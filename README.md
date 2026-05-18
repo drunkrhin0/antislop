@@ -2,6 +2,8 @@
 
 *By slop for slop, to remove slop in an AI slop world.*
 
+Written as a late shower from my ranting [LinkedIn post](https://www.linkedin.com/posts/tawilr_you-didnt-verify-this-and-i-can-tell-share-7460237564889944064-lXxs/)
+
 Two skills for writing like a human. Works with Claude Code, opencode, and any agent that supports SKILL.md or AGENTS.md.
 
 - **antislop** — a writing style skill. Ambient, always-on. Suppresses AI writing patterns across everything you write.
@@ -25,18 +27,25 @@ Two skills for writing like a human. Works with Claude Code, opencode, and any a
 
 ## Installation
 
+### Install with openskills
+
 ```bash
 npx openskills install drunkrhin0/antislop
 ```
 
 The repo includes an `AGENTS.md` file for automatic skill discovery in supported agents.
 
-Or copy the `antislop/` and `antislop-audit/` directories into your agent's skills directory manually:
+### Ask your agent
 
+Just tell your agent to install `drunkrhin0/antislop` from GitHub. Most will figure it out.
+
+### Manual
+
+Copy `antislop/` and `antislop-audit/` into your skills directory:
 - Claude Code: `~/.claude/skills/`
 - opencode: `~/.config/opencode/skills/`
 
-**AI chats (Claude.ai, ChatGPT, etc.):** Paste the contents of `antislop/SKILL.md` at the start of a conversation for writing, or `antislop-audit/SKILL.md` to audit existing text.
+For AI chats (Claude.ai, ChatGPT, etc.), paste `antislop/SKILL.md` at the start of a conversation for writing, or `antislop-audit/SKILL.md` to audit text.
 
 ---
 
