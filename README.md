@@ -31,11 +31,12 @@ npx openskills install drunkrhin0/antislop
 
 The repo includes an `AGENTS.md` file for automatic skill discovery in supported agents.
 
-Or copy the `antislop/` and `antislop-audit/` directories into your agent's skills directory manually.
+Or copy the `antislop/` and `antislop-audit/` directories into your agent's skills directory manually:
 
-**Other agents:** Refer to your agent's documentation for the skills directory location (typically `.agent/skills/` or similar), then copy the directories there.
+- Claude Code: `~/.claude/skills/`
+- opencode: `~/.config/opencode/skills/`
 
-**AI chats (Claude.ai, ChatGPT, etc.):** Paste the contents of `antislop/SKILL.md` and `antislop-audit/SKILL.md` at the start of any conversation.
+**AI chats (Claude.ai, ChatGPT, etc.):** Paste the contents of `antislop/SKILL.md` at the start of a conversation for writing, or `antislop-audit/SKILL.md` to audit existing text.
 
 ---
 
@@ -47,7 +48,7 @@ Triggers automatically when you ask your agent to write or edit anything. Or inv
 
 ### Audit (antislop-audit)
 
-Paste text and ask Claude to audit it with `/antislop-audit`
+Paste text and ask your agent to audit it with `/antislop-audit`
 
 Returns a score out of 100, a violations table with severity and excerpt, and a plain-English summary of what to fix first.
 
