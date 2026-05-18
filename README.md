@@ -45,7 +45,7 @@ Copy `antislop/` and `antislop-audit/` into your skills directory:
 - Claude Code: `~/.claude/skills/`
 - opencode: `~/.config/opencode/skills/`
 
-For AI chats (Claude.ai, ChatGPT, etc.), paste `antislop/SKILL.md` at the start of a conversation for writing, or `antislop-audit/SKILL.md` to audit text.
+For AI chats (Claude.ai, ChatGPT, etc.), paste the contents of `antislop/SKILL.md` at the start of a conversation for writing, or `antislop-audit/SKILL.md` to audit text.
 
 ---
 
