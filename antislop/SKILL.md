@@ -15,13 +15,13 @@ description: Universal writing style that suppresses detectable AI writing patte
 
 ---
 
-## Core Philosophy
+## Core philosophy
 
-AI writing is statistically average — it reaches for the most likely next word. Writing without a POV, without experience, without a position isn't neutral — it signals you didn't show up. These rules exist to interrupt that tendency. Specific beats vague. Direct beats hedged. Plain beats corporate.
+AI writing is statistically average. It reaches for the most likely next word. Writing without a POV, without experience, without a position isn't neutral. It signals you didn't show up. These rules exist to interrupt that tendency. Specific beats vague. Direct beats hedged. Plain beats corporate.
 
 ---
 
-## Hard-Banned Patterns
+## Hard-banned patterns
 
 ### Vocabulary — never use
 delve, leverage, tapestry, testament, vibrant, pivotal, utilize, synergy, holistic, robust, seamless, groundbreaking, cutting-edge, innovative, dynamic, comprehensive, embark, foster, ensure, explore, revolutionize, transformative, empower, unlock, supercharge
@@ -61,11 +61,11 @@ delve, leverage, tapestry, testament, vibrant, pivotal, utilize, synergy, holist
 
 ---
 
-## Punctuation and Formatting Rules
+## Punctuation and formatting rules
 
-**Em dashes** → prefer commas or periods. Specifically: don't use em-dashes as a rhetorical authority prop — padding a claim with justification instead of actually making the argument ("— not through magic, not through hype, but through hard work"). If you need an em-dash to sound credible, the sentence isn't doing its job. Rewrite it.
+**Em dashes** → prefer commas or periods. Specifically: don't use em-dashes as a rhetorical authority prop, padding a claim with justification instead of actually making the argument ("— not through magic, not through hype, but through hard work"). If you need an em-dash to sound credible, the sentence isn't doing its job. Rewrite it.
 
-**Scare quotes** → don't quote words to signal ironic distance unless it's genuinely intentional. Scare quotes read as hedging — the writer distancing themselves from their own word. Own it or cut it.
+**Scare quotes** → don't quote words to signal ironic distance unless it's genuinely intentional. Scare quotes read as hedging. The writer distances themselves from their own word. Own it or cut it.
 
 **Random bolding** → bold marks genuinely critical terms, not decoration. If you can't explain why a word is bolded, remove the bold.
 
@@ -81,9 +81,9 @@ delve, leverage, tapestry, testament, vibrant, pivotal, utilize, synergy, holist
 
 ---
 
-## Voice and Authenticity
+## Voice and authenticity
 
-This is the hardest pattern to catch because it's not a word or phrase — it's an absence.
+This is the hardest pattern to catch because it's not a word or phrase. It's an absence.
 
 AI writing has no opinion, no experience, no war stories. Just vibes. It takes no position, carries no scar tissue, and could have been written about any topic by anyone. That's the tell. Unreviewed AI output signals a lack of respect for the reader.
 
@@ -101,7 +101,7 @@ Rules:
 
 ---
 
-## Positive Guidance
+## Positive guidance
 
 - Mix sentence lengths. Aim for 20-30% of sentences under 10 words.
 - Use contractions where appropriate (you're, don't, can't)
@@ -114,7 +114,7 @@ Rules:
 
 ---
 
-## Emergency Replacements
+## Emergency replacements
 
 | Instead of | Use |
 |---|---|
@@ -140,7 +140,7 @@ Rules:
 
 ---
 
-## Audit Checklist
+## Audit checklist
 
 Before finishing any piece of writing:
 
@@ -156,7 +156,7 @@ Before finishing any piece of writing:
 
 ---
 
-## When to Use Antislop-Audit
+## When to use antislop-audit
 
 Use the **antislop-audit** companion tool to systematically score text for AI slop violations. Audit when:
 - You want a numerical slop score (0-100) and detailed violation list
@@ -164,4 +164,4 @@ Use the **antislop-audit** companion tool to systematically score text for AI sl
 - You're teaching antislop rules and want to show every violation
 - You've finished a piece and want final quality assurance before publishing
 
-The audit is strict — it flags every pattern regardless of intent. Use it to validate that your writing passes the antislop standard.
+The audit is strict. It flags every pattern regardless of intent. Use it to validate that your writing passes the antislop standard.

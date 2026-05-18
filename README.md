@@ -2,7 +2,7 @@
 
 *By slop for slop, to remove slop in an AI slop world.*
 
-Two Claude Code skills for writing like a human. Works with Claude Desktop, Cursor, Windsurf, and any agent that supports SKILL.md or AGENTS.md.
+Two Claude Code skills for writing like a human. Works with Claude Code, opencode, and any agent that supports SKILL.md or AGENTS.md.
 
 - **antislop** — a writing style skill. Ambient, always-on. Suppresses AI writing patterns across everything you write.
 - **antislop-audit** — a detection skill. Scores text 0-100 and returns a violations list. Zero exceptions for intent.
@@ -15,11 +15,11 @@ Two Claude Code skills for writing like a human. Works with Claude Desktop, Curs
 - Banned phrases ("it's worth noting", "in today's landscape", "at its core"...)
 - Em-dashes used as authority props instead of arguments
 - Scare quotes used to hedge instead of commit
-- Random bolding — decoration, not emphasis
+- Random bolding: decoration, not emphasis
 - Ambiguous bolded bullets where the body doesn't support the claim
 - Rule of three, synonym cycling, significance inflation, vague attributions
 - Chatbot artifacts ("I hope this helps!", "Great question!")
-- Writing with no opinion, no experience, no position — just vibes
+- Writing with no opinion, no experience, no position. Just vibes.
 
 ---
 
@@ -29,7 +29,9 @@ Two Claude Code skills for writing like a human. Works with Claude Desktop, Curs
 npx openskills install drunkrhin0/antislop
 ```
 
-Or copy the `antislop/` and `antislop-audit/` directories into your agent's skills directory manually. For AI chats, paste the SKILL.md contents at the start of a conversation.
+The repo includes an `AGENTS.md` file for automatic skill discovery in supported agents.
+
+Or copy the `antislop/` and `antislop-audit/` directories into your agent's skills directory manually.
 
 **Other agents:** Refer to your agent's documentation for the skills directory location (typically `.agent/skills/` or similar), then copy the directories there.
 

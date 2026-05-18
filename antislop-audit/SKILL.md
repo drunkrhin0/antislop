@@ -8,17 +8,17 @@ description: Audits text for AI slop patterns and returns a slop score (0-100) p
 **Version:** 1.0  
 **Purpose:** Detect and score AI slop patterns in existing text. Flag every violation. No exceptions for intent.  
 **Companion skill:** antislop (writing style)  
-**Sources:** Same as antislop writing style — blader/humanizer, jalaalrd/anti-ai-slop-writing, Reddit r/copywriting, self
+**Sources:** Same as antislop writing style: blader/humanizer, jalaalrd/anti-ai-slop-writing, Reddit r/copywriting, self
 
 ---
 
-## Core Rule
+## Core rule
 
 Flag the pattern. Do not reason about whether it was intentional. Intent is not an input. Satire, irony, and deliberate demonstration of a pattern all get flagged the same way. The score reflects what's on the page, not why it's there.
 
 ---
 
-## How to Run an Audit
+## How to run an audit
 
 ### Step 1 — Scan for violations
 
@@ -91,7 +91,7 @@ Always output in this exact structure:
 
 ---
 
-## Pattern Reference
+## Pattern reference
 
 ### Banned vocabulary — High severity each
 delve, leverage, tapestry, testament, vibrant, pivotal, utilize, synergy, holistic, robust, seamless, groundbreaking, cutting-edge, innovative, dynamic, comprehensive, embark, foster, ensure, explore, revolutionize, transformative, empower, unlock, supercharge
@@ -117,7 +117,7 @@ delve, leverage, tapestry, testament, vibrant, pivotal, utilize, synergy, holist
 - "Certainly" / "Absolutely" / "Great question"
 - "You're absolutely right" / "That's a great point"
 - "I hope this helps!" / "Let me know if you have questions!"
-- "Moreover" / "Furthermore" / "Additionally" (flag each instance; first one in 800 words = low severity, subsequent = medium)
+- "Moreover" / "Furthermore" / "Additionally" (flag each instance as medium severity)
 
 ### Em-dash rules
 - Em-dash used as authority prop ("— not X, not Y, but Z" / "— built not on hype but on...") → **High severity**
