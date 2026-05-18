@@ -2,7 +2,7 @@
 
 *By slop for slop, to remove slop in an AI slop world.*
 
-Two Claude Code skills for writing like a human. Works with Claude Code, opencode, and any agent that supports SKILL.md or AGENTS.md.
+Two skills for writing like a human. Works with Claude Code, opencode, and any agent that supports SKILL.md or AGENTS.md.
 
 - **antislop** — a writing style skill. Ambient, always-on. Suppresses AI writing patterns across everything you write.
 - **antislop-audit** — a detection skill. Scores text 0-100 and returns a violations list. Zero exceptions for intent.
@@ -43,7 +43,7 @@ Or copy the `antislop/` and `antislop-audit/` directories into your agent's skil
 
 ### Writing style (antislop)
 
-Triggers automatically when you ask Claude to write or edit anything. Or invoke `/antislop` directly
+Triggers automatically when you ask your agent to write or edit anything. Or invoke `/antislop` directly.
 
 ### Audit (antislop-audit)
 
@@ -55,7 +55,7 @@ Returns a score out of 100, a violations table with severity and excerpt, and a 
 - 85-100 — Clean. Reads like a person.
 - 65-84 — Some slop. Fixable with targeted edits.
 - 40-64 — Heavy slop. Significant rewrite needed.
-- 0-39 — Severe. Unreviewed AI output.
+- 0-39 — Severe. This reads like unreviewed AI output.
 
 ---
 
