@@ -2,7 +2,7 @@
 
 *By slop for slop, to remove slop in an AI slop world.*
 
-Written as a late shower from my ranting [LinkedIn post](https://www.linkedin.com/posts/tawilr_you-didnt-verify-this-and-i-can-tell-share-7460237564889944064-lXxs/)
+Written as a late shower thought from my ranting [LinkedIn post](https://www.linkedin.com/posts/tawilr_you-didnt-verify-this-and-i-can-tell-share-7460237564889944064-lXxs/)
 
 Two skills for writing like a human. Works with Claude Code, opencode, and any agent that supports SKILL.md or AGENTS.md.
 
