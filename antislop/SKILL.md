@@ -31,7 +31,7 @@ delve, leverage, tapestry, testament, vibrant, pivotal, utilize, synergy, holist
 - "It's worth noting that" — delete it, state the thing directly
 - "In today's fast-paced world" / "in today's landscape" → "Right now" or "Currently"
 - "Ever-evolving landscape" / "dynamic world of" / "in the realm of"
-- "At its core" / "at the end of the day"
+- "At its core" / "at the end of the day" / "the real question is" / "what really matters" / "fundamentally" / "in reality" / "the deeper issue is" — rhetorical cut-to-the-chase that adds ceremony without substance
 - "Let's dive in" / "let's delve deeper"
 - "Not just X, but Y" constructions
 - "Game-changer" (unless backed by specific metrics)
@@ -42,6 +42,16 @@ delve, leverage, tapestry, testament, vibrant, pivotal, utilize, synergy, holist
 - "Research shows" / "experts believe" without naming the research or expert
 - "Despite challenges, continues to thrive"
 - "The future looks bright" / "exciting times ahead"
+
+### Filler phrases — never use
+- "In order to" → "To"
+- "Due to the fact that" → "Because"
+- "At this point in time" → "Now"
+- "The system has the ability to" → "The system can"
+- "It is important to note that" → Drop it, state the thing
+
+### Hedging — never use
+- "Could potentially possibly" / "it might have some effect" / "it could be argued that" — one qualifier is fine. Three is a tell.
 
 ### Openers and closers — never use
 - "In conclusion" / "To summarize" / "To wrap up"
@@ -54,11 +64,19 @@ delve, leverage, tapestry, testament, vibrant, pivotal, utilize, synergy, holist
 - Rule of three inside a single sentence ("innovation, inspiration, and insights")
 - All paragraphs the same length
 - Announcing your structure ("First I'll discuss... then I'll cover...")
-- "X isn't the problem, Y is" constructions — too cliché
+- Negative parallelisms and trailing negations — "not just X, but Y", "it's not about X, it's about Y", "X isn't the problem, Y is", and trailing fragments like "..., no guessing" or "..., no exceptions". Define the thing by what it is, not what it isn't.
 - Synonym cycling — pick a word and repeat it; don't rotate through near-synonyms
 - False ranges ("from the Big Bang to dark matter") as rhetorical filler
 - Significance inflation ("pivotal moment in the evolution of...")
+- Superficial -ing analyses — "highlighting", "underscoring", "symbolizing", "reflecting", "contributing to" tacked onto sentence ends to add fake depth. Say what actually happened.
 - Promotional language ("nestled within the breathtaking...")
+- Copula avoidance — "serves as", "boasts", "features", "functions as", "stands as" when "is" or "has" would do the same job with half the ceremony
+- Parataxis — 3+ consecutive short declarative sentences with no connective tissue. It reads like a poem. It signals AI authorship. Merge or subordinate.
+- Passive voice / subjectless fragments ("No configuration file needed", "Results are preserved automatically") — use active voice
+- Rhetorical emphasis tails — ending sentences with "..., that's the thing", "..., and that's what matters", "..., that's the hard truth". If the sentence needs a punchline, rewrite the sentence so the whole thing lands.
+- Generic subject loops — 3+ sentences opening with the same vague pronoun ("They get... They ask... They want...") or the same impersonal construction ("You're going to... You're here to..."). Name the actual subject and vary openers.
+- Notability name-dropping — listing media outlets without context for what each said ("cited in NYT, BBC, FT, and The Hindu"). Either cite what a specific source actually reported or cut the name-drop.
+- Fragmented headers — a heading followed by a one-line paragraph that just restates the heading before the real content begins. Let the heading stand.
 
 ---
 
@@ -79,6 +97,8 @@ delve, leverage, tapestry, testament, vibrant, pivotal, utilize, synergy, holist
 **Emojis in prose** → remove.
 
 **Hyphenated word pairs** (cross-functional, data-driven, client-facing) → drop hyphens on common compound pairs.
+
+**Curly quotes** → use straight quotes ("), not curly (“”). Curly quotes are a ChatGPT-specific tell.
 
 ---
 

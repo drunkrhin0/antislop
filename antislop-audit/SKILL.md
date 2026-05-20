@@ -49,15 +49,25 @@ Do not skip categories. Do not combine violations. One instance = one violation 
 - Rule of three in a single sentence
 - Synonym cycling
 - Overlong sentence (3+ ideas, 2+ qualifiers, or 2+ disclaimers in one sentence)
-- "X isn't the problem, Y is" construction
+- Negative parallelism / trailing negation ("not just X, but Y", "it's not about X, it's about Y", "X isn't the problem, Y is", "..., no guessing")
+- Copula avoidance ("serves as", "boasts", "features", "functions as", "stands as" when "is"/"has" would do)
+- Parataxis (3+ consecutive short declarative sentences with no conjunctions or subordination)
+- Passive voice / subjectless fragments ("No configuration file needed", "Results are preserved automatically")
+- Excessive hedging ("could potentially possibly", "it might have some effect", "it could be argued that")
+- Rhetorical emphasis tail ("..., that's the thing", "..., and that's what matters", "..., that's the hard truth")
+- Generic subject loops (3+ sentences opening with the same vague pronoun or impersonal construction)
 - False range ("from X to Y" as rhetorical filler)
 - Promotional language ("nestled within the breathtaking...")
 - Generic conclusion ("The future looks bright", "Exciting times ahead")
+- Notability name-dropping (listing media outlets without saying what any of them actually reported)
+- Fragmented headers (heading followed by one-line paragraph that just restates it)
 
 **Low severity** (each = -2 points):
 - Title Case Headings (should be sentence case)
 - Inline-header lists (**Term:** explanation)
 - Hyphenated word pairs that don't need hyphens
+- Curly quotes (“ ”) — should be straight quotes (")
+- Filler phrases ("in order to", "due to the fact that", "at this point in time", "the system has the ability to")
 - Emojis in prose
 
 ### Step 3 — Calculate score
@@ -100,7 +110,7 @@ delve, leverage, tapestry, testament, vibrant, pivotal, utilize, synergy, holist
 ### Banned phrases — High severity each
 - "It's worth noting that"
 - "In today's fast-paced world" / "in today's landscape" / "ever-evolving landscape"
-- "At its core" / "at the end of the day"
+- "At its core" / "at the end of the day" / "the real question is" / "what really matters" / "fundamentally" / "in reality" / "the deeper issue is"
 - "Let's dive in" / "let's delve deeper"
 - "Not just X, but Y"
 - "Game-changer" (without specific metrics)
@@ -135,19 +145,30 @@ Any word in quotes where the quotes signal ironic distance rather than a direct 
 ### Structural patterns — Medium severity each
 - Rule of three in a single sentence
 - Overlong sentence (3+ ideas, or 2+ qualifiers/disclaimers crammed in)
-- "X isn't the problem, Y is"
+- Negative parallelism / trailing negation ("not just X, but Y", "it's not about X, it's about Y", "X isn't the problem, Y is", trailing fragments like "..., no guessing")
+- Copula avoidance ("serves as", "boasts", "features", "functions as", "stands as" when "is"/"has" would do)
+- Parataxis — 3+ consecutive short declarative sentences with no conjunctions or subordination
+- Passive voice / subjectless fragments ("No configuration file needed", "Results are preserved automatically")
+- Excessive hedging ("could potentially possibly", "it might have some effect", "it could be argued that")
+- Rhetorical emphasis tail ("..., that's the thing", "..., and that's what matters", "..., that's the hard truth")
+- Generic subject loops (3+ sentences opening with the same vague pronoun or impersonal construction)
 - Synonym cycling (protagonist / main character / central figure)
 - False range ("from X to Y" as rhetorical filler)
 - Significance inflation ("pivotal moment in the evolution of...")
+- Superficial -ing analysis ("highlighting", "underscoring", "symbolizing", "reflecting" tacked onto sentence ends to add fake depth)
 - Promotional language ("nestled within the breathtaking...")
 - Formulaic challenge framing ("despite challenges, continues to thrive")
 - Announcing structure ("First I'll discuss... then I'll cover...")
 - Generic conclusions ("The future looks bright")
+- Notability name-dropping — listing media outlets ("cited in NYT, BBC, FT, and The Hindu") without what any said. Medium severity each.
+- Fragmented headers — heading followed by one-line restatement. Medium severity each.
 
 ### Formatting — Low severity each
 - Title Case Headings
 - Inline-header lists (**Term:** description)
 - Unnecessary hyphenated pairs (cross-functional, data-driven)
+- Curly quotes (“ ”) — should be straight quotes (")
+- Filler phrases ("in order to", "due to the fact that", "at this point in time", "the system has the ability to")
 - Emojis in prose
 
 ### Chatbot artifacts — High severity each
