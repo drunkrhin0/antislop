@@ -1,0 +1,56 @@
+name: Release Skills
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'antislop/SKILL.md'
+      - 'antislop-audit/SKILL.md'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: dockhand
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683  # v4.2.2
+        with:
+          fetch-depth: 0
+
+      - name: Tag antislop
+        run: |
+          VERSION=$(grep '^version:' antislop/SKILL.md | head -1 | sed 's/version:[[:space:]]*"//;s/"//;s/[[:space:]]*$//')
+          if [ -z "$VERSION" ]; then
+            echo "No version found in antislop/SKILL.md, skipping"
+            exit 0
+          fi
+          TAG="antislop-v${VERSION}"
+          if git rev-parse "${TAG}" >/dev/null 2>&1; then
+            echo "Tag ${TAG} already exists, skipping"
+            exit 0
+          fi
+          git config user.name "CI"
+          git config user.email "ci@antislop"
+          git tag -a "${TAG}" -m "antislop ${VERSION}"
+          git push origin "${TAG}"
+          echo "Created and pushed tag ${TAG}"
+
+      - name: Tag antislop-audit
+        run: |
+          VERSION=$(grep '^version:' antislop-audit/SKILL.md | head -1 | sed 's/version:[[:space:]]*"//;s/"//;s/[[:space:]]*$//')
+          if [ -z "$VERSION" ]; then
+            echo "No version found in antislop-audit/SKILL.md, skipping"
+            exit 0
+          fi
+          TAG="antislop-audit-v${VERSION}"
+          if git rev-parse "${TAG}" >/dev/null 2>&1; then
+            echo "Tag ${TAG} already exists, skipping"
+            exit 0
+          fi
+          git config user.name "CI"
+          git config user.email "ci@antislop"
+          git tag -a "${TAG}" -m "antislop-audit ${VERSION}"
+          git push origin "${TAG}"
+          echo "Created and pushed tag ${TAG}"
