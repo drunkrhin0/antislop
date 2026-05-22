@@ -33,6 +33,13 @@ Two skills for writing like a human. Works with Claude Code, opencode, and any a
 npx openskills install drunkrhin0/antislop
 ```
 
+For global usage (in `~/.claude/skills` directly, otherwise it prefers putting the skills into the current working directory):
+
+```bash
+npx openskills install drunkrhin0/antislop --global
+```
+
+
 The repo includes an `AGENTS.md` file for automatic skill discovery in supported agents.
 
 ### Ask your agent
