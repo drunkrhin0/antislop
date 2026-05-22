@@ -69,6 +69,7 @@ Do not skip categories. Do not combine violations. One instance = one violation 
 - Curly quotes (“ ”) — should be straight quotes (")
 - Filler phrases ("in order to", "due to the fact that", "at this point in time", "the system has the ability to")
 - Emojis in prose
+- Usage of unicode characters to convey a point, which isn't used in general language (e.g. `→`)
 
 ### Step 3 — Calculate score
 
