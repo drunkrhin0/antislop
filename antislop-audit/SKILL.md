@@ -1,6 +1,6 @@
 ---
 name: antislop-audit
-version: "1.0"
+version: "1.1"
 description: Audits text for AI slop patterns and returns a slop score (0-100) plus a violations list. Use when the user asks to check, audit, review, grade, or score text for AI patterns, AI slop, or writing quality. Also trigger when the user pastes text and asks "does this pass?", "is this sloppy?", "flag the AI patterns", or similar. Companion to the antislop writing style skill. Zero exceptions — flag every violation regardless of perceived intent or satire.
 ---
 
@@ -61,6 +61,7 @@ Do not skip categories. Do not combine violations. One instance = one violation 
 - Generic conclusion ("The future looks bright", "Exciting times ahead")
 - Notability name-dropping (listing media outlets without saying what any of them actually reported)
 - Fragmented headers (heading followed by one-line paragraph that just restates it)
+- Negation flip ("This isn't X. It's Y." when the negation adds nothing the positive statement doesn't already carry)
 
 **Low severity** (each = -2 points):
 - Title Case Headings (should be sentence case)
@@ -96,6 +97,7 @@ Always output in this exact structure:
 | 1 | High | Banned phrase | "it's worth noting that" | Delete — state the thing directly |
 | 2 | High | Em-dash authority prop | "— not through magic, not through hype" | Em-dash padding a claim instead of making it |
 | 3 | Medium | Overlong sentence | "sentences that packed in three ideas..." | 3+ ideas in one sentence; use a full stop |
+| 4 | Medium | Negation flip | "This isn't a support desk. The goal is..." | Negation adds nothing the positive statement doesn't carry |
 ...
 
 **Summary:**
@@ -163,6 +165,7 @@ Any word in quotes where the quotes signal ironic distance rather than a direct 
 - Generic conclusions ("The future looks bright")
 - Notability name-dropping — listing media outlets ("cited in NYT, BBC, FT, and The Hindu") without what any said. Medium severity each.
 - Fragmented headers — heading followed by one-line restatement. Medium severity each.
+- Negation flip — stating what something isn't immediately before stating what it is, used as rhetorical padding rather than genuine contrast. E.g. "This isn't a support desk. The goal is..." / "These aren't hoops. They're how..." / "This is not discovery — it's logistics." Flag when the negation adds no information the positive statement doesn't already carry on its own.
 
 ### Formatting — Low severity each
 - Title Case Headings
@@ -187,3 +190,4 @@ Any word in quotes where the quotes signal ironic distance rather than a direct 
 - If the text is long (1000+ words), note the word count and confirm you've scanned all of it.
 - Never compliment the writing. Never soften the findings.
 - If score is above 85, say so plainly and stop. No padding.
+- After the summary, add one line: `Reply "fix" to apply corrections.`

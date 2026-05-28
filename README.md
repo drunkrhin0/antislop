@@ -4,7 +4,7 @@
 
 Written as a late shower thought from my ranting [LinkedIn post](https://www.linkedin.com/posts/tawilr_you-didnt-verify-this-and-i-can-tell-share-7460237564889944064-lXxs/)
 
-Two skills for writing like a human. Works with Claude Code, opencode, and any agent that supports SKILL.md or AGENTS.md.
+Two skills for writing like a human. Works with Claude Code, opencode, Gemini CLI, and any agent that supports SKILL.md or AGENTS.md.
 
 - **antislop** — a writing style skill. Ambient, always-on. Suppresses AI writing patterns across everything you write.
 - **antislop-audit** — a detection skill. Scores text 0-100 and returns a violations list. Zero exceptions for intent.
@@ -46,7 +46,30 @@ The repo includes an `AGENTS.md` file for automatic skill discovery in supported
 
 Just tell your agent to install `drunkrhin0/antislop` from GitHub. Most will figure it out.
 
-### Manual
+### Gemini CLI
+
+Copy the `antislop/` folder into your Gemini extensions directory:
+
+```bash
+mkdir -p ~/.gemini/extensions/antislop
+cp antislop/gemini-extension.json ~/.gemini/extensions/antislop/
+cp antislop/GEMINI.md ~/.gemini/extensions/antislop/
+```
+
+Gemini CLI picks it up automatically on next launch.
+
+### Gemini web app (gemini.google.com)
+
+Requires Gemini Advanced. Create a Gem:
+
+1. Left sidebar → **Gem manager** → **New Gem**
+2. Name it "Antislop"
+3. Paste the contents of `antislop/GEMINI.md` into the instructions field
+4. Save and use that Gem for writing
+
+Free tier: paste `antislop/GEMINI.md` at the start of any chat instead.
+
+### Manual (Claude Code, opencode)
 
 Copy `antislop/` and `antislop-audit/` into your skills directory:
 - Claude Code: `~/.claude/skills/`

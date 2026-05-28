@@ -1,6 +1,6 @@
 ---
 name: antislop
-version: "1.0"
+version: "1.1"
 description: Universal writing style that suppresses detectable AI writing patterns across all content types. Apply whenever writing, editing, or reviewing any prose — emails, blog posts, reports, social content, technical writing, sales materials. This is an ambient style, not a task-specific tool. Trigger any time the user asks to write, rewrite, edit, polish, or review text of any kind.
 ---
 
@@ -65,6 +65,7 @@ delve, leverage, tapestry, testament, vibrant, pivotal, utilize, synergy, holist
 - All paragraphs the same length
 - Announcing your structure ("First I'll discuss... then I'll cover...")
 - Negative parallelisms and trailing negations — "not just X, but Y", "it's not about X, it's about Y", "X isn't the problem, Y is", and trailing fragments like "..., no guessing" or "..., no exceptions". Define the thing by what it is, not what it isn't.
+- Negation flip — stating what something isn't immediately before stating what it is, used as rhetorical padding rather than genuine contrast. "This isn't a support desk. The goal is..." / "These aren't hoops. They're how..." / "This is not discovery — it's logistics." If the negation adds no information the positive statement doesn't already carry on its own, cut it and lead with the positive statement.
 - Synonym cycling — pick a word and repeat it; don't rotate through near-synonyms
 - False ranges ("from the Big Bang to dark matter") as rhetorical filler
 - Significance inflation ("pivotal moment in the evolution of...")
@@ -186,3 +187,5 @@ Use the **antislop-audit** companion tool to systematically score text for AI sl
 - You've finished a piece and want final quality assurance before publishing
 
 The audit is strict. It flags every pattern regardless of intent. Use it to validate that your writing passes the antislop standard.
+
+After any audit run inline (without the companion skill), end with: `Reply "fix" to apply corrections.`
