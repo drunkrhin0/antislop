@@ -1,0 +1,105 @@
+name: Create Release
+
+on:
+  push:
+    tags:
+      - 'antislop-v*'
+      - 'antislop-audit-v*'
+  workflow_dispatch:
+    inputs:
+      skill:
+        description: 'Skill to release (antislop or antislop-audit)'
+        required: true
+        type: choice
+        options:
+          - antislop
+          - antislop-audit
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd  # v5.0.1
+
+      - name: Determine skill and version
+        id: meta
+        run: |
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+            SKILL="${{ inputs.skill }}"
+          else
+            TAG="${GITHUB_REF#refs/tags/}"
+            if [[ "$TAG" == antislop-audit-* ]]; then
+              SKILL="antislop-audit"
+            else
+              SKILL="antislop"
+            fi
+          fi
+          VERSION=$(grep '^version:' "${SKILL}/SKILL.md" | head -1 | sed 's/version:[[:space:]]*"//;s/"//;s/[[:space:]]*$//')
+          echo "skill=${SKILL}" >> "$GITHUB_OUTPUT"
+          echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
+
+      - name: Package skill
+        run: |
+          zip -r "${{ steps.meta.outputs.skill }}-${{ steps.meta.outputs.version }}.zip" "${{ steps.meta.outputs.skill }}/"
+
+      - name: Create release
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+            TAG="${{ steps.meta.outputs.skill }}-v${{ steps.meta.outputs.version }}"
+          else
+            TAG="${GITHUB_REF#refs/tags/}"
+          fi
+          SKILL="${{ steps.meta.outputs.skill }}"
+          VERSION="${{ steps.meta.outputs.version }}"
+          ZIP="${SKILL}-${VERSION}.zip"
+
+          if [[ "${{ github.server_url }}" == "https://github.com" ]]; then
+            if gh release view "$TAG" >/dev/null 2>&1; then
+              echo "Release ${TAG} already exists, skipping"
+              exit 0
+            fi
+            gh release create "$TAG" "$ZIP" \
+              --title "${SKILL} v${VERSION}" \
+              --notes "Release of ${SKILL} v${VERSION}"
+          else
+            API="${{ github.server_url }}/api/v1"
+            REPO="${{ github.repository }}"
+
+            EXISTING=$(curl -s "${API}/repos/${REPO}/releases/tags/${TAG}" \
+              -H "Authorization: token ${GITHUB_TOKEN}")
+            EXISTING_ID=$(echo "${EXISTING}" | jq -r '.id // empty')
+
+            if [ -n "${EXISTING_ID}" ] && [ "${EXISTING_ID}" != "null" ]; then
+              echo "Release ${TAG} already exists (ID ${EXISTING_ID}), skipping"
+              exit 0
+            fi
+
+            RESPONSE=$(curl -s -X POST "${API}/repos/${REPO}/releases" \
+              -H "Authorization: token ${GITHUB_TOKEN}" \
+              -H "Content-Type: application/json" \
+              -d "{
+                \"tag_name\": \"${TAG}\",
+                \"name\": \"${SKILL} v${VERSION}\",
+                \"body\": \"Release of ${SKILL} v${VERSION}\",
+                \"draft\": false,
+                \"prerelease\": false
+              }")
+
+            echo "Create release response: ${RESPONSE}"
+
+            RELEASE_ID=$(echo "${RESPONSE}" | jq -r '.id')
+            if [ -z "${RELEASE_ID}" ] || [ "${RELEASE_ID}" = "null" ]; then
+              echo "Failed to create release"
+              exit 1
+            fi
+
+            curl -s -X POST "${API}/repos/${REPO}/releases/${RELEASE_ID}/assets" \
+              -H "Authorization: token ${GITHUB_TOKEN}" \
+              -F "attachment=@${ZIP}" \
+              -o /dev/null -w "Upload asset status: %{http_code}\n"
+          fi
