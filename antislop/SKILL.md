@@ -1,12 +1,12 @@
 ---
 name: antislop
-version: "1.2"
+version: "1.3"
 description: Universal writing style that suppresses detectable AI writing patterns across all content types. Apply whenever writing, editing, or reviewing any prose — emails, blog posts, reports, social content, technical writing, sales materials. This is an ambient style, not a task-specific tool. Trigger any time the user asks to write, rewrite, edit, polish, or review text of any kind.
 ---
 
 # Antislop Writing Style
 
-**Version:** 1.2  
+**Version:** 1.3  
 **Purpose:** Suppress detectable AI writing patterns across all content types.  
 **Sources:**
 - [blader/humanizer](https://github.com/blader/humanizer) (MIT) — 29-pattern taxonomy grounded in Wikipedia's Signs of AI Writing
@@ -16,6 +16,7 @@ description: Universal writing style that suppresses detectable AI writing patte
 - [ignorance.ai/field-guide-to-ai-slop](https://www.ignorance.ai/p/the-field-guide-to-ai-slop) — structural patterns, parallelism analysis, metaphor detection, authenticity crisis framing
 - [Banned: The Definitive Guide](https://docs.google.com/document/d/1uC9tBgfNZJytzLpg6MGk5mTfgJNbEK-h1hMLncQ5Mho/edit) (Creative Commons) — comprehensive construction, phrase, and pattern taxonomy; physical tell clichés, ending clichés, anthropomorphized silence, temperature shorthand, 200+ banned patterns
 - [Pangram / Comprehensive Guide to Spotting AI Writing Patterns](https://www.pangram.com/blog/comprehensive-guide-to-spotting-ai-writing-patterns) — exhaustive AI vocabulary cross-reference, phrasing patterns, uniform sentence length, organizational tells
+- [Anbeeld/WRITING.md](https://github.com/Anbeeld/WRITING.md) (MIT) — specificity theater, catalog/system-tour prose, regularity diagnostics, compound-modifier nuance, medium routing
 
 ---
 
@@ -137,6 +138,8 @@ This style is for human-readable prose. Do not apply to:
 - Paragraph-level redundancy — when paragraph 2 opens by restating paragraph 1's conclusion, or the same concept appears twice across paragraphs with different supporting details. Also intra-paragraph restatement — the concluding sentence that just summarizes the paragraph in different words. Consolidate or cut the weaker version. Antislop catches sentence-level patterns. This is a manual content/logic check.
 - Artificial line breaks — prose broken mid-sentence at terminal width (~80 chars) is an LLM artifact. Humans write continuous paragraphs. Break only for new thoughts.
 - Bullet-point crutch — using bullet lists to dodge writing full paragraphs when prose would communicate more clearly. Bullets are for breakdowns, not paragraph avoidance.
+- Concession rhythm — "not X, but Y" / "may sound X, but Y" used reflexively as a paragraph scaffold. Concede, then correct. When multiple paragraphs follow this arc, the rhythm becomes the tell. Break at least one occurrence with a direct statement or a different move.
+- Type-definition endings — "the kind of X where Y" used as a default paragraph closure. If multiple paragraphs end with this classifying shape, rewrite the closers to carry forward rather than categorize.
 
 **Discourse-level:**
 
@@ -149,6 +152,9 @@ This style is for human-readable prose. Do not apply to:
 - Triplet overlap — when 3+ descriptors name the same underlying quality rather than distinct things, consolidate to one descriptor or one phrase. "Current, documented, and auditable" all mean "reliable for attestation." Valid triplets name distinct categories: "policies, controls, and exceptions." Antislop catches form. Only a human can judge whether the meaning is distinct.
 - Awkward AI metaphors — metaphors that gesture toward meaning without achieving it. Generic, plausible, but unanchored to specific experience. "Learning an instrument is a mirror for learning itself: messy, slow, and quietly addictive" could describe anything. Human metaphors are rooted: "Our deploy pipeline was like a Jenga tower — every sprint we'd pull one block and hope nothing fell." If the metaphor applies equally well to any topic, cut it.
 - Ending clichés — "And for now, that was enough", "It was a start", "They would figure it out. Somehow.", "Nothing would ever be the same." Summary posing as closure. Labels emotional meaning rather than letting it emerge from action. End on action, decision, or consequence instead.
+- Specificity theater — invented specifics deployed to pass a "be concrete" check. Includes synthetic quotes, suspicious decimal precision ("47.3%"), decorative factuality (dates/numbers added that weren't in source material), and hidden-mechanism narration (claiming to know what a system "really" does under the hood without observable evidence). If you cannot verify a claim, attribute it, soften it, or cut it. An invented number is worse than "many" because it reads authoritative while being fabricated.
+- Catalog prose — a paragraph that is mainly names, milestones, categories, feature nouns, or system labels with no material consequence attached. If each paragraph can be summarized with a single label ("background", "mechanism", "impact"), the piece is a catalog, not an argument. Pick one change and trace its consequence.
+- System-tour prose — paragraphs that map one-to-one with predictable category buckets. Background paragraph, mechanism paragraph, impact paragraph, verdict paragraph. Cross-wire the piece so paragraphs depend on each other rather than sitting like labeled boxes.
 
 ---
 
@@ -168,7 +174,7 @@ This style is for human-readable prose. Do not apply to:
 
 **Emojis in prose** → remove.
 
-**Hyphenated word pairs** (cross-functional, data-driven, client-facing) → drop hyphens on common compound pairs.
+**Compound-modifier hyphenation** — hyphenate before the noun ("well-known author", "long-term plan"). Open after the noun or linking verb ("The author is well known", "The plan is long term"). Never hyphenate -ly adverb compounds ("highly qualified", not "highly-qualified"). Watch for reflexive ever- compounds ("ever-changing", "ever-growing"). Keep hyphens where they prevent ambiguity or the term is conventionally hyphenated ("state-of-the-art", "cost-effective"). The problem is the reflex, not the mark.
 
 **Curly quotes** → use straight quotes ("), not curly (“”). Curly quotes are a ChatGPT-specific tell.
 
@@ -185,6 +191,7 @@ Rules:
 - Specific experiences beat general observations. "I've seen this fail three times in enterprise deployments" beats "this approach has known limitations"
 - If a sentence could be written by someone who has never done the thing, rewrite it as someone who has
 - Opinion is not unprofessional. Hiding behind false balance is.
+- Do not fake humanity. No invented typos, intentional grammar breaks, injected slang, fake uncertainty ("I think... maybe... sort of"), or staged messiness to simulate a human voice. The fix for AI-sounding prose is better writing — concrete anchors, a clear position, varied rhythm — not simulated noise.
 
 **Example rewrite:**
 
@@ -281,6 +288,11 @@ Before finishing any piece of writing. After any audit run inline (without the c
 - [ ] Overlong-sentence check — any sentence with 5+ commas and nested clauses? Break into two or three.
 - [ ] Silence check — any silence "stretching" or "hanging"? Show effect on people instead.
 - [ ] Ending check — any "And for now, that was enough" style closure? End on action, decision, or consequence.
+- [ ] Specificity check — any unverifiable claims, invented specifics, or hidden-mechanism narration? Attribute, soften, or cut.
+- [ ] Catalog check — any paragraphs that are only names/dates/features with no material consequence? Trace one consequence.
+- [ ] Concession rhythm check — any "not X, but Y" used reflexively across multiple paragraphs? Break at least one.
+- [ ] Type-definition check — any "the kind of X where Y" endings used repeatedly? Rewrite the closers.
+- [ ] Overcorrection check — any fake-human moves (invented typos, slang, staged messiness) added to break a pattern? Cut them — fix the prose instead.
 
 ---
 

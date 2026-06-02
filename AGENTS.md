@@ -37,7 +37,7 @@ To test repo changes in an agent conversation, copy the updated `SKILL.md` into 
 ## Conventions
 
 - Sentence case headings everywhere — no Title Case
-- Skill files stay under 500 lines (current: 295 / 294 / 233)
+- Skill files stay under 500 lines (current: 306 / 309 / 243)
 - Version bumps touch four places: two frontmatter fields, one inline version, one JSON file
 - README follows antislop rules itself: zero em-dashes, no banned vocabulary
 - Workflows live in both `.forgejo/workflows/` and `.github/workflows/` — neither directory is the sole source

@@ -1,9 +1,9 @@
 # Antislop — Writing Style + Audit
 
-**Version:** 1.2  
+**Version:** 1.3  
 **Purpose:** Two capabilities in one extension. Suppress AI writing patterns when writing/editing. Score and flag them when auditing.
 
-**Sources:** [drunkrhin0/antislop](https://github.com/drunkrhin0/antislop) (MIT) — canonical source. Derived from blader/humanizer (MIT), jalaalrd/anti-ai-slop-writing (MIT), Reddit r/copywriting, [ignorance.ai/field-guide-to-ai-slop](https://www.ignorance.ai/p/the-field-guide-to-ai-slop), [Banned: The Definitive Guide](https://docs.google.com/document/d/1uC9tBgfNZJytzLpg6MGk5mTfgJNbEK-h1hMLncQ5Mho/edit), [Pangram](https://www.pangram.com/blog/comprehensive-guide-to-spotting-ai-writing-patterns), self.
+**Sources:** [drunkrhin0/antislop](https://github.com/drunkrhin0/antislop) (MIT) — canonical source. Derived from blader/humanizer (MIT), jalaalrd/anti-ai-slop-writing (MIT), Reddit r/copywriting, [ignorance.ai/field-guide-to-ai-slop](https://www.ignorance.ai/p/the-field-guide-to-ai-slop), [Banned: The Definitive Guide](https://docs.google.com/document/d/1uC9tBgfNZJytzLpg6MGk5mTfgJNbEK-h1hMLncQ5Mho/edit), [Pangram](https://www.pangram.com/blog/comprehensive-guide-to-spotting-ai-writing-patterns), [Anbeeld/WRITING.md](https://github.com/Anbeeld/WRITING.md), self.
 
 ---
 
@@ -85,6 +85,11 @@ delve, leverage, tapestry, testament, vibrant, pivotal, utilize, synergy, holist
 - Overlong sentences — 5+ commas, nested clauses, 3+ ideas in one sentence. AI refuses to end it. Break into two or three.
 - Anthropomorphized silence — "the silence stretched", "deafening silence." Silence doesn't do things. Show who breaks it, who endures it, what it costs.
 - Ending clichés — "And for now, that was enough", "It was a start." Summary posing as closure. End on action, decision, or consequence.
+- Specificity theater — invented specifics deployed to pass "be concrete" tests. Synthetic quotes, suspicious exactness, decorative factuality, hidden-mechanism narration. If you cannot verify a claim, attribute, soften, or cut. An invented number is worse than vague.
+- Catalog prose — paragraphs that are only names, milestones, feature labels with no material consequence. If each paragraph reduces to a single label, restructure.
+- System-tour prose — paragraphs mapping to predictable category buckets (background → mechanism → impact → verdict). Cross-wire so paragraphs depend on each other.
+- Concession rhythm — "not X, but Y" / "may sound X, but Y" used reflexively as paragraph scaffold across multiple paragraphs. Break at least one with a direct statement.
+- Type-definition endings — "the kind of X where Y" used repeatedly as paragraph closure. Rewrite the closing sentences.
 
 ### Punctuation and formatting
 
@@ -102,7 +107,7 @@ delve, leverage, tapestry, testament, vibrant, pivotal, utilize, synergy, holist
 
 **Emojis in prose** → remove.
 
-**Hyphenated word pairs** (cross-functional, data-driven, client-facing) → drop hyphens on common compound pairs.
+**Compound-modifier hyphenation** — hyphenate before the noun ("well-known author"). Open after linking verbs ("The author is well known"). Never hyphenate -ly adverb compounds ("highly qualified", not "highly-qualified"). Watch for ever- compounds ("ever-changing").
 
 ### Voice and authenticity
 
@@ -112,6 +117,7 @@ AI writing has no opinion, no experience, no war stories. It takes no position, 
 - Specific experiences beat general observations. "I've seen this fail three times in enterprise deployments" beats "this approach has known limitations"
 - If a sentence could be written by someone who has never done the thing, rewrite it as someone who has
 - Opinion is not unprofessional. Hiding behind false balance is
+- Do not fake humanity. No invented typos, intentional grammar breaks, injected slang, fake uncertainty, or staged messiness. The fix for AI prose is better writing, not simulated noise.
 
 **Rewrite example:**
 
@@ -181,6 +187,10 @@ AI writing has no opinion, no experience, no war stories. It takes no position, 
 - [ ] Overlong-sentence check — any sentence with 5+ commas? Break into two or three.
 - [ ] Silence check — any silence "stretching" or "hanging"? Show effect on people.
 - [ ] Ending check — any "And for now, that was enough" closure? End on action or consequence.
+- [ ] Specificity check — any unverifiable claims, invented specifics, or hidden-mechanism narration? Attribute, soften, or cut.
+- [ ] Catalog check — any paragraphs that are only names/dates/features with no material consequence? Trace one consequence.
+- [ ] Concession rhythm check — any "not X, but Y" used reflexively? Break at least one.
+- [ ] Type-definition check — any "the kind of X where Y" endings used repeatedly? Rewrite the closers.
 
 ---
 
@@ -211,6 +221,7 @@ Do not skip categories. Do not combine violations. One instance = one violation 
 - Significance inflation ("pivotal moment", "transformative")
 - Rhetorical-question hooks ("The kicker?", "The issue?", "Do you know what I learned?")
 - Balanced-take hedging ("While X is true, we must also consider Y" formula)
+- Specificity theater (synthetic quotes, suspicious exactness, decorative factuality, hidden-mechanism narration)
 
 **Medium severity** (each = -4 points):
 - Random bolding
@@ -243,11 +254,15 @@ Do not skip categories. Do not combine violations. One instance = one violation 
 - All paragraphs the same length (uniform paragraph length with no variation)
 - Uniform sentence length (monotonous same-length sentences with no variation in rhythm)
 - Ending clichés ("And for now, that was enough" — summary posing as closure)
+- Catalog prose (paragraphs that are only names, dates, features with no material consequence)
+- System-tour prose (paragraph-to-category-bucket mapping)
+- Concession rhythm ("not X, but Y" as reflexive scaffold)
+- Type-definition endings ("the kind of X where Y" appearing repeatedly)
 
 **Low severity** (each = -2 points):
 - Title Case Headings
 - Inline-header lists (**Term:** explanation)
-- Hyphenated word pairs that don't need hyphens
+- Compound-modifier over-hyphenation
 - Emojis in prose
 - Artificial line breaks (mid-sentence breaks at terminal width)
 - Passive voice / subjectless fragments

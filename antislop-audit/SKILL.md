@@ -1,15 +1,15 @@
 ---
 name: antislop-audit
-version: "1.2"
+version: "1.3"
 description: Audits text for AI slop patterns and returns a slop score (0-100) plus a violations list. Use when the user asks to check, audit, review, grade, or score text for AI patterns, AI slop, or writing quality. Also trigger when the user pastes text and asks "does this pass?", "is this sloppy?", "flag the AI patterns", or similar. Companion to the antislop writing style skill. Zero exceptions — flag every violation regardless of perceived intent or satire.
 ---
 
 # Antislop Audit
 
-**Version:** 1.2  
+**Version:** 1.3  
 **Purpose:** Detect and score AI slop patterns in existing text. Flag every violation. No exceptions for intent.  
 **Companion skill:** antislop (writing style)  
-**Sources:** Same as antislop writing style: blader/humanizer, jalaalrd/anti-ai-slop-writing, Reddit r/copywriting, ignorance.ai/field-guide-to-ai-slop, Banned: The Definitive Guide, Pangram, self
+**Sources:** Same as antislop writing style: blader/humanizer, jalaalrd/anti-ai-slop-writing, Reddit r/copywriting, ignorance.ai/field-guide-to-ai-slop, Banned: The Definitive Guide, Pangram, Anbeeld/WRITING.md, self
 
 ---
 
@@ -50,6 +50,7 @@ Do not skip categories. Do not combine violations. One instance = one violation 
 - Significance inflation ("pivotal moment", "transformative")
 - Rhetorical-question hooks ("The kicker?", "The issue?", "Do you know what I learned?")
 - Balanced-take hedging ("While X is true, we must also consider Y" formula)
+- Specificity theater (unverifiable specifics, decorative factuality, hidden-mechanism narration, synthetic quotes with no named source)
 
 **Medium severity** (each = -4 points):
 - Random bolding
@@ -84,11 +85,15 @@ Do not skip categories. Do not combine violations. One instance = one violation 
 - All paragraphs the same length (uniform paragraph length with no variation)
 - Uniform sentence length (monotonous same-length sentences with no variation in rhythm)
 - Ending clichés ("And for now, that was enough" — summary posing as closure)
+- Catalog prose (paragraphs that are only names, dates, features with no material consequence)
+- System-tour prose (paragraph-to-category-bucket mapping: background → mechanism → impact → verdict)
+- Concession rhythm ("not X, but Y" / "may sound X, but Y" as reflexive paragraph scaffold)
+- Type-definition endings ("the kind of X where Y" appearing multiple times as paragraph closure)
 
 **Low severity** (each = -2 points):
 - Title Case Headings (should be sentence case)
 - Inline-header lists (**Term:** explanation)
-- Hyphenated word pairs that don't need hyphens
+- Compound-modifier over-hyphenation (before-noun vs. after-noun, -ly adverb compounds, ever- compounds)
 - Curly quotes (“ ”) — should be straight quotes (")
 - Filler phrases ("in order to", "due to the fact that", "at this point in time", "the system has the ability to")
 - Emojis in prose
@@ -182,6 +187,7 @@ Any word in quotes where the quotes signal ironic distance rather than a direct 
 - Awkward AI metaphors — analogies that gesture toward meaning without achieving it. Generic, plausible, unanchored to specific experience. "Learning an instrument is a mirror for learning itself: messy, slow, and quietly addictive" could describe anything. Medium severity each.
 - Rhetorical-question hooks — "The kicker?", "The issue?", "The twist?", "Do you know what I realized?" as openers. High severity each.
 - Balanced-take hedging — "While X is true, we must also consider Y" as sentence scaffold. High severity each.
+- Specificity theater — unverifiable specifics deployed to pass a "be concrete" check. Includes synthetic quotes (invented attribution), suspicious exactness ("47.3%"), decorative factuality (dates/numbers without supporting source), or hidden-mechanism narration (claiming to know internal system behavior without observable evidence). High severity each.
 - Generic subject loops (3+ sentences opening with the same vague pronoun or impersonal construction)
 - Synonym cycling (protagonist / main character / central figure)
 - False range ("from X to Y" as rhetorical filler)
@@ -204,13 +210,17 @@ Any word in quotes where the quotes signal ironic distance rather than a direct 
 - Physical tell clichés — jaw/throat/breath/hands as interchangeable emotion props. Medium severity each.
 - Anthropomorphized silence — "the silence stretched" treats silence as an actor. Medium severity each.
 - Ending clichés — "And for now, that was enough" summary posing as closure. Medium severity each.
+- Catalog prose — paragraphs that are only names, milestones, feature labels with no material consequence attached. If each paragraph reads as a single category label, flag. Medium severity each.
+- System-tour prose — paragraphs mapping one-to-one with predictable category buckets (background, mechanism, impact, verdict). Medium severity each.
+- Concession rhythm — "not X, but Y" or "may sound X, but Y" used reflexively as paragraph scaffold across multiple paragraphs. Medium severity each.
+- Type-definition endings — "the kind of X where Y" used as default paragraph closure appearing multiple times. Medium severity each.
 - Uniform sentence length — monotonous sentences that stay in a narrow length band with no variation. Medium severity each.
 - Standalone "Because" fragments — "Because she can't bear to look." AI sentence rhythm. Low severity each.
 
 ### Formatting — Low severity each
 - Title Case Headings
 - Inline-header lists (**Term:** description)
-- Unnecessary hyphenated pairs (cross-functional, data-driven)
+- Compound-modifier over-hyphenation (before-noun vs. after-noun, -ly adverb compounds, ever- compounds)
 - Curly quotes (“ ”) — should be straight quotes (")
 - Filler phrases ("in order to", "due to the fact that", "at this point in time", "the system has the ability to")
 - Emojis in prose
