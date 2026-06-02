@@ -1,17 +1,25 @@
 ---
 name: antislop-audit
-version: "1.1"
+version: "1.2"
 description: Audits text for AI slop patterns and returns a slop score (0-100) plus a violations list. Use when the user asks to check, audit, review, grade, or score text for AI patterns, AI slop, or writing quality. Also trigger when the user pastes text and asks "does this pass?", "is this sloppy?", "flag the AI patterns", or similar. Companion to the antislop writing style skill. Zero exceptions — flag every violation regardless of perceived intent or satire.
 ---
 
 # Antislop Audit
 
-**Version:** 1.0  
+**Version:** 1.2  
 **Purpose:** Detect and score AI slop patterns in existing text. Flag every violation. No exceptions for intent.  
 **Companion skill:** antislop (writing style)  
-**Sources:** Same as antislop writing style: blader/humanizer, jalaalrd/anti-ai-slop-writing, Reddit r/copywriting, self
+**Sources:** Same as antislop writing style: blader/humanizer, jalaalrd/anti-ai-slop-writing, Reddit r/copywriting, ignorance.ai/field-guide-to-ai-slop, Banned: The Definitive Guide, Pangram, self
 
 ---
+
+## When to use
+
+Trigger when the user asks to check, audit, review, grade, or score text for AI patterns, AI slop, or writing quality. Also trigger when the user pastes text and asks "does this pass?", "is this sloppy?", "flag the AI patterns", or similar.
+
+## When NOT to use
+
+This tool is for **self-review** — checking your own or a collaborator's text before publishing. Do not use it to accuse strangers of using AI. Pattern-based detection is probabilistic, not proof. A single flag does not indicate AI authorship; accumulation and pattern density are the tells. Do not run this against unsolicited text from people you are not collaborating with.
 
 ## Core rule
 
@@ -35,14 +43,15 @@ Do not skip categories. Do not combine violations. One instance = one violation 
 **High severity** (each = -8 points):
 - Banned vocabulary
 - Banned phrases
-- Em-dash as authority prop ("— not X, not Y, but Z" or similar)
+- Em-dash (any use — never permitted)
 - Scare quotes
 - Chatbot artifacts ("I hope this helps", "Great question")
 - Vague attribution ("experts believe", "research shows" without source)
 - Significance inflation ("pivotal moment", "transformative")
+- Rhetorical-question hooks ("The kicker?", "The issue?", "Do you know what I learned?")
+- Balanced-take hedging ("While X is true, we must also consider Y" formula)
 
 **Medium severity** (each = -4 points):
-- Em-dash overuse (any em-dash not in the high severity category)
 - Random bolding
 - Ambiguous bolded bullet (claim not supported by body text)
 - Banned openers/closers (Moreover, Furthermore, In conclusion, etc.)
@@ -54,7 +63,7 @@ Do not skip categories. Do not combine violations. One instance = one violation 
 - Parataxis (3+ consecutive short declarative sentences with no conjunctions or subordination)
 - Passive voice / subjectless fragments ("No configuration file needed", "Results are preserved automatically")
 - Excessive hedging ("could potentially possibly", "it might have some effect", "it could be argued that")
-- Rhetorical emphasis tail ("..., that's the thing", "..., and that's what matters", "..., that's the hard truth")
+- Rhetorical emphasis tail / moralizing tail ("..., that's the thing", "..., that's the hard truth", "Why it matters:", "Here's what I learned:", "This shows that...")
 - Generic subject loops (3+ sentences opening with the same vague pronoun or impersonal construction)
 - False range ("from X to Y" as rhetorical filler)
 - Promotional language ("nestled within the breathtaking...")
@@ -62,6 +71,19 @@ Do not skip categories. Do not combine violations. One instance = one violation 
 - Notability name-dropping (listing media outlets without saying what any of them actually reported)
 - Fragmented headers (heading followed by one-line paragraph that just restates it)
 - Negation flip ("This isn't X. It's Y." when the negation adds nothing the positive statement doesn't already carry)
+- Paragraph-level redundancy (same idea restated across paragraphs or concluding sentence restating the paragraph)
+- Triplet overlap (3+ descriptors naming the same quality — "current, documented, and auditable")
+- Superficial -ing analyses ("highlighting", "underscoring" tacked onto sentence ends)
+- Bullet-point crutch (bullets used to dodge writing full paragraphs)
+- Awkward AI metaphors (generic analogies unanchored to specific experience — "learning X is a mirror for learning itself")
+- Simile-as-adverb ("with the [noun] of someone [verb]ing" — invents a hypothetical person)
+- Hedged reactions ("a laugh that isn't quite a laugh" — contradiction substituting for depth)
+- Temperature-as-emotion (hot/cold replacing specific emotional description)
+- Physical tell clichés (jaw/throat/breath/hands as interchangeable emotion props)
+- Anthropomorphized silence ("the silence stretched" — treating silence as an actor)
+- All paragraphs the same length (uniform paragraph length with no variation)
+- Uniform sentence length (monotonous same-length sentences with no variation in rhythm)
+- Ending clichés ("And for now, that was enough" — summary posing as closure)
 
 **Low severity** (each = -2 points):
 - Title Case Headings (should be sentence case)
@@ -71,6 +93,8 @@ Do not skip categories. Do not combine violations. One instance = one violation 
 - Filler phrases ("in order to", "due to the fact that", "at this point in time", "the system has the ability to")
 - Emojis in prose
 - Usage of unicode characters to convey a point, which isn't used in general language (e.g. `→`)
+- Artificial line breaks (mid-sentence breaks at terminal width ~80 chars)
+- Standalone "Because" fragments ("Because she can't bear to look." — AI sentence rhythm)
 
 ### Step 3 — Calculate score
 
@@ -108,7 +132,7 @@ Always output in this exact structure:
 ## Pattern reference
 
 ### Banned vocabulary — High severity each
-delve, leverage, tapestry, testament, vibrant, pivotal, utilize, synergy, holistic, robust, seamless, groundbreaking, cutting-edge, innovative, dynamic, comprehensive, embark, foster, ensure, explore, revolutionize, transformative, empower, unlock, supercharge
+delve, leverage, tapestry, testament, vibrant, pivotal, utilize, synergy, holistic, robust, seamless, groundbreaking, cutting-edge, innovative, dynamic, comprehensive, embark, foster, ensure, explore, revolutionize, transformative, empower, unlock, supercharge, significant
 
 ### Banned phrases — High severity each
 - "It's worth noting that"
@@ -134,9 +158,8 @@ delve, leverage, tapestry, testament, vibrant, pivotal, utilize, synergy, holist
 - "Moreover" / "Furthermore" / "Additionally" (flag each instance as medium severity)
 
 ### Em-dash rules
-- Em-dash used as authority prop ("— not X, not Y, but Z" / "— built not on hype but on...") → **High severity**
-- Any other em-dash → **Medium severity**
-- Flag every instance separately
+- Any em-dash → **High severity**. No exceptions.
+- Flag every instance separately.
 
 ### Scare quotes — High severity each
 Any word in quotes where the quotes signal ironic distance rather than a direct quotation. E.g. you know the "type", "innovative" solution.
@@ -153,7 +176,12 @@ Any word in quotes where the quotes signal ironic distance rather than a direct 
 - Parataxis — 3+ consecutive short declarative sentences with no conjunctions or subordination
 - Passive voice / subjectless fragments ("No configuration file needed", "Results are preserved automatically")
 - Excessive hedging ("could potentially possibly", "it might have some effect", "it could be argued that")
-- Rhetorical emphasis tail ("..., that's the thing", "..., and that's what matters", "..., that's the hard truth")
+- Rhetorical emphasis tail ("..., that's the thing", "..., that's the hard truth", "..., and that's what matters")
+- Moralizing tails — "Why it matters:", "Here's what I learned:", "This shows that..." tacked on without earning the takeaway
+- Bullet-point crutch — bullet lists used to dodge writing full paragraphs when prose communicates more clearly
+- Awkward AI metaphors — analogies that gesture toward meaning without achieving it. Generic, plausible, unanchored to specific experience. "Learning an instrument is a mirror for learning itself: messy, slow, and quietly addictive" could describe anything. Medium severity each.
+- Rhetorical-question hooks — "The kicker?", "The issue?", "The twist?", "Do you know what I realized?" as openers. High severity each.
+- Balanced-take hedging — "While X is true, we must also consider Y" as sentence scaffold. High severity each.
 - Generic subject loops (3+ sentences opening with the same vague pronoun or impersonal construction)
 - Synonym cycling (protagonist / main character / central figure)
 - False range ("from X to Y" as rhetorical filler)
@@ -166,6 +194,18 @@ Any word in quotes where the quotes signal ironic distance rather than a direct 
 - Notability name-dropping — listing media outlets ("cited in NYT, BBC, FT, and The Hindu") without what any said. Medium severity each.
 - Fragmented headers — heading followed by one-line restatement. Medium severity each.
 - Negation flip — stating what something isn't immediately before stating what it is, used as rhetorical padding rather than genuine contrast. E.g. "This isn't a support desk. The goal is..." / "These aren't hoops. They're how..." / "This is not discovery — it's logistics." Flag when the negation adds no information the positive statement doesn't already carry on its own.
+- Paragraph-level redundancy — same concept restated across paragraphs with different words, or concluding sentence that summarizes the paragraph in different words. Medium severity each.
+- Triplet overlap — 3+ descriptors naming the same quality (e.g. "current, documented, and auditable" all mean "reliable for attestation"). Medium severity each.
+- Artificial line breaks — prose broken mid-sentence at terminal width (~80 chars). Low severity each.
+- All paragraphs the same length — uniform paragraph length with no rhythmic variation. Medium severity each.
+- Simile-as-adverb — "with the [noun] of someone [verb]ing" invents a hypothetical person to describe the actual state. Medium severity each.
+- Hedged reactions — "a laugh that isn't quite a laugh" creates emotional static through contradiction. Medium severity each.
+- Temperature-as-emotion — hot/cold replacing specific emotional description. Medium severity each.
+- Physical tell clichés — jaw/throat/breath/hands as interchangeable emotion props. Medium severity each.
+- Anthropomorphized silence — "the silence stretched" treats silence as an actor. Medium severity each.
+- Ending clichés — "And for now, that was enough" summary posing as closure. Medium severity each.
+- Uniform sentence length — monotonous sentences that stay in a narrow length band with no variation. Medium severity each.
+- Standalone "Because" fragments — "Because she can't bear to look." AI sentence rhythm. Low severity each.
 
 ### Formatting — Low severity each
 - Title Case Headings

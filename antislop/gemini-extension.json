@@ -1,6 +1,6 @@
 {
   "name": "antislop",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Suppresses detectable AI writing patterns. Two modes: (1) ambient style — apply whenever writing, editing, or polishing any prose; (2) audit mode — score text 0-100 and list every violation when the user asks to check, grade, or flag AI patterns.",
   "contextFileName": "GEMINI.md"
 }

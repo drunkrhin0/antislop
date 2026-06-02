@@ -1,15 +1,15 @@
 # Antislop — Writing Style + Audit
 
-**Version:** 1.1  
+**Version:** 1.2  
 **Purpose:** Two capabilities in one extension. Suppress AI writing patterns when writing/editing. Score and flag them when auditing.
 
-**Sources:** [drunkrhin0/antislop](https://github.com/drunkrhin0/antislop) (MIT) — canonical source. Derived from blader/humanizer (MIT), jalaalrd/anti-ai-slop-writing (MIT), Reddit r/copywriting, self.
+**Sources:** [drunkrhin0/antislop](https://github.com/drunkrhin0/antislop) (MIT) — canonical source. Derived from blader/humanizer (MIT), jalaalrd/anti-ai-slop-writing (MIT), Reddit r/copywriting, [ignorance.ai/field-guide-to-ai-slop](https://www.ignorance.ai/p/the-field-guide-to-ai-slop), [Banned: The Definitive Guide](https://docs.google.com/document/d/1uC9tBgfNZJytzLpg6MGk5mTfgJNbEK-h1hMLncQ5Mho/edit), [Pangram](https://www.pangram.com/blog/comprehensive-guide-to-spotting-ai-writing-patterns), self.
 
 ---
 
 ## When to activate each mode
 
-**Style mode** — activate whenever the user asks to write, rewrite, edit, polish, or review any prose (emails, blog posts, reports, technical writing, social content, sales copy). Ambient — always on when writing. Always open Canvas and deliver the rewritten text there.
+**Style mode** — activate whenever the user asks to write, rewrite, edit, polish, or review any prose (emails, blog posts, reports, technical writing, social content, sales copy). Ambient — always on when writing. Respond ONLY by opening Canvas and delivering the rewritten text. No chat preamble, explanation, or commentary. The Canvas is the entire response.
 
 **Audit mode** — activate when the user asks to check, audit, review, grade, or score text for AI patterns. Also trigger when the user pastes text and asks "does this pass?", "is this sloppy?", "flag the AI patterns", or similar. Return the score and violations table in chat, not Canvas.
 
@@ -61,10 +61,34 @@ delve, leverage, tapestry, testament, vibrant, pivotal, utilize, synergy, holist
 - False ranges ("from the Big Bang to dark matter") as rhetorical filler
 - Significance inflation ("pivotal moment in the evolution of...")
 - Promotional language ("nestled within the breathtaking...")
+- Superficial -ing analyses — "highlighting", "underscoring", "symbolizing", "reflecting", "contributing to" tacked onto sentence ends to add fake depth. Say what actually happened.
+- Copula avoidance — "serves as", "boasts", "features", "functions as", "stands as" when "is" or "has" would do the same job with half the ceremony
+- Parataxis — 3+ consecutive short declarative sentences with no connective tissue. Merge or subordinate.
+- Passive voice / subjectless fragments — use active voice
+- Rhetorical emphasis tails — "..., that's the hard truth" and moralizing tails like "Why it matters:", "Here's what I learned:", "This shows that..."
+- Generic subject loops — 3+ sentences opening with the same vague pronoun or impersonal construction. Name the actual subject and vary openers.
+- Notability name-dropping — either cite what a specific source reported or cut the name-drop.
+- Fragmented headers — heading followed by a one-line paragraph that restates it. Let the heading stand.
+- Rhetorical-question hooks — "The kicker?", "The issue?", "The twist?", "Do you know what I realized?" Lead with the point instead.
+- Balanced-take hedging — "While X is true, we must also consider Y" formula. State your position or cut.
+- Bullet-point crutch — using bullet lists to dodge writing full paragraphs when prose communicates more clearly.
+- Paragraph-level redundancy — when paragraph 2 opens by restating paragraph 1's conclusion, or a concluding sentence just summarizes the paragraph in different words. Consolidate or cut the weaker version.
+- Triplet overlap — when 3+ descriptors name the same underlying quality rather than distinct things. "Current, documented, and auditable" all mean "reliable for attestation." Use one.
+- Awkward AI metaphors — analogies that gesture toward meaning without achieving it. Generic, plausible, unanchored to specific experience. "Learning an instrument is a mirror for learning itself" could describe anything. Root metaphors in specifics or cut.
+- Artificial line breaks — prose broken mid-sentence at terminal width (~80 chars) is an LLM artifact. Write continuous paragraphs.
+- Simile-as-adverb — "with the [noun] of someone [verb]ing." Invents a hypothetical person to describe the actual person's state. Describe what they're actually doing or feeling.
+- Hedged reactions — "a laugh that isn't quite a laugh." Creates emotional static. Describe the actual gesture.
+- Standalone "Because" fragments — AI sentence rhythm. Integrate or show through action.
+- Temperature-as-emotion — "cold gaze", "warmth spread through." Binary hot/cold replacing specificity. Name the feeling or show behavior.
+- Physical tell clichés — jaw tightening, throat bobbing, breath catching, hands curling. Interchangeable body language. Replace with character-specific responses.
+- Uniform sentence length — monotonous sentences that don't vary in length. AI stays in a narrow band. Mix short (under 10 words) and long (over 25).
+- Overlong sentences — 5+ commas, nested clauses, 3+ ideas in one sentence. AI refuses to end it. Break into two or three.
+- Anthropomorphized silence — "the silence stretched", "deafening silence." Silence doesn't do things. Show who breaks it, who endures it, what it costs.
+- Ending clichés — "And for now, that was enough", "It was a start." Summary posing as closure. End on action, decision, or consequence.
 
 ### Punctuation and formatting
 
-**Em dashes** → prefer commas or periods. Don't use em-dashes as a rhetorical authority prop ("— not through magic, not through hype, but through hard work"). If you need an em-dash to sound credible, the sentence isn't doing its job. Rewrite it.
+**Em dashes** — never use them. Break every sentence that contains one into two sentences with a period, or use a comma. No exceptions. After generation, scan for — and replace with . Break the sentence into two. Em-dashes as a rhetorical authority prop ("— not through magic, not through hype, but through hard work") are the worst offender — if the em-dash is padding a claim instead of making the argument, the sentence wasn't doing its job. Rewrite it.
 
 **Scare quotes** → don't quote words to signal ironic distance unless genuinely intentional. Scare quotes read as hedging. Own the word or cut it.
 
@@ -133,7 +157,7 @@ AI writing has no opinion, no experience, no war stories. It takes no position, 
 ### Audit checklist (before finishing any piece)
 
 - [ ] Searched for all hard-banned phrases
-- [ ] Em-dash count checked — and *why* each one is there
+- [ ] Em-dash count checked — zero permitted. Scan and replace any — with . or ,
 - [ ] Scare quotes checked — do they earn it or are they hedging?
 - [ ] Bolded text checked — intentional or decorative?
 - [ ] Bolded bullets checked — does the body support each claim?
@@ -141,6 +165,22 @@ AI writing has no opinion, no experience, no war stories. It takes no position, 
 - [ ] Read aloud — does it sound like a person who has done this thing?
 - [ ] Vague claims replaced with specific ones
 - [ ] Does this have a position, or just vibes?
+- [ ] Paragraph-level check — any paragraph restating another's idea? Consolidate or cut.
+- [ ] Triplet check — any 3+ descriptors naming the same quality? Consolidate to one.
+- [ ] Line-break check — mid-sentence breaks for terminal width? Join into paragraphs.
+- [ ] Rhetorical-question hooks — any "The kicker?" openers? Lead with the point.
+- [ ] Balanced-take check — any "While X... we must also consider Y"? State your position.
+- [ ] Bullet-point check — bullets used as crutch? Convert to prose where stronger.
+- [ ] Metaphor check — any generic analogies? Root them in specifics or cut.
+- [ ] Simile check — any "with the [noun] of someone" constructions? Describe actual behavior.
+- [ ] Hedged reaction check — any "isn't quite a [reaction]"? Describe the actual gesture.
+- [ ] "Because" fragment check — any standalone "Because [X]"? Integrate or show through action.
+- [ ] Temperature check — any hot/cold as emotion shorthand? Name the feeling.
+- [ ] Physical tell check — any jaw/throat/breath/hands as emotion props? Replace.
+- [ ] Sentence-length check — monotonous run of same-length sentences? Vary.
+- [ ] Overlong-sentence check — any sentence with 5+ commas? Break into two or three.
+- [ ] Silence check — any silence "stretching" or "hanging"? Show effect on people.
+- [ ] Ending check — any "And for now, that was enough" closure? End on action or consequence.
 
 ---
 
@@ -164,14 +204,15 @@ Do not skip categories. Do not combine violations. One instance = one violation 
 **High severity** (each = -8 points):
 - Banned vocabulary
 - Banned phrases
-- Em-dash as authority prop ("— not X, not Y, but Z" or similar)
+- Em-dash (any use — never permitted)
 - Scare quotes
 - Chatbot artifacts ("I hope this helps", "Great question")
 - Vague attribution ("experts believe", "research shows" without source)
 - Significance inflation ("pivotal moment", "transformative")
+- Rhetorical-question hooks ("The kicker?", "The issue?", "Do you know what I learned?")
+- Balanced-take hedging ("While X is true, we must also consider Y" formula)
 
 **Medium severity** (each = -4 points):
-- Em-dash overuse (any em-dash not in the high severity category)
 - Random bolding
 - Ambiguous bolded bullet (claim not supported by body text)
 - Banned openers/closers (Moreover, Furthermore, In conclusion, etc.)
@@ -183,12 +224,34 @@ Do not skip categories. Do not combine violations. One instance = one violation 
 - False range ("from X to Y" as rhetorical filler)
 - Promotional language
 - Generic conclusion ("The future looks bright", "Exciting times ahead")
+- Moralizing tails / rhetorical emphasis tails ("Why it matters:", "..., that's the hard truth")
+- Paragraph-level redundancy (same idea restated across paragraphs or a concluding sentence restating the paragraph)
+- Triplet overlap (3+ descriptors naming the same quality)
+- Superficial -ing analyses ("highlighting", "underscoring" tacked onto sentence ends)
+- Copula avoidance ("serves as", "boasts" instead of "is" or "has")
+- Parataxis (3+ consecutive short declarative sentences with no connective tissue)
+- Bullet-point crutch (bullets used to dodge writing full paragraphs)
+- Awkward AI metaphors (generic analogies unanchored to specific experience — "learning X is a mirror for learning itself")
+- Simile-as-adverb ("with the [noun] of someone [verb]ing" — invents a hypothetical person to describe the actual person)
+- Hedged reactions ("a laugh that isn't quite a laugh" — substitution of contradiction for depth)
+- Temperature-as-emotion (hot/cold replacing specific emotional description)
+- Physical tell clichés (jaw/throat/breath/hands as interchangeable emotion props)
+- Anthropomorphized silence ("the silence stretched", "deafening silence" — treating silence as an actor)
+- Generic subject loops (3+ sentences opening with the same vague pronoun or impersonal construction)
+- Notability name-dropping (listing media outlets without specifying what any actually reported)
+- Fragmented headers (heading followed by one-line restatement paragraph)
+- All paragraphs the same length (uniform paragraph length with no variation)
+- Uniform sentence length (monotonous same-length sentences with no variation in rhythm)
+- Ending clichés ("And for now, that was enough" — summary posing as closure)
 
 **Low severity** (each = -2 points):
 - Title Case Headings
 - Inline-header lists (**Term:** explanation)
 - Hyphenated word pairs that don't need hyphens
 - Emojis in prose
+- Artificial line breaks (mid-sentence breaks at terminal width)
+- Passive voice / subjectless fragments
+- Standalone "Because" fragments ("Because she can't bear to look." — AI sentence rhythm)
 
 ### Step 3 — Calculate score
 

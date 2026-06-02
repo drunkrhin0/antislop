@@ -1,50 +1,37 @@
-# Antislop
+# Antislop v1.2
 
 *By slop for slop, to remove slop in an AI slop world.*
 
 Written as a late shower thought from my ranting [LinkedIn post](https://www.linkedin.com/posts/tawilr_you-didnt-verify-this-and-i-can-tell-share-7460237564889944064-lXxs/)
 
-Two skills for writing like a human. Works with Claude Code, opencode, Gemini CLI, and any agent that supports SKILL.md or AGENTS.md.
+Two skills for writing like a human. Works with your favourite agent that supports SKILL.md or AGENTS.md.
 
-- **antislop** — a writing style skill. Ambient, always-on. Suppresses AI writing patterns across everything you write.
-- **antislop-audit** — a detection skill. Scores text 0-100 and returns a violations list. Zero exceptions for intent.
+- **antislop**: a writing style skill. Ambient, always-on. Suppresses AI writing patterns across everything you write.
+- **antislop-audit**: a detection skill. Scores text 0-100 and returns a violations list. Zero exceptions for intent.
 
----
+It catches:
 
-## What it catches
-
-- Banned vocabulary (delve, leverage, tapestry, pivotal, robust, seamless...)
-- Banned phrases ("it's worth noting", "in today's landscape", "at its core"...)
-- Em-dashes used as authority props instead of arguments
-- Scare quotes used to hedge instead of commit
-- Random bolding: decoration, not emphasis
-- Ambiguous bolded bullets where the body doesn't support the claim
-- Rule of three, synonym cycling, significance inflation, vague attributions
-- Chatbot artifacts ("I hope this helps!", "Great question!")
-- Writing with no opinion, no experience, no position. Just vibes.
+- Banned vocabulary and phrases
+- Structural tells (sentence, paragraph, and discourse-level patterns)
+- Formatting habits (em-dashes, scare quotes, bolding, title case)
+- Rhythmic giveaways (uniform length, parataxis, overlong sentences)
+- Voice-level absences (no opinion, no experience, no position)
 
 ---
 
 ## Installation
 
-### Install with openskills
-
-```bash
-npx openskills install drunkrhin0/antislop
-```
-
-For global usage (in `~/.claude/skills` directly, otherwise it prefers putting the skills into the current working directory):
+### Install with openskills (recommended)
 
 ```bash
 npx openskills install drunkrhin0/antislop --global
 ```
 
-
-The repo includes an `AGENTS.md` file for automatic skill discovery in supported agents.
+This installs to `~/.claude/skills/` so the skills are available across all projects. Leave off `--global` to install in the current directory instead.
 
 ### Ask your agent
 
-Just tell your agent to install `drunkrhin0/antislop` from GitHub. Most will figure it out.
+Just ask your agent to install `drunkrhin0/antislop` from GitHub. Most will figure it out. The repo includes an `AGENTS.md` file for automatic skill discovery.
 
 ### Gemini CLI
 
@@ -69,13 +56,13 @@ Requires Gemini Advanced. Create a Gem:
 
 Free tier: paste `antislop/GEMINI.md` at the start of any chat instead.
 
-### Manual (Claude Code, opencode)
+### Manual
 
 Copy `antislop/` and `antislop-audit/` into your skills directory:
 - Claude Code: `~/.claude/skills/`
 - opencode: `~/.config/opencode/skills/`
 
-For AI chats (Claude.ai, ChatGPT, etc.), paste the contents of `antislop/SKILL.md` at the start of a conversation for writing, or `antislop-audit/SKILL.md` to audit text.
+For AI chats (Claude.ai, ChatGPT, etc.), paste `antislop/SKILL.md` at the start of a conversation for writing, or `antislop-audit/SKILL.md` to audit text.
 
 ---
 
@@ -83,7 +70,7 @@ For AI chats (Claude.ai, ChatGPT, etc.), paste the contents of `antislop/SKILL.m
 
 ### Writing style (antislop)
 
-Triggers automatically when you ask your agent to write or edit anything. Or invoke `/antislop` directly.
+Triggers automatically when you ask your agent to write or edit anything.
 
 ### Audit (antislop-audit)
 
@@ -92,20 +79,38 @@ Paste text and ask your agent to audit it with `/antislop-audit`
 Returns a score out of 100, a violations table with severity and excerpt, and a plain-English summary of what to fix first.
 
 **Score bands:**
-- 85-100 — Clean. Reads like a person.
-- 65-84 — Some slop. Fixable with targeted edits.
-- 40-64 — Heavy slop. Significant rewrite needed.
-- 0-39 — Severe. This reads like unreviewed AI output.
+- 85-100: Clean. Reads like a person.
+- 65-84: Some slop. Fixable with targeted edits.
+- 40-64: Heavy slop. Significant rewrite needed.
+- 0-39: Severe. This reads like unreviewed AI output.
+
+---
+
+## How to use effectively
+
+**Let it run ambiently.** Both skills trigger automatically when you ask your agent to write, edit, or audit text. They activate on matching intent. No manual invocation needed.
+
+**Audit before sending, not while writing.** Write freely. Let antislop clean up sentence-level patterns in real time. Then run antislop-audit as a final gate before publishing. The audit catches what the style misses: paragraph redundancy, triplet overlap, semantic repetition.
+
+**Bring content, not just form.** Antislop catches patterns: sentence structure, banned words, rhythm tells. It does not catch vague ideas or unsupported claims. You still need to bring specific experience, numbers, examples, and a point of view.
+
+**Run the checklist.** The skill includes a 20+ item audit checklist. Run through it before finishing any piece. The items at the bottom matter most: redundancy, triplet overlap, metaphors, endings. They catch what pattern matching can't.
+
+**Don't over-apply.** Antislop is for prose meant to be read by humans. Skip it for code, config files, commit messages, structured data, or API docs. Those have their own conventions.
+
+**For Gemini users.** The Gem or GEMINI.md copy approach works best. Style mode outputs to Canvas only. No preamble, no commentary. Audit mode returns the score and violations in chat.
 
 ---
 
 ## Credits and inspiration
 
-- [blader/humanizer](https://github.com/blader/humanizer) (MIT) — the primary source. 29-pattern taxonomy grounded in Wikipedia's Signs of AI Writing. The backbone of both skills.
-- [jalaalrd/anti-ai-slop-writing](https://github.com/jalaalrd/anti-ai-slop-writing) (MIT) — banned word and phrase lists, structural pattern rules.
-- Scoring model concept (0-100, severity tiers, detect/clean split) — inspired by existing audit/linting tools.
-- [r/copywriting](https://www.reddit.com/r/copywriting/comments/1n3u03i/writing_instruction_to_prevent_ai_slop/) — hard-banned phrases, emergency replacements, quality checks.
-- Self — scare quotes, random bolding, ambiguous bold bullets, em-dash as false authority, voice and authenticity framing.
+- [blader/humanizer](https://github.com/blader/humanizer) (MIT): 29-pattern taxonomy grounded in Wikipedia's Signs of AI Writing
+- [jalaalrd/anti-ai-slop-writing](https://github.com/jalaalrd/anti-ai-slop-writing) (MIT): banned word and phrase lists, structural pattern rules
+- [Reddit r/copywriting](https://www.reddit.com/r/copywriting/comments/1n3u03i/writing_instruction_to_prevent_ai_slop/): hard-banned phrases, emergency replacements, quality checks
+- [ignorance.ai/field-guide-to-ai-slop](https://www.ignorance.ai/p/the-field-guide-to-ai-slop): structural patterns, parallelism analysis, metaphor detection, authenticity crisis framing
+- [Banned: The Definitive Guide](https://docs.google.com/document/d/1uC9tBgfNZJytzLpg6MGk5mTfgJNbEK-h1hMLncQ5Mho/edit) (Creative Commons): comprehensive construction, phrase, and pattern taxonomy
+- [Pangram](https://www.pangram.com/blog/comprehensive-guide-to-spotting-ai-writing-patterns): exhaustive AI vocabulary cross-reference, phrasing patterns, uniform sentence length, organizational tells
+- Self: scare quotes, random bolding, ambiguous bold bullets, em-dash as false authority, voice and authenticity framing
 
 ---
 

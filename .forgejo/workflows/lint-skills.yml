@@ -1,0 +1,147 @@
+name: Lint Skills
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Lint SKILL.md and extension files
+        shell: bash
+        run: |
+          set -euo pipefail
+          FAILURES=0
+
+          # ------------------------------------------------------------------
+          # Helper: extract frontmatter value between --- delimiters
+          # ------------------------------------------------------------------
+          frontmatter_field() {
+            local file="$1" field="$2"
+            awk "/^---$/ {c++; next} c==1 && /^${field}:/" "$file" \
+              | head -1 \
+              | sed "s/^${field}: *//; s/\"//g"
+          }
+
+          # ------------------------------------------------------------------
+          # Helper: count a FAIL
+          # ------------------------------------------------------------------
+          fail() {
+            echo "  FAIL  $*" >&2
+            FAILURES=$((FAILURES + 1))
+          }
+
+          # ------------------------------------------------------------------
+          # 1. Frontmatter completeness
+          # ------------------------------------------------------------------
+          echo ""
+          echo "=== Frontmatter checks ==="
+          while IFS= read -r -d '' file; do
+            name=$(frontmatter_field "$file" "name")
+            ver=$(frontmatter_field "$file" "version")
+            desc=$(frontmatter_field "$file" "description")
+
+            if [ -z "$name" ]; then  fail "$file: missing frontmatter 'name:'";  fi
+            if [ -z "$ver" ];  then  fail "$file: missing frontmatter 'version:'";  fi
+            if [ -z "$desc" ]; then  fail "$file: missing frontmatter 'description:'";  fi
+
+            if [ -n "$name" ] && [ -n "$ver" ]; then
+              echo "  PASS  $file  name=$name  version=$ver"
+            fi
+          done < <(find . -name SKILL.md -print0)
+
+          # ------------------------------------------------------------------
+          # 2. Version consistency: frontmatter vs inline body
+          # ------------------------------------------------------------------
+          echo ""
+          echo "=== Version consistency (frontmatter vs body) ==="
+          while IFS= read -r -d '' file; do
+            fm_ver=$(frontmatter_field "$file" "version")
+            body_ver=$(sed -n 's/^\*\*Version:\*\* *\([0-9.]*\).*/\1/p' "$file" | head -1)
+            if [ -z "$body_ver" ]; then
+              fail "$file: no **Version:** X.Y found in body"
+            elif [ "$fm_ver" != "$body_ver" ]; then
+              fail "$file: frontmatter version=$fm_ver, body version=$body_ver"
+            else
+              echo "  PASS  $file  version=$fm_ver"
+            fi
+          done < <(find . -name SKILL.md -print0)
+
+          # ------------------------------------------------------------------
+          # 3. Cross-file: antislop/SKILL.md vs gemini-extension.json
+          # ------------------------------------------------------------------
+          echo ""
+          echo "=== Cross-file version sync ==="
+          SKILL_VER=$(frontmatter_field "antislop/SKILL.md" "version")
+          if [ -f antislop/gemini-extension.json ]; then
+            GEMINI_VER=$(python3 -c "import json; d=json.load(open('antislop/gemini-extension.json')); print(d['version'].rstrip('.0'))" 2>/dev/null || echo "")
+            if [ -z "$GEMINI_VER" ]; then
+              fail "antislop/gemini-extension.json: could not parse version"
+            elif [ "$SKILL_VER" != "$GEMINI_VER" ]; then
+              fail "version drift: SKILL.md=$SKILL_VER, gemini-extension.json=$GEMINI_VER"
+            else
+              echo "  PASS  antislop/SKILL.md=$SKILL_VER == gemini-extension.json=$GEMINI_VER"
+            fi
+          else
+            echo "  SKIP  gemini-extension.json not found"
+          fi
+
+          # ------------------------------------------------------------------
+          # 4. Line count (warn at 500)
+          # ------------------------------------------------------------------
+          echo ""
+          echo "=== Line count (limit: 500) ==="
+          while IFS= read -r -d '' file; do
+            lines=$(wc -l < "$file")
+            if [ "$lines" -gt 500 ]; then
+              echo "  WARN  $file: $lines lines (over 500 — consider references/ for long content)"
+            else
+              echo "  PASS  $file: $lines lines"
+            fi
+          done < <(find . -name SKILL.md -print0)
+
+          # ------------------------------------------------------------------
+          # 5. Required sections
+          # ------------------------------------------------------------------
+          echo ""
+          echo "=== Required sections ==="
+          while IFS= read -r -d '' file; do
+            if ! grep -q '## When NOT to use' "$file"; then
+              fail "$file: missing '## When NOT to use' section"
+            else
+              echo "  PASS  $file: When NOT to use"
+            fi
+          done < <(find . -name SKILL.md -print0)
+
+          # ------------------------------------------------------------------
+          # 6. No emoji in rule headings (skipped on non-GNU grep)
+          # ------------------------------------------------------------------
+          echo ""
+          echo "=== Emoji-free headings ==="
+          while IFS= read -r -d '' file; do
+            if grep -qP '^#{1,6}\s.*[\x{1F300}-\x{1F9FF}]' "$file" 2>/dev/null; then
+              matches=$(grep -nP '^#{1,6}\s.*[\x{1F300}-\x{1F9FF}]' "$file")
+              fail "$file: emoji(s) in heading(s): $(echo "$matches" | tr '\n' ' ')"
+            elif ! echo | grep -qP '' 2>/dev/null; then
+              echo "  SKIP  $file (GNU grep not available — emoji check skipped)"
+            else
+              echo "  PASS  $file: no emojis in headings"
+            fi
+          done < <(find . -name SKILL.md -print0)
+
+          # ------------------------------------------------------------------
+          # Summary
+          # ------------------------------------------------------------------
+          echo ""
+          echo "============================================="
+          if [ "$FAILURES" -eq 0 ]; then
+            echo "ALL CHECKS PASSED"
+          else
+            echo "$FAILURES failure(s) — see above"
+            exit 1
+          fi
