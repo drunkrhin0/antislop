@@ -1,12 +1,12 @@
 ---
 name: antislop
-version: "1.3"
+version: "1.3.1"
 description: Universal writing style that suppresses detectable AI writing patterns across all content types. Apply whenever writing, editing, or reviewing any prose — emails, blog posts, reports, social content, technical writing, sales materials. This is an ambient style, not a task-specific tool. Trigger any time the user asks to write, rewrite, edit, polish, or review text of any kind.
 ---
 
 # Antislop Writing Style
 
-**Version:** 1.3  
+**Version:** 1.3.1  
 **Purpose:** Suppress detectable AI writing patterns across all content types.  
 **Sources:**
 - [blader/humanizer](https://github.com/blader/humanizer) (MIT) — 29-pattern taxonomy grounded in Wikipedia's Signs of AI Writing
@@ -144,7 +144,7 @@ This style is for human-readable prose. Do not apply to:
 **Discourse-level:**
 
 - Announcing your structure ("First I'll discuss... then I'll cover...")
-- Negative parallelisms and trailing negations — "not just X, but Y", "it's not about X, it's about Y", "X isn't the problem, Y is", and trailing fragments like "..., no guessing" or "..., no exceptions". Define the thing by what it is, not what it isn't.
+- Negative parallelisms and trailing negations — "not just X, but Y", "it's not about X, it's about Y", Reframe-without-adding — second sentence restates the first with more drama but no new information ("It didn't move gradually. It's collapsing into it." / "X isn't the problem, Y is") — Medium severity each, and trailing fragments like "..., no guessing" or "..., no exceptions". Define the thing by what it is, not what it isn't.
 - Negation flip — stating what something isn't immediately before stating what it is, used as rhetorical padding rather than genuine contrast. "This isn't a support desk. The goal is..." / "These aren't hoops. They're how..." / "This is not discovery — it's logistics." If the negation adds no information the positive statement doesn't already carry on its own, cut it and lead with the positive statement.
 - False ranges ("from the Big Bang to dark matter") as rhetorical filler
 - Promotional language ("nestled within the breathtaking...")

@@ -1,6 +1,6 @@
 # Antislop — Writing Style + Audit
 
-**Version:** 1.3  
+**Version:** 1.3.1  
 **Purpose:** Two capabilities in one extension. Suppress AI writing patterns when writing/editing. Score and flag them when auditing.
 
 **Sources:** [drunkrhin0/antislop](https://github.com/drunkrhin0/antislop) (MIT) — canonical source. Derived from blader/humanizer (MIT), jalaalrd/anti-ai-slop-writing (MIT), Reddit r/copywriting, [ignorance.ai/field-guide-to-ai-slop](https://www.ignorance.ai/p/the-field-guide-to-ai-slop), [Banned: The Definitive Guide](https://docs.google.com/document/d/1uC9tBgfNZJytzLpg6MGk5mTfgJNbEK-h1hMLncQ5Mho/edit), [Pangram](https://www.pangram.com/blog/comprehensive-guide-to-spotting-ai-writing-patterns), [Anbeeld/WRITING.md](https://github.com/Anbeeld/WRITING.md), self.
@@ -55,7 +55,7 @@ delve, leverage, tapestry, testament, vibrant, pivotal, utilize, synergy, holist
 - Rule of three inside a single sentence ("innovation, inspiration, and insights")
 - All paragraphs the same length
 - Announcing your structure ("First I'll discuss... then I'll cover...")
-- "X isn't the problem, Y is" constructions
+- Reframe-without-adding — second sentence restates the first with more drama but no new information ("It didn't move gradually. It's collapsing into it." / "X isn't the problem, Y is") — Medium severity each
 - Negation flip — stating what something isn't immediately before stating what it is, used as rhetorical padding rather than genuine contrast. "This isn't a support desk. The goal is..." / "These aren't hoops. They're how..." / "This is not discovery — it's logistics." If the negation adds no information the positive statement doesn't already carry on its own, cut it and lead with the positive statement.
 - Synonym cycling — pick a word and repeat it; don't rotate through near-synonyms
 - False ranges ("from the Big Bang to dark matter") as rhetorical filler
@@ -230,7 +230,7 @@ Do not skip categories. Do not combine violations. One instance = one violation 
 - Rule of three in a single sentence
 - Synonym cycling
 - Overlong sentence (3+ ideas, 2+ qualifiers, or 2+ disclaimers in one sentence)
-- "X isn't the problem, Y is" construction
+- Reframe-without-adding — second sentence restates the first with more drama but no new information ("It didn't move gradually. It's collapsing into it." / "X isn't the problem, Y is") — Medium severity each
 - Negation flip ("This isn't X. It's Y." when the negation adds nothing the positive statement doesn't already carry)
 - False range ("from X to Y" as rhetorical filler)
 - Promotional language

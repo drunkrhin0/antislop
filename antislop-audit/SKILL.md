@@ -1,12 +1,12 @@
 ---
 name: antislop-audit
-version: "1.3"
+version: "1.3.1"
 description: Audits text for AI slop patterns and returns a slop score (0-100) plus a violations list. Use when the user asks to check, audit, review, grade, or score text for AI patterns, AI slop, or writing quality. Also trigger when the user pastes text and asks "does this pass?", "is this sloppy?", "flag the AI patterns", or similar. Companion to the antislop writing style skill. Zero exceptions — flag every violation regardless of perceived intent or satire.
 ---
 
 # Antislop Audit
 
-**Version:** 1.3  
+**Version:** 1.3.1  
 **Purpose:** Detect and score AI slop patterns in existing text. Flag every violation. No exceptions for intent.  
 **Companion skill:** antislop (writing style)  
 **Sources:** Same as antislop writing style: blader/humanizer, jalaalrd/anti-ai-slop-writing, Reddit r/copywriting, ignorance.ai/field-guide-to-ai-slop, Banned: The Definitive Guide, Pangram, Anbeeld/WRITING.md, self
@@ -59,7 +59,7 @@ Do not skip categories. Do not combine violations. One instance = one violation 
 - Rule of three in a single sentence
 - Synonym cycling
 - Overlong sentence (3+ ideas, 2+ qualifiers, or 2+ disclaimers in one sentence)
-- Negative parallelism / trailing negation ("not just X, but Y", "it's not about X, it's about Y", "X isn't the problem, Y is", "..., no guessing")
+- Negative parallelism / trailing negation ("not just X, but Y", "it's not about X, it's about Y", Reframe-without-adding — second sentence restates the first with more drama but no new information ("It didn't move gradually. It's collapsing into it." / "X isn't the problem, Y is") — Medium severity each, "..., no guessing")
 - Copula avoidance ("serves as", "boasts", "features", "functions as", "stands as" when "is"/"has" would do)
 - Parataxis (3+ consecutive short declarative sentences with no conjunctions or subordination)
 - Passive voice / subjectless fragments ("No configuration file needed", "Results are preserved automatically")
@@ -176,7 +176,7 @@ Any word in quotes where the quotes signal ironic distance rather than a direct 
 ### Structural patterns — Medium severity each
 - Rule of three in a single sentence
 - Overlong sentence (3+ ideas, or 2+ qualifiers/disclaimers crammed in)
-- Negative parallelism / trailing negation ("not just X, but Y", "it's not about X, it's about Y", "X isn't the problem, Y is", trailing fragments like "..., no guessing")
+- Negative parallelism / trailing negation ("not just X, but Y", "it's not about X, it's about Y", Reframe-without-adding — second sentence restates the first with more drama but no new information ("It didn't move gradually. It's collapsing into it." / "X isn't the problem, Y is") — Medium severity each, trailing fragments like "..., no guessing")
 - Copula avoidance ("serves as", "boasts", "features", "functions as", "stands as" when "is"/"has" would do)
 - Parataxis — 3+ consecutive short declarative sentences with no conjunctions or subordination
 - Passive voice / subjectless fragments ("No configuration file needed", "Results are preserved automatically")

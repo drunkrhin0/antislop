@@ -1,4 +1,4 @@
-# Antislop v1.3
+# Antislop
 
 *By slop for slop, to remove slop in an AI slop world.*
 
