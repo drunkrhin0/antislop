@@ -12,6 +12,7 @@ Two skills for writing like a human. Works with your favourite agent that suppor
 It catches:
 
 - Banned vocabulary and phrases
+- Antithesis as tone management ("not just X but Y" that decorates instead of argues)
 - Structural tells (sentence, paragraph, and discourse-level patterns)
 - Formatting habits (em-dashes, scare quotes, bolding, title case)
 - Rhythmic giveaways (uniform length, parataxis, overlong sentences)
@@ -90,11 +91,11 @@ Returns a score out of 100, a violations table with severity and excerpt, and a 
 
 **Let it run ambiently.** Both skills trigger automatically when you ask your agent to write, edit, or audit text. They activate on matching intent. No manual invocation needed.
 
-**Audit before sending, not while writing.** Write freely. Let antislop clean up sentence-level patterns in real time. Then run antislop-audit as a final gate before publishing. The audit catches what the style misses: paragraph redundancy, triplet overlap, semantic repetition.
+**Audit before sending, not while writing.** Write freely. Let antislop clean up sentence-level patterns in real time. The mandatory pre-output scan catches em-dashes that slip through. Then run antislop-audit as a final gate before publishing. The audit catches what the style misses: paragraph redundancy, triplet overlap, semantic repetition.
 
 **Bring content, not just form.** Antislop catches patterns: sentence structure, banned words, rhythm tells. It does not catch vague ideas or unsupported claims. You still need to bring specific experience, numbers, examples, and a point of view.
 
-**Run the checklist.** The skill includes a 20+ item audit checklist. Run through it before finishing any piece. The items at the bottom matter most: redundancy, triplet overlap, metaphors, endings. They catch what pattern matching can't.
+**Run the checklist.** The skill includes a 20+ item audit checklist. Run through it before finishing any piece. The items at the bottom matter most: redundancy, triplet overlap, antithesis, metaphors, endings. They catch what pattern matching can't.
 
 **Don't over-apply.** Antislop is for prose meant to be read by humans. Skip it for code, config files, commit messages, structured data, or API docs. Those have their own conventions.
 

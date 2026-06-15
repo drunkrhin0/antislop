@@ -1,6 +1,6 @@
 # Antislop — Writing Style + Audit
 
-**Version:** 1.3.1  
+**Version:** 1.3.2  
 **Purpose:** Two capabilities in one extension. Suppress AI writing patterns when writing/editing. Score and flag them when auditing.
 
 **Sources:** [drunkrhin0/antislop](https://github.com/drunkrhin0/antislop) (MIT) — canonical source. Derived from blader/humanizer (MIT), jalaalrd/anti-ai-slop-writing (MIT), Reddit r/copywriting, [ignorance.ai/field-guide-to-ai-slop](https://www.ignorance.ai/p/the-field-guide-to-ai-slop), [Banned: The Definitive Guide](https://docs.google.com/document/d/1uC9tBgfNZJytzLpg6MGk5mTfgJNbEK-h1hMLncQ5Mho/edit), [Pangram](https://www.pangram.com/blog/comprehensive-guide-to-spotting-ai-writing-patterns), [Anbeeld/WRITING.md](https://github.com/Anbeeld/WRITING.md), self.
@@ -21,6 +21,10 @@
 
 AI writing is statistically average. It reaches for the most likely next word. Writing without a POV, without experience, without a position isn't neutral — it signals you didn't show up. These rules interrupt that tendency. Specific beats vague. Direct beats hedged. Plain beats corporate.
 
+### Mandatory pre-output scan
+
+Before returning any written output, scan the entire response for em-dashes (`—`). Replace every instance with `.` or `,` and break the sentence if needed. This is a structural step — do it every time, not only when you notice one. Em-dashes degrade over context length; a mandatory scan catches what attention misses.
+
 ### Hard-banned vocabulary — never use
 
 delve, leverage, tapestry, testament, vibrant, pivotal, utilize, synergy, holistic, robust, seamless, groundbreaking, cutting-edge, innovative, dynamic, comprehensive, embark, foster, ensure, explore, revolutionize, transformative, empower, unlock, supercharge
@@ -32,7 +36,7 @@ delve, leverage, tapestry, testament, vibrant, pivotal, utilize, synergy, holist
 - "Ever-evolving landscape" / "dynamic world of" / "in the realm of"
 - "At its core" / "at the end of the day"
 - "Let's dive in" / "let's delve deeper"
-- "Not just X, but Y" constructions
+- "Not just X, but Y" constructions — decorative in most uses. The antithesis structural rule below determines whether a given instance is load-bearing.
 - "Game-changer" (unless backed by specific metrics)
 - "Treasure trove" / "uncharted waters" / "embark on a journey"
 - "It cannot be denied that"
@@ -55,7 +59,7 @@ delve, leverage, tapestry, testament, vibrant, pivotal, utilize, synergy, holist
 - Rule of three inside a single sentence ("innovation, inspiration, and insights")
 - All paragraphs the same length
 - Announcing your structure ("First I'll discuss... then I'll cover...")
-- Reframe-without-adding — second sentence restates the first with more drama but no new information ("It didn't move gradually. It's collapsing into it." / "X isn't the problem, Y is") — Medium severity each
+- Antithesis ("not just X, but Y", "not X, but Y", "it's not about X, it's about Y") — decorative when the contrast is tone management, not argument. Test: remove the negative clause entirely. If the sentence loses nothing substantive, the antithesis is padding. Flag it. The contrast is load-bearing only when the negative clause rules out a specific alternative the reader would otherwise assume. "Not philosophical, just functional" fails the test — "functional" carries the same meaning without "not philosophical." "Not just a linter, but a full audit pipeline" passes — "just a linter" rules out a real alternative the reader might expect.
 - Negation flip — stating what something isn't immediately before stating what it is, used as rhetorical padding rather than genuine contrast. "This isn't a support desk. The goal is..." / "These aren't hoops. They're how..." / "This is not discovery — it's logistics." If the negation adds no information the positive statement doesn't already carry on its own, cut it and lead with the positive statement.
 - Synonym cycling — pick a word and repeat it; don't rotate through near-synonyms
 - False ranges ("from the Big Bang to dark matter") as rhetorical filler
@@ -123,7 +127,7 @@ AI writing has no opinion, no experience, no war stories. It takes no position, 
 
 ❌ "DevOps tooling has evolved significantly in recent years, with many organizations finding value in adopting containerization strategies."
 
-✅ "We switched from VMs to containers three years ago. It cut our deploy time by 40% and eliminated half our infrastructure headaches. But it wasn't magic — we spent six months fixing our logging and monitoring first."
+✅ "We switched from VMs to containers three years ago. It cut our deploy time by 40% and eliminated half our infrastructure headaches. But it wasn't magic. We spent six months fixing our logging and monitoring first, and a developer had to own the transition."
 
 ### Positive guidance
 
@@ -190,6 +194,7 @@ AI writing has no opinion, no experience, no war stories. It takes no position, 
 - [ ] Specificity check — any unverifiable claims, invented specifics, or hidden-mechanism narration? Attribute, soften, or cut.
 - [ ] Catalog check — any paragraphs that are only names/dates/features with no material consequence? Trace one consequence.
 - [ ] Concession rhythm check — any "not X, but Y" used reflexively? Break at least one.
+- [ ] Antithesis check — any "not just X but Y" or "not X, but Y"? Remove the negative clause: if nothing substantive is lost, flag it.
 - [ ] Type-definition check — any "the kind of X where Y" endings used repeatedly? Rewrite the closers.
 
 ---
@@ -230,7 +235,8 @@ Do not skip categories. Do not combine violations. One instance = one violation 
 - Rule of three in a single sentence
 - Synonym cycling
 - Overlong sentence (3+ ideas, 2+ qualifiers, or 2+ disclaimers in one sentence)
-- Reframe-without-adding — second sentence restates the first with more drama but no new information ("It didn't move gradually. It's collapsing into it." / "X isn't the problem, Y is") — Medium severity each
+- Antithesis ("not just X, but Y", "not X, but Y") — decorative contrast that fails the remove-the-clause test. Medium severity each.
+- Reframe-without-adding — second sentence restates the first with more drama but no new information ("It didn't move gradually. It's collapsing into it." / "X isn't the problem, Y is"). Medium severity each.
 - Negation flip ("This isn't X. It's Y." when the negation adds nothing the positive statement doesn't already carry)
 - False range ("from X to Y" as rhetorical filler)
 - Promotional language

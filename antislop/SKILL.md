@@ -1,12 +1,12 @@
 ---
 name: antislop
-version: "1.3.1"
+version: "1.3.2"
 description: Universal writing style that suppresses detectable AI writing patterns across all content types. Apply whenever writing, editing, or reviewing any prose — emails, blog posts, reports, social content, technical writing, sales materials. This is an ambient style, not a task-specific tool. Trigger any time the user asks to write, rewrite, edit, polish, or review text of any kind.
 ---
 
 # Antislop Writing Style
 
-**Version:** 1.3.1  
+**Version:** 1.3.2  
 **Purpose:** Suppress detectable AI writing patterns across all content types.  
 **Sources:**
 - [blader/humanizer](https://github.com/blader/humanizer) (MIT) — 29-pattern taxonomy grounded in Wikipedia's Signs of AI Writing
@@ -23,6 +23,12 @@ description: Universal writing style that suppresses detectable AI writing patte
 ## Core philosophy
 
 AI writing is statistically average. It reaches for the most likely next word. Writing without a POV, without experience, without a position isn't neutral. It signals you didn't show up. These rules exist to interrupt that tendency. Specific beats vague. Direct beats hedged. Plain beats corporate.
+
+---
+
+## Mandatory pre-output scan
+
+Before returning any written output, scan the entire response for em-dashes (`—`). Replace every instance with `.` or `,` and break the sentence if needed. This is a structural step — do it every time, not only when you notice one. Em-dashes degrade over context length; a mandatory scan catches what attention misses.
 
 ---
 
@@ -79,7 +85,7 @@ This style is for human-readable prose. Do not apply to:
 - "Ever-evolving landscape" / "dynamic world of" / "in the realm of"
 - "At its core" / "at the end of the day" / "the real question is" / "what really matters" / "fundamentally" / "in reality" / "the deeper issue is" — rhetorical cut-to-the-chase that adds ceremony without substance
 - "Let's dive in" / "let's delve deeper"
-- "Not just X, but Y" constructions
+- "Not just X, but Y" constructions — decorative in most uses. The antithesis structural rule below determines whether a given instance is load-bearing.
 - "Game-changer" (unless backed by specific metrics)
 - "Treasure trove" / "uncharted waters" / "embark on a journey"
 - "It cannot be denied that"
@@ -144,7 +150,7 @@ This style is for human-readable prose. Do not apply to:
 **Discourse-level:**
 
 - Announcing your structure ("First I'll discuss... then I'll cover...")
-- Negative parallelisms and trailing negations — "not just X, but Y", "it's not about X, it's about Y", Reframe-without-adding — second sentence restates the first with more drama but no new information ("It didn't move gradually. It's collapsing into it." / "X isn't the problem, Y is") — Medium severity each, and trailing fragments like "..., no guessing" or "..., no exceptions". Define the thing by what it is, not what it isn't.
+- Antithesis ("not just X, but Y", "not X, but Y", "it's not about X, it's about Y") — decorative when the contrast is tone management, not argument. Test: remove the negative clause entirely. If the sentence loses nothing substantive, the antithesis is padding. Flag it. The contrast is load-bearing only when the negative clause rules out a specific alternative the reader would otherwise assume. "Not philosophical, just functional" fails the test — "functional" carries the same meaning without "not philosophical." "Not just a linter, but a full audit pipeline" passes — "just a linter" rules out a real alternative the reader might expect.
 - Negation flip — stating what something isn't immediately before stating what it is, used as rhetorical padding rather than genuine contrast. "This isn't a support desk. The goal is..." / "These aren't hoops. They're how..." / "This is not discovery — it's logistics." If the negation adds no information the positive statement doesn't already carry on its own, cut it and lead with the positive statement.
 - False ranges ("from the Big Bang to dark matter") as rhetorical filler
 - Promotional language ("nestled within the breathtaking...")
@@ -197,7 +203,7 @@ Rules:
 
 **❌ AI voice (no position):** "DevOps tooling has evolved significantly in recent years, with many organizations finding value in adopting containerization strategies. The landscape continues to shift as teams explore new approaches to deployment automation."
 
-**✅ Authentic voice (clear position):** "We switched from VMs to containers three years ago. It cut our deploy time by 40% and eliminated half our infrastructure headaches. But it wasn't magic — we spent six months fixing our logging and monitoring first, and a developer had to own the transition."
+**✅ Authentic voice (clear position):** "We switched from VMs to containers three years ago. It cut our deploy time by 40% and eliminated half our infrastructure headaches. But it wasn't magic. We spent six months fixing our logging and monitoring first, and a developer had to own the transition."
 
 ---
 
@@ -240,6 +246,14 @@ When rules conflict, resolve in this order:
 **Negation flip:**
 ❌ "This isn't a support desk. The goal is to give engineers a self-service debugging toolkit."
 ✅ "Engineers get a self-service debugging toolkit instead of filing tickets."
+
+**Antithesis (decorative):**
+❌ "The API is not philosophical, just functional." (remove "not philosophical" — nothing changes)
+✅ "The API is functional." (or better: state what it actually does)
+
+**Antithesis (load-bearing):**
+❌ "Not just a linter, but a full audit pipeline." (if the reader would assume "just a linter")
+✅ "A full audit pipeline: linting, dependency scanning, and license compliance." (state what it does instead)
 
 **Superficial -ing analyses:**
 ❌ "Response times dropped 30% last quarter, highlighting the effectiveness of the new caching layer."
@@ -291,6 +305,7 @@ Before finishing any piece of writing. After any audit run inline (without the c
 - [ ] Specificity check — any unverifiable claims, invented specifics, or hidden-mechanism narration? Attribute, soften, or cut.
 - [ ] Catalog check — any paragraphs that are only names/dates/features with no material consequence? Trace one consequence.
 - [ ] Concession rhythm check — any "not X, but Y" used reflexively across multiple paragraphs? Break at least one.
+- [ ] Antithesis check — any "not just X but Y" or "not X, but Y"? Remove the negative clause: if nothing substantive is lost, flag it.
 - [ ] Type-definition check — any "the kind of X where Y" endings used repeatedly? Rewrite the closers.
 - [ ] Overcorrection check — any fake-human moves (invented typos, slang, staged messiness) added to break a pattern? Cut them — fix the prose instead.
 

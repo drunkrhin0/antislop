@@ -26,6 +26,10 @@ jobs:
             echo "No version found in antislop/SKILL.md, skipping"
             exit 0
           fi
+          if ! echo "$VERSION" | grep -qE '^[0-9]+\.[0-9]+\.[0-9]+$'; then
+            echo "Invalid version format: $VERSION (expected X.Y.Z)"
+            exit 1
+          fi
           TAG="antislop-v${VERSION}"
           if git rev-parse "${TAG}" >/dev/null 2>&1; then
             echo "Tag ${TAG} already exists, skipping"
@@ -43,6 +47,10 @@ jobs:
           if [ -z "$VERSION" ]; then
             echo "No version found in antislop-audit/SKILL.md, skipping"
             exit 0
+          fi
+          if ! echo "$VERSION" | grep -qE '^[0-9]+\.[0-9]+\.[0-9]+$'; then
+            echo "Invalid version format: $VERSION (expected X.Y.Z)"
+            exit 1
           fi
           TAG="antislop-audit-v${VERSION}"
           if git rev-parse "${TAG}" >/dev/null 2>&1; then

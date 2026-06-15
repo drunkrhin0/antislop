@@ -55,6 +55,20 @@ To test repo changes in an agent conversation, copy the updated `SKILL.md` into 
 
 **Global replacements cause collateral damage.** A `sed 's/—/,/g'` across markdown replaced em-dashes in code spans and explanations, not just prose. Always verify after bulk edits.
 
+**Forgejo runner can't resolve public hostname.** The Forgejo runner container is on the local Docker network and cannot resolve `git.drunkrhin0.au` (DNS fails). All `git clone` and `curl` calls in Forgejo workflows must use the internal IP `192.168.1.62:3000`. The runner also can't use `actions/checkout` with the default URL — it fails with `Could not resolve host: git.drunkrhin0.au`. Workaround: skip `actions/checkout` entirely and do a manual `git clone` in a custom step using the internal URL.
+
+**Internal Forgejo runs on HTTP, not HTTPS.** Port 3000 serves plain HTTP. Using `https://192.168.1.62:3000` causes `gnutls_handshake() failed: An unexpected TLS packet was received`. Always use `http://` for the internal Forgejo instance.
+
+**Forgejo Actions doesn't support SHA-pinned GitHub actions.** Pinning `actions/checkout@93cb6efe...` (SHA digest) fails on Forgejo 15.0.1. Use tag references like `actions/checkout@v4` instead. GitHub Actions supports SHA pinning natively — keep the GitHub workflows SHA-pinned for security.
+
+**Forgejo's `container:` key with `runs-on: docker` is unreliable.** The runner is registered with label `docker:docker://node:lts` (a Debian-based image). The `container:` field to specify a different image (like `alpine:3.20`) may not override the default. The `apk` package manager fails because the actual container is Debian, not Alpine. Use `runs-on: ubuntu-latest` instead and rely on the runner having standard tools pre-installed.
+
+**Bash parameter expansion `#http://` only strips `http://`, not `https://`.** If `GITHUB_SERVER_URL` is `https://git.drunkrhin0.au`, the expansion `${GITHUB_SERVER_URL#http://}` leaves it unchanged, producing `https://https://...` in the resulting URL. Use a more robust method or hardcode the URL.
+
+**`/tmp/lint-test.sh` doesn't exist.** The AGENTS.md references it but the script was never created. Use `act push -W .forgejo/workflows/lint-skills.yml` instead (requires Docker).
+
+**`GITHUB_REPOSITORY` is a full SSH URL on this Forgejo runner, not `owner/repo`.** The runner sets `GITHUB_REPOSITORY=ssh://git@git.drunkrhin0.au/drunkrhin0/antislop` rather than just `drunkrhin0/antislop`. Concatenating it into a URL produces garbage like `http://192.168.1.62:3000/ssh://git@...`. Hardcode the repo path instead, or strip the SSH prefix with parameter expansion.
+
 ---
 
 <skills_system priority="1">

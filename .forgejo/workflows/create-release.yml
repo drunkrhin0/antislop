@@ -8,45 +8,43 @@ on:
 
 jobs:
   release:
-    runs-on: docker
-    container:
-      image: alpine:latest
+    runs-on: ubuntu-latest
     steps:
-      - name: Setup
-        run: apk add --no-cache curl zip git >/dev/null 2>&1
-
-      - name: Create annotated tag and push
+      - name: Clone tag and convert to annotated
         env:
           RELEASE_TOKEN: ${{ secrets.RELEASE_TOKEN }}
         run: |
           set -eu
           TAG="${GITHUB_REF#refs/tags/}"
           VERSION="${TAG#antislop-v}"
+          # Use internal IP — runner can't resolve public hostname
+          # Internal Forgejo runs on HTTP (port 3000)
+          CLONE_URL="http://x-access-token:${RELEASE_TOKEN}@192.168.1.62:3000/drunkrhin0/antislop.git"
 
-          # Only act on lightweight tags (annotated ones already work)
-          TAG_TYPE=$(git tag -l --format='%(objecttype)' "$TAG" 2>/dev/null || echo "unknown")
-          if [ "$TAG_TYPE" != "commit" ]; then
-            echo "Tag ${TAG} is already annotated (type: ${TAG_TYPE}), skipping"
-            exit 0
-          fi
-
-          echo "Converting lightweight tag ${TAG} to annotated..."
-          CLONE_URL="https://x-access-token:${RELEASE_TOKEN}@${GITHUB_SERVER_URL#https://}/${GITHUB_REPOSITORY}.git"
           git clone --depth 1 --branch "${TAG}" "${CLONE_URL}" .
-          git tag -d "$TAG" 2>/dev/null || true
-          git tag -a "$TAG" -m "antislop v${VERSION}"
-          git push "${CLONE_URL}" "refs/tags/${TAG}:refs/tags/${TAG}" --force
-          echo "Annotated tag ${TAG} pushed"
+          echo "Cloned ${TAG}"
+
+          # Check if tag is already annotated
+          TAG_TYPE=$(git tag -l --format='%(objecttype)' "$TAG" 2>/dev/null || echo "unknown")
+          if [ "$TAG_TYPE" = "commit" ]; then
+            echo "Converting lightweight tag ${TAG} to annotated..."
+            git tag -d "$TAG"
+            git tag -a "$TAG" -m "antislop v${VERSION}"
+            git push "${CLONE_URL}" "refs/tags/${TAG}:refs/tags/${TAG}" --force
+            echo "Annotated tag ${TAG} pushed"
+          else
+            echo "Tag ${TAG} is already annotated (type: ${TAG_TYPE})"
+          fi
 
       - name: Build zips
         run: |
           VERSION="${GITHUB_REF#refs/tags/}"
           VERSION="${VERSION#antislop-v}"
-          zip -r "antislop-${VERSION}.zip" antislop/ 2>/dev/null || true
-          zip -r "antislop-audit-${VERSION}.zip" antislop-audit/ 2>/dev/null || true
-          mkdir -p gemini && cp antislop/GEMINI.md antislop/gemini-extension.json gemini/ 2>/dev/null || true
-          zip -r "gemini-${VERSION}.zip" gemini/ 2>/dev/null || true
-          ls -la *.zip 2>/dev/null || true
+          zip -r "antislop-${VERSION}.zip" antislop/
+          zip -r "antislop-audit-${VERSION}.zip" antislop-audit/
+          mkdir -p gemini && cp antislop/GEMINI.md antislop/gemini-extension.json gemini/
+          zip -r "gemini-${VERSION}.zip" gemini/
+          ls -la *.zip
 
       - name: Upload assets to release
         env:
@@ -55,7 +53,8 @@ jobs:
           set -eu
           TAG="${GITHUB_REF#refs/tags/}"
           VERSION="${TAG#antislop-v}"
-          API="${GITHUB_SERVER_URL}/api/v1"
+          # Use internal HTTP API — runner can't resolve public hostname
+          API="http://192.168.1.62:3000/api/v1"
           REPO="${GITHUB_REPOSITORY}"
           AUTH="Authorization: token ${RELEASE_TOKEN}"
 

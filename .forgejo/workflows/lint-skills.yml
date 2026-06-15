@@ -10,7 +10,13 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        env:
+          RELEASE_TOKEN: ${{ secrets.RELEASE_TOKEN }}
+        run: |
+          git clone --depth 1 \
+            "http://x-access-token:${RELEASE_TOKEN}@192.168.1.62:3000/drunkrhin0/antislop.git" \
+            .
 
       - name: Lint SKILL.md and extension files
         shell: bash
@@ -20,6 +26,8 @@ jobs:
 
           # ------------------------------------------------------------------
           # Helper: extract frontmatter value between --- delimiters
+          # NOTE: field parameter must be a hardcoded string (name/version/description).
+          #       Do not pass user-controlled input — the awk/sed patterns are not sanitized.
           # ------------------------------------------------------------------
           frontmatter_field() {
             local file="$1" field="$2"
