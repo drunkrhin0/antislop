@@ -1,12 +1,12 @@
 ---
 name: antislop
-version: "1.3.3"
+version: "1.4.0"
 description: Universal writing style that suppresses detectable AI writing patterns across all content types. Apply whenever writing, editing, or reviewing any prose — emails, blog posts, reports, social content, technical writing, sales materials. This is an ambient style, not a task-specific tool. Trigger any time the user asks to write, rewrite, edit, polish, or review text of any kind.
 ---
 
 # Antislop Writing Style
 
-**Version:** 1.3.3  
+**Version:** 1.4.0  
 **Purpose:** Suppress detectable AI writing patterns across all content types.  
 **Sources:**
 - [blader/humanizer](https://github.com/blader/humanizer) (MIT) — 29-pattern taxonomy grounded in Wikipedia's Signs of AI Writing
@@ -81,14 +81,12 @@ This style is for human-readable prose. Do not apply to:
 | significant | say how significant (3x faster, 40% reduction) |
 | commence | start, begin |
 | obtain | get |
-| approximately | about |
 | implement | do, apply, set up |
 | facilitate | help |
 | subsequently | then, after |
 | discontinue | stop |
 | dispatch | send |
 | ascertain | find out |
-| methodology | method |
 
 ### Phrases — never use
 - "It's worth noting that" — delete it, state the thing directly
@@ -144,7 +142,7 @@ This style is for human-readable prose. Do not apply to:
 - Physical tell clichés — jaw tightening, throat bobbing, breath catching, hands curling into fists, spine stiffening. Interchangeable body language that flattens distinct characters into identical nervous systems. Replace with character-specific responses.
 - Uniform sentence length — monotonous sentences that don't vary in length or rhythm. AI stays in a narrow band of 15-25 words per sentence, every sentence. Human writing mixes short and long. Aim for 20-30% of sentences under 10 words, some over 25.
 - Overlong sentences — 5+ commas, nested clauses, 3+ ideas in one sentence. AI refuses to end it because it keeps qualifying, hedging, and adding detail. Break into two or three. Periods are free.
-- Generic action-describing link text — "click here", "learn more", "read more", "get started", "sign up", "download", "view", "details" as standalone anchor text. Describes the interaction (click, learn, read) instead of naming the destination. AI writes this way because it doesn't know what specific thing it's linking to. Name what you're linking to.
+- Generic action-describing link text — "click here", "learn more", "read more", "get started", "sign up", "download", "view", "details" as standalone anchor text. Describes the interaction (click, learn, read) instead of naming the destination. AI writes this way because it doesn't know what specific thing it's linking to. Name what you're linking to. **Context matters:** product UI buttons and standard marketing CTAs are not AI tells — this rule targets link text in prose where the destination should be described.
 
 **Paragraph-level:**
 
@@ -182,7 +180,7 @@ This style is for human-readable prose. Do not apply to:
 
 **Exclamation marks** — zero in technical or factual writing. One maximum in conversational prose. AI overuses them for fake enthusiasm. If the content doesn't earn the excitement, remove the mark.
 
-**Semicolons** — avoid in prose. AI reaches for semicolons as a sophistication signal. Two or more per paragraph is a rhythm tell. Use separate sentences instead.
+**Semicolons** — avoid in prose. AI reaches for semicolons as a sophistication signal. Two or more per paragraph is a rhythm tell. Use separate sentences instead. **Exception:** formal or academic writing where semicolons are conventional register.
 
 **Scare quotes** → don't quote words to signal ironic distance unless it's genuinely intentional. Scare quotes read as hedging. The writer distances themselves from their own word. Own it or cut it.
 
@@ -326,7 +324,7 @@ Before finishing any piece of writing. After any audit run inline (without the c
 - [ ] Overcorrection check — any fake-human moves (invented typos, slang, staged messiness) added to break a pattern? Cut them — fix the prose instead.
 - [ ] Link text check — any "click here", "learn more", "get started", or other action-describing standalone link text? Name the destination instead.
 - [ ] Exclamation mark check — more than one? Any in technical/factual prose? Remove the excess.
-- [ ] Semicolon check — two or more per paragraph? Split into separate sentences.
+- [ ] Semicolon check — two or more per paragraph in prose where formal register isn't the style? Split into separate sentences.
 
 ---
 

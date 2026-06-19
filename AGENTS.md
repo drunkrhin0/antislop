@@ -69,6 +69,8 @@ To test repo changes in an agent conversation, copy the updated `SKILL.md` into 
 
 **`GITHUB_REPOSITORY` is a full SSH URL on this Forgejo runner, not `owner/repo`.** The runner sets `GITHUB_REPOSITORY=ssh://git@git.drunkrhin0.au/drunkrhin0/antislop` rather than just `drunkrhin0/antislop`. Concatenating it into a URL produces garbage like `http://192.168.1.62:3000/ssh://git@...`. Hardcode the repo path instead, or strip the SSH prefix with parameter expansion.
 
+**`rstrip('.0')` in lint workflow breaks versions ending in `.0`.** The lint check at `.forgejo/workflows/lint-skills.yml:90` uses `python3 -c "version.rstrip('.0')"` to normalize the JSON version before comparing. For versions like `1.4.0`, this strips to `1.4`, causing a false version-drift failure. The version is actually consistent — the check is broken. Fix: use `re.sub(r'\.0+$', '', v)` or don't normalize at all.
+
 ---
 
 <skills_system priority="1">

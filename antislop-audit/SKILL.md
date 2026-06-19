@@ -1,12 +1,12 @@
 ---
 name: antislop-audit
-version: "1.3.3"
+version: "1.4.0"
 description: Audits text for AI slop patterns and returns a slop score (0-100) plus a violations list. Use when the user asks to check, audit, review, grade, or score text for AI patterns, AI slop, or writing quality. Also trigger when the user pastes text and asks "does this pass?", "is this sloppy?", "flag the AI patterns", or similar. Companion to the antislop writing style skill. Zero exceptions — flag every violation regardless of perceived intent or satire.
 ---
 
 # Antislop Audit
 
-**Version:** 1.3.3  
+**Version:** 1.4.0  
 **Purpose:** Detect and score AI slop patterns in existing text. Flag every violation. No exceptions for intent.  
 **Companion skill:** antislop (writing style)  
 **Sources:** Same as antislop writing style: blader/humanizer, jalaalrd/anti-ai-slop-writing, Reddit r/copywriting, ignorance.ai/field-guide-to-ai-slop, Banned: The Definitive Guide, Pangram, Anbeeld/WRITING.md, Bugcrowd Design System, self
@@ -92,7 +92,7 @@ Do not skip categories. Do not combine violations. One instance = one violation 
 - System-tour prose (paragraph-to-category-bucket mapping: background → mechanism → impact → verdict)
 - Concession rhythm ("not X, but Y" / "may sound X, but Y" as reflexive paragraph scaffold)
 - Type-definition endings ("the kind of X where Y" appearing multiple times as paragraph closure)
-- Generic action-describing link text ("click here", "learn more", "read more", "get started", "sign up", "download", "view", "details" as standalone anchor text naming the interaction instead of the destination)
+- Generic action-describing link text ("click here", "learn more", "read more", "get started", "sign up", "download", "view", "details" as standalone anchor text naming the interaction instead of the destination — context matters: product UI buttons and marketing CTAs are not AI tells)
 - Artificial line breaks (mid-sentence breaks at terminal width ~80 chars — terminal-specific AI tell)
 
 **Low severity** (each = -2 points):
@@ -105,7 +105,7 @@ Do not skip categories. Do not combine violations. One instance = one violation 
 - Usage of unicode characters to convey a point, which isn't used in general language (e.g. `→`)
 - Standalone "Because" fragments ("Because she can't bear to look." — AI sentence rhythm)
 - Exclamation mark overuse (any in technical/factual prose, or more than one in conversational)
-- Semicolon overuse (2+ per paragraph — AI uses semicolons as a sophistication signal)
+- Semicolon overuse (2+ per paragraph — AI uses semicolons as a sophistication signal. Exceptions: formal or academic register)
 
 ### Step 3 — Calculate score
 
@@ -143,7 +143,7 @@ Always output in this exact structure:
 ## Pattern reference
 
 ### Banned vocabulary — High severity each
-delve, leverage, tapestry, testament, vibrant, pivotal, utilize, synergy, holistic, robust, seamless, groundbreaking, cutting-edge, innovative, dynamic, comprehensive, embark, foster, ensure, explore, revolutionize, transformative, empower, unlock, supercharge, significant, commence, obtain, approximately, implement, facilitate, subsequently, discontinue, dispatch, ascertain, methodology
+delve, leverage, tapestry, testament, vibrant, pivotal, utilize, synergy, holistic, robust, seamless, groundbreaking, cutting-edge, innovative, dynamic, comprehensive, embark, foster, ensure, explore, revolutionize, transformative, empower, unlock, supercharge, significant, commence, obtain, implement, facilitate, subsequently, discontinue, dispatch, ascertain
 
 ### Banned phrases — High severity each
 - "It's worth noting that"
@@ -180,7 +180,7 @@ Any word in quotes where the quotes signal ironic distance rather than a direct 
 - Ambiguous bolded bullet (bold claim not supported by following text) → **Medium severity** per instance
 
 ### Structural patterns — Medium severity each
-- Generic action-describing link text ("click here", "learn more", "read more", "get started", "sign up", "download", "view", "details" as standalone anchor text)
+- Generic action-describing link text ("click here", "learn more", "read more", "get started", "sign up", "download", "view", "details" as standalone anchor text — context matters: product UI buttons and marketing CTAs are not AI tells)
 - Rule of three in a single sentence
 - Overlong sentence (3+ ideas, or 2+ qualifiers/disclaimers crammed in)
 - Antithesis ("not just X, but Y", "not X, but Y") — decorative contrast that fails the remove-the-clause test. Remove the negative clause; if nothing substantive is lost, it's antithesis slop.
@@ -235,7 +235,7 @@ Any word in quotes where the quotes signal ironic distance rather than a direct 
 - Filler phrases ("in order to", "due to the fact that", "at this point in time", "the system has the ability to")
 - Emojis in prose
 - Exclamation mark overuse (any in technical/factual prose, or more than one in conversational)
-- Semicolon overuse (2+ per paragraph — sophistication signal)
+- Semicolon overuse (2+ per paragraph — sophistication signal; exceptions: formal or academic register)
 
 ### Chatbot artifacts — High severity each
 - "I hope this helps!"
