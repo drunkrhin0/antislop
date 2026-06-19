@@ -1,15 +1,15 @@
 ---
 name: antislop-audit
-version: "1.3.2"
+version: "1.3.3"
 description: Audits text for AI slop patterns and returns a slop score (0-100) plus a violations list. Use when the user asks to check, audit, review, grade, or score text for AI patterns, AI slop, or writing quality. Also trigger when the user pastes text and asks "does this pass?", "is this sloppy?", "flag the AI patterns", or similar. Companion to the antislop writing style skill. Zero exceptions — flag every violation regardless of perceived intent or satire.
 ---
 
 # Antislop Audit
 
-**Version:** 1.3.2  
+**Version:** 1.3.3  
 **Purpose:** Detect and score AI slop patterns in existing text. Flag every violation. No exceptions for intent.  
 **Companion skill:** antislop (writing style)  
-**Sources:** Same as antislop writing style: blader/humanizer, jalaalrd/anti-ai-slop-writing, Reddit r/copywriting, ignorance.ai/field-guide-to-ai-slop, Banned: The Definitive Guide, Pangram, Anbeeld/WRITING.md, self
+**Sources:** Same as antislop writing style: blader/humanizer, jalaalrd/anti-ai-slop-writing, Reddit r/copywriting, ignorance.ai/field-guide-to-ai-slop, Banned: The Definitive Guide, Pangram, Anbeeld/WRITING.md, Bugcrowd Design System, self
 
 ---
 
@@ -92,6 +92,8 @@ Do not skip categories. Do not combine violations. One instance = one violation 
 - System-tour prose (paragraph-to-category-bucket mapping: background → mechanism → impact → verdict)
 - Concession rhythm ("not X, but Y" / "may sound X, but Y" as reflexive paragraph scaffold)
 - Type-definition endings ("the kind of X where Y" appearing multiple times as paragraph closure)
+- Generic action-describing link text ("click here", "learn more", "read more", "get started", "sign up", "download", "view", "details" as standalone anchor text naming the interaction instead of the destination)
+- Artificial line breaks (mid-sentence breaks at terminal width ~80 chars — terminal-specific AI tell)
 
 **Low severity** (each = -2 points):
 - Title Case Headings (should be sentence case)
@@ -101,8 +103,9 @@ Do not skip categories. Do not combine violations. One instance = one violation 
 - Filler phrases ("in order to", "due to the fact that", "at this point in time", "the system has the ability to")
 - Emojis in prose
 - Usage of unicode characters to convey a point, which isn't used in general language (e.g. `→`)
-- Artificial line breaks (mid-sentence breaks at terminal width ~80 chars)
 - Standalone "Because" fragments ("Because she can't bear to look." — AI sentence rhythm)
+- Exclamation mark overuse (any in technical/factual prose, or more than one in conversational)
+- Semicolon overuse (2+ per paragraph — AI uses semicolons as a sophistication signal)
 
 ### Step 3 — Calculate score
 
@@ -140,7 +143,7 @@ Always output in this exact structure:
 ## Pattern reference
 
 ### Banned vocabulary — High severity each
-delve, leverage, tapestry, testament, vibrant, pivotal, utilize, synergy, holistic, robust, seamless, groundbreaking, cutting-edge, innovative, dynamic, comprehensive, embark, foster, ensure, explore, revolutionize, transformative, empower, unlock, supercharge, significant
+delve, leverage, tapestry, testament, vibrant, pivotal, utilize, synergy, holistic, robust, seamless, groundbreaking, cutting-edge, innovative, dynamic, comprehensive, embark, foster, ensure, explore, revolutionize, transformative, empower, unlock, supercharge, significant, commence, obtain, approximately, implement, facilitate, subsequently, discontinue, dispatch, ascertain, methodology
 
 ### Banned phrases — High severity each
 - "It's worth noting that"
@@ -177,6 +180,7 @@ Any word in quotes where the quotes signal ironic distance rather than a direct 
 - Ambiguous bolded bullet (bold claim not supported by following text) → **Medium severity** per instance
 
 ### Structural patterns — Medium severity each
+- Generic action-describing link text ("click here", "learn more", "read more", "get started", "sign up", "download", "view", "details" as standalone anchor text)
 - Rule of three in a single sentence
 - Overlong sentence (3+ ideas, or 2+ qualifiers/disclaimers crammed in)
 - Antithesis ("not just X, but Y", "not X, but Y") — decorative contrast that fails the remove-the-clause test. Remove the negative clause; if nothing substantive is lost, it's antithesis slop.
@@ -202,7 +206,7 @@ Any word in quotes where the quotes signal ironic distance rather than a direct 
 - Negation flip — stating what something isn't immediately before stating what it is, used as rhetorical padding rather than genuine contrast. E.g. "This isn't a support desk. The goal is..." / "These aren't hoops. They're how..." / "This is not discovery — it's logistics." Flag when the negation adds no information the positive statement doesn't already carry on its own.
 - Paragraph-level redundancy — same concept restated across paragraphs with different words, or concluding sentence that summarizes the paragraph in different words. Medium severity each.
 - Triplet overlap — 3+ descriptors naming the same quality (e.g. "current, documented, and auditable" all mean "reliable for attestation"). Medium severity each.
-- Artificial line breaks — prose broken mid-sentence at terminal width (~80 chars). Low severity each.
+- Artificial line breaks — prose broken mid-sentence at terminal width (~80 chars). Medium severity each. Terminal-specific AI tell — Claude Code, Gemini CLI, and ChatGPT terminal all wrap at ~80 cols.
 - All paragraphs the same length — uniform paragraph length with no rhythmic variation. Medium severity each.
 - Simile-as-adverb — "with the [noun] of someone [verb]ing" invents a hypothetical person to describe the actual state. Medium severity each.
 - Hedged reactions — "a laugh that isn't quite a laugh" creates emotional static through contradiction. Medium severity each.
@@ -230,6 +234,8 @@ Any word in quotes where the quotes signal ironic distance rather than a direct 
 - Curly quotes (“ ”) — should be straight quotes (")
 - Filler phrases ("in order to", "due to the fact that", "at this point in time", "the system has the ability to")
 - Emojis in prose
+- Exclamation mark overuse (any in technical/factual prose, or more than one in conversational)
+- Semicolon overuse (2+ per paragraph — sophistication signal)
 
 ### Chatbot artifacts — High severity each
 - "I hope this helps!"

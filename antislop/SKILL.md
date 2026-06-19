@@ -1,12 +1,12 @@
 ---
 name: antislop
-version: "1.3.2"
+version: "1.3.3"
 description: Universal writing style that suppresses detectable AI writing patterns across all content types. Apply whenever writing, editing, or reviewing any prose — emails, blog posts, reports, social content, technical writing, sales materials. This is an ambient style, not a task-specific tool. Trigger any time the user asks to write, rewrite, edit, polish, or review text of any kind.
 ---
 
 # Antislop Writing Style
 
-**Version:** 1.3.2  
+**Version:** 1.3.3  
 **Purpose:** Suppress detectable AI writing patterns across all content types.  
 **Sources:**
 - [blader/humanizer](https://github.com/blader/humanizer) (MIT) — 29-pattern taxonomy grounded in Wikipedia's Signs of AI Writing
@@ -17,6 +17,7 @@ description: Universal writing style that suppresses detectable AI writing patte
 - [Banned: The Definitive Guide](https://docs.google.com/document/d/1uC9tBgfNZJytzLpg6MGk5mTfgJNbEK-h1hMLncQ5Mho/edit) (Creative Commons) — comprehensive construction, phrase, and pattern taxonomy; physical tell clichés, ending clichés, anthropomorphized silence, temperature shorthand, 200+ banned patterns
 - [Pangram / Comprehensive Guide to Spotting AI Writing Patterns](https://www.pangram.com/blog/comprehensive-guide-to-spotting-ai-writing-patterns) — exhaustive AI vocabulary cross-reference, phrasing patterns, uniform sentence length, organizational tells
 - [Anbeeld/WRITING.md](https://github.com/Anbeeld/WRITING.md) (MIT) — specificity theater, catalog/system-tour prose, regularity diagnostics, compound-modifier nuance, medium routing
+- [Bugcrowd Design System — Tone & Language](https://bugcrowd.design/docs/guidelines/content-guidelines/language/) — plain English substitutions, generic link text patterns, punctuation tell detection
 
 ---
 
@@ -78,6 +79,16 @@ This style is for human-readable prose. Do not apply to:
 | unlock | enable, allow, make possible |
 | supercharge | speed up, boost, improve |
 | significant | say how significant (3x faster, 40% reduction) |
+| commence | start, begin |
+| obtain | get |
+| approximately | about |
+| implement | do, apply, set up |
+| facilitate | help |
+| subsequently | then, after |
+| discontinue | stop |
+| dispatch | send |
+| ascertain | find out |
+| methodology | method |
 
 ### Phrases — never use
 - "It's worth noting that" — delete it, state the thing directly
@@ -133,6 +144,7 @@ This style is for human-readable prose. Do not apply to:
 - Physical tell clichés — jaw tightening, throat bobbing, breath catching, hands curling into fists, spine stiffening. Interchangeable body language that flattens distinct characters into identical nervous systems. Replace with character-specific responses.
 - Uniform sentence length — monotonous sentences that don't vary in length or rhythm. AI stays in a narrow band of 15-25 words per sentence, every sentence. Human writing mixes short and long. Aim for 20-30% of sentences under 10 words, some over 25.
 - Overlong sentences — 5+ commas, nested clauses, 3+ ideas in one sentence. AI refuses to end it because it keeps qualifying, hedging, and adding detail. Break into two or three. Periods are free.
+- Generic action-describing link text — "click here", "learn more", "read more", "get started", "sign up", "download", "view", "details" as standalone anchor text. Describes the interaction (click, learn, read) instead of naming the destination. AI writes this way because it doesn't know what specific thing it's linking to. Name what you're linking to.
 
 **Paragraph-level:**
 
@@ -142,7 +154,7 @@ This style is for human-readable prose. Do not apply to:
 - Fragmented headers — a heading followed by a one-line paragraph that just restates the heading before the real content begins. Let the heading stand.
 - Anthropomorphized silence — "the silence stretched between them", "deafening silence", "the silence hung thick and suffocating." Treating silence as an actor rather than showing its effect on people. Silence doesn't do things. Show who breaks it, who endures it, what it costs.
 - Paragraph-level redundancy — when paragraph 2 opens by restating paragraph 1's conclusion, or the same concept appears twice across paragraphs with different supporting details. Also intra-paragraph restatement — the concluding sentence that just summarizes the paragraph in different words. Consolidate or cut the weaker version. Antislop catches sentence-level patterns. This is a manual content/logic check.
-- Artificial line breaks — prose broken mid-sentence at terminal width (~80 chars) is an LLM artifact. Humans write continuous paragraphs. Break only for new thoughts.
+- Artificial line breaks — prose broken mid-sentence at terminal width (~80 chars) is a strong visual tell of unreviewed AI output, especially from terminal-based tools (Claude Code, Gemini CLI, ChatGPT terminal). Humans write continuous paragraphs. Break only for new thoughts.
 - Bullet-point crutch — using bullet lists to dodge writing full paragraphs when prose would communicate more clearly. Bullets are for breakdowns, not paragraph avoidance.
 - Concession rhythm — "not X, but Y" / "may sound X, but Y" used reflexively as a paragraph scaffold. Concede, then correct. When multiple paragraphs follow this arc, the rhythm becomes the tell. Break at least one occurrence with a direct statement or a different move.
 - Type-definition endings — "the kind of X where Y" used as a default paragraph closure. If multiple paragraphs end with this classifying shape, rewrite the closers to carry forward rather than categorize.
@@ -167,6 +179,10 @@ This style is for human-readable prose. Do not apply to:
 ## Punctuation and formatting rules
 
 **Em dashes** — never use them. Break every sentence that contains one into two sentences with a period, or use a comma. No exceptions. After generation, scan for — and replace with . Break the sentence into two. Em-dashes as a rhetorical authority prop ("— not through magic, not through hype, but through hard work") are the worst offender — if the em-dash is padding a claim instead of making the argument, the sentence wasn't doing its job. Rewrite it.
+
+**Exclamation marks** — zero in technical or factual writing. One maximum in conversational prose. AI overuses them for fake enthusiasm. If the content doesn't earn the excitement, remove the mark.
+
+**Semicolons** — avoid in prose. AI reaches for semicolons as a sophistication signal. Two or more per paragraph is a rhythm tell. Use separate sentences instead.
 
 **Scare quotes** → don't quote words to signal ironic distance unless it's genuinely intentional. Scare quotes read as hedging. The writer distances themselves from their own word. Own it or cut it.
 
@@ -308,6 +324,9 @@ Before finishing any piece of writing. After any audit run inline (without the c
 - [ ] Antithesis check — any "not just X but Y" or "not X, but Y"? Remove the negative clause: if nothing substantive is lost, flag it.
 - [ ] Type-definition check — any "the kind of X where Y" endings used repeatedly? Rewrite the closers.
 - [ ] Overcorrection check — any fake-human moves (invented typos, slang, staged messiness) added to break a pattern? Cut them — fix the prose instead.
+- [ ] Link text check — any "click here", "learn more", "get started", or other action-describing standalone link text? Name the destination instead.
+- [ ] Exclamation mark check — more than one? Any in technical/factual prose? Remove the excess.
+- [ ] Semicolon check — two or more per paragraph? Split into separate sentences.
 
 ---
 
