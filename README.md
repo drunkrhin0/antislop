@@ -112,6 +112,7 @@ Returns a score out of 100, a violations table with severity and excerpt, and a 
 - [Banned: The Definitive Guide](https://docs.google.com/document/d/1uC9tBgfNZJytzLpg6MGk5mTfgJNbEK-h1hMLncQ5Mho/edit) (Creative Commons): comprehensive construction, phrase, and pattern taxonomy
 - [Pangram](https://www.pangram.com/blog/comprehensive-guide-to-spotting-ai-writing-patterns): exhaustive AI vocabulary cross-reference, phrasing patterns, uniform sentence length, organizational tells
 - [Anbeeld/WRITING.md](https://github.com/Anbeeld/WRITING.md) (MIT): specificity theater, catalog prose, regularity diagnostics, compound-modifier nuance, medium routing
+- [Bugcrowd Design System — Tone & Language](https://bugcrowd.design/docs/guidelines/content-guidelines/language/): plain English substitutions, link text semantics, punctuation tell detection
 - Self: scare quotes, random bolding, ambiguous bold bullets, em-dash as false authority, voice and authenticity framing
 
 ---

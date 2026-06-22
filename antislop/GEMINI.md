@@ -1,9 +1,9 @@
 # Antislop — Writing Style + Audit
 
-**Version:** 1.3.2  
+**Version:** 1.4.0  
 **Purpose:** Two capabilities in one extension. Suppress AI writing patterns when writing/editing. Score and flag them when auditing.
 
-**Sources:** [drunkrhin0/antislop](https://github.com/drunkrhin0/antislop) (MIT) — canonical source. Derived from blader/humanizer (MIT), jalaalrd/anti-ai-slop-writing (MIT), Reddit r/copywriting, [ignorance.ai/field-guide-to-ai-slop](https://www.ignorance.ai/p/the-field-guide-to-ai-slop), [Banned: The Definitive Guide](https://docs.google.com/document/d/1uC9tBgfNZJytzLpg6MGk5mTfgJNbEK-h1hMLncQ5Mho/edit), [Pangram](https://www.pangram.com/blog/comprehensive-guide-to-spotting-ai-writing-patterns), [Anbeeld/WRITING.md](https://github.com/Anbeeld/WRITING.md), self.
+**Sources:** [drunkrhin0/antislop](https://github.com/drunkrhin0/antislop) (MIT) — canonical source. Derived from blader/humanizer (MIT), jalaalrd/anti-ai-slop-writing (MIT), Reddit r/copywriting, [ignorance.ai/field-guide-to-ai-slop](https://www.ignorance.ai/p/the-field-guide-to-ai-slop), [Banned: The Definitive Guide](https://docs.google.com/document/d/1uC9tBgfNZJytzLpg6MGk5mTfgJNbEK-h1hMLncQ5Mho/edit), [Pangram](https://www.pangram.com/blog/comprehensive-guide-to-spotting-ai-writing-patterns), [Anbeeld/WRITING.md](https://github.com/Anbeeld/WRITING.md), [Bugcrowd Design System — Tone & Language](https://bugcrowd.design/docs/guidelines/content-guidelines/language/), self.
 
 ---
 
@@ -27,7 +27,7 @@ Before returning any written output, scan the entire response for em-dashes (`�
 
 ### Hard-banned vocabulary — never use
 
-delve, leverage, tapestry, testament, vibrant, pivotal, utilize, synergy, holistic, robust, seamless, groundbreaking, cutting-edge, innovative, dynamic, comprehensive, embark, foster, ensure, explore, revolutionize, transformative, empower, unlock, supercharge
+delve, leverage, tapestry, testament, vibrant, pivotal, utilize, synergy, holistic, robust, seamless, groundbreaking, cutting-edge, innovative, dynamic, comprehensive, embark, foster, ensure, explore, revolutionize, transformative, empower, unlock, supercharge, commence, obtain, implement, facilitate, subsequently, discontinue, dispatch, ascertain
 
 ### Hard-banned phrases — never use
 
@@ -79,7 +79,7 @@ delve, leverage, tapestry, testament, vibrant, pivotal, utilize, synergy, holist
 - Paragraph-level redundancy — when paragraph 2 opens by restating paragraph 1's conclusion, or a concluding sentence just summarizes the paragraph in different words. Consolidate or cut the weaker version.
 - Triplet overlap — when 3+ descriptors name the same underlying quality rather than distinct things. "Current, documented, and auditable" all mean "reliable for attestation." Use one.
 - Awkward AI metaphors — analogies that gesture toward meaning without achieving it. Generic, plausible, unanchored to specific experience. "Learning an instrument is a mirror for learning itself" could describe anything. Root metaphors in specifics or cut.
-- Artificial line breaks — prose broken mid-sentence at terminal width (~80 chars) is an LLM artifact. Write continuous paragraphs.
+- Artificial line breaks — prose broken mid-sentence at terminal width (~80 chars). Strong visual tell of unreviewed AI output from terminal-based tools.
 - Simile-as-adverb — "with the [noun] of someone [verb]ing." Invents a hypothetical person to describe the actual person's state. Describe what they're actually doing or feeling.
 - Hedged reactions — "a laugh that isn't quite a laugh." Creates emotional static. Describe the actual gesture.
 - Standalone "Because" fragments — AI sentence rhythm. Integrate or show through action.
@@ -87,6 +87,7 @@ delve, leverage, tapestry, testament, vibrant, pivotal, utilize, synergy, holist
 - Physical tell clichés — jaw tightening, throat bobbing, breath catching, hands curling. Interchangeable body language. Replace with character-specific responses.
 - Uniform sentence length — monotonous sentences that don't vary in length. AI stays in a narrow band. Mix short (under 10 words) and long (over 25).
 - Overlong sentences — 5+ commas, nested clauses, 3+ ideas in one sentence. AI refuses to end it. Break into two or three.
+- Generic action-describing link text — "click here", "learn more", "read more", "get started", "sign up", "download", "view", "details" as standalone anchor text. Describes the interaction instead of naming the destination. **Context matters:** product UI buttons and marketing CTAs are not AI tells — this targets link text in prose.
 - Anthropomorphized silence — "the silence stretched", "deafening silence." Silence doesn't do things. Show who breaks it, who endures it, what it costs.
 - Ending clichés — "And for now, that was enough", "It was a start." Summary posing as closure. End on action, decision, or consequence.
 - Specificity theater — invented specifics deployed to pass "be concrete" tests. Synthetic quotes, suspicious exactness, decorative factuality, hidden-mechanism narration. If you cannot verify a claim, attribute, soften, or cut. An invented number is worse than vague.
@@ -98,6 +99,10 @@ delve, leverage, tapestry, testament, vibrant, pivotal, utilize, synergy, holist
 ### Punctuation and formatting
 
 **Em dashes** — never use them. Break every sentence that contains one into two sentences with a period, or use a comma. No exceptions. After generation, scan for — and replace with . Break the sentence into two. Em-dashes as a rhetorical authority prop ("— not through magic, not through hype, but through hard work") are the worst offender — if the em-dash is padding a claim instead of making the argument, the sentence wasn't doing its job. Rewrite it.
+
+**Exclamation marks** — zero in technical or factual writing. One maximum in conversational prose. AI overuses them for fake enthusiasm.
+
+**Semicolons** — avoid in prose. AI reaches for semicolons as a sophistication signal. Two or more per paragraph is a rhythm tell. Use separate sentences instead. **Exception:** formal or academic writing where semicolons are conventional register.
 
 **Scare quotes** → don't quote words to signal ironic distance unless genuinely intentional. Scare quotes read as hedging. Own the word or cut it.
 
@@ -163,6 +168,14 @@ AI writing has no opinion, no experience, no war stories. It takes no position, 
 | Synergy | Collaboration, integration, or be specific |
 | Dynamic / Vibrant | Describe the actual change or quality |
 | Groundbreaking / Cutting-edge | New, first, fastest, or state the advantage |
+| Commence | Start, begin |
+| Obtain | Get |
+| Implement | Do, apply, set up |
+| Facilitate | Help |
+| Subsequently | Then, after |
+| Discontinue | Stop |
+| Dispatch | Send |
+| Ascertain | Find out |
 
 ### Audit checklist (before finishing any piece)
 
@@ -196,6 +209,9 @@ AI writing has no opinion, no experience, no war stories. It takes no position, 
 - [ ] Concession rhythm check — any "not X, but Y" used reflexively? Break at least one.
 - [ ] Antithesis check — any "not just X but Y" or "not X, but Y"? Remove the negative clause: if nothing substantive is lost, flag it.
 - [ ] Type-definition check — any "the kind of X where Y" endings used repeatedly? Rewrite the closers.
+- [ ] Link text check — any "click here", "learn more", "get started", or other action-describing standalone link text? Name the destination instead.
+- [ ] Exclamation mark check — more than one? Any in technical/factual prose? Remove the excess.
+- [ ] Semicolon check — two or more per paragraph in prose where formal register isn't the style? Split into separate sentences.
 
 ---
 
@@ -264,15 +280,18 @@ Do not skip categories. Do not combine violations. One instance = one violation 
 - System-tour prose (paragraph-to-category-bucket mapping)
 - Concession rhythm ("not X, but Y" as reflexive scaffold)
 - Type-definition endings ("the kind of X where Y" appearing repeatedly)
+- Generic action-describing link text ("click here", "learn more", "read more", "get started", "sign up", "download", "view", "details" as standalone anchor text — context matters: product UI buttons and marketing CTAs are not AI tells)
+- Artificial line breaks (mid-sentence breaks at terminal width — terminal-specific AI tell)
 
 **Low severity** (each = -2 points):
 - Title Case Headings
 - Inline-header lists (**Term:** explanation)
 - Compound-modifier over-hyphenation
 - Emojis in prose
-- Artificial line breaks (mid-sentence breaks at terminal width)
 - Passive voice / subjectless fragments
 - Standalone "Because" fragments ("Because she can't bear to look." — AI sentence rhythm)
+- Exclamation mark overuse (any in technical/factual prose, or more than one in conversational)
+- Semicolon overuse (2+ per paragraph — sophistication signal; exceptions: formal or academic register)
 
 ### Step 3 — Calculate score
 
