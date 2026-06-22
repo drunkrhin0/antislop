@@ -87,7 +87,7 @@ jobs:
           echo "=== Cross-file version sync ==="
           SKILL_VER=$(frontmatter_field "antislop/SKILL.md" "version")
           if [ -f antislop/gemini-extension.json ]; then
-            GEMINI_VER=$(python3 -c "import json; d=json.load(open('antislop/gemini-extension.json')); print(d['version'].rstrip('.0'))" 2>/dev/null || echo "")
+            GEMINI_VER=$(python3 -c "import json; d=json.load(open('antislop/gemini-extension.json')); print(d['version'])" 2>/dev/null || echo "")
             if [ -z "$GEMINI_VER" ]; then
               fail "antislop/gemini-extension.json: could not parse version"
             elif [ "$SKILL_VER" != "$GEMINI_VER" ]; then
