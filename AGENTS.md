@@ -71,6 +71,23 @@ To test repo changes in an agent conversation, copy the updated `SKILL.md` into 
 
 **`rstrip('.0')` in lint workflow breaks versions ending in `.0`.** The lint check at `.forgejo/workflows/lint-skills.yml:90` uses `python3 -c "version.rstrip('.0')"` to normalize the JSON version before comparing. For versions like `1.4.0`, this strips to `1.4`, causing a false version-drift failure. The version is actually consistent — the check is broken. Fix: use `re.sub(r'\.0+$', '', v)` or don't normalize at all.
 
+**`release-skills.yml` auto-tag workflow never fires on Forgejo.** The workflow in `.github/workflows/release-skills.yml` uses `actions/checkout` with SHA pinning, which fails on this Forgejo runner (DNS + SHA pin issues documented above). When a version bump lands on `main`, no tag is created automatically. The GitHub mirror gets the tag only if manually pushed. Fix: after merging a version bump to `main`, create and push both annotated tags manually:
+
+```bash
+git fetch origin main
+git tag -a antislop-vX.Y.Z -m "antislop vX.Y.Z" origin/main
+git tag -a antislop-audit-vX.Y.Z -m "antislop-audit vX.Y.Z" origin/main
+git push origin antislop-vX.Y.Z antislop-audit-vX.Y.Z
+```
+
+The Forgejo `create-release.yml` workflow picks up the tags and builds release assets automatically. Then push the same tags to GitHub for the mirror release:
+
+```bash
+git push git@github.com:drunkrhin0/antislop.git antislop-vX.Y.Z antislop-audit-vX.Y.Z
+```
+
+If creating a `.forgejo/workflows/release-skills.yml` Forgejo-native version of the auto-tag workflow, replace `actions/checkout` with a manual `git clone` via the internal HTTP URL and use tag refs only (no SHA pinning).
+
 ---
 
 <skills_system priority="1">
