@@ -100,7 +100,26 @@ jobs:
           fi
 
           # ------------------------------------------------------------------
-          # 4. Line count (warn at 500)
+          # 4. Cross-file: SKILL.md vs opencode agent file
+          # ------------------------------------------------------------------
+          echo ""
+          echo "=== Agent file version sync ==="
+          AGENT_FILE=".opencode/agents/antislop.md"
+          if [ -f "$AGENT_FILE" ]; then
+            AGENT_VER=$(sed -n 's/^\*\*Version:\*\* *\([0-9.]*\).*/\1/p' "$AGENT_FILE" | head -1)
+            if [ -z "$AGENT_VER" ]; then
+              fail "$AGENT_FILE: no **Version:** X.Y found in body"
+            elif [ "$SKILL_VER" != "$AGENT_VER" ]; then
+              fail "version drift: SKILL.md=$SKILL_VER, agent=$AGENT_VER"
+            else
+              echo "  PASS  SKILL.md=$SKILL_VER == agent=$AGENT_VER"
+            fi
+          else
+            echo "  SKIP  $AGENT_FILE not found"
+          fi
+
+          # ------------------------------------------------------------------
+          # 5. Line count (warn at 500, agent file excluded)
           # ------------------------------------------------------------------
           echo ""
           echo "=== Line count (limit: 500) ==="
@@ -114,7 +133,7 @@ jobs:
           done < <(find . -name SKILL.md -print0)
 
           # ------------------------------------------------------------------
-          # 5. Required sections
+          # 6. Required sections
           # ------------------------------------------------------------------
           echo ""
           echo "=== Required sections ==="
@@ -127,7 +146,7 @@ jobs:
           done < <(find . -name SKILL.md -print0)
 
           # ------------------------------------------------------------------
-          # 6. No emoji in rule headings (skipped on non-GNU grep)
+          # 7. No emoji in rule headings (skipped on non-GNU grep)
           # ------------------------------------------------------------------
           echo ""
           echo "=== Emoji-free headings ==="
