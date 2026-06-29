@@ -57,13 +57,25 @@ Requires Gemini Advanced. Create a Gem:
 
 Free tier: paste `antislop/GEMINI.md` at the start of any chat instead.
 
+### Agent (subagent)
+
+A spawnable subagent with two modes: style (writing) and audit (scoring). Lives in `.opencode/agents/antislop.md` in the repo. The agent file format is opencode-specific, but the rules content works as a system prompt in any LLM.
+
+Project-level use works automatically when the repo is cloned. opencode discovers `.opencode/agents/` in project directories. For global install, copy the agent file:
+
+```bash
+cp .opencode/agents/antislop.md ~/.config/opencode/agents/
+```
+
+Mention `@antislop` in opencode, or let the primary agent spawn it automatically when it detects a writing or auditing task. The agent is read-only: it returns corrected text or audit results, and the primary agent or user writes files.
+
+The agent is a hand-maintained derivative of the canonical SKILL.md files, like GEMINI.md. When adding a rule, update the agent file alongside the other derivatives.
+
 ### Manual
 
 Copy `antislop/` and `antislop-audit/` into your skills directory:
 - Claude Code: `~/.claude/skills/`
 - opencode: `~/.config/opencode/skills/`
-
-For AI chats (Claude.ai, ChatGPT, etc.), paste `antislop/SKILL.md` at the start of a conversation for writing, or `antislop-audit/SKILL.md` to audit text.
 
 ---
 

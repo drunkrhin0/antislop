@@ -4,6 +4,8 @@
 
 Antislop is a pair of AI agent skills that suppress detectable AI writing patterns. **antislop** is an ambient writing style that triggers automatically when asked to write or edit prose. **antislop-audit** scores text 0-100 and returns a violations list with severity and excerpts. Works with any agent supporting the SKILL.md or skills system.
 
+There is also an agent file (`.opencode/agents/antislop.md`) that bundles both modes into a single spawnable agent. The agent file format is opencode-specific, but the rules content works as a system prompt in any LLM.
+
 ## How to run and test
 
 ```bash
@@ -16,9 +18,22 @@ act push -W .forgejo/workflows/lint-skills.yml
 # Test a skill locally — copy to agent skills dir
 cp antislop/SKILL.md ~/.claude/skills/antislop/
 cp antislop-audit/SKILL.md ~/.claude/skills/antislop-audit/
+
+# Test the agent — copy to global agents dir
+cp .opencode/agents/antislop.md ~/.config/opencode/agents/
 ```
 
 To test repo changes in an agent conversation, copy the updated `SKILL.md` into the agent's skills directory and restart.
+
+### System prompt (any LLM)
+
+For agent frameworks or LLM chats that don't support skills or subagents, use the rules directly as a system prompt:
+
+- **Writing style:** paste `antislop/SKILL.md` at the start of a conversation
+- **Audit:** paste `antislop-audit/SKILL.md` and then the text to audit
+- **Both modes:** paste `.opencode/agents/antislop.md` (strip the YAML frontmatter) for the combined two-mode system prompt
+
+This works with Claude.ai, ChatGPT, Cursor, Windsurf, Zed, or any tool that accepts a custom system prompt.
 
 ## Key architecture decisions
 
@@ -34,14 +49,17 @@ To test repo changes in an agent conversation, copy the updated `SKILL.md` into 
 
 **GEMINI.md is a two-mode file.** It bundles both Style and Audit modes into one extension file, triggered by intent matching. Style mode outputs exclusively to Canvas. This structure differs from the split SKILL.md / SKILL.md approach for Claude Code.
 
+**Agent file is a hand-maintained derivative.** `.opencode/agents/antislop.md` combines style and audit rules with subagent-specific framing, like GEMINI.md. It has its own two-mode structure and subagent context. When adding a rule, update the agent file alongside the other derivatives.
+
 ## Conventions
 
 - Sentence case headings everywhere — no Title Case
 - Skill files stay under 500 lines (current: 306 / 309 / 243)
-- Version bumps touch four places: two frontmatter fields, one inline version, one JSON file
+- Version bumps touch five places: two frontmatter fields, one inline version, one JSON file, and the agent file's inline version
 - README follows antislop rules itself: zero em-dashes, no banned vocabulary
-- Workflows live in both `.forgejo/workflows/` and `.github/workflows/` — neither directory is the sole source
+- Forgejo is the primary CI. Workflows live in `.forgejo/workflows/`. GitHub is a mirror only.
 - When to Use / When NOT to Use sections are mandatory — the lint CI fails without them
+- Agent file (`.opencode/agents/antislop.md`) is a derivative synced alongside GEMINI.md and antislop-audit/SKILL.md
 
 ## Known gotchas
 
@@ -52,6 +70,8 @@ To test repo changes in an agent conversation, copy the updated `SKILL.md` into 
 **Asset upload parameter differs by platform.** Forgejo requires `?name=file.zip` as a query parameter on the asset upload endpoint. GitHub derives the name from the form field.
 
 **`antislop/GEMINI.md` is not a direct port of SKILL.md.** It has audit severity rules inline, a different organizational structure, and Canvas-only output instructions. Don't treat it as a 1:1 mirror when syncing rules.
+
+**`.opencode/agents/antislop.md` is not a direct port of either SKILL.md.** It combines style and audit rules with subagent framing: no Canvas, no skill-specific When to Use sections, intent matching for mode detection. Don't treat it as a 1:1 mirror when syncing rules. The 500-line skill convention does not apply to the agent file.
 
 **Global replacements cause collateral damage.** A `sed 's/—/,/g'` across markdown replaced em-dashes in code spans and explanations, not just prose. Always verify after bulk edits.
 
