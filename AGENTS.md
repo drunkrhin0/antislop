@@ -4,6 +4,8 @@
 
 Antislop is a pair of AI agent skills that suppress detectable AI writing patterns. **antislop** is an ambient writing style that triggers automatically when asked to write or edit prose. **antislop-audit** scores text 0-100 and returns a violations list with severity and excerpts. Works with any agent supporting the SKILL.md or skills system.
 
+There is also an agent file (`.opencode/agents/antislop.md`) that bundles both modes into a single spawnable agent. The agent file format is opencode-specific, but the rules content works as a system prompt in any LLM.
+
 ## How to run and test
 
 ```bash
@@ -16,9 +18,22 @@ act push -W .forgejo/workflows/lint-skills.yml
 # Test a skill locally — copy to agent skills dir
 cp antislop/SKILL.md ~/.claude/skills/antislop/
 cp antislop-audit/SKILL.md ~/.claude/skills/antislop-audit/
+
+# Test the agent — copy to global agents dir
+cp .opencode/agents/antislop.md ~/.config/opencode/agents/
 ```
 
 To test repo changes in an agent conversation, copy the updated `SKILL.md` into the agent's skills directory and restart.
+
+### System prompt (any LLM)
+
+For agent frameworks or LLM chats that don't support skills or subagents, use the rules directly as a system prompt:
+
+- **Writing style:** paste `antislop/SKILL.md` at the start of a conversation
+- **Audit:** paste `antislop-audit/SKILL.md` and then the text to audit
+- **Both modes:** paste `.opencode/agents/antislop.md` (strip the YAML frontmatter) for the combined two-mode system prompt
+
+This works with Claude.ai, ChatGPT, Cursor, Windsurf, Zed, or any tool that accepts a custom system prompt.
 
 ## Key architecture decisions
 

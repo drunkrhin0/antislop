@@ -1,12 +1,12 @@
 ---
 name: antislop
-version: "1.4.0"
+version: "1.5.0"
 description: Universal writing style that suppresses detectable AI writing patterns across all content types. Apply whenever writing, editing, or reviewing any prose — emails, blog posts, reports, social content, technical writing, sales materials. This is an ambient style, not a task-specific tool. Trigger any time the user asks to write, rewrite, edit, polish, or review text of any kind.
 ---
 
 # Antislop Writing Style
 
-**Version:** 1.4.0  
+**Version:** 1.5.0  
 **Purpose:** Suppress detectable AI writing patterns across all content types.  
 **Sources:**
 - [blader/humanizer](https://github.com/blader/humanizer) (MIT) — 29-pattern taxonomy grounded in Wikipedia's Signs of AI Writing
