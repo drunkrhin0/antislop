@@ -1,6 +1,6 @@
 # Antislop — Writing Style + Audit
 
-**Version:** 1.7.0  
+**Version:** 1.6.0  
 **Purpose:** Two capabilities in one extension. Suppress AI writing patterns when writing/editing. Score and flag them when auditing.
 
 **Sources:** [drunkrhin0/antislop](https://github.com/drunkrhin0/antislop) (MIT) — canonical source. Derived from blader/humanizer (MIT), jalaalrd/anti-ai-slop-writing (MIT), Reddit r/copywriting, [ignorance.ai/field-guide-to-ai-slop](https://www.ignorance.ai/p/the-field-guide-to-ai-slop), [Banned: The Definitive Guide](https://docs.google.com/document/d/1uC9tBgfNZJytzLpg6MGk5mTfgJNbEK-h1hMLncQ5Mho/edit), [Pangram](https://www.pangram.com/blog/comprehensive-guide-to-spotting-ai-writing-patterns), [Anbeeld/WRITING.md](https://github.com/Anbeeld/WRITING.md), [Bugcrowd Design System — Tone & Language](https://bugcrowd.design/docs/guidelines/content-guidelines/language/), self.
@@ -27,7 +27,7 @@ Before returning any written output, scan the entire response for em-dashes (`�
 
 ### Hard-banned vocabulary — never use
 
-delve, leverage, tapestry, testament, vibrant, pivotal, utilize, synergy, holistic, robust, seamless, groundbreaking, cutting-edge, innovative, dynamic, comprehensive, embark, foster, ensure, explore, revolutionize, transformative, empower, unlock, supercharge, commence, obtain, implement, facilitate, subsequently, discontinue, dispatch, ascertain, navigate, unpack
+delve, leverage, tapestry, testament, vibrant, pivotal, utilize, synergy, holistic, seamless, groundbreaking, cutting-edge, innovative, dynamic, embark, foster, revolutionize, transformative, empower, unlock, supercharge, commence, obtain, facilitate, subsequently, discontinue, dispatch, ascertain, navigate, unpack, enhance, showcase, interplay
 
 ### Hard-banned phrases — never use
 
@@ -55,7 +55,7 @@ delve, leverage, tapestry, testament, vibrant, pivotal, utilize, synergy, holist
 - "creeps in" — performative emphasis (e.g. "mediocrity creeps in")
 - "Here's the thing:" / "Here's what [X]" / "Here's why [X]" / "Here's the problem though:" — "here's what/this/that/why" throat-clearing constructions. Cut and state the point directly.
 - "Hint:" / "Plot twist:" / "Spoiler:" — self-referential asides that announce a reveal instead of making one
-- "Let me walk you through..." / "In this section, we'll..." / "As we'll see..." — announcing structure instead of moving through it
+- "Let me walk you through..." — announcing structure instead of moving through it
 - "Think about it:" / "And that's okay." — condescending prompt and unnecessary permission-granting
 - "With that in mind" / "Against this backdrop" / "Taken together" / "Zooming out" / "Building on this" — transition glue that signals a shift without performing one. Cut the glue and start with your point.
 - "This is more complex than it appears" / "The reality is more nuanced" / "It's complicated" — performing nuance instead of demonstrating it. Show the complexity through specifics or cut the framing.
@@ -116,6 +116,7 @@ delve, leverage, tapestry, testament, vibrant, pivotal, utilize, synergy, holist
 - System-tour prose — paragraphs mapping to predictable category buckets (background → mechanism → impact → verdict). Cross-wire so paragraphs depend on each other.
 - Concession rhythm — "not X, but Y" / "may sound X, but Y" used reflexively as paragraph scaffold across multiple paragraphs. Break at least one with a direct statement.
 - Type-definition endings — "the kind of X where Y" used repeatedly as paragraph closure. Rewrite the closing sentences.
+- Punchy one-liner closure — every paragraph ending with a short dramatic standalone sentence as a default closing move. Vary closers: end on a detail, a question, a quoted line, or a longer sentence.
 - False agency — giving inanimate things human verbs. "The data tells us", "the market rewards", "the decision emerges", "the culture shifts", "the conversation moves toward". Name the human. "The team fixed it that week" beats "the complaint becomes a fix." Related to anthropomorphized silence (covered above) but broader — this is about ascribing intent and action, not just treating concepts as actors.
 - Wisdom sandwich — paragraph that opens and closes with an aphorism (e.g. "Things change. [content]. And that's okay."). The framing does the work the middle should be doing. Open with the specific situation, not the general truth.
 - Corrective reveals — "You've been told X. Here's the truth: Y." Theatrical truth-telling construction that sets up a false belief so the author can heroically correct it. If no actual misconception exists, cut the setup and state your point directly.
@@ -244,6 +245,7 @@ AI writing has no opinion, no experience, no war stories. It takes no position, 
 - [ ] Concession rhythm check — any "not X, but Y" used reflexively? Break at least one.
 - [ ] Antithesis check — any "not just X but Y" or "not X, but Y"? Remove the negative clause: if nothing substantive is lost, flag it.
 - [ ] Type-definition check — any "the kind of X where Y" endings used repeatedly? Rewrite the closers.
+- [ ] Punchy one-liner check — any paragraph ending with a short dramatic standalone sentence as a default closing move? Vary the closers.
 - [ ] Wisdom sandwich check — any paragraph framed by bookend aphorisms? Open with the specific situation.
 - [ ] Corrective reveal check — any "You've been told X. Here's the truth: Y" setup? Cut it and state your point directly.
 - [ ] Link text check — any "click here", "learn more", "get started", or other action-describing standalone link text? Name the destination instead.
@@ -327,6 +329,8 @@ Do not skip categories. Do not combine violations. One instance = one violation 
 - Discovery narration ("As I explored this further", "What I found surprised me" — narrating the learning process instead of the finding)
 - Wisdom sandwich (paragraph framed by bookend aphorisms — framing doing the work the middle should do)
 - Corrective reveals ("You've been told X. Here's the truth: Y" — theatrical truth-telling setup)
+- Punchy one-liner closure (every paragraph ending with a short dramatic standalone sentence as a default closing move)
+- "It turns out" as throat-clearing opener
 
 **Low severity** (each = -2 points):
 - Title Case Headings

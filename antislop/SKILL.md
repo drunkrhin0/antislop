@@ -1,12 +1,12 @@
 ---
 name: antislop
-version: "1.7.0"
+version: "1.6.0"
 description: Universal writing style that suppresses detectable AI writing patterns across all content types. Apply whenever writing, editing, or reviewing any prose — emails, blog posts, reports, social content, technical writing, sales materials. This is an ambient style, not a task-specific tool. Trigger any time the user asks to write, rewrite, edit, polish, or review text of any kind.
 ---
 
 # Antislop Writing Style
 
-**Version:** 1.7.0  
+**Version:** 1.6.0  
 **Purpose:** Suppress detectable AI writing patterns across all content types.  
 **Sources:**
 - [blader/humanizer](https://github.com/blader/humanizer) (MIT) — 29-pattern taxonomy grounded in Wikipedia's Signs of AI Writing
@@ -62,26 +62,20 @@ This style is for human-readable prose. Do not apply to:
 | utilize | use |
 | synergy | collaboration, integration, or be specific |
 | holistic | complete, full-stack, or say what parts it covers |
-| robust | reliable, handles edge cases, or stays up |
 | seamless | works without friction, no setup needed |
 | groundbreaking | new, first, fastest, or state the advantage |
 | cutting-edge | new, first, fastest, or state the advantage |
 | innovative | new, different, or describe what it actually does |
 | dynamic | describe the actual change or quality |
-| comprehensive | full, complete, thorough |
 | embark | start, begin |
 | foster | support, encourage, build |
-| ensure | make sure (or restructure the sentence) |
-| explore | look into, try, study, test |
 | revolutionize | change, overhaul, replace |
 | transformative | changed X, made Y possible |
 | empower | enable, allow, make possible |
 | unlock | enable, allow, make possible |
 | supercharge | speed up, boost, improve |
-| significant | say how significant (3x faster, 40% reduction) |
 | commence | start, begin |
 | obtain | get |
-| implement | do, apply, set up |
 | facilitate | help |
 | subsequently | then, after |
 | discontinue | stop |
@@ -89,6 +83,9 @@ This style is for human-readable prose. Do not apply to:
 | ascertain | find out |
 | navigate | handle, address |
 | unpack | explain, examine |
+| enhance | improve, speed up |
+| showcase | show, demonstrate |
+| interplay | relationship, tension, or how they interact |
 
 ### Phrases — never use
 - "It's worth noting that" — delete it, state the thing directly
@@ -115,7 +112,7 @@ This style is for human-readable prose. Do not apply to:
 - "creeps in" — performative emphasis (e.g. "mediocrity creeps in")
 - "Here's the thing:" / "Here's what [X]" / "Here's why [X]" / "Here's the problem though:" — "here's what/this/that/why" throat-clearing constructions. Cut and state the point directly.
 - "Hint:" / "Plot twist:" / "Spoiler:" — self-referential asides that announce a reveal instead of making one
-- "Let me walk you through..." / "In this section, we'll..." / "As we'll see..." — announcing structure instead of moving through it
+- "Let me walk you through..." — announcing structure instead of moving through it
 - "Think about it:" / "And that's okay." — condescending prompt and unnecessary permission-granting
 - "With that in mind" / "Against this backdrop" / "Taken together" / "Zooming out" / "Building on this" — transition glue that signals a shift without performing one. Cut the glue and start with your point.
 - "This is more complex than it appears" / "The reality is more nuanced" / "It's complicated" — performing nuance instead of demonstrating it. Show the complexity through specifics or cut the framing.
@@ -179,6 +176,7 @@ This style is for human-readable prose. Do not apply to:
 - Bullet-point crutch — using bullet lists to dodge writing full paragraphs when prose would communicate more clearly. Bullets are for breakdowns, not paragraph avoidance.
 - Concession rhythm — "not X, but Y" / "may sound X, but Y" used reflexively as a paragraph scaffold. Concede, then correct. When multiple paragraphs follow this arc, the rhythm becomes the tell. Break at least one occurrence with a direct statement or a different move.
 - Type-definition endings — "the kind of X where Y" used as a default paragraph closure. If multiple paragraphs end with this classifying shape, rewrite the closers to carry forward rather than categorize.
+- Punchy one-liner paragraph closure — every paragraph ending with a short standalone dramatic sentence. AI uses this as a default closing move, creating homogeneous rhythm where each paragraph performs the same structural trick. Vary closers: end on a detail, a question, a quoted line, or a longer sentence.
 
 **Discourse-level:**
 
@@ -358,6 +356,7 @@ Before finishing any piece of writing. After any audit run inline (without the c
 - [ ] Concession rhythm check — any "not X, but Y" used reflexively across multiple paragraphs? Break at least one.
 - [ ] Antithesis check — any "not just X but Y" or "not X, but Y"? Remove the negative clause: if nothing substantive is lost, flag it.
 - [ ] Type-definition check — any "the kind of X where Y" endings used repeatedly? Rewrite the closers.
+- [ ] Punchy one-liner check — any paragraph ending with a short dramatic standalone sentence as a default closing move? Vary the closers.
 - [ ] Wisdom sandwich check — any paragraph framed by bookend aphorisms? Open with the specific situation.
 - [ ] Corrective reveal check — any "You've been told X. Here's the truth: Y" setup? Cut it and state your point directly.
 - [ ] Overcorrection check — any fake-human moves (invented typos, slang, staged messiness) added to break a pattern? Cut them — fix the prose instead.

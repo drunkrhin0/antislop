@@ -1,12 +1,12 @@
 ---
 name: antislop-audit
-version: "1.7.0"
+version: "1.6.0"
 description: Audits text for AI slop patterns and returns a slop score (0-100) plus a violations list. Use when the user asks to check, audit, review, grade, or score text for AI patterns, AI slop, or writing quality. Also trigger when the user pastes text and asks "does this pass?", "is this sloppy?", "flag the AI patterns", or similar. Companion to the antislop writing style skill. Zero exceptions — flag every violation regardless of perceived intent or satire.
 ---
 
 # Antislop Audit
 
-**Version:** 1.7.0  
+**Version:** 1.6.0  
 **Purpose:** Detect and score AI slop patterns in existing text. Flag every violation. No exceptions for intent.  
 **Companion skill:** antislop (writing style)  
 **Sources:** Same as antislop writing style: blader/humanizer, jalaalrd/anti-ai-slop-writing, Reddit r/copywriting, ignorance.ai/field-guide-to-ai-slop, Banned: The Definitive Guide, Pangram, Anbeeld/WRITING.md, Bugcrowd Design System, self
@@ -105,6 +105,8 @@ Do not skip categories. Do not combine violations. One instance = one violation 
 - Discovery narration ("As I explored this further", "What I found surprised me" — narrating the learning process instead of the finding)
 - Wisdom sandwich (paragraph framed by bookend aphorisms — the framing doing the work the middle should do)
 - Corrective reveals ("You've been told X. Here's the truth: Y" — theatrical truth-telling setup for hero correction)
+- Punchy one-liner closure (every paragraph ending with a short dramatic standalone sentence as a default closing move)
+- "It turns out" as throat-clearing opener
 
 **Low severity** (each = -2 points):
 - Title Case Headings (should be sentence case)
@@ -154,7 +156,7 @@ Always output in this exact structure:
 ## Pattern reference
 
 ### Banned vocabulary — High severity each
-delve, leverage, tapestry, testament, vibrant, pivotal, utilize, synergy, holistic, robust, seamless, groundbreaking, cutting-edge, innovative, dynamic, comprehensive, embark, foster, ensure, explore, revolutionize, transformative, empower, unlock, supercharge, significant, commence, obtain, implement, facilitate, subsequently, discontinue, dispatch, ascertain, navigate, unpack
+delve, leverage, tapestry, testament, vibrant, pivotal, utilize, synergy, holistic, seamless, groundbreaking, cutting-edge, innovative, dynamic, embark, foster, revolutionize, transformative, empower, unlock, supercharge, commence, obtain, facilitate, subsequently, discontinue, dispatch, ascertain, navigate, unpack, enhance, showcase, interplay
 
 ### Banned phrases — High severity each
 - "It's worth noting that"
@@ -174,14 +176,13 @@ delve, leverage, tapestry, testament, vibrant, pivotal, utilize, synergy, holist
 - "Let that sink in" — emphasis crutch
 - "Full stop." / "Period." — emphasis crutch (standalone as sentence)
 - "Make no mistake" — emphasis crutch
-- "It turns out" — throat-clearing opener
 - "Let me be clear" — throat-clearing opener
 - "I want to explore..." — meta-commentary
 - "This is what X actually looks like" — telling instead of showing
 - "creeps in" — performative emphasis (e.g. "mediocrity creeps in")
 - "Here's the thing:" / "Here's what [X]" / "Here's why [X]" / "Here's the problem though:" — "here's what/this/that/why" throat-clearing
 - "Hint:" / "Plot twist:" / "Spoiler:" — self-referential asides
-- "Let me walk you through..." / "In this section, we'll..." / "As we'll see..." — announcing structure
+- "Let me walk you through..." — announcing structure
 - "Think about it:" — condescending prompt
 - "And that's okay." — unnecessary permission-granting
 - "With that in mind" / "Against this backdrop" / "Taken together" / "Zooming out" / "Building on this" — transition glue
@@ -255,6 +256,8 @@ Any word in quotes where the quotes signal ironic distance rather than a direct 
 - Discovery narration — "As I explored this further", "What I found surprised me" — narrating the learning process instead of the finding. Medium severity each.
 - Wisdom sandwich — paragraph framed by bookend aphorisms with the framing doing the work the middle should do. Medium severity each.
 - Corrective reveals — "You've been told X. Here's the truth: Y" — theatrical truth-telling setup. Medium severity each.
+- Punchy one-liner closure — every paragraph ending with a short dramatic standalone sentence as a default closing move. Medium severity each.
+- "It turns out" as throat-clearing opener. Medium severity each.
 - Standalone "Because" fragments — "Because she can't bear to look." AI sentence rhythm. Low severity each.
 
 ### Structural patterns — High severity each
