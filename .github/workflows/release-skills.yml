@@ -11,6 +11,9 @@ on:
         description: 'Tag to release (e.g. antislop-v1.6.0)'
         required: true
 
+permissions:
+  contents: write
+
 jobs:
   release:
     runs-on: ubuntu-latest
