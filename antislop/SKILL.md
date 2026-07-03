@@ -1,12 +1,12 @@
 ---
 name: antislop
-version: "1.5.0"
+version: "1.6.0"
 description: Universal writing style that suppresses detectable AI writing patterns across all content types. Apply whenever writing, editing, or reviewing any prose — emails, blog posts, reports, social content, technical writing, sales materials. This is an ambient style, not a task-specific tool. Trigger any time the user asks to write, rewrite, edit, polish, or review text of any kind.
 ---
 
 # Antislop Writing Style
 
-**Version:** 1.5.0  
+**Version:** 1.6.0  
 **Purpose:** Suppress detectable AI writing patterns across all content types.  
 **Sources:**
 - [blader/humanizer](https://github.com/blader/humanizer) (MIT) — 29-pattern taxonomy grounded in Wikipedia's Signs of AI Writing
@@ -62,31 +62,30 @@ This style is for human-readable prose. Do not apply to:
 | utilize | use |
 | synergy | collaboration, integration, or be specific |
 | holistic | complete, full-stack, or say what parts it covers |
-| robust | reliable, handles edge cases, or stays up |
 | seamless | works without friction, no setup needed |
 | groundbreaking | new, first, fastest, or state the advantage |
 | cutting-edge | new, first, fastest, or state the advantage |
 | innovative | new, different, or describe what it actually does |
 | dynamic | describe the actual change or quality |
-| comprehensive | full, complete, thorough |
 | embark | start, begin |
 | foster | support, encourage, build |
-| ensure | make sure (or restructure the sentence) |
-| explore | look into, try, study, test |
 | revolutionize | change, overhaul, replace |
 | transformative | changed X, made Y possible |
 | empower | enable, allow, make possible |
 | unlock | enable, allow, make possible |
 | supercharge | speed up, boost, improve |
-| significant | say how significant (3x faster, 40% reduction) |
 | commence | start, begin |
 | obtain | get |
-| implement | do, apply, set up |
 | facilitate | help |
 | subsequently | then, after |
 | discontinue | stop |
 | dispatch | send |
 | ascertain | find out |
+| navigate | handle, address |
+| unpack | explain, examine |
+| enhance | improve, speed up |
+| showcase | show, demonstrate |
+| interplay | relationship, tension, or how they interact |
 
 ### Phrases — never use
 - "It's worth noting that" — delete it, state the thing directly
@@ -103,6 +102,21 @@ This style is for human-readable prose. Do not apply to:
 - "Research shows" / "experts believe" without naming the research or expert
 - "Despite challenges, continues to thrive"
 - "The future looks bright" / "exciting times ahead"
+- "Let that sink in" — emphasis crutch
+- "Full stop." / "Period." — emphasis crutch (standalone as sentence)
+- "Make no mistake" — emphasis crutch
+- "It turns out" — throat-clearing opener
+- "Let me be clear" — throat-clearing opener
+- "I want to explore..." — meta-commentary that announces intent instead of doing it
+- "This is what X actually looks like" — telling instead of showing
+- "creeps in" — performative emphasis (e.g. "mediocrity creeps in")
+- "Here's the thing:" / "Here's what [X]" / "Here's why [X]" / "Here's the problem though:" — "here's what/this/that/why" throat-clearing constructions. Cut and state the point directly.
+- "Hint:" / "Plot twist:" / "Spoiler:" — self-referential asides that announce a reveal instead of making one
+- "Let me walk you through..." — announcing structure instead of moving through it
+- "Think about it:" / "And that's okay." — condescending prompt and unnecessary permission-granting
+- "With that in mind" / "Against this backdrop" / "Taken together" / "Zooming out" / "Building on this" — transition glue that signals a shift without performing one. Cut the glue and start with your point.
+- "This is more complex than it appears" / "The reality is more nuanced" / "It's complicated" — performing nuance instead of demonstrating it. Show the complexity through specifics or cut the framing.
+- "As I explored this further" / "What I found surprised me" / "The more I looked" — narrating the learning process instead of delivering what was learned. Cut the setup and present the finding.
 
 ### Filler phrases — never use
 - "In order to" → "To"
@@ -121,6 +135,7 @@ This style is for human-readable prose. Do not apply to:
 - "You're absolutely right" / "That's a great point"
 - "I hope this helps!" / "Let me know if you have questions!"
 - "Moreover" / "Furthermore" / "Additionally" — max once per 800 words; never consecutive
+- "So" as paragraph opener — cut it. Let the paragraph start with its content.
 
 ### Structure — never use
 
@@ -143,6 +158,11 @@ This style is for human-readable prose. Do not apply to:
 - Uniform sentence length — monotonous sentences that don't vary in length or rhythm. AI stays in a narrow band of 15-25 words per sentence, every sentence. Human writing mixes short and long. Aim for 20-30% of sentences under 10 words, some over 25.
 - Overlong sentences — 5+ commas, nested clauses, 3+ ideas in one sentence. AI refuses to end it because it keeps qualifying, hedging, and adding detail. Break into two or three. Periods are free.
 - Generic action-describing link text — "click here", "learn more", "read more", "get started", "sign up", "download", "view", "details" as standalone anchor text. Describes the interaction (click, learn, read) instead of naming the destination. AI writes this way because it doesn't know what specific thing it's linking to. Name what you're linking to. **Context matters:** product UI buttons and standard marketing CTAs are not AI tells — this rule targets link text in prose where the destination should be described.
+- Wh- sentence openers — sentences starting with What, When, Where, Which, Who, Why, How as a default pattern. Restructure to lead with the subject or verb. "What makes this hard is..." → "The constraint is..." Rhetorical-question hooks are covered separately. Default Wh- openers are a rhythm tell.
+- Lazy extremes — "always", "never", "everything", "nothing", "everyone", "nobody" as false universals. AI reaches for absolute language as high-probability completions. Replace with specifics: "every team" → "teams we surveyed" or "12 out of 14 teams".
+- Weak verb constructions — "work to ensure", "seek to address", "take steps to", "begin to understand". Hedging through indirection. AI uses these to describe action without committing to it. Replace with the actual action: "fixed", "handled", "investigated", "decided".
+- Empty declaratives — sentences with declarative form that carry zero specific information. "This matters.", "Everything is connected.", "The rules have changed.", "The stakes are high." They perform significance without delivering substance. If the sentence can be removed without losing information, cut or rewrite it to state what specifically matters or changed.
+- Transformation chains — three or more sequential sentences each claiming a change, creating false momentum: "X became Y. Y became Z." AI serializes transformations as a narrative shortcut. Consolidate or cut.
 
 **Paragraph-level:**
 
@@ -156,6 +176,7 @@ This style is for human-readable prose. Do not apply to:
 - Bullet-point crutch — using bullet lists to dodge writing full paragraphs when prose would communicate more clearly. Bullets are for breakdowns, not paragraph avoidance.
 - Concession rhythm — "not X, but Y" / "may sound X, but Y" used reflexively as a paragraph scaffold. Concede, then correct. When multiple paragraphs follow this arc, the rhythm becomes the tell. Break at least one occurrence with a direct statement or a different move.
 - Type-definition endings — "the kind of X where Y" used as a default paragraph closure. If multiple paragraphs end with this classifying shape, rewrite the closers to carry forward rather than categorize.
+- Punchy one-liner paragraph closure — every paragraph ending with a short standalone dramatic sentence. AI uses this as a default closing move, creating homogeneous rhythm where each paragraph performs the same structural trick. Vary closers: end on a detail, a question, a quoted line, or a longer sentence.
 
 **Discourse-level:**
 
@@ -171,6 +192,9 @@ This style is for human-readable prose. Do not apply to:
 - Specificity theater — invented specifics deployed to pass a "be concrete" check. Includes synthetic quotes, suspicious decimal precision ("47.3%"), decorative factuality (dates/numbers added that weren't in source material), and hidden-mechanism narration (claiming to know what a system "really" does under the hood without observable evidence). If you cannot verify a claim, attribute it, soften it, or cut it. An invented number is worse than "many" because it reads authoritative while being fabricated.
 - Catalog prose — a paragraph that is mainly names, milestones, categories, feature nouns, or system labels with no material consequence attached. If each paragraph can be summarized with a single label ("background", "mechanism", "impact"), the piece is a catalog, not an argument. Pick one change and trace its consequence.
 - System-tour prose — paragraphs that map one-to-one with predictable category buckets. Background paragraph, mechanism paragraph, impact paragraph, verdict paragraph. Cross-wire the piece so paragraphs depend on each other rather than sitting like labeled boxes.
+- False agency — giving inanimate things human verbs. "The data tells us", "the market rewards", "the decision emerges", "the culture shifts", "the conversation moves toward". Name the human. "The team fixed it that week" beats "the complaint becomes a fix." Related to anthropomorphized silence (covered above) but broader — this is about ascribing intent and action, not just treating concepts as actors.
+- Wisdom sandwich — paragraph that opens and closes with an aphorism (e.g. "Things change. [content]. And that's okay."). The framing does the work the middle should be doing. Open with the specific situation, not the general truth.
+- Corrective reveals — "You've been told X. Here's the truth: Y." Theatrical truth-telling construction that sets up a false belief so the author can heroically correct it. If no actual misconception exists, cut the setup and state your point directly.
 
 ---
 
@@ -292,6 +316,17 @@ When rules conflict, resolve in this order:
 Before finishing any piece of writing. After any audit run inline (without the companion skill), end with: `Reply "fix" to apply corrections.`
 
 - [ ] Searched for all hard-banned phrases
+- [ ] "Here's what" check — any "here's the thing", "here's what I mean" throat-clearing? Cut to the point.
+- [ ] Cut quotables check — if any sentence sounds like a pull-quote, rewrite it
+- [ ] Transition glue check — any "With that in mind", "Against this backdrop", "Zooming out"? Cut the glue and start with your point.
+- [ ] Complexity signalling check — any "This is more complex than it appears" / "It's complicated" framing? Demonstrate complexity through specifics.
+- [ ] Discovery narration check — any "As I explored this further" / "The more I looked" narrating the learning process? Cut the setup and deliver the finding.
+- [ ] False agency check — any inanimate thing doing a human verb? Name the person.
+- [ ] Lazy extremes check — any "always", "never", "everything", "nothing" doing vague universal work? Replace with specifics.
+- [ ] Wh- opener check — any string of sentences starting with What/Why/How? Restructure.
+- [ ] Weak verb check — any "work to ensure", "seek to address", "begin to understand" hedging through indirection? Replace with actual action.
+- [ ] Empty declarative check — any "This matters", "Everything is connected", "The stakes are high" performing significance without substance? Cut or rewrite with specifics.
+- [ ] Transformation chain check — any "X became Y. Y became Z" sequences creating false momentum? Consolidate.
 - [ ] Em-dash count checked — zero permitted. Scan and replace any — with . or ,
 - [ ] Scare quotes checked — do they earn it or are they hedging?
 - [ ] Bolded text checked — intentional or decorative?
@@ -321,6 +356,9 @@ Before finishing any piece of writing. After any audit run inline (without the c
 - [ ] Concession rhythm check — any "not X, but Y" used reflexively across multiple paragraphs? Break at least one.
 - [ ] Antithesis check — any "not just X but Y" or "not X, but Y"? Remove the negative clause: if nothing substantive is lost, flag it.
 - [ ] Type-definition check — any "the kind of X where Y" endings used repeatedly? Rewrite the closers.
+- [ ] Punchy one-liner check — any paragraph ending with a short dramatic standalone sentence as a default closing move? Vary the closers.
+- [ ] Wisdom sandwich check — any paragraph framed by bookend aphorisms? Open with the specific situation.
+- [ ] Corrective reveal check — any "You've been told X. Here's the truth: Y" setup? Cut it and state your point directly.
 - [ ] Overcorrection check — any fake-human moves (invented typos, slang, staged messiness) added to break a pattern? Cut them — fix the prose instead.
 - [ ] Link text check — any "click here", "learn more", "get started", or other action-describing standalone link text? Name the destination instead.
 - [ ] Exclamation mark check — more than one? Any in technical/factual prose? Remove the excess.

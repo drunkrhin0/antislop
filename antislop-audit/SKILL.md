@@ -1,12 +1,12 @@
 ---
 name: antislop-audit
-version: "1.5.0"
+version: "1.6.0"
 description: Audits text for AI slop patterns and returns a slop score (0-100) plus a violations list. Use when the user asks to check, audit, review, grade, or score text for AI patterns, AI slop, or writing quality. Also trigger when the user pastes text and asks "does this pass?", "is this sloppy?", "flag the AI patterns", or similar. Companion to the antislop writing style skill. Zero exceptions — flag every violation regardless of perceived intent or satire.
 ---
 
 # Antislop Audit
 
-**Version:** 1.5.0  
+**Version:** 1.6.0  
 **Purpose:** Detect and score AI slop patterns in existing text. Flag every violation. No exceptions for intent.  
 **Companion skill:** antislop (writing style)  
 **Sources:** Same as antislop writing style: blader/humanizer, jalaalrd/anti-ai-slop-writing, Reddit r/copywriting, ignorance.ai/field-guide-to-ai-slop, Banned: The Definitive Guide, Pangram, Anbeeld/WRITING.md, Bugcrowd Design System, self
@@ -94,6 +94,19 @@ Do not skip categories. Do not combine violations. One instance = one violation 
 - Type-definition endings ("the kind of X where Y" appearing multiple times as paragraph closure)
 - Generic action-describing link text ("click here", "learn more", "read more", "get started", "sign up", "download", "view", "details" as standalone anchor text naming the interaction instead of the destination — context matters: product UI buttons and marketing CTAs are not AI tells)
 - Artificial line breaks (mid-sentence breaks at terminal width ~80 chars — terminal-specific AI tell)
+- Wh- sentence openers (sentences starting with What, When, Where, Which, Who, Why, How as a default rhythm tell)
+- Lazy extremes ("always", "never", "everything", "nothing", "everyone", "nobody" as false universals)
+- False agency (inanimate things doing human verbs — "the data tells us", "the decision emerges", "the culture shifts")
+- Weak verb constructions ("work to ensure", "seek to address", "begin to understand" — hedging through indirection)
+- Empty declaratives (sentences that perform significance without substance — "This matters", "Everything is connected", "The stakes are high")
+- Transformation chains (three or more sequential sentences claiming a change — "X became Y. Y became Z." creating false momentum)
+- Transition glue ("With that in mind", "Against this backdrop", "Zooming out" — glue that signals a shift without performing one)
+- Complexity signalling ("This is more complex than it appears", "It's complicated" — performing nuance instead of demonstrating it)
+- Discovery narration ("As I explored this further", "What I found surprised me" — narrating the learning process instead of the finding)
+- Wisdom sandwich (paragraph framed by bookend aphorisms — the framing doing the work the middle should do)
+- Corrective reveals ("You've been told X. Here's the truth: Y" — theatrical truth-telling setup for hero correction)
+- Punchy one-liner closure (every paragraph ending with a short dramatic standalone sentence as a default closing move)
+- "It turns out" as throat-clearing opener
 
 **Low severity** (each = -2 points):
 - Title Case Headings (should be sentence case)
@@ -143,7 +156,7 @@ Always output in this exact structure:
 ## Pattern reference
 
 ### Banned vocabulary — High severity each
-delve, leverage, tapestry, testament, vibrant, pivotal, utilize, synergy, holistic, robust, seamless, groundbreaking, cutting-edge, innovative, dynamic, comprehensive, embark, foster, ensure, explore, revolutionize, transformative, empower, unlock, supercharge, significant, commence, obtain, implement, facilitate, subsequently, discontinue, dispatch, ascertain
+delve, leverage, tapestry, testament, vibrant, pivotal, utilize, synergy, holistic, seamless, groundbreaking, cutting-edge, innovative, dynamic, embark, foster, revolutionize, transformative, empower, unlock, supercharge, commence, obtain, facilitate, subsequently, discontinue, dispatch, ascertain, navigate, unpack, enhance, showcase, interplay
 
 ### Banned phrases — High severity each
 - "It's worth noting that"
@@ -160,6 +173,21 @@ delve, leverage, tapestry, testament, vibrant, pivotal, utilize, synergy, holist
 - "Despite challenges, continues to thrive"
 - "The future looks bright" / "exciting times ahead"
 - "In the realm of" / "dynamic world of"
+- "Let that sink in" — emphasis crutch
+- "Full stop." / "Period." — emphasis crutch (standalone as sentence)
+- "Make no mistake" — emphasis crutch
+- "Let me be clear" — throat-clearing opener
+- "I want to explore..." — meta-commentary
+- "This is what X actually looks like" — telling instead of showing
+- "creeps in" — performative emphasis (e.g. "mediocrity creeps in")
+- "Here's the thing:" / "Here's what [X]" / "Here's why [X]" / "Here's the problem though:" — "here's what/this/that/why" throat-clearing
+- "Hint:" / "Plot twist:" / "Spoiler:" — self-referential asides
+- "Let me walk you through..." — announcing structure
+- "Think about it:" — condescending prompt
+- "And that's okay." — unnecessary permission-granting
+- "With that in mind" / "Against this backdrop" / "Taken together" / "Zooming out" / "Building on this" — transition glue
+- "This is more complex than it appears" / "The reality is more nuanced" / "It's complicated" — performing nuance instead of demonstrating it
+- "As I explored this further" / "What I found surprised me" / "The more I looked" — narrating the learning process instead of delivering what was learned
 
 ### Banned openers and closers — Medium severity each
 - "In conclusion" / "To summarize" / "To wrap up"
@@ -167,6 +195,7 @@ delve, leverage, tapestry, testament, vibrant, pivotal, utilize, synergy, holist
 - "You're absolutely right" / "That's a great point"
 - "I hope this helps!" / "Let me know if you have questions!"
 - "Moreover" / "Furthermore" / "Additionally" (flag each instance as medium severity)
+- "So" as paragraph opener
 
 ### Em-dash rules
 - Any em-dash → **High severity**. No exceptions.
@@ -219,6 +248,16 @@ Any word in quotes where the quotes signal ironic distance rather than a direct 
 - Concession rhythm — "not X, but Y" or "may sound X, but Y" used reflexively as paragraph scaffold across multiple paragraphs. Medium severity each.
 - Type-definition endings — "the kind of X where Y" used as default paragraph closure appearing multiple times. Medium severity each.
 - Uniform sentence length — monotonous sentences that stay in a narrow length band with no variation. Medium severity each.
+- Weak verb constructions — "work to ensure", "seek to address", "begin to understand" — hedging through indirection. Medium severity each.
+- Empty declaratives — sentences performing significance without substance: "This matters", "Everything is connected", "The stakes are high". Medium severity each.
+- Transformation chains — three or more sequential sentences claiming a change: "X became Y. Y became Z." creating false momentum. Medium severity each.
+- Transition glue — "With that in mind", "Against this backdrop", "Zooming out" — signals a shift without performing one. Medium severity each.
+- Complexity signalling — "This is more complex than it appears", "It's complicated" — performing nuance instead of demonstrating it. Medium severity each.
+- Discovery narration — "As I explored this further", "What I found surprised me" — narrating the learning process instead of the finding. Medium severity each.
+- Wisdom sandwich — paragraph framed by bookend aphorisms with the framing doing the work the middle should do. Medium severity each.
+- Corrective reveals — "You've been told X. Here's the truth: Y" — theatrical truth-telling setup. Medium severity each.
+- Punchy one-liner closure — every paragraph ending with a short dramatic standalone sentence as a default closing move. Medium severity each.
+- "It turns out" as throat-clearing opener. Medium severity each.
 - Standalone "Because" fragments — "Because she can't bear to look." AI sentence rhythm. Low severity each.
 
 ### Structural patterns — High severity each
