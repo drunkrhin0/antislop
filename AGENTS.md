@@ -108,6 +108,8 @@ git push git@github.com:drunkrhin0/antislop.git antislop-vX.Y.Z antislop-audit-v
 
 If creating a `.forgejo/workflows/release-skills.yml` Forgejo-native version of the auto-tag workflow, replace `actions/checkout` with a manual `git clone` via the internal HTTP URL and use tag refs only (no SHA pinning).
 
+**GitHub release workflow needs `permissions: contents: write`.** `.github/workflows/release-skills.yml` uses `softprops/action-gh-release@v2` to create releases. The default `GITHUB_TOKEN` cannot create releases — the job-level `permissions:` block is required. Without it, you get `403 Resource not accessible by integration`. Added in commit `f3b7269`.
+
 ---
 
 <skills_system priority="1">
