@@ -1,6 +1,6 @@
 # Antislop — Writing Style + Audit
 
-**Version:** 1.4.0  
+**Version:** 1.7.0  
 **Purpose:** Two capabilities in one extension. Suppress AI writing patterns when writing/editing. Score and flag them when auditing.
 
 **Sources:** [drunkrhin0/antislop](https://github.com/drunkrhin0/antislop) (MIT) — canonical source. Derived from blader/humanizer (MIT), jalaalrd/anti-ai-slop-writing (MIT), Reddit r/copywriting, [ignorance.ai/field-guide-to-ai-slop](https://www.ignorance.ai/p/the-field-guide-to-ai-slop), [Banned: The Definitive Guide](https://docs.google.com/document/d/1uC9tBgfNZJytzLpg6MGk5mTfgJNbEK-h1hMLncQ5Mho/edit), [Pangram](https://www.pangram.com/blog/comprehensive-guide-to-spotting-ai-writing-patterns), [Anbeeld/WRITING.md](https://github.com/Anbeeld/WRITING.md), [Bugcrowd Design System — Tone & Language](https://bugcrowd.design/docs/guidelines/content-guidelines/language/), self.
@@ -27,7 +27,7 @@ Before returning any written output, scan the entire response for em-dashes (`�
 
 ### Hard-banned vocabulary — never use
 
-delve, leverage, tapestry, testament, vibrant, pivotal, utilize, synergy, holistic, robust, seamless, groundbreaking, cutting-edge, innovative, dynamic, comprehensive, embark, foster, ensure, explore, revolutionize, transformative, empower, unlock, supercharge, commence, obtain, implement, facilitate, subsequently, discontinue, dispatch, ascertain
+delve, leverage, tapestry, testament, vibrant, pivotal, utilize, synergy, holistic, robust, seamless, groundbreaking, cutting-edge, innovative, dynamic, comprehensive, embark, foster, ensure, explore, revolutionize, transformative, empower, unlock, supercharge, commence, obtain, implement, facilitate, subsequently, discontinue, dispatch, ascertain, navigate, unpack
 
 ### Hard-banned phrases — never use
 
@@ -45,6 +45,21 @@ delve, leverage, tapestry, testament, vibrant, pivotal, utilize, synergy, holist
 - "Research shows" / "experts believe" without naming the research or expert
 - "Despite challenges, continues to thrive"
 - "The future looks bright" / "exciting times ahead"
+- "Let that sink in" — emphasis crutch
+- "Full stop." / "Period." — emphasis crutch (standalone as sentence)
+- "Make no mistake" — emphasis crutch
+- "It turns out" — throat-clearing opener
+- "Let me be clear" — throat-clearing opener
+- "I want to explore..." — meta-commentary
+- "This is what X actually looks like" — telling instead of showing
+- "creeps in" — performative emphasis (e.g. "mediocrity creeps in")
+- "Here's the thing:" / "Here's what [X]" / "Here's why [X]" / "Here's the problem though:" — "here's what/this/that/why" throat-clearing constructions. Cut and state the point directly.
+- "Hint:" / "Plot twist:" / "Spoiler:" — self-referential asides that announce a reveal instead of making one
+- "Let me walk you through..." / "In this section, we'll..." / "As we'll see..." — announcing structure instead of moving through it
+- "Think about it:" / "And that's okay." — condescending prompt and unnecessary permission-granting
+- "With that in mind" / "Against this backdrop" / "Taken together" / "Zooming out" / "Building on this" — transition glue that signals a shift without performing one. Cut the glue and start with your point.
+- "This is more complex than it appears" / "The reality is more nuanced" / "It's complicated" — performing nuance instead of demonstrating it. Show the complexity through specifics or cut the framing.
+- "As I explored this further" / "What I found surprised me" / "The more I looked" — narrating the learning process instead of delivering what was learned. Cut the setup and present the finding.
 
 ### Hard-banned openers and closers — never use
 
@@ -53,6 +68,7 @@ delve, leverage, tapestry, testament, vibrant, pivotal, utilize, synergy, holist
 - "You're absolutely right" / "That's a great point"
 - "I hope this helps!" / "Let me know if you have questions!"
 - "Moreover" / "Furthermore" / "Additionally" — max once per 800 words; never consecutive
+- "So" as paragraph opener — cut it. Let the paragraph start with its content.
 
 ### Hard-banned structure — never use
 
@@ -88,6 +104,11 @@ delve, leverage, tapestry, testament, vibrant, pivotal, utilize, synergy, holist
 - Uniform sentence length — monotonous sentences that don't vary in length. AI stays in a narrow band. Mix short (under 10 words) and long (over 25).
 - Overlong sentences — 5+ commas, nested clauses, 3+ ideas in one sentence. AI refuses to end it. Break into two or three.
 - Generic action-describing link text — "click here", "learn more", "read more", "get started", "sign up", "download", "view", "details" as standalone anchor text. Describes the interaction instead of naming the destination. **Context matters:** product UI buttons and marketing CTAs are not AI tells — this targets link text in prose.
+- Wh- sentence openers — sentences starting with What, When, Where, Which, Who, Why, How as a default pattern. Restructure to lead with the subject or verb. "What makes this hard is..." → "The constraint is..." Rhetorical-question hooks are covered separately. Default Wh- openers are a rhythm tell.
+- Lazy extremes — "always", "never", "everything", "nothing", "everyone", "nobody" as false universals. AI reaches for absolute language as high-probability completions. Replace with specifics: "every team" → "teams we surveyed" or "12 out of 14 teams".
+- Weak verb constructions — "work to ensure", "seek to address", "take steps to", "begin to understand". Hedging through indirection. Replace with the actual action: "fixed", "handled", "investigated", "decided".
+- Empty declaratives — sentences with declarative form that carry zero specific information. "This matters.", "Everything is connected.", "The rules have changed.", "The stakes are high." They perform significance without delivering substance. If the sentence can be removed without losing information, cut or rewrite it to state what specifically matters or changed.
+- Transformation chains — three or more sequential sentences each claiming a change, creating false momentum: "X became Y. Y became Z." Consolidate or cut.
 - Anthropomorphized silence — "the silence stretched", "deafening silence." Silence doesn't do things. Show who breaks it, who endures it, what it costs.
 - Ending clichés — "And for now, that was enough", "It was a start." Summary posing as closure. End on action, decision, or consequence.
 - Specificity theater — invented specifics deployed to pass "be concrete" tests. Synthetic quotes, suspicious exactness, decorative factuality, hidden-mechanism narration. If you cannot verify a claim, attribute, soften, or cut. An invented number is worse than vague.
@@ -95,6 +116,9 @@ delve, leverage, tapestry, testament, vibrant, pivotal, utilize, synergy, holist
 - System-tour prose — paragraphs mapping to predictable category buckets (background → mechanism → impact → verdict). Cross-wire so paragraphs depend on each other.
 - Concession rhythm — "not X, but Y" / "may sound X, but Y" used reflexively as paragraph scaffold across multiple paragraphs. Break at least one with a direct statement.
 - Type-definition endings — "the kind of X where Y" used repeatedly as paragraph closure. Rewrite the closing sentences.
+- False agency — giving inanimate things human verbs. "The data tells us", "the market rewards", "the decision emerges", "the culture shifts", "the conversation moves toward". Name the human. "The team fixed it that week" beats "the complaint becomes a fix." Related to anthropomorphized silence (covered above) but broader — this is about ascribing intent and action, not just treating concepts as actors.
+- Wisdom sandwich — paragraph that opens and closes with an aphorism (e.g. "Things change. [content]. And that's okay."). The framing does the work the middle should be doing. Open with the specific situation, not the general truth.
+- Corrective reveals — "You've been told X. Here's the truth: Y." Theatrical truth-telling construction that sets up a false belief so the author can heroically correct it. If no actual misconception exists, cut the setup and state your point directly.
 
 ### Punctuation and formatting
 
@@ -180,6 +204,17 @@ AI writing has no opinion, no experience, no war stories. It takes no position, 
 ### Audit checklist (before finishing any piece)
 
 - [ ] Searched for all hard-banned phrases
+- [ ] "Here's what" check — any "here's the thing", "here's what I mean" throat-clearing? Cut to the point.
+- [ ] Cut quotables check — if any sentence sounds like a pull-quote, rewrite it
+- [ ] Transition glue check — any "With that in mind", "Against this backdrop", "Zooming out"? Cut the glue and start with your point.
+- [ ] Complexity signalling check — any "This is more complex than it appears" / "It's complicated" framing? Demonstrate complexity through specifics.
+- [ ] Discovery narration check — any "As I explored this further" / "The more I looked" narrating the learning process? Cut the setup and deliver the finding.
+- [ ] False agency check — any inanimate thing doing a human verb? Name the person.
+- [ ] Lazy extremes check — any "always", "never", "everything", "nothing" doing vague universal work? Replace with specifics.
+- [ ] Wh- opener check — any string of sentences starting with What/Why/How? Restructure.
+- [ ] Weak verb check — any "work to ensure", "seek to address", "begin to understand" hedging through indirection? Replace with actual action.
+- [ ] Empty declarative check — any "This matters", "Everything is connected", "The stakes are high" performing significance without substance? Cut or rewrite with specifics.
+- [ ] Transformation chain check — any "X became Y. Y became Z" sequences creating false momentum? Consolidate.
 - [ ] Em-dash count checked — zero permitted. Scan and replace any — with . or ,
 - [ ] Scare quotes checked — do they earn it or are they hedging?
 - [ ] Bolded text checked — intentional or decorative?
@@ -209,6 +244,8 @@ AI writing has no opinion, no experience, no war stories. It takes no position, 
 - [ ] Concession rhythm check — any "not X, but Y" used reflexively? Break at least one.
 - [ ] Antithesis check — any "not just X but Y" or "not X, but Y"? Remove the negative clause: if nothing substantive is lost, flag it.
 - [ ] Type-definition check — any "the kind of X where Y" endings used repeatedly? Rewrite the closers.
+- [ ] Wisdom sandwich check — any paragraph framed by bookend aphorisms? Open with the specific situation.
+- [ ] Corrective reveal check — any "You've been told X. Here's the truth: Y" setup? Cut it and state your point directly.
 - [ ] Link text check — any "click here", "learn more", "get started", or other action-describing standalone link text? Name the destination instead.
 - [ ] Exclamation mark check — more than one? Any in technical/factual prose? Remove the excess.
 - [ ] Semicolon check — two or more per paragraph in prose where formal register isn't the style? Split into separate sentences.
@@ -282,6 +319,14 @@ Do not skip categories. Do not combine violations. One instance = one violation 
 - Type-definition endings ("the kind of X where Y" appearing repeatedly)
 - Generic action-describing link text ("click here", "learn more", "read more", "get started", "sign up", "download", "view", "details" as standalone anchor text — context matters: product UI buttons and marketing CTAs are not AI tells)
 - Artificial line breaks (mid-sentence breaks at terminal width — terminal-specific AI tell)
+- Weak verb constructions ("work to ensure", "seek to address", "begin to understand" — hedging through indirection)
+- Empty declaratives (sentences performing significance without substance — "This matters", "Everything is connected", "The stakes are high")
+- Transformation chains (three or more sequential sentences claiming a change — "X became Y. Y became Z." creating false momentum)
+- Transition glue ("With that in mind", "Against this backdrop", "Zooming out" — signals a shift without performing one)
+- Complexity signalling ("This is more complex than it appears", "It's complicated" — performing nuance instead of demonstrating it)
+- Discovery narration ("As I explored this further", "What I found surprised me" — narrating the learning process instead of the finding)
+- Wisdom sandwich (paragraph framed by bookend aphorisms — framing doing the work the middle should do)
+- Corrective reveals ("You've been told X. Here's the truth: Y" — theatrical truth-telling setup)
 
 **Low severity** (each = -2 points):
 - Title Case Headings
