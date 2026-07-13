@@ -6,6 +6,9 @@ on:
     paths:
       - 'skills/antislop/SKILL.md'
       - 'skills/antislop-audit/SKILL.md'
+    tags:
+      - 'antislop-v*'
+      - 'antislop-audit-v*'
   workflow_dispatch:
 
 jobs:
