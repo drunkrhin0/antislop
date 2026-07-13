@@ -1,0 +1,46 @@
+{
+  "skill_name": "antislop",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Write a LinkedIn post about why I think SIEM vendors oversell detection rules and undersell operational maturity.",
+      "should_trigger": true,
+      "assertions": [
+        "The skill was loaded before the response was generated",
+        "The output contains no em-dashes",
+        "The output avoids banned vocabulary (e.g. 'leverage', 'streamline', 'tapestry')",
+        "The output has an opinion and a point of view, not just neutral observations"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Can you help me edit this blog post? Here it is: The world of cybersecurity is constantly evolving, and it's more important than ever to stay ahead of the curve. In today's rapidly changing threat landscape, organizations must be proactive in their approach to security.",
+      "should_trigger": true,
+      "assertions": [
+        "The skill was loaded before the response was generated",
+        "The edited text removes 'constantly evolving' and 'stay ahead of the curve'",
+        "The edited text removes 'rapidly changing threat landscape'",
+        "The edited text adds specific experience or opinion instead of vague generalizations"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "Help me write a Python function that parses CSV files and outputs JSON.",
+      "should_trigger": false,
+      "assertions": [
+        "The skill was NOT loaded for this task",
+        "The response is code, not prose editing"
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "I need to write an email to a customer explaining that their vulnerability scan found 47 critical findings. How should I phrase this without sounding alarmist but also without minimizing the risk?",
+      "should_trigger": true,
+      "assertions": [
+        "The skill was loaded before the response was generated",
+        "The email draft has a clear position on the severity",
+        "The email avoids hedging language like 'it's worth noting' or 'in today's world'"
+      ]
+    }
+  ]
+}

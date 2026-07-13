@@ -1,0 +1,46 @@
+{
+  "skill_name": "antislop-audit",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Audit this paragraph: In today's rapidly evolving cybersecurity landscape, organizations must leverage cutting-edge solutions to stay ahead of the curve. Our platform provides a comprehensive, end-to-end approach to vulnerability management that streamlines workflows and drives actionable insights.",
+      "should_trigger": true,
+      "assertions": [
+        "The skill was loaded before the response was generated",
+        "The output includes a numeric score between 0 and 100",
+        "The output identifies 'leveraging', 'cutting-edge', 'stay ahead of the curve', 'comprehensive', 'end-to-end', 'streamlines', and 'actionable insights' as violations",
+        "The score is below 40 (severe slop)"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Does this pass? We ran Nessus against the /24 and found 12 hosts with CVE-2024-3094. Three are internet-facing. Patches are queued for next maintenance window. No compensating controls in place yet.",
+      "should_trigger": true,
+      "assertions": [
+        "The skill was loaded before the response was generated",
+        "The output includes a numeric score",
+        "The score is above 85 (clean — reads like a person)",
+        "No violations are flagged for technical specificity or directness"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "Can you explain what a CVE is and how CVSS scoring works?",
+      "should_trigger": false,
+      "assertions": [
+        "The skill was NOT loaded for this task",
+        "The response is an explanation, not an audit"
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "Review this report summary for AI patterns: Furthermore, it is important to note that the threat landscape is constantly evolving. By leveraging our advanced detection capabilities, we can provide a holistic view of your security posture. Our team of experts is dedicated to ensuring optimal outcomes.",
+      "should_trigger": true,
+      "assertions": [
+        "The skill was loaded before the response was generated",
+        "The output identifies 'furthermore', 'it is important to note', 'constantly evolving', 'leveraging', 'holistic', and 'optimal outcomes' as violations",
+        "The score is below 40 (severe slop)"
+      ]
+    }
+  ]
+}
