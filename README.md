@@ -36,12 +36,12 @@ Just ask your agent to install `drunkrhin0/antislop` from GitHub. Most will figu
 
 ### Gemini CLI
 
-Copy the `antislop/` folder into your Gemini extensions directory:
+Copy the `skills/antislop/` folder into your Gemini extensions directory:
 
 ```bash
 mkdir -p ~/.gemini/extensions/antislop
-cp antislop/gemini-extension.json ~/.gemini/extensions/antislop/
-cp antislop/GEMINI.md ~/.gemini/extensions/antislop/
+cp skills/antislop/gemini-extension.json ~/.gemini/extensions/antislop/
+cp skills/antislop/GEMINI.md ~/.gemini/extensions/antislop/
 ```
 
 Gemini CLI picks it up automatically on next launch.
@@ -52,10 +52,10 @@ Requires Gemini Advanced. Create a Gem:
 
 1. Left sidebar → **Gem manager** → **New Gem**
 2. Name it "Antislop"
-3. Paste the contents of `antislop/GEMINI.md` into the instructions field
+3. Paste the contents of `skills/antislop/GEMINI.md` into the instructions field
 4. Save and use that Gem for writing
 
-Free tier: paste `antislop/GEMINI.md` at the start of any chat instead.
+Free tier: paste `skills/antislop/GEMINI.md` at the start of any chat instead.
 
 ### Agent (subagent)
 
@@ -73,7 +73,7 @@ The agent is a hand-maintained derivative of the canonical SKILL.md files, like 
 
 ### Manual
 
-Copy `antislop/` and `antislop-audit/` into your skills directory:
+Copy `skills/antislop/` and `skills/antislop-audit/` into your skills directory:
 - Claude Code: `~/.claude/skills/`
 - opencode: `~/.config/opencode/skills/`
 
