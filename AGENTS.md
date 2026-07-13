@@ -16,8 +16,8 @@ bash /tmp/lint-test.sh
 act push -W .forgejo/workflows/lint-skills.yml
 
 # Test a skill locally — copy to agent skills dir
-cp antislop/SKILL.md ~/.claude/skills/antislop/
-cp antislop-audit/SKILL.md ~/.claude/skills/antislop-audit/
+cp skills/antislop/SKILL.md ~/.claude/skills/antislop/
+cp skills/antislop-audit/SKILL.md ~/.claude/skills/antislop-audit/
 
 # Test the agent — copy to global agents dir
 cp .opencode/agents/antislop.md ~/.config/opencode/agents/
@@ -29,15 +29,15 @@ To test repo changes in an agent conversation, copy the updated `SKILL.md` into 
 
 For agent frameworks or LLM chats that don't support skills or subagents, use the rules directly as a system prompt:
 
-- **Writing style:** paste `antislop/SKILL.md` at the start of a conversation
-- **Audit:** paste `antislop-audit/SKILL.md` and then the text to audit
+- **Writing style:** paste `skills/antislop/SKILL.md` at the start of a conversation
+- **Audit:** paste `skills/antislop-audit/SKILL.md` and then the text to audit
 - **Both modes:** paste `.opencode/agents/antislop.md` (strip the YAML frontmatter) for the combined two-mode system prompt
 
 This works with Claude.ai, ChatGPT, Cursor, Windsurf, Zed, or any tool that accepts a custom system prompt.
 
 ## Key architecture decisions
 
-**`antislop/SKILL.md` is the canonical source.** `antislop/GEMINI.md` and `antislop-audit/SKILL.md` are synced derivatives. When adding a rule, update all three plus severity categories and pattern references in the audit file. The lint CI enforces version consistency across all four version-bearing files.
+**`skills/antislop/SKILL.md` is the canonical source.** `skills/antislop/GEMINI.md` and `skills/antislop-audit/SKILL.md` are synced derivatives. When adding a rule, update all three plus severity categories and pattern references in the audit file. The lint CI enforces version consistency across all four version-bearing files.
 
 **Structure section is grouped by level.** Sentence-level, Paragraph-level, Discourse-level. This came from the realization that 25+ flat bullet points were unparseable under context pressure. Place new rules in the right sub-group.
 
@@ -54,8 +54,8 @@ This works with Claude.ai, ChatGPT, Cursor, Windsurf, Zed, or any tool that acce
 ## Conventions
 
 - Sentence case headings everywhere — no Title Case
-- Skill files stay under 500 lines (current: 306 / 309 / 243)
-- Version bumps touch five places: two frontmatter fields, one inline version, one JSON file, and the agent file's inline version
+- Skill files stay under 500 lines (current: 154 / 383 / 163)
+- Version bumps touch five places: metadata.version in each SKILL.md, inline **Version:** in each body, and gemini-extension.json
 - README follows antislop rules itself: zero em-dashes, no banned vocabulary
 - Forgejo is the primary CI. Workflows live in `.forgejo/workflows/`. GitHub is a mirror only.
 - When to Use / When NOT to Use sections are mandatory — the lint CI fails without them
@@ -69,7 +69,7 @@ This works with Claude.ai, ChatGPT, Cursor, Windsurf, Zed, or any tool that acce
 
 **Asset upload parameter differs by platform.** Forgejo requires `?name=file.zip` as a query parameter on the asset upload endpoint. GitHub derives the name from the form field.
 
-**`antislop/GEMINI.md` is not a direct port of SKILL.md.** It has audit severity rules inline, a different organizational structure, and Canvas-only output instructions. Don't treat it as a 1:1 mirror when syncing rules.
+**`skills/antislop/GEMINI.md` is not a direct port of SKILL.md.** It has audit severity rules inline, a different organizational structure, and Canvas-only output instructions. Don't treat it as a 1:1 mirror when syncing rules.
 
 **`.opencode/agents/antislop.md` is not a direct port of either SKILL.md.** It combines style and audit rules with subagent framing: no Canvas, no skill-specific When to Use sections, intent matching for mode detection. Don't treat it as a 1:1 mirror when syncing rules. The 500-line skill convention does not apply to the agent file.
 
@@ -88,8 +88,6 @@ This works with Claude.ai, ChatGPT, Cursor, Windsurf, Zed, or any tool that acce
 **`/tmp/lint-test.sh` doesn't exist.** The AGENTS.md references it but the script was never created. Use `act push -W .forgejo/workflows/lint-skills.yml` instead (requires Docker).
 
 **`GITHUB_REPOSITORY` is a full SSH URL on this Forgejo runner, not `owner/repo`.** The runner sets `GITHUB_REPOSITORY=ssh://git@git.drunkrhin0.au/drunkrhin0/antislop` rather than just `drunkrhin0/antislop`. Concatenating it into a URL produces garbage like `http://192.168.1.62:3000/ssh://git@...`. Hardcode the repo path instead, or strip the SSH prefix with parameter expansion.
-
-**`rstrip('.0')` in lint workflow breaks versions ending in `.0`.** The lint check at `.forgejo/workflows/lint-skills.yml:90` uses `python3 -c "version.rstrip('.0')"` to normalize the JSON version before comparing. For versions like `1.4.0`, this strips to `1.4`, causing a false version-drift failure. The version is actually consistent — the check is broken. Fix: use `re.sub(r'\.0+$', '', v)` or don't normalize at all.
 
 **`release-skills.yml` auto-tag workflow never fires on Forgejo.** The workflow in `.github/workflows/release-skills.yml` uses `actions/checkout` with SHA pinning, which fails on this Forgejo runner (DNS + SHA pin issues documented above). When a version bump lands on `main`, no tag is created automatically. The GitHub mirror gets the tag only if manually pushed. Fix: after merging a version bump to `main`, create and push both annotated tags manually:
 

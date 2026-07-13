@@ -31,9 +31,9 @@ jobs:
       - name: Build zips
         run: |
           SUFFIX="${TAG#antislop-}"
-          zip -r "antislop-${SUFFIX}.zip" antislop/
-          zip -r "antislop-audit-${SUFFIX}.zip" antislop-audit/
-          mkdir -p gemini && cp antislop/GEMINI.md antislop/gemini-extension.json gemini/
+          zip -r "antislop-${SUFFIX}.zip" skills/antislop/
+          zip -r "antislop-audit-${SUFFIX}.zip" skills/antislop-audit/
+          mkdir -p gemini && cp skills/antislop/GEMINI.md skills/antislop/gemini-extension.json gemini/
           zip -r "gemini-${SUFFIX}.zip" gemini/
 
       - uses: softprops/action-gh-release@v2

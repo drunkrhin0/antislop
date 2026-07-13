@@ -18,6 +18,9 @@ jobs:
             "http://x-access-token:${RELEASE_TOKEN}@192.168.1.62:3000/drunkrhin0/antislop.git" \
             .
 
+      - name: Install pyyaml
+        run: pip install --break-system-packages pyyaml
+
       - name: Lint SKILL.md and extension files
         shell: bash
         run: |
@@ -25,15 +28,48 @@ jobs:
           FAILURES=0
 
           # ------------------------------------------------------------------
-          # Helper: extract frontmatter value between --- delimiters
-          # NOTE: field parameter must be a hardcoded string (name/version/description).
-          #       Do not pass user-controlled input — the awk/sed patterns are not sanitized.
+          # Helper: extract frontmatter field via Python YAML parser
+          # Handles unquoted colons, multi-line values, and other edge cases
           # ------------------------------------------------------------------
           frontmatter_field() {
             local file="$1" field="$2"
-            awk "/^---$/ {c++; next} c==1 && /^${field}:/" "$file" \
-              | head -1 \
-              | sed "s/^${field}: *//; s/\"//g"
+            python3 -c "
+          import yaml, sys
+          lines = []
+          in_fm = False
+          for line in open(sys.argv[1]):
+              if line.strip() == '---':
+                  in_fm = not in_fm
+                  continue
+              if in_fm:
+                  lines.append(line)
+              elif lines:
+                  break
+          d = yaml.safe_load(''.join(lines)) or {}
+          print(d.get(sys.argv[2], ''))
+          " "$file" "$field" 2>/dev/null || echo ""
+          }
+
+          # ------------------------------------------------------------------
+          # Helper: extract metadata.version from YAML frontmatter
+          # ------------------------------------------------------------------
+          metadata_version() {
+            local file="$1"
+            python3 -c "
+          import yaml, sys
+          lines = []
+          in_fm = False
+          for line in open(sys.argv[1]):
+              if line.strip() == '---':
+                  in_fm = not in_fm
+                  continue
+              if in_fm:
+                  lines.append(line)
+              elif lines:
+                  break
+          d = yaml.safe_load(''.join(lines)) or {}
+          print((d.get('metadata') or {}).get('version', ''))
+          " "$file" 2>/dev/null || echo ""
           }
 
           # ------------------------------------------------------------------
@@ -51,75 +87,56 @@ jobs:
           echo "=== Frontmatter checks ==="
           while IFS= read -r -d '' file; do
             name=$(frontmatter_field "$file" "name")
-            ver=$(frontmatter_field "$file" "version")
+            ver=$(metadata_version "$file")
             desc=$(frontmatter_field "$file" "description")
 
             if [ -z "$name" ]; then  fail "$file: missing frontmatter 'name:'";  fi
-            if [ -z "$ver" ];  then  fail "$file: missing frontmatter 'version:'";  fi
+            if [ -z "$ver" ];  then  fail "$file: missing metadata.version";  fi
             if [ -z "$desc" ]; then  fail "$file: missing frontmatter 'description:'";  fi
 
             if [ -n "$name" ] && [ -n "$ver" ]; then
               echo "  PASS  $file  name=$name  version=$ver"
             fi
-          done < <(find . -name SKILL.md -print0)
+          done < <(find . -name SKILL.md -not -path './.opencode/*' -print0)
 
           # ------------------------------------------------------------------
-          # 2. Version consistency: frontmatter vs inline body
+          # 2. Version consistency: metadata vs inline body
           # ------------------------------------------------------------------
           echo ""
-          echo "=== Version consistency (frontmatter vs body) ==="
+          echo "=== Version consistency (metadata vs body) ==="
           while IFS= read -r -d '' file; do
-            fm_ver=$(frontmatter_field "$file" "version")
+            fm_ver=$(metadata_version "$file")
             body_ver=$(sed -n 's/^\*\*Version:\*\* *\([0-9.]*\).*/\1/p' "$file" | head -1)
             if [ -z "$body_ver" ]; then
               fail "$file: no **Version:** X.Y found in body"
             elif [ "$fm_ver" != "$body_ver" ]; then
-              fail "$file: frontmatter version=$fm_ver, body version=$body_ver"
+              fail "$file: metadata version=$fm_ver, body version=$body_ver"
             else
               echo "  PASS  $file  version=$fm_ver"
             fi
-          done < <(find . -name SKILL.md -print0)
+          done < <(find . -name SKILL.md -not -path './.opencode/*' -print0)
 
           # ------------------------------------------------------------------
-          # 3. Cross-file: antislop/SKILL.md vs gemini-extension.json
+          # 3. Cross-file: skills/antislop/SKILL.md vs gemini-extension.json
           # ------------------------------------------------------------------
           echo ""
           echo "=== Cross-file version sync ==="
-          SKILL_VER=$(frontmatter_field "antislop/SKILL.md" "version")
-          if [ -f antislop/gemini-extension.json ]; then
-            GEMINI_VER=$(python3 -c "import json; d=json.load(open('antislop/gemini-extension.json')); print(d['version'])" 2>/dev/null || echo "")
+          SKILL_VER=$(metadata_version "skills/antislop/SKILL.md")
+          if [ -f skills/antislop/gemini-extension.json ]; then
+            GEMINI_VER=$(python3 -c "import json; d=json.load(open('skills/antislop/gemini-extension.json')); print(d['version'])" 2>/dev/null || echo "")
             if [ -z "$GEMINI_VER" ]; then
-              fail "antislop/gemini-extension.json: could not parse version"
+              fail "skills/antislop/gemini-extension.json: could not parse version"
             elif [ "$SKILL_VER" != "$GEMINI_VER" ]; then
               fail "version drift: SKILL.md=$SKILL_VER, gemini-extension.json=$GEMINI_VER"
             else
-              echo "  PASS  antislop/SKILL.md=$SKILL_VER == gemini-extension.json=$GEMINI_VER"
+              echo "  PASS  skills/antislop/SKILL.md=$SKILL_VER == gemini-extension.json=$GEMINI_VER"
             fi
           else
             echo "  SKIP  gemini-extension.json not found"
           fi
 
           # ------------------------------------------------------------------
-          # 4. Cross-file: SKILL.md vs opencode agent file
-          # ------------------------------------------------------------------
-          echo ""
-          echo "=== Agent file version sync ==="
-          AGENT_FILE=".opencode/agents/antislop.md"
-          if [ -f "$AGENT_FILE" ]; then
-            AGENT_VER=$(sed -n 's/^\*\*Version:\*\* *\([0-9.]*\).*/\1/p' "$AGENT_FILE" | head -1)
-            if [ -z "$AGENT_VER" ]; then
-              fail "$AGENT_FILE: no **Version:** X.Y found in body"
-            elif [ "$SKILL_VER" != "$AGENT_VER" ]; then
-              fail "version drift: SKILL.md=$SKILL_VER, agent=$AGENT_VER"
-            else
-              echo "  PASS  SKILL.md=$SKILL_VER == agent=$AGENT_VER"
-            fi
-          else
-            echo "  SKIP  $AGENT_FILE not found"
-          fi
-
-          # ------------------------------------------------------------------
-          # 5. Line count (warn at 500, agent file excluded)
+          # 4. Line count (warn at 500, agent file excluded)
           # ------------------------------------------------------------------
           echo ""
           echo "=== Line count (limit: 500) ==="
