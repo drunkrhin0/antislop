@@ -18,6 +18,9 @@ jobs:
             "http://x-access-token:${RELEASE_TOKEN}@192.168.1.62:3000/drunkrhin0/antislop.git" \
             .
 
+      - name: Install pyyaml
+        run: pip install pyyaml
+
       - name: Lint SKILL.md and extension files
         shell: bash
         run: |
