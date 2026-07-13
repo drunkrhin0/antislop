@@ -19,7 +19,7 @@ jobs:
             .
 
       - name: Install pyyaml
-        run: pip install pyyaml
+        run: pip install --break-system-packages pyyaml
 
       - name: Lint SKILL.md and extension files
         shell: bash
