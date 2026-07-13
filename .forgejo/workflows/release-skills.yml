@@ -4,8 +4,8 @@ on:
   push:
     branches: [main]
     paths:
-      - 'antislop/SKILL.md'
-      - 'antislop-audit/SKILL.md'
+      - 'skills/antislop/SKILL.md'
+      - 'skills/antislop-audit/SKILL.md'
   workflow_dispatch:
 
 jobs:
@@ -18,9 +18,23 @@ jobs:
 
       - name: Tag antislop
         run: |
-          VERSION=$(grep '^version:' antislop/SKILL.md | head -1 | sed 's/version:[[:space:]]*"//;s/"//;s/[[:space:]]*$//')
+          VERSION=$(python3 -c "
+          import yaml
+          lines = []
+          in_fm = False
+          for line in open('skills/antislop/SKILL.md'):
+              if line.strip() == '---':
+                  in_fm = not in_fm
+                  continue
+              if in_fm:
+                  lines.append(line)
+              elif lines:
+                  break
+          d = yaml.safe_load(''.join(lines)) or {}
+          print((d.get('metadata') or {}).get('version', ''))
+          " 2>/dev/null || echo "")
           if [ -z "$VERSION" ]; then
-            echo "No version found in antislop/SKILL.md, skipping"
+            echo "No version found in skills/antislop/SKILL.md, skipping"
             exit 0
           fi
           if ! echo "$VERSION" | grep -qE '^[0-9]+\.[0-9]+\.[0-9]+$'; then
@@ -41,9 +55,23 @@ jobs:
 
       - name: Tag antislop-audit
         run: |
-          VERSION=$(grep '^version:' antislop-audit/SKILL.md | head -1 | sed 's/version:[[:space:]]*"//;s/"//;s/[[:space:]]*$//')
+          VERSION=$(python3 -c "
+          import yaml
+          lines = []
+          in_fm = False
+          for line in open('skills/antislop-audit/SKILL.md'):
+              if line.strip() == '---':
+                  in_fm = not in_fm
+                  continue
+              if in_fm:
+                  lines.append(line)
+              elif lines:
+                  break
+          d = yaml.safe_load(''.join(lines)) or {}
+          print((d.get('metadata') or {}).get('version', ''))
+          " 2>/dev/null || echo "")
           if [ -z "$VERSION" ]; then
-            echo "No version found in antislop-audit/SKILL.md, skipping"
+            echo "No version found in skills/antislop-audit/SKILL.md, skipping"
             exit 0
           fi
           if ! echo "$VERSION" | grep -qE '^[0-9]+\.[0-9]+\.[0-9]+$'; then
@@ -63,9 +91,9 @@ jobs:
 
       - name: Build zips
         run: |
-          zip -r "antislop-${VERSION}.zip" antislop/
-          zip -r "antislop-audit-${VERSION}.zip" antislop-audit/
-          mkdir -p gemini && cp antislop/GEMINI.md antislop/gemini-extension.json gemini/
+          zip -r "antislop-${VERSION}.zip" skills/antislop/
+          zip -r "antislop-audit-${VERSION}.zip" skills/antislop-audit/
+          mkdir -p gemini && cp skills/antislop/GEMINI.md skills/antislop/gemini-extension.json gemini/
           zip -r "gemini-${VERSION}.zip" gemini/
           ls -la *.zip
 
