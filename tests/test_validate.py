@@ -82,6 +82,58 @@ class TestProductionChecks(unittest.TestCase):
         output = stdout + stderr
         self.assertEqual(rc, 0, f"Validator failed on production skills:\n{output}")
 
+    def test_production_skills_version(self):
+        """The real skills/ directory should be at 1.8.0."""
+        rc, stdout, stderr = run_validator("--skills-dir", "skills", "--expect-version", "1.8.0")
+        output = stdout + stderr
+        self.assertEqual(rc, 0, f"Version check failed on production skills:\n{output}")
+
+
+class TestVersionChecks(unittest.TestCase):
+    """--expect-version flag."""
+
+    def test_catches_wrong_version(self):
+        """Version mismatch fixture should fail --expect-version 1.8.0."""
+        rc, stdout, stderr = run_validator(
+            "--skills-dir", os.path.join(FIXTURES, "version-mismatch"),
+            "--expect-version", "1.8.0",
+        )
+        output = stdout + stderr
+        self.assertNotEqual(rc, 0)
+        self.assertIn("expected 1.8.0", output)
+
+
+class TestAuditContentChecks(unittest.TestCase):
+    """Audit output format and authorship disclaimer."""
+
+    def test_catches_wrong_score_name(self):
+        """Audit using 'Slop Score' instead of 'Formulaic Writing Risk Score'."""
+        rc, stdout, stderr = run_validator(
+            "--skills-dir", os.path.join(FIXTURES, "bad-score-name"),
+        )
+        output = stdout + stderr
+        self.assertNotEqual(rc, 0)
+        self.assertIn("Formulaic Writing Risk Score", output)
+
+    def test_catches_missing_disclaimer(self):
+        """Audit missing authorship disclaimer."""
+        rc, stdout, stderr = run_validator(
+            "--skills-dir", os.path.join(FIXTURES, "no-disclaimer"),
+        )
+        output = stdout + stderr
+        self.assertNotEqual(rc, 0)
+        self.assertIn("authorship disclaimer", output)
+
+    def test_catches_bad_antithesis_rule(self):
+        """Antithesis rule without load-bearing distinction."""
+        rc, stdout, stderr = run_validator(
+            "--skills-dir", os.path.join(FIXTURES, "bad-antithesis"),
+        )
+        output = stdout + stderr
+        self.assertNotEqual(rc, 0)
+        self.assertIn("antithesis", output.lower())
+        self.assertIn("load-bearing", output.lower())
+
 
 if __name__ == "__main__":
     unittest.main()

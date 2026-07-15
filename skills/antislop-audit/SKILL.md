@@ -2,12 +2,12 @@
 name: antislop-audit
 description: Audits text for AI slop patterns and returns a slop score (0-100) plus a violations list. Use when the user asks to check, audit, review, grade, or score text for AI patterns, AI slop, or writing quality. Also trigger when the user pastes text and asks "does this pass?", "is this sloppy?", "flag the AI patterns", or similar. Companion to the antislop writing style skill. Zero exceptions — flag every violation regardless of perceived intent or satire.
 metadata:
-  version: "1.7.0"
+  version: "1.8.0"
 ---
 
 # Antislop Audit
 
-**Version:** 1.7.0  
+**Version:** 1.8.0  
 **Purpose:** Detect and score AI slop patterns in existing text. Flag every violation. No exceptions for intent.  
 **Companion skill:** antislop (writing style)  
 **Sources:** Same as antislop writing style: blader/humanizer, jalaalrd/anti-ai-slop-writing, Reddit r/copywriting, ignorance.ai/field-guide-to-ai-slop, Banned: The Definitive Guide, Pangram, Anbeeld/WRITING.md, Bugcrowd Design System, self
@@ -62,7 +62,7 @@ Do not skip categories. Do not combine violations. One instance = one violation 
 - Rule of three in a single sentence
 - Synonym cycling
 - Overlong sentence (3+ ideas, 2+ qualifiers, or 2+ disclaimers in one sentence)
-- Antithesis ("not just X, but Y", "not X, but Y") — decorative contrast
+- Antithesis ("not just X, but Y", "not X, but Y") — decorative when the contrast is tone management, not argument. Load-bearing contrasts that rule out a specific alternative the reader would otherwise assume are not violations.
 - Negative parallelism / trailing negation
 - Copula avoidance ("serves as", "boasts", "features", "functions as", "stands as")
 - Parataxis (3+ consecutive short declarative sentences)
@@ -125,6 +125,8 @@ Do not skip categories. Do not combine violations. One instance = one violation 
 
 Start at 100. Subtract points per violation. Floor is 0.
 
+When multiple rules overlap on the same text span, assign one primary scored finding to that span. Report overlapping findings as related findings without another score deduction. Document-level findings are counted once unless materially independent sections exhibit separate instances.
+
 **Score bands:**
 - **85-100** — Clean. Reads like a person.
 - **65-84** — Some slop. Fixable with targeted edits.
@@ -137,7 +139,12 @@ Always output in this exact structure:
 
 ---
 
-**Slop Score: [X]/100** — [band label]
+**Formulaic Writing Risk Score: [X]/100** — [band label]
+
+This score measures formulaic-writing risk and cannot prove AI authorship.
+
+**Word count:** [N]  
+**Scored findings:** [N] (primary) + [N] (related, unscored)
 
 **Violations ([N] total):**
 
@@ -160,4 +167,4 @@ Always output in this exact structure:
 - If the text is long (1000+ words), note the word count and confirm you've scanned all of it.
 - Never compliment the writing. Never soften the findings.
 - If score is above 85, say so plainly and stop. No padding.
-- After the summary, add one line: `Reply "fix" to apply corrections.`
+- When corrections are wanted and possible, end with: `Reply "fix" to apply corrections.` Otherwise omit the footer.

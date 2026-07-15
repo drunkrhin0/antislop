@@ -8,9 +8,14 @@ Checks:
   4. Cross-file version consistency (SKILL.md vs gemini-extension.json)
   5. Line count (warn at 500)
   6. Emoji-free headings
+  7. --expect-version: all artifacts at the specified version
+  8. Audit output uses "Formulaic Writing Risk Score"
+  9. Audit includes authorship disclaimer
+  10. Antithesis rule mentions load-bearing distinction
 
 Usage:
     python3 validate.py --skills-dir skills
+    python3 validate.py --skills-dir skills --expect-version 1.8.0
     python3 validate.py --skills-dir tests/fixtures
     python3 validate.py --help
 """
@@ -177,12 +182,119 @@ def check_cross_file_versions(skills_dir):
     return errors
 
 
+def check_expected_version(skills_dir, expected):
+    """Check that all SKILL.md files and gemini-extension.json are at expected version."""
+    errors = []
+    skill_files = find_skill_files(skills_dir)
+
+    for path in skill_files:
+        with open(path) as f:
+            text = f.read()
+        fm = parse_frontmatter(text)
+        ver = (fm.get("metadata") or {}).get("version")
+        body_ver = extract_version_from_body(text)
+        relpath = os.path.relpath(path)
+        if ver and ver != expected:
+            errors.append(f"{relpath}: metadata version={ver}, expected {expected}")
+        if body_ver and body_ver != expected:
+            errors.append(f"{relpath}: body version={body_ver}, expected {expected}")
+
+    # Check gemini-extension.json files
+    for path in skill_files:
+        skill_dir = os.path.dirname(path)
+        gemini_json = os.path.join(skill_dir, "gemini-extension.json")
+        if not os.path.exists(gemini_json):
+            continue
+        with open(gemini_json) as f:
+            data = json.load(f)
+        ver = data.get("version")
+        if ver and ver != expected:
+            errors.append(f"{os.path.relpath(gemini_json)}: version={ver}, expected {expected}")
+
+    return errors
+
+
+def check_audit_output_format(skills_dir):
+    """Check that audit skill uses 'Formulaic Writing Risk Score' in output format."""
+    errors = []
+    audit_path = os.path.join(skills_dir, "antislop-audit", "SKILL.md")
+    if not os.path.exists(audit_path):
+        return errors
+
+    with open(audit_path) as f:
+        text = f.read()
+
+    if "Formulaic Writing Risk Score" not in text:
+        errors.append(
+            f"{os.path.relpath(audit_path)}: output format must use 'Formulaic Writing Risk Score'"
+        )
+
+    return errors
+
+
+def check_authorship_disclaimer(skills_dir):
+    """Check that audit skill states the score cannot prove AI authorship."""
+    errors = []
+    audit_path = os.path.join(skills_dir, "antislop-audit", "SKILL.md")
+    if not os.path.exists(audit_path):
+        return errors
+
+    with open(audit_path) as f:
+        text = f.read()
+
+    # Check for authorship disclaimer language
+    has_disclaimer = (
+        "cannot prove" in text.lower()
+        or "cannot establish" in text.lower()
+        or "does not prove" in text.lower()
+        or "does not establish" in text.lower()
+    )
+    if not has_disclaimer:
+        errors.append(
+            f"{os.path.relpath(audit_path)}: missing authorship disclaimer "
+            "(score cannot prove/establish AI authorship)"
+        )
+
+    return errors
+
+
+def check_antithesis_consistency(skills_dir):
+    """Check that antithesis rule uses the load-bearing distinction consistently."""
+    errors = []
+    skill_files = find_skill_files(skills_dir)
+
+    for path in skill_files:
+        with open(path) as f:
+            text = f.read()
+
+        # Find lines mentioning antithesis
+        for i, line in enumerate(text.splitlines(), 1):
+            if "antithesis" in line.lower():
+                # The rule should mention "load-bearing" or "decorative when"
+                line_lower = line.lower()
+                has_nuance = "load-bearing" in line_lower or "decorative when" in line_lower
+                # Flag if the line is a bare "antithesis = always bad" statement
+                if not has_nuance and "decorative" in line_lower:
+                    # This is a blanket statement without the load-bearing distinction
+                    relpath = os.path.relpath(path)
+                    errors.append(
+                        f"{relpath}:{i}: antithesis rule lacks load-bearing distinction"
+                    )
+
+    return errors
+
+
 def main():
     parser = argparse.ArgumentParser(description="Validate Antislop repository invariants")
     parser.add_argument(
         "--skills-dir",
         default="skills",
         help="Path to skills directory (default: skills)",
+    )
+    parser.add_argument(
+        "--expect-version",
+        default=None,
+        help="Require all artifacts to be at this version (e.g. 1.8.0)",
     )
     args = parser.parse_args()
 
@@ -200,6 +312,15 @@ def main():
 
     # Cross-file checks
     all_errors.extend(check_cross_file_versions(skills_dir))
+
+    # Version-specific checks
+    if args.expect_version:
+        all_errors.extend(check_expected_version(skills_dir, args.expect_version))
+
+    # Audit content checks (always run)
+    all_errors.extend(check_audit_output_format(skills_dir))
+    all_errors.extend(check_authorship_disclaimer(skills_dir))
+    all_errors.extend(check_antithesis_consistency(skills_dir))
 
     # Report
     if all_errors:
