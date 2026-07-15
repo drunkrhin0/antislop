@@ -210,6 +210,11 @@ class TestOverlapHandling(unittest.TestCase):
         self.assertGreater(len(primaries), 0)
         # Primary should be scored (weight > 0)
         self.assertGreater(primaries[0]["weight"], 0)
+        # Related findings should exist with weight 0
+        related = [f for f in data["findings"] if not f.get("primary")]
+        for r in related:
+            self.assertEqual(r["weight"], 0,
+                             f"Related finding {r['rule_id']} should have weight 0")
 
 
 class TestProfile(unittest.TestCase):

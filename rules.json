@@ -41,7 +41,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "high"
     },
     {
       "id": "vocab-leverage",
@@ -55,7 +56,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "high"
     },
     {
       "id": "vocab-tapestry",
@@ -69,7 +71,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "high"
     },
     {
       "id": "vocab-testament",
@@ -83,7 +86,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "high"
     },
     {
       "id": "vocab-vibrant",
@@ -97,7 +101,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "high"
     },
     {
       "id": "vocab-pivotal",
@@ -113,7 +118,8 @@
       "overlaps": [
         "struct-significance-inflation"
       ],
-      "examples": []
+      "examples": [],
+      "confidence": "high"
     },
     {
       "id": "vocab-utilize",
@@ -131,7 +137,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "high"
     },
     {
       "id": "vocab-synergy",
@@ -145,7 +152,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "high"
     },
     {
       "id": "vocab-holistic",
@@ -159,7 +167,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "high"
     },
     {
       "id": "vocab-seamless",
@@ -173,7 +182,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "high"
     },
     {
       "id": "vocab-robust",
@@ -192,7 +202,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "high"
     },
     {
       "id": "vocab-groundbreaking",
@@ -206,7 +217,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "high"
     },
     {
       "id": "vocab-cutting-edge",
@@ -220,7 +232,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "high"
     },
     {
       "id": "vocab-innovative",
@@ -234,7 +247,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "high"
     },
     {
       "id": "vocab-dynamic",
@@ -248,7 +262,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "high"
     },
     {
       "id": "vocab-comprehensive",
@@ -266,7 +281,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "high"
     },
     {
       "id": "vocab-embark",
@@ -280,7 +296,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "high"
     },
     {
       "id": "vocab-foster",
@@ -294,7 +311,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "high"
     },
     {
       "id": "vocab-revolutionize",
@@ -308,7 +326,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "high"
     },
     {
       "id": "vocab-transformative",
@@ -324,7 +343,8 @@
       "overlaps": [
         "struct-significance-inflation"
       ],
-      "examples": []
+      "examples": [],
+      "confidence": "high"
     },
     {
       "id": "vocab-empower",
@@ -338,7 +358,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "high"
     },
     {
       "id": "vocab-unlock",
@@ -352,7 +373,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "high"
     },
     {
       "id": "vocab-supercharge",
@@ -366,7 +388,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "high"
     },
     {
       "id": "vocab-significant",
@@ -387,7 +410,8 @@
       "overlaps": [
         "struct-significance-inflation"
       ],
-      "examples": []
+      "examples": [],
+      "confidence": "high"
     },
     {
       "id": "vocab-commence",
@@ -401,7 +425,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "high"
     },
     {
       "id": "vocab-obtain",
@@ -415,7 +440,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "high"
     },
     {
       "id": "vocab-implement",
@@ -433,7 +459,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "high"
     },
     {
       "id": "vocab-facilitate",
@@ -451,7 +478,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "high"
     },
     {
       "id": "vocab-subsequently",
@@ -465,7 +493,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "high"
     },
     {
       "id": "vocab-discontinue",
@@ -479,7 +508,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "high"
     },
     {
       "id": "vocab-dispatch",
@@ -493,7 +523,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "high"
     },
     {
       "id": "vocab-ascertain",
@@ -507,7 +538,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "high"
     },
     {
       "id": "vocab-navigate",
@@ -521,7 +553,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "high"
     },
     {
       "id": "vocab-unpack",
@@ -535,7 +568,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "high"
     },
     {
       "id": "vocab-enhance",
@@ -549,7 +583,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "high"
     },
     {
       "id": "vocab-showcase",
@@ -563,7 +598,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "high"
     },
     {
       "id": "vocab-interplay",
@@ -577,7 +613,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "high"
     },
     {
       "id": "phrase-worth-noting",
@@ -591,7 +628,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "medium"
     },
     {
       "id": "phrase-today-world",
@@ -605,7 +643,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "medium"
     },
     {
       "id": "phrase-ever-evolving",
@@ -619,7 +658,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "medium"
     },
     {
       "id": "phrase-at-core",
@@ -633,7 +673,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "medium"
     },
     {
       "id": "phrase-dive-in",
@@ -647,7 +688,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "medium"
     },
     {
       "id": "phrase-not-just",
@@ -665,7 +707,8 @@
       "overlaps": [
         "struct-antithesis"
       ],
-      "examples": []
+      "examples": [],
+      "confidence": "medium"
     },
     {
       "id": "phrase-game-changer",
@@ -681,7 +724,8 @@
         "when backed by specific metrics"
       ],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "medium"
     },
     {
       "id": "phrase-treasure-trove",
@@ -695,7 +739,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "medium"
     },
     {
       "id": "phrase-cannot-denied",
@@ -709,7 +754,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "medium"
     },
     {
       "id": "phrase-underscores",
@@ -723,7 +769,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "medium"
     },
     {
       "id": "phrase-knowledge-cutoff",
@@ -737,7 +784,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "medium"
     },
     {
       "id": "phrase-research-shows",
@@ -753,7 +801,8 @@
         "when a specific source is named"
       ],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "medium"
     },
     {
       "id": "phrase-despite-thrive",
@@ -767,7 +816,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "medium"
     },
     {
       "id": "phrase-future-bright",
@@ -781,7 +831,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "medium"
     },
     {
       "id": "phrase-let-sink-in",
@@ -795,7 +846,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "medium"
     },
     {
       "id": "phrase-full-stop",
@@ -809,7 +861,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "medium"
     },
     {
       "id": "phrase-make-no-mistake",
@@ -823,7 +876,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "medium"
     },
     {
       "id": "phrase-let-me-clear",
@@ -837,7 +891,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "medium"
     },
     {
       "id": "phrase-explore",
@@ -851,7 +906,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "medium"
     },
     {
       "id": "phrase-what-looks-like",
@@ -865,7 +921,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "medium"
     },
     {
       "id": "phrase-creeps-in",
@@ -879,7 +936,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "medium"
     },
     {
       "id": "phrase-heres-thing",
@@ -893,7 +951,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "medium"
     },
     {
       "id": "phrase-hint-plot-spoiler",
@@ -907,7 +966,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "medium"
     },
     {
       "id": "phrase-walk-through",
@@ -921,7 +981,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "medium"
     },
     {
       "id": "phrase-think-about-it",
@@ -935,7 +996,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "medium"
     },
     {
       "id": "phrase-thats-okay",
@@ -949,7 +1011,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "medium"
     },
     {
       "id": "phrase-transition-glue",
@@ -965,7 +1028,8 @@
       "overlaps": [
         "struct-transition-glue"
       ],
-      "examples": []
+      "examples": [],
+      "confidence": "medium"
     },
     {
       "id": "phrase-complexity-signal",
@@ -981,7 +1045,8 @@
       "overlaps": [
         "struct-complexity-signalling"
       ],
-      "examples": []
+      "examples": [],
+      "confidence": "medium"
     },
     {
       "id": "phrase-discovery-narration",
@@ -997,7 +1062,8 @@
       "overlaps": [
         "struct-discovery-narration"
       ],
-      "examples": []
+      "examples": [],
+      "confidence": "medium"
     },
     {
       "id": "phrase-in-conclusion",
@@ -1011,7 +1077,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "medium"
     },
     {
       "id": "phrase-certainly",
@@ -1025,7 +1092,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "medium"
     },
     {
       "id": "phrase-absolutely-right",
@@ -1039,7 +1107,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "medium"
     },
     {
       "id": "phrase-hope-helps",
@@ -1053,7 +1122,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "medium"
     },
     {
       "id": "phrase-moreover",
@@ -1069,7 +1139,8 @@
         "max once per 800 words; never consecutive"
       ],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "medium"
     },
     {
       "id": "filler-in-order",
@@ -1083,7 +1154,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "medium"
     },
     {
       "id": "filler-due-to-fact",
@@ -1097,7 +1169,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "medium"
     },
     {
       "id": "filler-at-point-in-time",
@@ -1111,7 +1184,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "medium"
     },
     {
       "id": "filler-system-ability",
@@ -1125,7 +1199,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "medium"
     },
     {
       "id": "filler-important-note",
@@ -1141,7 +1216,8 @@
       "overlaps": [
         "phrase-worth-noting"
       ],
-      "examples": []
+      "examples": [],
+      "confidence": "medium"
     },
     {
       "id": "filler-crucial",
@@ -1155,7 +1231,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "medium"
     },
     {
       "id": "struct-rule-of-three",
@@ -1169,7 +1246,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "medium"
     },
     {
       "id": "struct-synonym-cycling",
@@ -1183,7 +1261,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "medium"
     },
     {
       "id": "struct-copula-avoidance",
@@ -1197,7 +1276,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "medium"
     },
     {
       "id": "struct-ing-analyses",
@@ -1211,7 +1291,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "medium"
     },
     {
       "id": "struct-significance-inflation",
@@ -1229,7 +1310,8 @@
         "vocab-transformative",
         "vocab-significant"
       ],
-      "examples": []
+      "examples": [],
+      "confidence": "medium"
     },
     {
       "id": "struct-passive-voice",
@@ -1243,7 +1325,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "medium"
     },
     {
       "id": "struct-emphasis-tails",
@@ -1257,7 +1340,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "medium"
     },
     {
       "id": "struct-rhetorical-hooks",
@@ -1271,7 +1355,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "medium"
     },
     {
       "id": "struct-balanced-take",
@@ -1285,7 +1370,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "medium"
     },
     {
       "id": "struct-simile-adverb",
@@ -1299,7 +1385,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "medium"
     },
     {
       "id": "struct-hedged-reactions",
@@ -1313,7 +1400,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "medium"
     },
     {
       "id": "struct-because-fragments",
@@ -1327,7 +1415,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "medium"
     },
     {
       "id": "struct-temperature-emotion",
@@ -1341,7 +1430,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "medium"
     },
     {
       "id": "struct-physical-tells",
@@ -1355,7 +1445,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "medium"
     },
     {
       "id": "struct-uniform-sentence",
@@ -1369,7 +1460,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "medium"
     },
     {
       "id": "struct-overlong-sentence",
@@ -1383,7 +1475,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "medium"
     },
     {
       "id": "struct-link-text",
@@ -1399,7 +1492,8 @@
         "product UI buttons and marketing CTAs are not AI tells"
       ],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "medium"
     },
     {
       "id": "struct-all-same-length",
@@ -1413,7 +1507,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "medium"
     },
     {
       "id": "struct-parataxis",
@@ -1427,7 +1522,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "medium"
     },
     {
       "id": "struct-subject-loops",
@@ -1441,7 +1537,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "medium"
     },
     {
       "id": "struct-fragmented-headers",
@@ -1455,7 +1552,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "medium"
     },
     {
       "id": "struct-anthropomorphized-silence",
@@ -1469,7 +1567,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "medium"
     },
     {
       "id": "struct-paragraph-redundancy",
@@ -1483,7 +1582,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "medium"
     },
     {
       "id": "struct-artificial-line-breaks",
@@ -1497,7 +1597,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "medium"
     },
     {
       "id": "struct-bullet-crutch",
@@ -1511,7 +1612,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "medium"
     },
     {
       "id": "struct-concession-rhythm",
@@ -1525,7 +1627,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "medium"
     },
     {
       "id": "struct-type-definition",
@@ -1539,7 +1642,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "medium"
     },
     {
       "id": "struct-announce-structure",
@@ -1553,7 +1657,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "medium"
     },
     {
       "id": "struct-antithesis",
@@ -1571,7 +1676,8 @@
       "overlaps": [
         "phrase-not-just"
       ],
-      "examples": []
+      "examples": [],
+      "confidence": "medium"
     },
     {
       "id": "struct-negation-flip",
@@ -1585,7 +1691,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "medium"
     },
     {
       "id": "struct-false-ranges",
@@ -1599,7 +1706,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "medium"
     },
     {
       "id": "struct-promotional",
@@ -1613,7 +1721,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "medium"
     },
     {
       "id": "struct-notability-dropping",
@@ -1627,7 +1736,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "medium"
     },
     {
       "id": "struct-triplet-overlap",
@@ -1641,7 +1751,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "medium"
     },
     {
       "id": "struct-awkward-metaphors",
@@ -1655,7 +1766,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "medium"
     },
     {
       "id": "struct-ending-cliches",
@@ -1669,7 +1781,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "medium"
     },
     {
       "id": "struct-specificity-theater",
@@ -1683,7 +1796,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "medium"
     },
     {
       "id": "struct-catalog-prose",
@@ -1697,7 +1811,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "medium"
     },
     {
       "id": "struct-system-tour",
@@ -1711,7 +1826,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "medium"
     },
     {
       "id": "struct-transition-glue",
@@ -1727,7 +1843,8 @@
       "overlaps": [
         "phrase-transition-glue"
       ],
-      "examples": []
+      "examples": [],
+      "confidence": "medium"
     },
     {
       "id": "struct-complexity-signalling",
@@ -1743,7 +1860,8 @@
       "overlaps": [
         "phrase-complexity-signal"
       ],
-      "examples": []
+      "examples": [],
+      "confidence": "medium"
     },
     {
       "id": "struct-discovery-narration",
@@ -1759,7 +1877,8 @@
       "overlaps": [
         "phrase-discovery-narration"
       ],
-      "examples": []
+      "examples": [],
+      "confidence": "medium"
     },
     {
       "id": "struct-wisdom-sandwich",
@@ -1773,7 +1892,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "medium"
     },
     {
       "id": "struct-corrective-reveals",
@@ -1787,7 +1907,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "medium"
     },
     {
       "id": "struct-punchy-closure",
@@ -1801,7 +1922,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "medium"
     },
     {
       "id": "struct-weak-verbs",
@@ -1815,7 +1937,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "medium"
     },
     {
       "id": "struct-empty-declaratives",
@@ -1829,7 +1952,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "medium"
     },
     {
       "id": "struct-transformation-chains",
@@ -1843,7 +1967,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "medium"
     },
     {
       "id": "struct-it-turns-out",
@@ -1857,7 +1982,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "medium"
     },
     {
       "id": "fmt-em-dash",
@@ -1871,7 +1997,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "high"
     },
     {
       "id": "fmt-title-case",
@@ -1885,7 +2012,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "medium"
     },
     {
       "id": "fmt-inline-header",
@@ -1899,7 +2027,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "medium"
     },
     {
       "id": "fmt-compound-hyphen",
@@ -1913,7 +2042,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "medium"
     },
     {
       "id": "fmt-curly-quotes",
@@ -1927,7 +2057,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "high"
     },
     {
       "id": "fmt-emojis",
@@ -1941,7 +2072,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "medium"
     },
     {
       "id": "fmt-exclamation",
@@ -1955,7 +2087,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "medium"
     },
     {
       "id": "fmt-semicolon",
@@ -1971,7 +2104,8 @@
         "formal or academic register"
       ],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "medium"
     },
     {
       "id": "chatbot-hope-helps",
@@ -1985,7 +2119,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "medium"
     },
     {
       "id": "chatbot-let-me-know",
@@ -1999,7 +2134,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "medium"
     },
     {
       "id": "chatbot-great-question",
@@ -2013,7 +2149,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "medium"
     },
     {
       "id": "chatbot-certainly-absolutely",
@@ -2027,7 +2164,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "medium"
     },
     {
       "id": "chatbot-cutoff-disclaimers",
@@ -2041,7 +2179,8 @@
       ],
       "exceptions": [],
       "overlaps": [],
-      "examples": []
+      "examples": [],
+      "confidence": "medium"
     }
   ],
   "profiles": {

@@ -40,7 +40,7 @@ class TestRegistrySchema(unittest.TestCase):
 
     def test_each_rule_has_required_fields(self):
         required = {"id", "text", "category", "severity", "base_weight",
-                     "detection_class", "profiles"}
+                     "detection_class", "profiles", "confidence"}
         for rule in self.registry["rules"]:
             missing = required - set(rule.keys())
             self.assertFalse(missing, f"Rule {rule.get('id', '?')} missing: {missing}")
