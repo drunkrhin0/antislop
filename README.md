@@ -89,13 +89,24 @@ Triggers automatically when you ask your agent to write or edit anything.
 
 Paste text and ask your agent to audit it with `/antislop-audit`
 
-Returns a score out of 100, a violations table with severity and excerpt, and a plain-English summary of what to fix first.
+Returns a Formulaic Writing Risk Score (0-100), a violations table with severity and excerpt, word count, finding density, and a plain-English summary of what to fix first.
 
 **Score bands:**
 - 85-100: Clean. Reads like a person.
 - 65-84: Some slop. Fixable with targeted edits.
 - 40-64: Heavy slop. Significant rewrite needed.
 - 0-39: Severe. This reads like unreviewed AI output.
+
+**Writing profiles:**
+- `general` (default) -- all rules active
+- `technical` -- technical documentation, API references (contextual terms like "significant" and "robust" are not penalized)
+- `business` -- business communications, reports, proposals
+- `marketing` -- marketing copy, landing pages, sales materials
+- `social` -- social media posts, casual communication
+- `fiction` -- fiction writing (physical tells, temperature-as-emotion are craft tools)
+- `academic` -- academic papers, research writing
+
+The score measures formulaic-writing risk and cannot prove AI authorship.
 
 ---
 
@@ -112,6 +123,23 @@ Returns a score out of 100, a violations table with severity and excerpt, and a 
 **Don't over-apply.** Antislop is for prose meant to be read by humans. Skip it for code, config files, commit messages, structured data, or API docs. Those have their own conventions.
 
 **For Gemini users.** The Gem or GEMINI.md copy approach works best. Style mode outputs to Canvas only. No preamble, no commentary. Audit mode returns the score and violations in chat.
+
+---
+
+## Version 2.0
+
+Version 2.0 introduces the rule registry (`rules.json`) as the single source of truth for all writing rules. Each rule has a stable ID, severity, detection class, profile set, and overlap relationships. The generator (`generate.py`) renders pattern reference files from the registry, and the scorer (`score.py`) calculates scores using the registry metadata.
+
+**What changed from 1.8:**
+- Score renamed from "Slop Score" to "Formulaic Writing Risk Score"
+- Authorship disclaimer added: score cannot prove AI authorship
+- Writing profiles: general, technical, business, marketing, social, fiction, academic
+- Diminishing repetition: repeated instances of one rule diminish (100%, 50%, 25%), capped at 3x base weight
+- 500-word normalization: comparable scores across different text lengths
+- Overlap handling: one primary finding per text span, related findings unscored
+- Rule registry: 139 rules with stable IDs, severity weights, and profile assignments
+
+**Compatibility boundary:** Version 1.8 corrected contradictions and overlap handling while preserving the existing score formula. Version 2.0 changes the score calculation, output format, and rule activation through profiles. The 1.8 score formula is not preserved in 2.0.
 
 ---
 
