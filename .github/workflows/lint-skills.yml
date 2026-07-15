@@ -10,13 +10,7 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        env:
-          RELEASE_TOKEN: ${{ secrets.RELEASE_TOKEN }}
-        run: |
-          git clone --depth 1 \
-            "http://x-access-token:${RELEASE_TOKEN}@192.168.1.62:3000/drunkrhin0/antislop.git" \
-            .
+      - uses: actions/checkout@v4
 
       - name: Validate repository invariants
         run: python3 validate.py --skills-dir skills

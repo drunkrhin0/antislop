@@ -1,0 +1,6 @@
+{
+  "name": "test-cross-file-drift",
+  "version": "1.6.0",
+  "description": "Drifted version.",
+  "contextFileName": "GEMINI.md"
+}
