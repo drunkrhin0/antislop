@@ -6,7 +6,9 @@ renders rule sections deterministically and verifies committed files match.
 
 Usage:
     python3 generate.py --check                    # verify committed files match
+    python3 generate.py --check --profile technical # verify for specific profile
     python3 generate.py --output-dir out/          # write generated files
+    python3 generate.py --output-dir out/ --profile general
     python3 generate.py --help
 
 Check mode exits 0 when all generated artifacts match committed files,
@@ -22,6 +24,21 @@ import sys
 def load_registry(path="rules.json"):
     with open(path) as f:
         return json.load(f)
+
+
+def filter_rules_by_profile(rules, profile):
+    """Return rules active in the given profile.
+
+    A rule is active if:
+    - Its profiles list contains '*' (universal), OR
+    - Its profiles list contains the requested profile name.
+    """
+    active = []
+    for rule in rules:
+        rule_profiles = rule.get("profiles", ["general"])
+        if "*" in rule_profiles or profile in rule_profiles:
+            active.append(rule)
+    return active
 
 
 def render_vocabulary_section(rules):
@@ -120,14 +137,19 @@ def render_severity_summary(rules):
     return "\n".join(lines)
 
 
-def render_pattern_reference(registry):
-    """Render the full pattern reference document."""
-    rules = registry["rules"]
+def render_pattern_reference(registry, profile="general"):
+    """Render the full pattern reference document for a given profile."""
+    all_rules = registry["rules"]
+    rules = filter_rules_by_profile(all_rules, profile)
+    profile_name = profile
+    profile_info = registry.get("profiles", {}).get(profile, {})
     sections = [
         "# Pattern reference (generated)",
         "",
         "This file is generated from rules.json. Do not edit directly.",
         f"Registry version: {registry['version']}",
+        f"Profile: {profile_name}",
+        f"Profile description: {profile_info.get('description', '')}",
         "",
         render_vocabulary_section(rules),
         "",
@@ -147,17 +169,16 @@ def render_pattern_reference(registry):
     return "\n".join(sections) + "\n"
 
 
-def generate_all(registry):
-    """Generate all artifacts. Returns dict of relative path -> content."""
-    rules = registry["rules"]
+def generate_all(registry, profile="general"):
+    """Generate all artifacts for a given profile. Returns dict of relative path -> content."""
     return {
-        "skills/antislop-audit/references/pattern-reference.md": render_pattern_reference(registry),
+        "skills/antislop-audit/references/pattern-reference.md": render_pattern_reference(registry, profile),
     }
 
 
-def check_mode(registry, repo_root):
+def check_mode(registry, repo_root, profile="general"):
     """Compare generated output against committed files. Returns list of diffs."""
-    generated = generate_all(registry)
+    generated = generate_all(registry, profile)
     diffs = []
     for relpath, expected_content in generated.items():
         full_path = os.path.join(repo_root, relpath)
@@ -171,9 +192,9 @@ def check_mode(registry, repo_root):
     return diffs
 
 
-def write_mode(registry, output_dir):
+def write_mode(registry, output_dir, profile="general"):
     """Write generated files to output directory."""
-    generated = generate_all(registry)
+    generated = generate_all(registry, profile)
     for relpath, content in generated.items():
         full_path = os.path.join(output_dir, relpath)
         os.makedirs(os.path.dirname(full_path), exist_ok=True)
@@ -198,6 +219,10 @@ def main():
         "--registry", default="rules.json",
         help="Path to rule registry (default: rules.json)"
     )
+    parser.add_argument(
+        "--profile", default="general",
+        help="Writing profile to generate for (default: general)"
+    )
     args = parser.parse_args()
 
     if not os.path.exists(args.registry):
@@ -208,9 +233,16 @@ def main():
     rules = registry.get("rules", [])
     print(f"Loaded {len(rules)} rules from {args.registry} (v{registry.get('version', '?')})")
 
+    # Validate profile
+    valid_profiles = set(registry.get("profiles", {}).keys())
+    if args.profile not in valid_profiles:
+        print(f"ERROR: unknown profile '{args.profile}'. Valid: {sorted(valid_profiles)}",
+              file=sys.stderr)
+        sys.exit(2)
+
     if args.check:
         repo_root = os.path.dirname(os.path.abspath(args.registry))
-        diffs = check_mode(registry, repo_root)
+        diffs = check_mode(registry, repo_root, args.profile)
         if diffs:
             print(f"\nFAILED — {len(diffs)} artifact(s) differ from generated:\n")
             for d in diffs:
@@ -220,8 +252,8 @@ def main():
             print("ALL ARTIFACTS MATCH")
             sys.exit(0)
     elif args.output_dir:
-        write_mode(registry, args.output_dir)
-        print(f"\nGenerated {len(generate_all(registry))} file(s) to {args.output_dir}")
+        write_mode(registry, args.output_dir, args.profile)
+        print(f"\nGenerated {len(generate_all(registry, args.profile))} file(s) to {args.output_dir}")
     else:
         parser.print_help()
         sys.exit(0)

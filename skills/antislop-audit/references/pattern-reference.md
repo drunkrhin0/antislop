@@ -2,6 +2,8 @@
 
 This file is generated from rules.json. Do not edit directly.
 Registry version: 2.0.0
+Profile: general
+Profile description: Default profile for all prose. All rules active.
 
 ## Vocabulary — never use
 
@@ -30,6 +32,7 @@ Registry version: 2.0.0
 | obtain | high |
 | pivotal | high |
 | revolutionize | high |
+| robust | high |
 | seamless | high |
 | showcase | high |
 | significant | high |
