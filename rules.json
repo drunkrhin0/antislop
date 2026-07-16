@@ -129,11 +129,7 @@
       "base_weight": 8,
       "detection_class": "exact_match",
       "profiles": [
-        "general",
-        "business",
-        "marketing",
-        "social",
-        "fiction"
+        "general"
       ],
       "exceptions": [],
       "overlaps": [],
@@ -193,12 +189,7 @@
       "base_weight": 8,
       "detection_class": "exact_match",
       "profiles": [
-        "general",
-        "business",
-        "marketing",
-        "social",
-        "fiction",
-        "academic"
+        "general"
       ],
       "exceptions": [],
       "overlaps": [],
@@ -273,11 +264,7 @@
       "base_weight": 8,
       "detection_class": "exact_match",
       "profiles": [
-        "general",
-        "marketing",
-        "social",
-        "fiction",
-        "academic"
+        "general"
       ],
       "exceptions": [],
       "overlaps": [],
@@ -399,12 +386,7 @@
       "base_weight": 8,
       "detection_class": "exact_match",
       "profiles": [
-        "general",
-        "business",
-        "marketing",
-        "social",
-        "fiction",
-        "academic"
+        "general"
       ],
       "exceptions": [],
       "overlaps": [
@@ -451,11 +433,7 @@
       "base_weight": 8,
       "detection_class": "exact_match",
       "profiles": [
-        "general",
-        "business",
-        "marketing",
-        "social",
-        "fiction"
+        "general"
       ],
       "exceptions": [],
       "overlaps": [],
@@ -470,11 +448,7 @@
       "base_weight": 8,
       "detection_class": "exact_match",
       "profiles": [
-        "general",
-        "business",
-        "marketing",
-        "social",
-        "fiction"
+        "general"
       ],
       "exceptions": [],
       "overlaps": [],
@@ -2191,26 +2165,10 @@
     "technical": {
       "default": false,
       "description": "Technical documentation, API references, engineering docs. Contextual vocabulary like \"significant\" and \"robust\" are precise domain terms, not slop."
-    },
-    "business": {
-      "default": false,
-      "description": "Business communications, reports, proposals. Formal register expected."
-    },
-    "marketing": {
-      "default": false,
-      "description": "Marketing copy, landing pages, sales materials. Promotional language is expected, not penalized."
-    },
-    "social": {
-      "default": false,
-      "description": "Social media posts, casual communication. Shorter form, more conversational."
-    },
-    "fiction": {
-      "default": false,
-      "description": "Fiction writing. Physical tells, temperature-as-emotion, and hedged reactions are craft tools, not slop."
-    },
-    "academic": {
-      "default": false,
-      "description": "Academic papers, research writing. Formal register, semicolons and hedging are conventional."
     }
+  },
+  "_profile_guide": {
+    "_comment": "To add a new profile: (1) add it to the profiles dict above, (2) for each rule that should be exempt, change its profiles list from [\"general\"] to [\"general\", \"new-profile\"]. Rules with profiles=[\"*\"] are universal. Rules with profiles=[\"general\"] fire only in general. If a rule should NOT fire in your new profile, leave it out of the profiles list.",
+    "example": "To add a \"creative\" profile where \"dynamic\" is allowed: 1) Add \"creative\": {\"default\": false, \"description\": \"...\"} to profiles. 2) Leave vocab-dynamic at [\"general\"] so it does NOT fire in creative."
   }
 }

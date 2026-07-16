@@ -31,14 +31,13 @@ class TestProfileDefinitions(unittest.TestCase):
     def test_profiles_section_exists(self):
         self.assertIn("profiles", self.registry)
 
-    def test_has_seven_profiles(self):
+    def test_has_two_profiles(self):
         profiles = self.registry["profiles"]
         self.assertIsInstance(profiles, dict)
-        self.assertEqual(len(profiles), 7)
+        self.assertEqual(len(profiles), 2)
 
     def test_has_required_profiles(self):
-        expected = {"general", "technical", "business", "marketing",
-                    "social", "fiction", "academic"}
+        expected = {"general", "technical"}
         self.assertEqual(set(self.registry["profiles"].keys()), expected)
 
     def test_general_is_default(self):

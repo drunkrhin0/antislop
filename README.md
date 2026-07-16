@@ -100,11 +100,8 @@ Returns a Formulaic Writing Risk Score (0-100), a violations table with severity
 **Writing profiles:**
 - `general` (default) -- all rules active
 - `technical` -- technical documentation, API references (contextual terms like "significant" and "robust" are not penalized)
-- `business` -- business communications, reports, proposals
-- `marketing` -- marketing copy, landing pages, sales materials
-- `social` -- social media posts, casual communication
-- `fiction` -- fiction writing (physical tells, temperature-as-emotion are craft tools)
-- `academic` -- academic papers, research writing
+
+To add a new profile, see the `_profile_guide` in `rules.json`.
 
 The score measures formulaic-writing risk and cannot prove AI authorship.
 
