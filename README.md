@@ -99,7 +99,7 @@ Returns a Formulaic Writing Risk Score (0-100), a violations table with severity
 
 **Writing profiles:**
 - `general` (default) -- all rules active
-- `technical` -- technical documentation, API references (contextual terms like "significant" and "robust" are not penalized)
+- `technical` -- technical documentation, API references (contextual terms like significant and robust are not penalized)
 
 To add a new profile, see the `_profile_guide` in `rules.json`.
 
@@ -130,7 +130,7 @@ Version 2.0 introduces the rule registry (`rules.json`) as the single source of 
 **What changed from 1.8:**
 - Score renamed from "Slop Score" to "Formulaic Writing Risk Score"
 - Authorship disclaimer added: score cannot prove AI authorship
-- Writing profiles: general, technical, business, marketing, social, fiction, academic
+- Writing profiles: general and technical (extensible via rules.json)
 - Diminishing repetition: repeated instances of one rule diminish (100%, 50%, 25%), capped at 3x base weight
 - 500-word normalization: comparable scores across different text lengths
 - Overlap handling: one primary finding per text span, related findings unscored
