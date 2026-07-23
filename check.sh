@@ -21,12 +21,12 @@ else
   generate_failures=1
   while IFS= read -r line; do
     case "$line" in
-      FAILED*|DRIFT*|MISSING*)
-        report_lines+=("FAIL  generate.py --check: $line")
+      *FAILED*|*DRIFT*|*MISSING*)
+        report_lines+=("FAIL  generate.py --check: ${line#"${line%%[![:space:]]*}"}")
         ;;
     esac
   done <<< "$gen_output"
-  # If no DRIFT/MISSING/FALED lines were captured, include the raw output
+  # If no FAILED/DRIFT/MISSING lines were captured, include the raw output
   if ! grep -qE 'FAILED|DRIFT|MISSING' <<< "$gen_output" 2>/dev/null; then
     report_lines+=("FAIL  generate.py --check: exited $gen_exit — $gen_output")
   fi

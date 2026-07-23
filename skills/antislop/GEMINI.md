@@ -3,7 +3,7 @@
 **Version:** 2.0.0  
 **Purpose:** Two capabilities in one extension. Suppress AI writing patterns when writing/editing. Score and flag them when auditing.
 
-**Sources:** [drunkrhin0/antislop](https://github.com/drunkrhin0/antislop) (MIT) — canonical source. Derived from blader/humanizer (MIT), jalaalrd/anti-ai-slop-writing (MIT), Reddit r/copywriting, [ignorance.ai/field-guide-to-ai-slop](https://www.ignorance.ai/p/the-field-guide-to-ai-slop), [Banned: The Definitive Guide](https://docs.google.com/document/d/1uC9tBgfNZJytzLpg6MGk5mTfgJNbEK-h1hMLncQ5Mho/edit), [Pangram](https://www.pangram.com/blog/comprehensive-guide-to-spotting-ai-writing-patterns), [Anbeeld/WRITING.md](https://github.com/Anbeeld/WRITING.md), [Bugcrowd Design System — Tone & Language](https://bugcrowd.design/docs/guidelines/content-guidelines/language/), self.
+**Sources:** [drunkrhin0/antislop](https://github.com/drunkrhin0/antislop) (MIT) — canonical source. Derived from blader/humanizer (MIT), jalaalrd/anti-ai-slop-writing (MIT), Reddit r/copywriting, [ignorance.ai/field-guide-to-ai-slop](https://www.ignorance.ai/p/the-field-guide-to-ai-slop), [Banned: The Definitive Guide](https://docs.google.com/document/d/1uC9tBgfNZJytzLpg6MGk5mTfgJNbEK-h1hMLncQ5Mho/edit), [Pangram](https://www.pangram.com/blog/comprehensive-guide-to-spotting-ai-writing-patterns), [Anbeeld/WRITING.md](https://github.com/Anbeeld/WRITING.md), [Bugcrowd Design System — Tone & Language](https://bugcrowd.design/docs/guidelines/content-guidelines/language/), [petergyang/no-ai-slop](https://github.com/petergyang/no-ai-slop) (MIT), self.
 
 ---
 
@@ -23,7 +23,7 @@ AI writing is statistically average. It reaches for the most likely next word. W
 
 ### Mandatory pre-output scan
 
-Before returning any written output, scan the entire response for em-dashes (`—`). Replace every instance with `.` or `,` and break the sentence if needed. This is a structural step — do it every time, not only when you notice one. Em-dashes degrade over context length; a mandatory scan catches what attention misses.
+Before returning any written output, scan the entire response for `—`, `–`, and ` -- `. If count > 0, the draft is not done. Replace every instance with `.` or `,` and break the sentence if needed. Em-dashes degrade over context length; a mandatory scan catches what attention misses.
 
 ### Hard-banned vocabulary — never use
 
@@ -55,6 +55,9 @@ delve, leverage, tapestry, testament, vibrant, pivotal, utilize, synergy, holist
 - "creeps in" — performative emphasis (e.g. "mediocrity creeps in")
 - "Here's the thing:" / "Here's what [X]" / "Here's why [X]" / "Here's the problem though:" — "here's what/this/that/why" throat-clearing constructions. Cut and state the point directly.
 - "Hint:" / "Plot twist:" / "Spoiler:" — self-referential asides that announce a reveal instead of making one
+- "This is the part most people skip" / "What most people get wrong" / "Here's what nobody tells you" / "The part everyone misses" — expert cosplay. Cut the setup and let the claim stand.
+- "What if I told you..." — hypothetical-framing rhetorical setup. Cut the framing and state the claim directly.
+- Self-answered question pairs — "Can AI write like a human? No, but..." / "Is slop inevitable? I don't think so." Faux-conversational Q&A. Cut the scaffold and state the point.
 - "Let me walk you through..." — announcing structure instead of moving through it
 - "Think about it:" / "And that's okay." — condescending prompt and unnecessary permission-granting
 - "With that in mind" / "Against this backdrop" / "Taken together" / "Zooming out" / "Building on this" — transition glue that signals a shift without performing one. Cut the glue and start with your point.
@@ -70,6 +73,10 @@ delve, leverage, tapestry, testament, vibrant, pivotal, utilize, synergy, holist
 - "Moreover" / "Furthermore" / "Additionally" — max once per 800 words; never consecutive
 - "So" as paragraph opener — cut it. Let the paragraph start with its content.
 
+### Padding adverbs — cut unless they carry weight
+
+"Just", "literally", "honestly", "simply", "actually", "truly", "fundamentally", "importantly", "crucially", "inherently", "inevitably" — cut them when they add nothing. Keep them when they carry emphasis, uncertainty, contrast, or the writer's natural spoken rhythm.
+
 ### Hard-banned structure — never use
 
 - Rule of three inside a single sentence ("innovation, inspiration, and insights")
@@ -83,6 +90,7 @@ delve, leverage, tapestry, testament, vibrant, pivotal, utilize, synergy, holist
 - Promotional language ("nestled within the breathtaking...")
 - Superficial -ing analyses — "highlighting", "underscoring", "symbolizing", "reflecting", "contributing to" tacked onto sentence ends to add fake depth. Say what actually happened.
 - Copula avoidance — "serves as", "boasts", "features", "functions as", "stands as" when "is" or "has" would do the same job with half the ceremony
+- Colon reveals — noun-phrase colon lowercase-dramatic-reveal. "The best part: it learns." "The catch: nobody tested it." Rewrite as a plain sentence. Colons are for lists, labels, and quotes, not fake drama.
 - Parataxis — 3+ consecutive short declarative sentences with no connective tissue. Merge or subordinate.
 - Passive voice / subjectless fragments — use active voice
 - Rhetorical emphasis tails — "..., that's the hard truth" and moralizing tails like "Why it matters:", "Here's what I learned:", "This shows that..."
@@ -92,6 +100,7 @@ delve, leverage, tapestry, testament, vibrant, pivotal, utilize, synergy, holist
 - Rhetorical-question hooks — "The kicker?", "The issue?", "The twist?", "Do you know what I realized?" Lead with the point instead.
 - Balanced-take hedging — "While X is true, we must also consider Y" formula. State your position or cut.
 - Bullet-point crutch — using bullet lists to dodge writing full paragraphs when prose communicates more clearly.
+- Listicle in a trenchcoat — sequential transitions disguised as prose ("The first reason... The second... A third..."). Rewrite around a single consequence instead of counting items.
 - Paragraph-level redundancy — when paragraph 2 opens by restating paragraph 1's conclusion, or a concluding sentence just summarizes the paragraph in different words. Consolidate or cut the weaker version.
 - Triplet overlap — when 3+ descriptors name the same underlying quality rather than distinct things. "Current, documented, and auditable" all mean "reliable for attestation." Use one.
 - Awkward AI metaphors — analogies that gesture toward meaning without achieving it. Generic, plausible, unanchored to specific experience. "Learning an instrument is a mirror for learning itself" could describe anything. Root metaphors in specifics or cut.
@@ -123,7 +132,7 @@ delve, leverage, tapestry, testament, vibrant, pivotal, utilize, synergy, holist
 
 ### Punctuation and formatting
 
-**Em dashes** — never use them. Break every sentence that contains one into two sentences with a period, or use a comma. No exceptions. After generation, scan for — and replace with . Break the sentence into two. Em-dashes as a rhetorical authority prop ("— not through magic, not through hype, but through hard work") are the worst offender — if the em-dash is padding a claim instead of making the argument, the sentence wasn't doing its job. Rewrite it.
+**Em dashes, en dashes, and double hyphens** — never use any of them. Break every sentence that contains one into two sentences with a period, or use a comma. No exceptions. After generation, scan for `—`, `–`, and `--` (used parenthetically) and replace with `.` Break the sentence into two. Em-dashes as a rhetorical authority prop ("— not through magic, not through hype, but through hard work") are the worst offender — if the em-dash is padding a claim instead of making the argument, the sentence wasn't doing its job. Rewrite it.
 
 **Exclamation marks** — zero in technical or factual writing. One maximum in conversational prose. AI overuses them for fake enthusiasm.
 
@@ -139,7 +148,8 @@ delve, leverage, tapestry, testament, vibrant, pivotal, utilize, synergy, holist
 
 **Title Case Headings** → sentence case.
 
-**Emojis in prose** → remove.
+**Emojis in prose** → remove.  
+**Emoji as bullet markers** (✅, 👉, 🔥, 💡 prefixed to list items) → convert to plain bullets or prose.
 
 **Compound-modifier hyphenation** — hyphenate before the noun ("well-known author"). Open after linking verbs ("The author is well known"). Never hyphenate -ly adverb compounds ("highly qualified", not "highly-qualified"). Watch for ever- compounds ("ever-changing").
 
@@ -152,6 +162,8 @@ AI writing has no opinion, no experience, no war stories. It takes no position, 
 - If a sentence could be written by someone who has never done the thing, rewrite it as someone who has
 - Opinion is not unprofessional. Hiding behind false balance is
 - Do not fake humanity. No invented typos, intentional grammar breaks, injected slang, fake uncertainty, or staged messiness. The fix for AI prose is better writing, not simulated noise.
+- Before editing, identify the writer's signals — vocabulary, cadence, bluntness, humor, digressions — and treat them as load-bearing. Don't smooth distinctive traits into consistency. A rough draft with a real voice should still sound like the same person after editing.
+- Protect the specific fact during editing — don't smooth a real detail ("cut deploy time from 40 minutes to 4") into generic importance ("significantly improved efficiency"). Real specifics anchor writing. Abstracting them destroys the most valuable part of the draft.
 
 **Rewrite example:**
 
@@ -206,6 +218,10 @@ AI writing has no opinion, no experience, no war stories. It takes no position, 
 
 - [ ] Searched for all hard-banned phrases
 - [ ] "Here's what" check — any "here's the thing", "here's what I mean" throat-clearing? Cut to the point.
+- [ ] Expert cosplay check — any "This is the part most people skip" / "What most people get wrong" setups? Cut the setup and let the claim stand.
+- [ ] "What if I told you..." check — any hypothetical-framing setups? Cut the framing and state the claim directly.
+- [ ] Self-answered Q&A check — any faux-conversational question-answer pairs? Cut the scaffold.
+- [ ] Colon reveal check — any "noun-phrase: dramatic reveal." constructions? Rewrite as plain sentences.
 - [ ] Cut quotables check — if any sentence sounds like a pull-quote, rewrite it
 - [ ] Transition glue check — any "With that in mind", "Against this backdrop", "Zooming out"? Cut the glue and start with your point.
 - [ ] Complexity signalling check — any "This is more complex than it appears" / "It's complicated" framing? Demonstrate complexity through specifics.
@@ -216,7 +232,7 @@ AI writing has no opinion, no experience, no war stories. It takes no position, 
 - [ ] Weak verb check — any "work to ensure", "seek to address", "begin to understand" hedging through indirection? Replace with actual action.
 - [ ] Empty declarative check — any "This matters", "Everything is connected", "The stakes are high" performing significance without substance? Cut or rewrite with specifics.
 - [ ] Transformation chain check — any "X became Y. Y became Z" sequences creating false momentum? Consolidate.
-- [ ] Em-dash count checked — zero permitted. Scan and replace any — with . or ,
+- [ ] Em-dash, en-dash, and double-hyphen count checked — zero permitted. Scan and replace any —, –, or -- with . or ,
 - [ ] Scare quotes checked — do they earn it or are they hedging?
 - [ ] Bolded text checked — intentional or decorative?
 - [ ] Bolded bullets checked — does the body support each claim?
@@ -224,12 +240,15 @@ AI writing has no opinion, no experience, no war stories. It takes no position, 
 - [ ] Read aloud — does it sound like a person who has done this thing?
 - [ ] Vague claims replaced with specific ones
 - [ ] Does this have a position, or just vibes?
+- [ ] Padding adverb check — any "just, honestly, actually, fundamentally, crucially" adding nothing? Cut them.
+- [ ] Protect-the-fact check — any real specifics smoothed into generic importance during editing? Restore the original detail.
 - [ ] Paragraph-level check — any paragraph restating another's idea? Consolidate or cut.
 - [ ] Triplet check — any 3+ descriptors naming the same quality? Consolidate to one.
 - [ ] Line-break check — mid-sentence breaks for terminal width? Join into paragraphs.
 - [ ] Rhetorical-question hooks — any "The kicker?" openers? Lead with the point.
 - [ ] Balanced-take check — any "While X... we must also consider Y"? State your position.
 - [ ] Bullet-point check — bullets used as crutch? Convert to prose where stronger.
+- [ ] Listicle check — any "The first... The second..." sequential prose? Rewrite around a single consequence.
 - [ ] Metaphor check — any generic analogies? Root them in specifics or cut.
 - [ ] Simile check — any "with the [noun] of someone" constructions? Describe actual behavior.
 - [ ] Hedged reaction check — any "isn't quite a [reaction]"? Describe the actual gesture.
@@ -250,6 +269,7 @@ AI writing has no opinion, no experience, no war stories. It takes no position, 
 - [ ] Corrective reveal check — any "You've been told X. Here's the truth: Y" setup? Cut it and state your point directly.
 - [ ] Link text check — any "click here", "learn more", "get started", or other action-describing standalone link text? Name the destination instead.
 - [ ] Exclamation mark check — more than one? Any in technical/factual prose? Remove the excess.
+- [ ] Emoji bullet check — any ✅, 👉, 🔥, 💡 used as list markers? Convert to plain bullets.
 - [ ] Semicolon check — two or more per paragraph in prose where formal register isn't the style? Split into separate sentences.
 
 ---
@@ -274,7 +294,7 @@ Do not skip categories. Do not combine violations. One instance = one violation 
 **High severity** (each = -8 points):
 - Banned vocabulary
 - Banned phrases
-- Em-dash (any use — never permitted)
+- Em-dash, en-dash, or double-hyphen substitute (any use — never permitted)
 - Scare quotes
 - Chatbot artifacts ("I hope this helps", "Great question")
 - Vague attribution ("experts believe", "research shows" without source)
@@ -301,6 +321,7 @@ Do not skip categories. Do not combine violations. One instance = one violation 
 - Triplet overlap (3+ descriptors naming the same quality)
 - Superficial -ing analyses ("highlighting", "underscoring" tacked onto sentence ends)
 - Copula avoidance ("serves as", "boasts" instead of "is" or "has")
+- Colon reveals (noun-phrase colon lowercase-dramatic-reveal — "The best part: it learns." Rewrite as a plain sentence.)
 - Parataxis (3+ consecutive short declarative sentences with no connective tissue)
 - Bullet-point crutch (bullets used to dodge writing full paragraphs)
 - Awkward AI metaphors (generic analogies unanchored to specific experience — "learning X is a mirror for learning itself")
@@ -337,10 +358,12 @@ Do not skip categories. Do not combine violations. One instance = one violation 
 - Inline-header lists (**Term:** explanation)
 - Compound-modifier over-hyphenation
 - Emojis in prose
+- Emoji as bullet markers (✅, 👉, 🔥, 💡 prefixed to list items)
 - Passive voice / subjectless fragments
 - Standalone "Because" fragments ("Because she can't bear to look." — AI sentence rhythm)
 - Exclamation mark overuse (any in technical/factual prose, or more than one in conversational)
 - Semicolon overuse (2+ per paragraph — sophistication signal; exceptions: formal or academic register)
+- Padding adverbs — "just, honestly, actually, fundamentally, crucially, importantly" used as padding rather than carrying weight
 
 ### Step 3 — Calculate score
 

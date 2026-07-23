@@ -57,6 +57,7 @@ Profile description: Default profile for all prose. All rules active.
 - "As I explored this further / What I found surprised me / The more I looked"
 - "Let's dive in / let's delve deeper"
 - "Ever-evolving landscape / dynamic world of / in the realm of"
+- "This is the part most people skip / What most people get wrong / Here's what nobody tells you / The part everyone misses — expert cosplay. Cut the setup and let the claim stand on its own."
 - "I want to explore..."
 - "Full stop. / Period."
 - "The future looks bright / exciting times ahead"
@@ -69,6 +70,7 @@ Profile description: Default profile for all prose. All rules active.
 - "Make no mistake"
 - "Not just X, but Y" (exception: when the contrast rules out a specific alternative the reader would otherwise assume)
 - "Research shows / experts believe (without named source)" (exception: when a specific source is named)
+- "Self-answered question pairs — "Can AI write like a human? No, but..." / "Is slop inevitable? I don't think so." Faux-conversational setup posing a question then immediately answering it. Cut the Q&A scaffold and state the point directly."
 - "And that's okay."
 - "Think about it:"
 - "In today's fast-paced world / in today's landscape"
@@ -76,6 +78,7 @@ Profile description: Default profile for all prose. All rules active.
 - "Treasure trove / uncharted waters / embark on a journey"
 - "This underscores the importance of"
 - "Let me walk you through..."
+- ""What if I told you..." — hypothetical-framing rhetorical setup that poses a claim as a revelation. Cut the framing and state the claim directly."
 - "This is what X actually looks like"
 - "It's worth noting that"
 
@@ -94,6 +97,7 @@ Profile description: Default profile for all prose. All rules active.
 - "Due to the fact that"
 - "It is important to note that"
 - "In order to"
+- "Padding adverbs — 'just, honestly, actually, fundamentally, crucially, importantly' used as padding rather than carrying weight. Flag when they add nothing."
 - "The system has the ability to"
 
 ## Structural patterns
@@ -115,6 +119,7 @@ Profile description: Default profile for all prose. All rules active.
 - Awkward AI metaphors — generic, plausible, unanchored to experience
 - Bullet-point crutch — using bullets to dodge writing paragraphs
 - Catalog prose — paragraphs that are only names/milestones with no consequence
+- Colon reveals — noun-phrase colon lowercase-dramatic-reveal. 'The best part: it learns.' Rewrite as a plain sentence. Colons are for lists, labels, and quotes, not fake drama.
 - Complexity signalling — 'This is more complex than it appears'
 - Concession rhythm — 'not X, but Y' used reflexively as paragraph scaffold
 - Copula avoidance — 'serves as', 'boasts', 'features', 'functions as', 'stands as' when 'is' or 'has' would do
@@ -129,6 +134,7 @@ Profile description: Default profile for all prose. All rules active.
 - Superficial -ing analyses — 'highlighting', 'underscoring' tacked onto sentence ends
 - 'It turns out' as throat-clearing opener
 - Generic action-describing link text — 'click here', 'learn more' — name what you're linking to
+- Listicle in a trenchcoat — sequential transitions disguised as prose ('The first reason... The second... A third...') that turn a paragraph into a disguised numbered list. Rewrite around a single consequence or relationship instead of counting items.
 - Negation flip — stating what something isn't before what it is, as padding
 - Notability name-dropping without context
 - Overlong sentences — 5+ commas, nested clauses — break into two or three
@@ -160,7 +166,8 @@ Profile description: Default profile for all prose. All rules active.
 
 - Compound-modifier over-hyphenation
 - Curly quotes — should be straight quotes
-- Em-dash — never use them
+- Em-dash (—), en-dash (–), and double-hyphen (--) used as substitute — never use any of them. Break the sentence into two with a period or comma. No exceptions.
+- Emoji as bullet-point markers (e.g. ✅, 👉, 🔥, 💡 used to prefix list items) — convert to plain bullets or prose. Emoji markers are a formatting crutch, distinct from emoji in prose.
 - Emojis in prose — remove
 - Exclamation mark overuse
 - Inline-header lists ('**Term:** explanation') — convert to prose

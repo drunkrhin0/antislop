@@ -152,6 +152,7 @@ Version 2.0 introduces the rule registry (`rules.json`) as the single source of 
 - [Bugcrowd Design System — Tone & Language](https://bugcrowd.design/docs/guidelines/content-guidelines/language/): plain English substitutions, link text semantics, punctuation tell detection
 - [hardikpandya/stop-slop](https://github.com/hardikpandya/stop-slop) (MIT): cherry-picked phrase patterns — emphasis crutches, throat-clearing openers, meta-commentary, performative emphasis
 - [apurvrdx1/tagore](https://github.com/apurvrdx1/tagore) (MIT): vocabulary additions (actually, enhance, showcase, interplay) and punchy one-liner closure pattern
+- [petergyang/no-ai-slop](https://github.com/petergyang/no-ai-slop) (MIT): padding adverbs, colon reveals, expert cosplay, voice preservation framing, protect-the-fact editing principle
 - Self: scare quotes, random bolding, ambiguous bold bullets, em-dash as false authority, voice and authenticity framing
 
 ---

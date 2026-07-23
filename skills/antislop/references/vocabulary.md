@@ -57,6 +57,25 @@ Load this file when writing or editing prose to check specific words and phrases
 - "Research shows" / "experts believe" without naming the research or expert
 - "Despite challenges, continues to thrive"
 - "The future looks bright" / "exciting times ahead"
+- "Let that sink in" — emphasis crutch
+- "Full stop." / "Period." — emphasis crutch (standalone as sentence)
+- "Make no mistake" — emphasis crutch
+- "It turns out" — throat-clearing opener
+- "Let me be clear" — throat-clearing opener
+- "I want to explore..." — meta-commentary that announces intent instead of doing it
+- "This is what X actually looks like" — telling instead of showing
+- "creeps in" — performative emphasis
+- "Here's the thing:" / "Here's what [X]" / "Here's why [X]" / "Here's the problem though:" — "here's what/this/that/why" throat-clearing constructions. Cut and state the point directly.
+- "This is the part most people skip" / "What most people get wrong" / "Here's what nobody tells you" / "The part everyone misses" — expert cosplay. Cut the setup and let the claim stand on its own.
+- "This is the part most people skip" / "What most people get wrong" / "Here's what nobody tells you" / "The part everyone misses" — expert cosplay. Cut the setup and let the claim stand on its own.
+- "What if I told you..." — hypothetical-framing rhetorical setup that poses a claim as a revelation. Cut the framing and state the claim directly.
+- Self-answered question pairs — "Can AI write like a human? No, but..." / "Is slop inevitable? I don't think so." Faux-conversational setup. Cut the Q&A scaffold and state the point directly.
+- "Hint:" / "Plot twist:" / "Spoiler:" — self-referential asides that announce a reveal instead of making one
+- "Let me walk you through..." — announcing structure instead of moving through it
+- "Think about it:" / "And that's okay." — condescending prompt and unnecessary permission-granting
+- "With that in mind" / "Against this backdrop" / "Taken together" / "Zooming out" / "Building on this" — transition glue that signals a shift without performing one. Cut the glue and start with your point.
+- "This is more complex than it appears" / "The reality is more nuanced" / "It's complicated" — performing nuance instead of demonstrating it. Show the complexity through specifics or cut the framing.
+- "As I explored this further" / "What I found surprised me" / "The more I looked" — narrating the learning process instead of delivering what was learned. Cut the setup and present the finding.
 
 ## Filler phrases — never use
 
@@ -70,6 +89,10 @@ Load this file when writing or editing prose to check specific words and phrases
 ## Hedging — never use
 
 - "Could potentially possibly" / "it might have some effect" / "it could be argued that" — one qualifier is fine. Three is a tell.
+
+## Padding adverbs — cut unless they carry weight
+
+These adverbs are frequently padding. Cut them when they add nothing. Keep them when they carry emphasis, uncertainty, contrast, or the writer's natural spoken rhythm: just, literally, honestly, simply, actually, truly, fundamentally, importantly, crucially, inherently, inevitably.
 
 ## Openers and closers — never use
 

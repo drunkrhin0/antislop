@@ -1328,7 +1328,10 @@
         "*"
       ],
       "exceptions": [],
-      "overlaps": [],
+      "overlaps": [
+        "phrase-what-if-i-told",
+        "phrase-self-answered-qa"
+      ],
       "examples": [],
       "confidence": "medium"
     },
@@ -1961,7 +1964,7 @@
     },
     {
       "id": "fmt-em-dash",
-      "text": "Em-dash \u2014 never use them",
+      "text": "Em-dash (\u2014), en-dash (\u2013), and double-hyphen (--) used as substitute \u2014 never use any of them. Break the sentence into two with a period or comma. No exceptions.",
       "category": "formatting",
       "severity": "high",
       "base_weight": 8,
@@ -2153,6 +2156,117 @@
       ],
       "exceptions": [],
       "overlaps": [],
+      "examples": [],
+      "confidence": "medium"
+    },
+    {
+      "id": "phrase-expert-cosplay",
+      "text": "This is the part most people skip / What most people get wrong / Here's what nobody tells you / The part everyone misses \u2014 expert cosplay. Cut the setup and let the claim stand on its own.",
+      "category": "phrase",
+      "severity": "high",
+      "base_weight": 8,
+      "detection_class": "phrase_match",
+      "profiles": [
+        "general"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "medium"
+    },
+    {
+      "id": "struct-colon-reveal",
+      "text": "Colon reveals \u2014 noun-phrase colon lowercase-dramatic-reveal. 'The best part: it learns.' Rewrite as a plain sentence. Colons are for lists, labels, and quotes, not fake drama.",
+      "category": "structural",
+      "severity": "medium",
+      "base_weight": 4,
+      "detection_class": "structural",
+      "profiles": [
+        "*"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "medium"
+    },
+    {
+      "id": "filler-padding-adverbs",
+      "text": "Padding adverbs \u2014 'just, honestly, actually, fundamentally, crucially, importantly' used as padding rather than carrying weight. Flag when they add nothing.",
+      "category": "filler",
+      "severity": "low",
+      "base_weight": 2,
+      "detection_class": "pattern_match",
+      "profiles": [
+        "general"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "medium"
+    },
+    {
+      "id": "phrase-what-if-i-told",
+      "text": "\"What if I told you...\" \u2014 hypothetical-framing rhetorical setup that poses a claim as a revelation. Cut the framing and state the claim directly.",
+      "category": "phrase",
+      "severity": "high",
+      "base_weight": 8,
+      "detection_class": "phrase_match",
+      "profiles": [
+        "general"
+      ],
+      "exceptions": [],
+      "overlaps": [
+        "struct-rhet-question-hooks"
+      ],
+      "examples": [],
+      "confidence": "medium"
+    },
+    {
+      "id": "phrase-self-answered-qa",
+      "text": "Self-answered question pairs \u2014 \"Can AI write like a human? No, but...\" / \"Is slop inevitable? I don't think so.\" Faux-conversational setup posing a question then immediately answering it. Cut the Q&A scaffold and state the point directly.",
+      "category": "phrase",
+      "severity": "high",
+      "base_weight": 8,
+      "detection_class": "phrase_match",
+      "profiles": [
+        "general"
+      ],
+      "exceptions": [],
+      "overlaps": [
+        "struct-rhet-question-hooks"
+      ],
+      "examples": [],
+      "confidence": "medium"
+    },
+    {
+      "id": "fmt-emoji-bullets",
+      "text": "Emoji as bullet-point markers (e.g. \u2705, \ud83d\udc49, \ud83d\udd25, \ud83d\udca1 used to prefix list items) \u2014 convert to plain bullets or prose. Emoji markers are a formatting crutch, distinct from emoji in prose.",
+      "category": "formatting",
+      "severity": "low",
+      "base_weight": 2,
+      "detection_class": "pattern_match",
+      "profiles": [
+        "*"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "medium"
+    },
+    {
+      "id": "struct-listicle-trenchcoat",
+      "text": "Listicle in a trenchcoat \u2014 sequential transitions disguised as prose ('The first reason... The second... A third...') that turn a paragraph into a disguised numbered list. Rewrite around a single consequence or relationship instead of counting items.",
+      "category": "structural",
+      "severity": "medium",
+      "base_weight": 4,
+      "detection_class": "structural",
+      "profiles": [
+        "*"
+      ],
+      "exceptions": [],
+      "overlaps": [
+        "struct-bullet-crutch"
+      ],
       "examples": [],
       "confidence": "medium"
     }

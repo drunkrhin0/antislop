@@ -10,7 +10,7 @@ metadata:
 **Version:** 2.0.0  
 **Purpose:** Detect and score AI slop patterns in existing text. Flag every violation. No exceptions for intent.  
 **Companion skill:** antislop (writing style)  
-**Sources:** Same as antislop writing style: blader/humanizer, jalaalrd/anti-ai-slop-writing, Reddit r/copywriting, ignorance.ai/field-guide-to-ai-slop, Banned: The Definitive Guide, Pangram, Anbeeld/WRITING.md, Bugcrowd Design System, self
+**Sources:** Same as antislop writing style: blader/humanizer, jalaalrd/anti-ai-slop-writing, Reddit r/copywriting, ignorance.ai/field-guide-to-ai-slop, Banned: The Definitive Guide, Pangram, Anbeeld/WRITING.md, Bugcrowd Design System, petergyang/no-ai-slop, self
 
 ---
 
@@ -39,14 +39,12 @@ Read [references/pattern-reference.md](references/pattern-reference.md) for the 
 - **Excerpt** — the exact offending text, quoted
 - **Rule breached** — one line description
 
-Do not skip categories. Do not combine violations. One instance = one violation entry.
-
 ### Step 2 — Count violations by severity
 
 **High severity** (each = -8 points):
 - Banned vocabulary
 - Banned phrases
-- Em-dash (any use — never permitted)
+- Em-dash, en-dash, or double-hyphen substitute (any use — never permitted)
 - Scare quotes
 - Chatbot artifacts ("I hope this helps", "Great question")
 - Vague attribution ("experts believe", "research shows" without source)
@@ -65,6 +63,7 @@ Do not skip categories. Do not combine violations. One instance = one violation 
 - Antithesis ("not just X, but Y", "not X, but Y") — decorative when the contrast is tone management, not argument. Load-bearing contrasts that rule out a specific alternative the reader would otherwise assume are not violations.
 - Negative parallelism / trailing negation
 - Copula avoidance ("serves as", "boasts", "features", "functions as", "stands as")
+- Colon reveals (noun-phrase colon lowercase-dramatic-reveal — "The best part: it learns." Rewrite as a plain sentence.)
 - Parataxis (3+ consecutive short declarative sentences)
 - Passive voice / subjectless fragments
 - Excessive hedging ("could potentially possibly", "it might have some effect")
@@ -116,10 +115,12 @@ Do not skip categories. Do not combine violations. One instance = one violation 
 - Curly quotes — should be straight quotes
 - Filler phrases ("in order to", "due to the fact that", "at this point in time")
 - Emojis in prose
+- Emoji as bullet markers (✅, 👉, 🔥, 💡 prefixed to list items)
 - Usage of unicode characters to convey a point (e.g. `→`)
 - Standalone "Because" fragments
 - Exclamation mark overuse
 - Semicolon overuse (2+ per paragraph)
+- Padding adverbs — "just, honestly, actually, fundamentally, crucially, importantly" used as padding rather than carrying weight
 
 ### Step 3 — Calculate score
 
