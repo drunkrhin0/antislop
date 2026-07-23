@@ -34,7 +34,7 @@ AI writing is statistically average. It reaches for the most likely next word. W
 
 ### Mandatory pre-output scan
 
-Before returning any written output, scan the entire response for `—`, `–`, and ` -- `. If count > 0, the draft is not done. Replace every instance with `.` or `,` and break the sentence if needed. Em-dashes degrade over context length; a mandatory scan catches what attention misses.
+Before returning any written output, scan the entire response for `—`, `–`, and ` -- `. If count > 0, the draft is not done. Replace every instance with `.` or `,` and break the sentence if needed.
 
 ### Hard-banned vocabulary -- never use
 

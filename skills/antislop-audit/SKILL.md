@@ -1,6 +1,6 @@
 ---
 name: antislop-audit
-description: Audits text for AI slop patterns and returns a slop score (0-100) plus a violations list. Use when the user asks to check, audit, review, grade, or score text for AI patterns, AI slop, or writing quality. Also trigger when the user pastes text and asks "does this pass?", "is this sloppy?", "flag the AI patterns", or similar. Companion to the antislop writing style skill. Zero exceptions — flag every violation regardless of perceived intent or satire.
+description: Audits text for AI slop patterns and returns a slop score (0-100) plus a violations list. Use when the user asks to check, audit, review, grade, or score text for AI patterns, AI slop, or writing quality. Also trigger when the user pastes text and asks "does this pass?", "is this sloppy?", "flag the AI patterns", or similar.
 metadata:
   version: "1.8.0"
 ---
@@ -20,7 +20,7 @@ Trigger when the user asks to check, audit, review, grade, or score text for AI 
 
 ## When NOT to use
 
-This tool is for **self-review** — checking your own or a collaborator's text before publishing. Do not use it to accuse strangers of using AI. Pattern-based detection is probabilistic, not proof. A single flag does not indicate AI authorship; accumulation and pattern density are the tells. Do not run this against unsolicited text from people you are not collaborating with.
+For self-review only — checking your own or a collaborator's text before publishing. Do not use to accuse strangers of using AI.
 
 ## Core rule
 

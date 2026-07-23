@@ -1,6 +1,6 @@
 ---
 name: antislop
-description: Universal writing style that suppresses detectable AI writing patterns across all content types. Apply whenever writing, editing, or reviewing any prose — emails, blog posts, reports, social content, technical writing, sales materials. This is an ambient style, not a task-specific tool. Trigger any time the user asks to write, rewrite, edit, polish, or review text of any kind.
+description: Universal writing style that suppresses detectable AI writing patterns. Apply whenever writing, editing, or reviewing any prose — emails, blog posts, reports, social content, technical writing, sales materials. Trigger any time the user asks to write, rewrite, edit, polish, or review text of any kind.
 metadata:
   version: "1.8.0"
 ---
@@ -25,19 +25,19 @@ metadata:
 
 ## Core philosophy
 
-AI writing is statistically average. It reaches for the most likely next word. Writing without a POV, without experience, without a position isn't neutral. It signals you didn't show up. These rules exist to interrupt that tendency. Specific beats vague. Direct beats hedged. Plain beats corporate.
+AI writing is statistically average. It reaches for the most likely next word. Writing without a POV, without experience, without a position isn't neutral — it signals you didn't show up. Specific beats vague. Direct beats hedged. Plain beats corporate.
 
 ---
 
 ## Mandatory pre-output scan
 
-Before returning any written output, scan the entire response for `—`, `–`, and ` -- `. If count > 0, the draft is not done. Replace every instance with `.` or `,` and break the sentence if needed. Em-dashes degrade over context length; a mandatory scan catches what attention misses.
+Before returning any written output, scan the entire response for `—`, `–`, and ` -- `. If count > 0, the draft is not done. Replace every instance with `.` or `,` and break the sentence if needed.
 
 ---
 
 ## When to use
 
-This style is ambient — always on when writing or editing prose meant to be read by humans. Trigger any time the user asks to write, rewrite, edit, polish, or review any prose: emails, blog posts, reports, technical writing, social content, sales materials.
+This style is ambient — always active when writing or editing prose meant to be read by humans. Trigger any time the user asks to write, rewrite, edit, polish, or review any prose.
 
 ## When NOT to use
 
