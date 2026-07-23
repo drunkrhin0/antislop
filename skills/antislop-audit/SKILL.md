@@ -2,12 +2,12 @@
 name: antislop-audit
 description: Audits text for AI slop patterns and returns a slop score (0-100) plus a violations list. Use when the user asks to check, audit, review, grade, or score text for AI patterns, AI slop, or writing quality. Also trigger when the user pastes text and asks "does this pass?", "is this sloppy?", "flag the AI patterns", or similar. Companion to the antislop writing style skill. Zero exceptions — flag every violation regardless of perceived intent or satire.
 metadata:
-  version: "2.0.0"
+  version: "1.8.0"
 ---
 
 # Antislop Audit
 
-**Version:** 2.0.0  
+**Version:** 1.8.0  
 **Purpose:** Detect and score AI slop patterns in existing text. Flag every violation. No exceptions for intent.  
 **Companion skill:** antislop (writing style)  
 **Sources:** Same as antislop writing style: blader/humanizer, jalaalrd/anti-ai-slop-writing, Reddit r/copywriting, ignorance.ai/field-guide-to-ai-slop, Banned: The Definitive Guide, Pangram, Anbeeld/WRITING.md, Bugcrowd Design System, petergyang/no-ai-slop, self

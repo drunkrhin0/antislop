@@ -19,7 +19,7 @@ jobs:
             .
 
       - name: Validate repository invariants
-        run: python3 validate.py --skills-dir skills --expect-version 2.0.0
+        run: python3 validate.py --skills-dir skills --expect-version 1.8.0
 
       - name: Check generated artifacts match registry
         run: python3 generate.py --check
