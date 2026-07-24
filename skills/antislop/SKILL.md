@@ -25,7 +25,7 @@ metadata:
 
 ## Core philosophy
 
-AI writing is statistically average. It reaches for the most likely next word. Writing without a POV, without experience, without a position isn't neutral — it signals you didn't show up. Specific beats vague. Direct beats hedged. Plain beats corporate.
+AI writing is statistically average. It reaches for the most likely next word. Writing without a POV, without experience, without a position isn't neutral. It signals you didn't show up. Specific beats vague. Direct beats hedged. Plain beats corporate.
 
 ---
 
@@ -37,7 +37,7 @@ Before returning any written output, scan the entire response for `—`, `–`, 
 
 ## When to use
 
-This style is ambient — always active when writing or editing prose meant to be read by humans. Trigger any time the user asks to write, rewrite, edit, polish, or review any prose.
+This style is ambient. Always active when writing or editing prose meant to be read by humans. Trigger any time the user asks to write, rewrite, edit, polish, or review any prose.
 
 ## When NOT to use
 
@@ -102,8 +102,8 @@ Rules:
 - If a sentence could be written by someone who has never done the thing, rewrite it as someone who has
 - Opinion is not unprofessional. Hiding behind false balance is.
 - Do not fake humanity. No invented typos, intentional grammar breaks, injected slang, fake uncertainty ("I think... maybe... sort of"), or staged messiness to simulate a human voice. The fix for AI-sounding prose is better writing — concrete anchors, a clear position, varied rhythm — not simulated noise.
-- Before editing, identify the writer's signals — vocabulary, cadence, bluntness, humor, digressions — and treat them as load-bearing. Don't smooth distinctive traits into consistency. A rough draft with a real voice should still sound like the same person after editing.
-- Protect the specific fact during editing — don't smooth a real detail ("cut deploy time from 40 minutes to 4") into generic importance ("significantly improved efficiency"). Real specifics anchor writing. Abstracting them destroys the most valuable part of the draft.
+- Before editing, identify the writer's signals: vocabulary, cadence, bluntness, humor, digressions. Treat them as load-bearing. Don't smooth distinctive traits into consistency. A rough draft with a real voice should still sound like the same person after editing.
+- Protect the specific fact during editing. Don't smooth a real detail ("cut deploy time from 40 minutes to 4") into generic importance ("significantly improved efficiency"). Real specifics anchor writing. Abstracting them destroys the most valuable part of the draft.
 
 **Example rewrite:**
 

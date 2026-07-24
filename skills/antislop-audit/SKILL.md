@@ -20,7 +20,7 @@ Trigger when the user asks to check, audit, review, grade, or score text for AI 
 
 ## When NOT to use
 
-For self-review only — checking your own or a collaborator's text before publishing. Do not use to accuse strangers of using AI.
+For self-review only — checking your own or a collaborator's text before publishing. Do not use to accuse strangers of using AI. Pattern-based detection is probabilistic, not proof: a single flag does not indicate AI authorship. Accumulation and pattern density are the tells.
 
 ## Core rule
 
@@ -38,6 +38,8 @@ Read [references/pattern-reference.md](references/pattern-reference.md) for the 
 - **Category** (e.g. Banned vocab, Em-dash)
 - **Excerpt** — the exact offending text, quoted
 - **Rule breached** — one line description
+
+Do not skip categories. Do not combine violations: one instance is one violation entry.
 
 ### Step 2 — Count violations by severity
 
