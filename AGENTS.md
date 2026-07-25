@@ -69,7 +69,7 @@ This works with Claude.ai, ChatGPT, Cursor, Windsurf, Zed, or any tool that acce
 
 - Sentence case headings everywhere — no Title Case
 - Skill files stay under 500 lines (current: 154 / 383 / 163)
-- Version bumps touch ten files: `metadata.version` and inline `**Version:**` in each SKILL.md, `gemini-extension.json`, `GEMINI.md`, `.opencode/agents/antislop.md`, `rules.json`, both `lint-skills.yml` workflows, and the production assertion in `tests/test_validate.py`. `pattern-reference.md` is generated, so regenerate rather than edit it. Verify with `python3 validate.py --skills-dir skills --expect-version <new>` and `bash check.sh`. Test fixtures keep their deliberately wrong versions.
+- Version bumps touch eleven files: `metadata.version` and inline `**Version:**` in each SKILL.md, `gemini-extension.json`, `GEMINI.md`, `.opencode/agents/antislop.md`, `rules.json`, both `lint-skills.yml` workflows, the production assertion in `tests/test_validate.py`, and `.claude-plugin/plugin.json`. Nothing checks the plugin manifest automatically, so it drifts silently. `pattern-reference.md` is generated, so regenerate rather than edit it. Verify with `python3 validate.py --skills-dir skills --expect-version <new>` and `bash check.sh`. Test fixtures keep their deliberately wrong versions.
 - README follows antislop rules itself: zero em-dashes, no banned vocabulary
 - Forgejo is the primary CI. Workflows live in `.forgejo/workflows/`. GitHub is a mirror only.
 - When to Use / When NOT to Use sections are mandatory — the lint CI fails without them
