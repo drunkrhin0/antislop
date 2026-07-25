@@ -10,6 +10,7 @@ working tree.
 
 import json
 import os
+import re
 import shutil
 import subprocess
 import sys
@@ -26,6 +27,28 @@ def make_sandbox():
         shutil.copy(os.path.join(ROOT, name), os.path.join(tmp, name))
     shutil.copytree(os.path.join(ROOT, "skills"), os.path.join(tmp, "skills"))
     return tmp
+
+
+def sandbox_version(sandbox):
+    """Read metadata.version out of the sandbox's antislop SKILL.md.
+
+    Read rather than hardcoded so a version bump on the base branch does not
+    break every test in this file.
+    """
+    path = os.path.join(sandbox, "skills/antislop/SKILL.md")
+    with open(path) as f:
+        text = f.read()
+    m = re.search(r'^\s*version:\s*"([^"]+)"', text, re.MULTILINE)
+    if not m:
+        raise AssertionError(f"no metadata.version found in {path}")
+    return m.group(1)
+
+
+def patch_bump(version):
+    """Return the next patch version, e.g. 2.0.0 becomes 2.0.1."""
+    parts = version.split(".")
+    parts[-1] = str(int(parts[-1]) + 1)
+    return ".".join(parts)
 
 
 def run_fix(sandbox, *args):
@@ -112,11 +135,13 @@ class TestVersionPropagation(unittest.TestCase):
     def test_bumped_metadata_version_propagates_to_body_and_gemini(self):
         sandbox = make_sandbox()
         try:
+            current = sandbox_version(sandbox)
+            target = patch_bump(current)
             skill_path = os.path.join(sandbox, "skills/antislop/SKILL.md")
             with open(skill_path) as f:
                 text = f.read()
-            self.assertIn('version: "1.8.0"', text)
-            bumped = text.replace('version: "1.8.0"', 'version: "1.8.1"', 1)
+            self.assertIn(f'version: "{current}"', text)
+            bumped = text.replace(f'version: "{current}"', f'version: "{target}"', 1)
             self.assertNotEqual(bumped, text)
             with open(skill_path, "w") as f:
                 f.write(bumped)
@@ -126,12 +151,12 @@ class TestVersionPropagation(unittest.TestCase):
 
             with open(skill_path) as f:
                 fixed_text = f.read()
-            self.assertIn("**Version:** 1.8.1", fixed_text)
+            self.assertIn(f"**Version:** {target}", fixed_text)
 
             gemini_path = os.path.join(sandbox, "skills/antislop/gemini-extension.json")
             with open(gemini_path) as f:
                 gemini = json.load(f)
-            self.assertEqual(gemini["version"], "1.8.1")
+            self.assertEqual(gemini["version"], target)
 
             val_rc, val_out, val_err = run_py(sandbox, "validate.py", "--skills-dir", "skills")
             self.assertEqual(val_rc, 0, f"validate.py should pass after fix: {val_out}{val_err}")
@@ -146,11 +171,13 @@ class TestUnresolvedFixLeavesFileUntouched(unittest.TestCase):
     def test_corrupt_gemini_json_is_left_untouched_and_reported(self):
         sandbox = make_sandbox()
         try:
+            current = sandbox_version(sandbox)
+            target = patch_bump(current)
             skill_path = os.path.join(sandbox, "skills/antislop/SKILL.md")
             with open(skill_path) as f:
                 text = f.read()
-            bumped = text.replace('version: "1.8.0"', 'version: "1.8.1"', 1)
-            bumped = bumped.replace("**Version:** 1.8.0", "**Version:** 1.8.1", 1)
+            bumped = text.replace(f'version: "{current}"', f'version: "{target}"', 1)
+            bumped = bumped.replace(f"**Version:** {current}", f"**Version:** {target}", 1)
             with open(skill_path, "w") as f:
                 f.write(bumped)
 
@@ -160,7 +187,7 @@ class TestUnresolvedFixLeavesFileUntouched(unittest.TestCase):
             # Malformed JSON (dangling comma with no value) — fix.py must not
             # attempt to parse-and-rewrite this.
             corrupt = gemini_before.replace(
-                '"version": "1.8.0",', '"version": "1.8.0",\n  "broken": ,'
+                f'"version": "{current}",', f'"version": "{current}",\n  "broken": ,'
             )
             self.assertNotEqual(corrupt, gemini_before)
             with open(gemini_path, "w") as f:
