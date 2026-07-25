@@ -2216,7 +2216,7 @@
       ],
       "exceptions": [],
       "overlaps": [
-        "struct-rhet-question-hooks"
+        "struct-rhetorical-hooks"
       ],
       "examples": [],
       "confidence": "medium"
@@ -2233,7 +2233,7 @@
       ],
       "exceptions": [],
       "overlaps": [
-        "struct-rhet-question-hooks"
+        "struct-rhetorical-hooks"
       ],
       "examples": [],
       "confidence": "medium"
