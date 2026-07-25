@@ -311,11 +311,13 @@ def repo_root_for(skills_dir):
 def find_shipped_artifacts(skills_dir):
     """Skill files plus the shipped derivatives that live outside skills_dir."""
     paths = list(find_skill_files(skills_dir))
+    seen = {os.path.normpath(os.path.abspath(p)) for p in paths}
     root = repo_root_for(skills_dir)
     for rel in EXTRA_ARTIFACTS:
         path = os.path.join(root, rel)
-        if os.path.isfile(path) and path not in paths:
+        if os.path.isfile(path) and os.path.normpath(os.path.abspath(path)) not in seen:
             paths.append(path)
+            seen.add(os.path.normpath(os.path.abspath(path)))
     return paths
 
 
