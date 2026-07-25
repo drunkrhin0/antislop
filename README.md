@@ -98,8 +98,8 @@ Returns a Formulaic Writing Risk Score (0-100), a violations table with severity
 - 0-39: Severe. This reads like unreviewed AI output.
 
 **Writing profiles:**
-- `general` (default) -- all rules active
-- `technical` -- technical documentation, API references (contextual terms like significant and robust are not penalized)
+- `general` (default): all rules active
+- `technical`: technical documentation, API references (contextual terms like significant and robust are not penalized)
 
 To add a new profile, see the `_profile_guide` in `rules.json`.
 
@@ -150,7 +150,7 @@ Version 2.0 introduces the rule registry (`rules.json`) as the single source of 
 - [Pangram](https://www.pangram.com/blog/comprehensive-guide-to-spotting-ai-writing-patterns): exhaustive AI vocabulary cross-reference, phrasing patterns, uniform sentence length, organizational tells
 - [Anbeeld/WRITING.md](https://github.com/Anbeeld/WRITING.md) (MIT): specificity theater, catalog prose, regularity diagnostics, compound-modifier nuance, medium routing
 - [Bugcrowd Design System — Tone & Language](https://bugcrowd.design/docs/guidelines/content-guidelines/language/): plain English substitutions, link text semantics, punctuation tell detection
-- [hardikpandya/stop-slop](https://github.com/hardikpandya/stop-slop) (MIT): cherry-picked phrase patterns — emphasis crutches, throat-clearing openers, meta-commentary, performative emphasis
+- [hardikpandya/stop-slop](https://github.com/hardikpandya/stop-slop) (MIT): cherry-picked emphasis crutches, throat-clearing openers, meta-commentary, performative emphasis
 - [apurvrdx1/tagore](https://github.com/apurvrdx1/tagore) (MIT): vocabulary additions (actually, enhance, showcase, interplay) and punchy one-liner closure pattern
 - [petergyang/no-ai-slop](https://github.com/petergyang/no-ai-slop) (MIT): padding adverbs, colon reveals, expert cosplay, voice preservation framing, protect-the-fact editing principle
 - Self: scare quotes, random bolding, ambiguous bold bullets, em-dash as false authority, voice and authenticity framing

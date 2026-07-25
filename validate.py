@@ -12,6 +12,8 @@ Checks:
   8. Audit output uses "Formulaic Writing Risk Score"
   9. Audit includes authorship disclaimer
   10. Antithesis rule mentions load-bearing distinction
+  11. No ASCII dash or arrow substitutes (' -- ', '->') outside code spans
+  12. Shared lines carry the same marks across shipped artifacts
 
 Usage:
     python3 validate.py --skills-dir skills
@@ -284,6 +286,121 @@ def check_antithesis_consistency(skills_dir):
     return errors
 
 
+# Artifacts that ship alongside skills/ and restate the same rules. Paths are
+# relative to the repository root, taken as the parent of skills_dir. Each is
+# checked only when present, so fixture runs skip them.
+EXTRA_ARTIFACTS = [
+    os.path.join(".opencode", "agents", "antislop.md"),
+    os.path.join("skills", "antislop", "GEMINI.md"),
+    "README.md",
+]
+
+# ASCII stand-ins a bulk find-and-replace leaves behind in place of the real
+# marks: ' -- ' for an em dash, '->' for an arrow.
+DASH_SUBSTITUTE = re.compile(r' -- |"-- |->')
+
+# Every mark plus its ASCII stand-in, for comparing the same line across files.
+MARK_OR_SUBSTITUTE = re.compile(r'—|–|→| -- |"-- |->')
+
+
+def repo_root_for(skills_dir):
+    """Repository root, taken as the parent of skills_dir."""
+    return os.path.dirname(os.path.abspath(skills_dir)) or "."
+
+
+def find_shipped_artifacts(skills_dir):
+    """Skill files plus the shipped derivatives that live outside skills_dir."""
+    paths = list(find_skill_files(skills_dir))
+    root = repo_root_for(skills_dir)
+    for rel in EXTRA_ARTIFACTS:
+        path = os.path.join(root, rel)
+        if os.path.isfile(path) and path not in paths:
+            paths.append(path)
+    return paths
+
+
+def blank_code_spans(line):
+    """Blank inline code spans, preserving offsets, so a literal mark
+    reference like ` -- ` is not read as dash usage."""
+    return re.sub(r"`[^`]*`", lambda m: " " * len(m.group(0)), line)
+
+
+def is_table_or_rule(line):
+    """Markdown table separators and horizontal rules are built from hyphens."""
+    stripped = line.strip()
+    return "-" in stripped and bool(re.match(r"^\|?[\s|:-]+\|?$", stripped))
+
+
+def check_dash_substitutes(skills_dir):
+    """Flag ASCII dash and arrow substitutes in shipped prose.
+
+    Em dashes in rule explanations are meta-context, not violations: the files
+    have to quote the marks they ban. What is not allowed is the ASCII stand-in
+    a bulk find-and-replace leaves behind. Code spans are exempt, since the
+    post-generation scan instruction must name the marks it looks for.
+    """
+    errors = []
+
+    for path in find_shipped_artifacts(skills_dir):
+        with open(path) as f:
+            text = f.read()
+
+        relpath = os.path.relpath(path)
+        in_fence = False
+
+        for i, line in enumerate(text.splitlines(), 1):
+            if line.strip().startswith("```"):
+                in_fence = not in_fence
+                continue
+            if in_fence or is_table_or_rule(line):
+                continue
+            for match in DASH_SUBSTITUTE.finditer(blank_code_spans(line)):
+                errors.append(
+                    f"{relpath}:{i}: dash substitute {match.group(0).strip()!r} "
+                    "outside a code span"
+                )
+
+    return errors
+
+
+def check_dash_parity(skills_dir):
+    """Shared lines across shipped artifacts must carry the same marks.
+
+    The agent file, GEMINI.md, and both SKILL.md files restate the same rules
+    and examples. A bulk replace applied to one derivative and not its siblings
+    shows up here as one sentence carrying different marks in different files.
+    """
+    errors = []
+    seen = {}
+
+    for path in find_shipped_artifacts(skills_dir):
+        with open(path) as f:
+            text = f.read()
+
+        relpath = os.path.relpath(path)
+
+        for i, line in enumerate(text.splitlines(), 1):
+            marks = MARK_OR_SUBSTITUTE.findall(line)
+            if not marks:
+                continue
+
+            key = MARK_OR_SUBSTITUTE.sub("\x00", " ".join(line.split()))
+            if len(key.replace("\x00", "").strip()) < 20:
+                continue  # too short to identify a shared line
+
+            signature = tuple(m.strip() for m in marks)
+            previous = seen.get(key)
+            if previous is None:
+                seen[key] = (relpath, i, signature)
+            elif previous[2] != signature:
+                errors.append(
+                    f"{relpath}:{i}: dash drift from {previous[0]}:{previous[1]} "
+                    f"({list(signature)} vs {list(previous[2])})"
+                )
+
+    return errors
+
+
 def main():
     parser = argparse.ArgumentParser(description="Validate Antislop repository invariants")
     parser.add_argument(
@@ -321,6 +438,8 @@ def main():
     all_errors.extend(check_audit_output_format(skills_dir))
     all_errors.extend(check_authorship_disclaimer(skills_dir))
     all_errors.extend(check_antithesis_consistency(skills_dir))
+    all_errors.extend(check_dash_substitutes(skills_dir))
+    all_errors.extend(check_dash_parity(skills_dir))
 
     # Report
     if all_errors:

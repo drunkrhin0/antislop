@@ -135,5 +135,43 @@ class TestAuditContentChecks(unittest.TestCase):
         self.assertIn("load-bearing", output.lower())
 
 
+class TestDashChecks(unittest.TestCase):
+    """ASCII dash substitutes and cross-artifact mark parity."""
+
+    def test_catches_dash_substitute(self):
+        """A double hyphen standing in for an em dash outside a code span."""
+        rc, stdout, stderr = run_validator(
+            "--skills-dir", os.path.join(FIXTURES, "dash-substitute"),
+        )
+        output = stdout + stderr
+        self.assertNotEqual(rc, 0)
+        self.assertIn("dash substitute", output)
+
+    def test_allows_marks_inside_code_spans(self):
+        """Literal mark references in backticks are meta-context, not usage."""
+        rc, stdout, stderr = run_validator(
+            "--skills-dir", os.path.join(FIXTURES, "dash-substitute"),
+        )
+        output = stdout + stderr
+        # Line 17 carries the violation; line 19 backticks the same marks.
+        self.assertIn(":17:", output)
+        self.assertNotIn(":19:", output)
+
+    def test_catches_dash_drift_between_artifacts(self):
+        """The same line carrying different marks in two shipped artifacts."""
+        rc, stdout, stderr = run_validator(
+            "--skills-dir", os.path.join(FIXTURES, "dash-drift"),
+        )
+        output = stdout + stderr
+        self.assertNotEqual(rc, 0)
+        self.assertIn("dash drift", output)
+
+    def test_production_artifacts_have_no_substitutes(self):
+        """The real artifacts, including the agent file and README."""
+        rc, stdout, stderr = run_validator("--skills-dir", "skills")
+        output = stdout + stderr
+        self.assertEqual(rc, 0, f"Dash checks failed on production:\n{output}")
+
+
 if __name__ == "__main__":
     unittest.main()

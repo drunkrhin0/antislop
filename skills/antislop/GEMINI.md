@@ -232,7 +232,7 @@ AI writing has no opinion, no experience, no war stories. It takes no position, 
 - [ ] Weak verb check — any "work to ensure", "seek to address", "begin to understand" hedging through indirection? Replace with actual action.
 - [ ] Empty declarative check — any "This matters", "Everything is connected", "The stakes are high" performing significance without substance? Cut or rewrite with specifics.
 - [ ] Transformation chain check — any "X became Y. Y became Z" sequences creating false momentum? Consolidate.
-- [ ] Em-dash, en-dash, and double-hyphen count checked — zero permitted. Scan and replace any —, –, or -- with . or ,
+- [ ] Em-dash, en-dash, and double-hyphen count checked — zero permitted. Scan and replace any `—`, `–`, or `--` with `.` or `,`
 - [ ] Scare quotes checked — do they earn it or are they hedging?
 - [ ] Bolded text checked — intentional or decorative?
 - [ ] Bolded bullets checked — does the body support each claim?
