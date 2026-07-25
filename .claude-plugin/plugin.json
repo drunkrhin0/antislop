@@ -17,6 +17,7 @@
     "ai-slop",
     "prose",
     "style-guide",
-    "linting"
+    "linting",
+    "humanizer"
   ]
 }
