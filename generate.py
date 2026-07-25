@@ -132,8 +132,9 @@ def render_severity_summary(rules):
     """Render a severity-to-weight mapping summary."""
     lines = ["## Severity weights", "", "| Severity | Base weight |", "|---|---|"]
     for sev in ("high", "medium", "low"):
-        weight = next(r["base_weight"] for r in rules if r["severity"] == sev)
-        lines.append(f"| {sev} | {weight} |")
+        match = next((r["base_weight"] for r in rules if r["severity"] == sev), None)
+        if match is not None:
+            lines.append(f"| {sev} | {match} |")
     return "\n".join(lines)
 
 

@@ -2095,7 +2095,9 @@
         "*"
       ],
       "exceptions": [],
-      "overlaps": [],
+      "overlaps": [
+        "phrase-hope-helps"
+      ],
       "examples": [],
       "confidence": "medium"
     },
@@ -2140,13 +2142,15 @@
         "*"
       ],
       "exceptions": [],
-      "overlaps": [],
+      "overlaps": [
+        "phrase-certainly"
+      ],
       "examples": [],
       "confidence": "medium"
     },
     {
       "id": "chatbot-cutoff-disclaimers",
-      "text": "Cutoff disclaimers ('While details are limited based on available information...')",
+      "text": "While details are limited based on available information",
       "category": "chatbot",
       "severity": "high",
       "base_weight": 8,

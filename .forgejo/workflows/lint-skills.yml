@@ -12,10 +12,10 @@ jobs:
     steps:
       - name: Checkout
         env:
-          RELEASE_TOKEN: ${{ secrets.RELEASE_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           git clone --depth 1 \
-            "http://x-access-token:${RELEASE_TOKEN}@192.168.1.62:3000/drunkrhin0/antislop.git" \
+            "http://x-access-token:${GITHUB_TOKEN}@192.168.1.62:3000/drunkrhin0/antislop.git" \
             .
 
       - name: Validate repository invariants

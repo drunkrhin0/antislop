@@ -41,6 +41,25 @@ VERSION_BODY_RE = re.compile(r"(\*\*Version:\*\*\s*)([0-9][0-9a-zA-Z.\-]*)")
 VERSION_JSON_RE = re.compile(r'("version"\s*:\s*")([^"]*)(")')
 
 
+def _atomic_write(path, data, mode="w"):
+    """Write data to path atomically via a temp file + os.replace."""
+    target_dir = os.path.dirname(path) or "."
+    fd, tmppath = tempfile.mkstemp(dir=target_dir)
+    try:
+        with os.fdopen(fd, mode) as f:
+            if isinstance(data, str):
+                f.write(data)
+            else:
+                f.write(data)
+        os.replace(tmppath, path)
+    except BaseException:
+        try:
+            os.unlink(tmppath)
+        except OSError:
+            pass
+        raise
+
+
 def _run(cmd, cwd):
     result = subprocess.run(cmd, capture_output=True, text=True, cwd=cwd)
     return result.returncode, result.stdout, result.stderr
@@ -75,7 +94,8 @@ def fix_pattern_reference(root, registry, profile):
             return {"name": PATTERN_REF_RELPATH, "check": "generate", "status": "unresolved",
                      "detail": "generator did not produce the artifact"}
         os.makedirs(os.path.dirname(target), exist_ok=True)
-        shutil.copyfile(generated, target)
+        with open(generated, "rb") as src:
+            _atomic_write(target, src.read(), mode="wb")
 
     rc2, out2, err2 = _run([sys.executable, generate_py, "--check",
                              "--registry", registry, "--profile", profile], root)
@@ -119,16 +139,14 @@ def fix_skill_versions(root, skill_path):
             results.append({"name": relpath, "check": "version-mismatch", "status": "unresolved",
                              "detail": "could not locate a **Version:** string to rewrite"})
         else:
-            with open(skill_path, "w") as f:
-                f.write(new_text)
+            _atomic_write(skill_path, new_text)
             rc, out, err = _scoped_validate(root, skill_dir)
             still_broken = "version mismatch" in (out + err).lower()
             if not still_broken:
                 results.append({"name": relpath, "check": "version-mismatch", "status": "fixed"})
                 text = new_text  # carry forward so the gemini check below sees the fixed body
             else:
-                with open(skill_path, "w") as f:
-                    f.write(text)
+                _atomic_write(skill_path, text)
                 results.append({"name": relpath, "check": "version-mismatch", "status": "unresolved",
                                  "detail": (out + err).strip()})
 
@@ -153,15 +171,13 @@ def fix_skill_versions(root, skill_path):
                     results.append({"name": gemini_relpath, "check": "cross-file-drift", "status": "unresolved",
                                      "detail": "could not locate a \"version\" field to rewrite"})
                 else:
-                    with open(gemini_path, "w") as f:
-                        f.write(new_raw)
+                    _atomic_write(gemini_path, new_raw)
                     rc, out, err = _scoped_validate(root, skill_dir)
                     still_broken = "cross-file version drift" in (out + err).lower()
                     if not still_broken:
                         results.append({"name": gemini_relpath, "check": "cross-file-drift", "status": "fixed"})
                     else:
-                        with open(gemini_path, "w") as f:
-                            f.write(raw)
+                        _atomic_write(gemini_path, raw)
                         results.append({"name": gemini_relpath, "check": "cross-file-drift", "status": "unresolved",
                                          "detail": (out + err).strip()})
 

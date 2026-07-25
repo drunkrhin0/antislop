@@ -66,9 +66,16 @@ def find_phrase_matches(text, rule):
 
 
 def detect_findings(text, rules, profile):
-    """Detect all findings in text against the active rules."""
+    """Detect all findings in text against the active rules.
+
+    Returns (findings, skipped_count) where skipped_count is the number of
+    active rules whose detection_class is not yet implemented (pattern_match,
+    structural). The score output's metadata.skipped_rules field uses this
+    to document coverage gaps.
+    """
     active_rules = filter_rules_by_profile(rules, profile)
     findings = []
+    skipped = 0
 
     for rule in active_rules:
         detection = rule.get("detection_class", "exact_match")
@@ -78,10 +85,10 @@ def detect_findings(text, rules, profile):
         elif detection == "phrase_match":
             matches = find_phrase_matches(text, rule)
         elif detection in ("pattern_match", "structural"):
-            # For structural/pattern rules, we rely on the text containing
-            # indicative patterns. Simplified detection for now.
+            skipped += 1
             continue
         else:
+            skipped += 1
             continue
 
         for match in matches:
@@ -103,7 +110,7 @@ def detect_findings(text, rules, profile):
                 "match_length": match_len,
             })
 
-    return findings
+    return findings, skipped
 
 
 def handle_overlaps(findings):
@@ -236,7 +243,7 @@ def score_text(text, registry, profile="general"):
     word_count = count_words(text)
 
     # Detect findings
-    raw_findings = detect_findings(text, rules, profile)
+    raw_findings, skipped_rules = detect_findings(text, rules, profile)
 
     # Handle overlaps
     findings = handle_overlaps(raw_findings)
@@ -279,6 +286,7 @@ def score_text(text, registry, profile="general"):
             "version": registry.get("version", "unknown"),
             "total_penalty": round(total_penalty, 2),
             "normalized_penalty": round(normalized, 2),
+            "skipped_rules": skipped_rules,
         },
     }
 

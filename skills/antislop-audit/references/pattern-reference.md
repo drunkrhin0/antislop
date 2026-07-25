@@ -177,7 +177,7 @@ Profile description: Default profile for all prose. All rules active.
 ## Chatbot artifacts
 
 - "Certainly! / Absolutely!"
-- "Cutoff disclaimers ('While details are limited based on available information...')"
+- "While details are limited based on available information"
 - "Great question!"
 - "I hope this helps!"
 - "Let me know if you have questions!"
