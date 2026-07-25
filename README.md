@@ -71,6 +71,21 @@ Mention `@antislop` in opencode, or let the primary agent spawn it automatically
 
 The agent is a hand-maintained derivative of the canonical SKILL.md files, like GEMINI.md. When adding a rule, update the agent file alongside the other derivatives.
 
+### Claude Code plugin
+
+The repo ships a `.claude-plugin/plugin.json` manifest, so it loads as a Claude Code plugin straight from a local clone. No copying files into `~/.claude/skills/` first.
+
+```bash
+git clone https://github.com/drunkrhin0/antislop.git
+claude --plugin-dir ./antislop
+```
+
+Claude Code finds `skills/antislop/SKILL.md` and `skills/antislop-audit/SKILL.md` under the default `skills/` scan, so the manifest does not need to list them one by one. Once loaded, the skills sit under the `antislop` namespace, for example `/antislop:antislop-audit`.
+
+Run `claude plugin validate .` from the repo root to check the manifest before you rely on it.
+
+The plugin is not yet listed on the community marketplace. That submission is a manual step for the maintainer, tracked separately from this manifest.
+
 ### Manual
 
 Copy `skills/antislop/` and `skills/antislop-audit/` into your skills directory:

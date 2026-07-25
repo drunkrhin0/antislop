@@ -34,7 +34,9 @@ Flag the pattern. Do not reason about whether it was intentional. Intent is not 
 
 ### Step 1 — Scan for violations
 
-Read [references/pattern-reference.md](references/pattern-reference.md) for the full pattern list with severity levels. Work through every category. For each violation found, record:
+Read [references/pattern-reference.md](references/pattern-reference.md) before scoring any text. It is the generated artifact rendered from the rule registry (rules.json) and is the single source of truth for what counts as a finding: every banned word, phrase, filler phrase, structural pattern, formatting rule, and chatbot artifact, organized by category with each rule's severity attached. Load it now if you have not already — do not rely on memory or a prior pass, since the registry is what changes when rules are added, removed, or reweighted.
+
+Work through every category in the reference file. For each violation found, record:
 - **Category** (e.g. Banned vocab, Em-dash)
 - **Excerpt** — the exact offending text, quoted
 - **Rule breached** — one line description
@@ -43,86 +45,15 @@ Do not skip categories. Do not combine violations: one instance is one violation
 
 ### Step 2 — Count violations by severity
 
-**High severity** (each = -8 points):
-- Banned vocabulary
-- Banned phrases
-- Em-dash, en-dash, or double-hyphen substitute (any use — never permitted)
-- Scare quotes
-- Chatbot artifacts ("I hope this helps", "Great question")
-- Vague attribution ("experts believe", "research shows" without source)
-- Significance inflation ("pivotal moment", "transformative")
-- Rhetorical-question hooks ("The kicker?", "The issue?", "Do you know what I learned?")
-- Balanced-take hedging ("While X is true, we must also consider Y" formula)
-- Specificity theater (unverifiable specifics, decorative factuality, hidden-mechanism narration, synthetic quotes with no named source)
+Every rule in the reference file is tagged high, medium, or low. Use the severity attached to the rule you matched in Step 1, and apply its base weight per finding:
 
-**Medium severity** (each = -4 points):
-- Random bolding
-- Ambiguous bolded bullet (claim not supported by body text)
-- Banned openers/closers (Moreover, Furthermore, In conclusion, etc.)
-- Rule of three in a single sentence
-- Synonym cycling
-- Overlong sentence (3+ ideas, 2+ qualifiers, or 2+ disclaimers in one sentence)
-- Antithesis ("not just X, but Y", "not X, but Y") — decorative when the contrast is tone management, not argument. Load-bearing contrasts that rule out a specific alternative the reader would otherwise assume are not violations.
-- Negative parallelism / trailing negation
-- Copula avoidance ("serves as", "boasts", "features", "functions as", "stands as")
-- Colon reveals (noun-phrase colon lowercase-dramatic-reveal — "The best part: it learns." Rewrite as a plain sentence.)
-- Parataxis (3+ consecutive short declarative sentences)
-- Passive voice / subjectless fragments
-- Excessive hedging ("could potentially possibly", "it might have some effect")
-- Rhetorical emphasis tail / moralizing tail
-- Generic subject loops (3+ sentences opening with the same vague pronoun)
-- False range ("from X to Y" as rhetorical filler)
-- Promotional language ("nestled within the breathtaking...")
-- Generic conclusion ("The future looks bright", "Exciting times ahead")
-- Notability name-dropping
-- Fragmented headers (heading followed by one-line restatement)
-- Negation flip
-- Paragraph-level redundancy
-- Triplet overlap (3+ descriptors naming the same quality)
-- Superficial -ing analyses ("highlighting", "underscoring" tacked onto sentence ends)
-- Bullet-point crutch
-- Awkward AI metaphors
-- Simile-as-adverb ("with the [noun] of someone [verb]ing")
-- Hedged reactions ("a laugh that isn't quite a laugh")
-- Temperature-as-emotion (hot/cold replacing specific emotional description)
-- Physical tell clichés (jaw/throat/breath/hands as emotion props)
-- Anthropomorphized silence ("the silence stretched")
-- All paragraphs the same length
-- Uniform sentence length
-- Ending clichés ("And for now, that was enough")
-- Catalog prose (paragraphs that are only names, dates, features)
-- System-tour prose (paragraph-to-category-bucket mapping)
-- Concession rhythm ("not X, but Y" as reflexive paragraph scaffold)
-- Type-definition endings ("the kind of X where Y" as default paragraph closure)
-- Generic action-describing link text ("click here", "learn more")
-- Artificial line breaks (mid-sentence breaks at terminal width)
-- Wh- sentence openers
-- Lazy extremes ("always", "never", "everything", "nothing")
-- False agency (inanimate things doing human verbs)
-- Weak verb constructions ("work to ensure", "seek to address")
-- Empty declaratives ("This matters", "Everything is connected")
-- Transformation chains ("X became Y. Y became Z.")
-- Transition glue ("With that in mind", "Against this backdrop")
-- Complexity signalling ("This is more complex than it appears")
-- Discovery narration ("As I explored this further")
-- Wisdom sandwich (paragraph framed by bookend aphorisms)
-- Corrective reveals ("You've been told X. Here's the truth: Y")
-- Punchy one-liner closure (every paragraph ending with short dramatic sentence)
-- "It turns out" as throat-clearing opener
+| Severity | Points per finding |
+|---|---|
+| High | -8 |
+| Medium | -4 |
+| Low | -2 |
 
-**Low severity** (each = -2 points):
-- Title Case Headings
-- Inline-header lists (**Term:** explanation)
-- Compound-modifier over-hyphenation
-- Curly quotes — should be straight quotes
-- Filler phrases ("in order to", "due to the fact that", "at this point in time")
-- Emojis in prose
-- Emoji as bullet markers (✅, 👉, 🔥, 💡 prefixed to list items)
-- Usage of unicode characters to convey a point (e.g. `→`)
-- Standalone "Because" fragments
-- Exclamation mark overuse
-- Semicolon overuse (2+ per paragraph)
-- Padding adverbs — "just, honestly, actually, fundamentally, crucially, importantly" used as padding rather than carrying weight
+The reference file's own "Severity weights" table is authoritative if these ever drift from rules.json.
 
 ### Step 3 — Calculate score
 
