@@ -34,17 +34,27 @@ This installs to `~/.claude/skills/` so the skills are available across all proj
 
 Just ask your agent to install `drunkrhin0/antislop` from GitHub. Most will figure it out. The repo includes an `AGENTS.md` file for automatic skill discovery.
 
-### Gemini CLI
+### Claude Code plugin
 
-Copy the `skills/antislop/` folder into your Gemini extensions directory:
+The repo ships a `.claude-plugin/plugin.json` manifest, so it loads as a Claude Code plugin straight from a local clone. No copying files into `~/.claude/skills/` first.
 
 ```bash
-mkdir -p ~/.gemini/extensions/antislop
-cp skills/antislop/gemini-extension.json ~/.gemini/extensions/antislop/
-cp skills/antislop/GEMINI.md ~/.gemini/extensions/antislop/
+git clone https://github.com/drunkrhin0/antislop.git
+claude --plugin-dir ./antislop
 ```
 
-Gemini CLI picks it up automatically on next launch.
+Claude Code finds `skills/antislop/SKILL.md` and `skills/antislop-audit/SKILL.md` under the default `skills/` scan, so the manifest does not need to list them one by one. Once loaded, the skills sit under the `antislop` namespace, for example `/antislop:antislop-audit`.
+
+Run `claude plugin validate .claude-plugin/plugin.json` to check the manifest before you rely on it. The repo also ships a `.claude-plugin/marketplace.json`, so pointing `validate` at the bare repo root validates the marketplace file instead. Pass the manifest path explicitly to check the plugin.
+
+The repo also self-hosts its own marketplace, so you can install without a local clone:
+
+```bash
+claude plugin marketplace add https://git.drunkrhin0.au/drunkrhin0/antislop.git
+claude plugin install antislop@drunkrhin0
+```
+
+Not listed on Anthropic's community marketplace (that submission is a separate, manual step), but self-hosted install works today.
 
 ### Gemini web app (gemini.google.com)
 
@@ -71,33 +81,26 @@ Mention `@antislop` in opencode, or let the primary agent spawn it automatically
 
 The agent is a hand-maintained derivative of the canonical SKILL.md files, like GEMINI.md. When adding a rule, update the agent file alongside the other derivatives.
 
-### Claude Code plugin
-
-The repo ships a `.claude-plugin/plugin.json` manifest, so it loads as a Claude Code plugin straight from a local clone. No copying files into `~/.claude/skills/` first.
-
-```bash
-git clone https://github.com/drunkrhin0/antislop.git
-claude --plugin-dir ./antislop
-```
-
-Claude Code finds `skills/antislop/SKILL.md` and `skills/antislop-audit/SKILL.md` under the default `skills/` scan, so the manifest does not need to list them one by one. Once loaded, the skills sit under the `antislop` namespace, for example `/antislop:antislop-audit`.
-
-Run `claude plugin validate .claude-plugin/plugin.json` to check the manifest before you rely on it. The repo also ships a `.claude-plugin/marketplace.json`, so pointing `validate` at the bare repo root validates the marketplace file instead. Pass the manifest path explicitly to check the plugin.
-
-The repo also self-hosts its own marketplace, so you can install without a local clone:
-
-```bash
-claude plugin marketplace add https://git.drunkrhin0.au/drunkrhin0/antislop.git
-claude plugin install antislop@drunkrhin0
-```
-
-Not listed on Anthropic's community marketplace (that submission is a separate, manual step), but self-hosted install works today.
-
 ### Manual
 
-Copy `skills/antislop/` and `skills/antislop-audit/` into your skills directory:
-- Claude Code: `~/.claude/skills/`
-- opencode: `~/.config/opencode/skills/`
+Copy skill files straight into your agent's directory. No plugin system, no CLI install step.
+
+| Agent | Target directory | What to copy |
+|---|---|---|
+| Claude Code | `~/.claude/skills/` | `skills/antislop/`, `skills/antislop-audit/` |
+| opencode | `~/.config/opencode/skills/` | `skills/antislop/`, `skills/antislop-audit/` |
+| Gemini CLI | `~/.gemini/extensions/antislop/` | `skills/antislop/gemini-extension.json`, `skills/antislop/GEMINI.md` |
+
+```bash
+# Claude Code / opencode
+cp -r skills/antislop skills/antislop-audit ~/.claude/skills/
+
+# Gemini CLI
+mkdir -p ~/.gemini/extensions/antislop
+cp skills/antislop/gemini-extension.json skills/antislop/GEMINI.md ~/.gemini/extensions/antislop/
+```
+
+Gemini CLI picks up the extension automatically on next launch.
 
 ---
 
