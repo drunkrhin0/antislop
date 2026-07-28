@@ -149,7 +149,7 @@ The score measures formulaic-writing risk and cannot prove AI authorship.
 
 Version 2.0 introduces the rule registry (`rules.json`) as the single source of truth for all writing rules. Each rule has a stable ID, severity, detection class, profile set, and overlap relationships. The generator (`generate.py`) renders pattern reference files from the registry, and the scorer (`score.py`) calculates scores using the registry metadata.
 
-**What changed from 1.8:**
+**What changed from 1.7:**
 - Score renamed from "Slop Score" to "Formulaic Writing Risk Score"
 - Authorship disclaimer added: score cannot prove AI authorship
 - Writing profiles: general and technical (extensible via rules.json)
@@ -158,7 +158,7 @@ Version 2.0 introduces the rule registry (`rules.json`) as the single source of 
 - Overlap handling: one primary finding per text span, related findings unscored
 - Rule registry: 146 rules with stable IDs, severity weights, and profile assignments
 
-**Compatibility boundary:** Version 1.8 corrected contradictions and overlap handling while preserving the existing score formula. Version 2.0 changes the score calculation, output format, and rule activation through profiles. The 1.8 score formula is not preserved in 2.0.
+**Compatibility boundary:** 2.0.0 ships directly from 1.7.0. A 1.8 compatibility release was planned to correct contradictions and overlap handling while preserving the 1.7 score formula, but no 1.8.0 tag was ever cut (see `docs/adr/0002`); those corrections landed directly in 2.0 instead. The 1.7 score formula is not preserved in 2.0.
 
 ---
 
