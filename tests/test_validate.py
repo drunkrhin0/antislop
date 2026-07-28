@@ -109,8 +109,8 @@ class TestProductionChecks(unittest.TestCase):
         self.assertEqual(rc, 0, f"Validator failed on production skills:\n{output}")
 
     def test_production_skills_version(self):
-        """The real skills/ directory should be at 2.0.0."""
-        rc, stdout, stderr = run_validator("--skills-dir", "skills", "--expect-version", "2.0.0")
+        """The real skills/ directory should be at 2.0.1."""
+        rc, stdout, stderr = run_validator("--skills-dir", "skills", "--expect-version", "2.0.1")
         output = stdout + stderr
         self.assertEqual(rc, 0, f"Version check failed on production skills:\n{output}")
 

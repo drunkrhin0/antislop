@@ -30,7 +30,7 @@ bash check.sh
 python3 -m unittest discover -s tests
 
 # Structural invariants only
-python3 validate.py --skills-dir skills --expect-version 2.0.0
+python3 validate.py --skills-dir skills --expect-version 2.0.1
 
 # Committed artifacts match the registry
 python3 generate.py --check
