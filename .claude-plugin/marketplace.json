@@ -1,0 +1,15 @@
+{
+  "$schema": "https://www.schemastore.org/claude-code-marketplace.json",
+  "name": "drunkrhin0",
+  "owner": {
+    "name": "Rami Tawil",
+    "url": "https://git.drunkrhin0.au/drunkrhin0"
+  },
+  "plugins": [
+    {
+      "name": "antislop",
+      "source": "./",
+      "description": "Writing style and audit skills that suppress detectable AI writing patterns in prose."
+    }
+  ]
+}
