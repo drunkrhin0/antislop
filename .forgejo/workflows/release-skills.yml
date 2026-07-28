@@ -86,19 +86,16 @@ jobs:
           fi
 
       - name: Resolve version from tag
-        if: startsWith(github.ref, 'refs/tags/')
+        if: startsWith(github.ref, 'refs/tags/antislop-v')
         run: |
           TAG="${GITHUB_REF_NAME}"
           VERSION="${TAG#antislop-v}"
-          if [ "$VERSION" = "$TAG" ]; then
-            VERSION="${TAG#antislop-audit-v}"
-          fi
           echo "VERSION=${VERSION}" >> "$GITHUB_ENV"
           echo "TAG=${TAG}" >> "$GITHUB_ENV"
           echo "Resolved: tag=${TAG} version=${VERSION}"
 
       - name: Build zips
-        if: startsWith(github.ref, 'refs/tags/')
+        if: startsWith(github.ref, 'refs/tags/antislop-v')
         run: |
           zip -r "antislop-${VERSION}.zip" skills/antislop/
           zip -r "antislop-audit-${VERSION}.zip" skills/antislop-audit/
@@ -107,7 +104,7 @@ jobs:
           ls -la *.zip
 
       - name: Create release and upload assets
-        if: startsWith(github.ref, 'refs/tags/')
+        if: startsWith(github.ref, 'refs/tags/antislop-v')
         env:
           RELEASE_TOKEN: ${{ secrets.RELEASE_TOKEN }}
         run: |
@@ -116,23 +113,39 @@ jobs:
           REPO="${GITHUB_REPOSITORY}"
           AUTH="Authorization: token ${RELEASE_TOKEN}"
 
+          extract_id() {
+            # Reads a JSON object from argv[1] and prints its top-level "id",
+            # or nothing. A naive sed/grep for "id": matches the *last*
+            # occurrence in the blob, which is the author's user id (nested
+            # under "author"), not the release's own id -- silently uploads
+            # assets to the wrong (often nonexistent) release. Parse it.
+            python3 -c "
+          import json, sys
+          try:
+              print(json.loads(sys.argv[1]).get('id', ''))
+          except Exception:
+              print('')
+          " "$1"
+          }
+
           echo "Finding release for tag ${TAG}..."
           RELEASE_DATA=$(curl -s "${API}/repos/${REPO}/releases/tags/${TAG}" -H "${AUTH}")
-          RELEASE_ID=$(echo "$RELEASE_DATA" | sed -n 's/.*"id": *\([0-9]*\).*/\1/p')
+          RELEASE_ID=$(extract_id "$RELEASE_DATA")
 
           if [ -z "${RELEASE_ID}" ]; then
             echo "No release found — creating one"
             BODY="antislop v${VERSION} — writing style, audit companion, Gemini extension, and opencode agent."
             printf '{"tag_name":"%s","name":"antislop v%s","body":"%s","draft":false,"prerelease":false}' \
               "${TAG}" "${VERSION}" "${BODY}" > /tmp/release.json
-            RESPONSE=$(curl -s -X POST "${API}/repos/${REPO}/releases" \
+            RESPONSE=$(curl -s -w "\n%{http_code}" -X POST "${API}/repos/${REPO}/releases" \
               -H "${AUTH}" -H "Content-Type: application/json" \
-              -d @/tmp/release.json -w "\n%{http_code}")
-            HTTP_CODE=$(echo "$RESPONSE" | tail -1)
-            RELEASE_ID=$(echo "$RESPONSE" | sed -n 's/.*"id": *\([0-9]*\).*/\1/p')
+              -d @/tmp/release.json)
+            HTTP_CODE=$(printf '%s' "$RESPONSE" | tail -n1)
+            RESPONSE_BODY=$(printf '%s' "$RESPONSE" | sed '$d')
+            RELEASE_ID=$(extract_id "$RESPONSE_BODY")
             if [ -z "${RELEASE_ID}" ] || [ "${HTTP_CODE}" -ge 400 ]; then
               echo "Failed to create release (HTTP ${HTTP_CODE})"
-              echo "Response: ${RESPONSE}"
+              echo "Response: ${RESPONSE_BODY}"
               exit 1
             fi
           else
