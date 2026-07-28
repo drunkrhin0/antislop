@@ -20,20 +20,7 @@ import os
 import re
 import sys
 
-
-def load_registry(path="rules.json"):
-    with open(path) as f:
-        return json.load(f)
-
-
-def filter_rules_by_profile(rules, profile):
-    """Return rules active in the given profile."""
-    active = []
-    for rule in rules:
-        rule_profiles = rule.get("profiles", ["general"])
-        if "*" in rule_profiles or profile in rule_profiles:
-            active.append(rule)
-    return active
+from registry import load_registry, filter_rules_by_profile
 
 
 def count_words(text):

@@ -7,7 +7,7 @@ applies two mechanical fix classes:
   1. Regenerate skills/antislop-audit/references/pattern-reference.md when
      generate.py --check reports drift against rules.json.
   2. Propagate metadata.version (the canonical source — see AGENTS.md's
-     "version bumps touch five places") to the body **Version:** string and
+     "version bumps touch eleven files") to the body **Version:** string and
      to the paired gemini-extension.json when validate.py reports a
      version-mismatch or cross-file-drift error.
 

@@ -23,7 +23,7 @@ ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 def make_sandbox():
     """Copy the pieces fix.py needs into a throwaway directory."""
     tmp = tempfile.mkdtemp(prefix="antislop-fix-test-")
-    for name in ("rules.json", "generate.py", "validate.py", "fix.py"):
+    for name in ("rules.json", "generate.py", "registry.py", "validate.py", "fix.py"):
         shutil.copy(os.path.join(ROOT, name), os.path.join(tmp, name))
     shutil.copytree(os.path.join(ROOT, "skills"), os.path.join(tmp, "skills"))
     return tmp
