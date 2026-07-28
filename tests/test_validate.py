@@ -4,6 +4,7 @@
 Run: python3 tests/test_validate.py
 """
 
+import atexit
 import os
 import shutil
 import subprocess
@@ -13,6 +14,7 @@ import unittest
 
 VALIDATOR = os.path.join(os.path.dirname(__file__), "..", "validate.py")
 FIXTURES = os.path.join(os.path.dirname(__file__), "fixtures")
+REPO_ROOT = os.path.join(os.path.dirname(__file__), "..")
 
 
 def run_validator(*args):
@@ -30,10 +32,11 @@ def materialize_fixture(name):
     pick up these deliberately-broken files as installable skills. validate.py's
     discovery still needs the real filename to exercise the actual code path,
     so materialize a real copy at test time instead of keeping SKILL.md on disk
-    permanently.
+    permanently. The temp copy is removed when the test process exits.
     """
     src = os.path.join(FIXTURES, name)
     tmp = tempfile.mkdtemp(prefix="antislop-fixture-")
+    atexit.register(shutil.rmtree, tmp, ignore_errors=True)
     dst = os.path.join(tmp, os.path.basename(name))
     shutil.copytree(src, dst)
     for root, _dirs, files in os.walk(dst):
@@ -194,6 +197,29 @@ class TestDashChecks(unittest.TestCase):
         rc, stdout, stderr = run_validator("--skills-dir", "skills")
         output = stdout + stderr
         self.assertEqual(rc, 0, f"Dash checks failed on production:\n{output}")
+
+
+class TestSkillFileDiscovery(unittest.TestCase):
+    """Regression test: tools that walk the repo for files literally named
+    SKILL.md (openskills, and anything else with no skills/ scoping) must
+    find exactly the two real skills, nothing from tests/fixtures/."""
+
+    def test_only_the_two_real_skills_are_named_skill_md(self):
+        found = []
+        for root, dirs, files in os.walk(REPO_ROOT):
+            dirs[:] = [d for d in dirs if d != ".git"]
+            if "SKILL.md" in files:
+                found.append(os.path.relpath(os.path.join(root, "SKILL.md"), REPO_ROOT))
+        expected = {
+            os.path.join("skills", "antislop", "SKILL.md"),
+            os.path.join("skills", "antislop-audit", "SKILL.md"),
+        }
+        self.assertEqual(
+            set(found), expected,
+            "Exactly two files may be named SKILL.md in this repo. If a new "
+            "fixture needs one, name it SKILL.md.fixture and materialize it "
+            "at test time -- see materialize_fixture() above.",
+        )
 
 
 if __name__ == "__main__":
