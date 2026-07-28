@@ -1,6 +1,7 @@
 {
   "$schema": "https://www.schemastore.org/claude-code-marketplace.json",
   "name": "drunkrhin0",
+  "description": "Rami Tawil's self-hosted Claude Code plugin marketplace.",
   "owner": {
     "name": "Rami Tawil",
     "url": "https://git.drunkrhin0.au/drunkrhin0"

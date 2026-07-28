@@ -82,9 +82,16 @@ claude --plugin-dir ./antislop
 
 Claude Code finds `skills/antislop/SKILL.md` and `skills/antislop-audit/SKILL.md` under the default `skills/` scan, so the manifest does not need to list them one by one. Once loaded, the skills sit under the `antislop` namespace, for example `/antislop:antislop-audit`.
 
-Run `claude plugin validate .` from the repo root to check the manifest before you rely on it.
+Run `claude plugin validate .claude-plugin/plugin.json` to check the manifest before you rely on it. The repo also ships a `.claude-plugin/marketplace.json`, so pointing `validate` at the bare repo root validates the marketplace file instead. Pass the manifest path explicitly to check the plugin.
 
-The plugin is not yet listed on the community marketplace. That submission is a manual step for the maintainer, tracked separately from this manifest.
+The repo also self-hosts its own marketplace, so you can install without a local clone:
+
+```bash
+claude plugin marketplace add https://git.drunkrhin0.au/drunkrhin0/antislop.git
+claude plugin install antislop@drunkrhin0
+```
+
+Not listed on Anthropic's community marketplace (that submission is a separate, manual step), but self-hosted install works today.
 
 ### Manual
 
@@ -149,7 +156,7 @@ Version 2.0 introduces the rule registry (`rules.json`) as the single source of 
 - Diminishing repetition: repeated instances of one rule diminish (100%, 50%, 25%), capped at 3x base weight
 - 500-word normalization: comparable scores across different text lengths
 - Overlap handling: one primary finding per text span, related findings unscored
-- Rule registry: 139 rules with stable IDs, severity weights, and profile assignments
+- Rule registry: 146 rules with stable IDs, severity weights, and profile assignments
 
 **Compatibility boundary:** Version 1.8 corrected contradictions and overlap handling while preserving the existing score formula. Version 2.0 changes the score calculation, output format, and rule activation through profiles. The 1.8 score formula is not preserved in 2.0.
 
