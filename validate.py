@@ -17,9 +17,12 @@ Checks:
 
 Usage:
     python3 validate.py --skills-dir skills
-    python3 validate.py --skills-dir skills --expect-version 1.8.0
-    python3 validate.py --skills-dir tests/fixtures
+    python3 validate.py --skills-dir skills --expect-version 2.0.1
     python3 validate.py --help
+
+Fixture files under tests/fixtures/ are named SKILL.md.fixture, not SKILL.md
+(see tests/test_validate.py's materialize_fixture()), so run the test suite
+to exercise them rather than pointing --skills-dir at that directory directly.
 """
 
 import argparse
