@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json.schemastore.org/openai-plugin.json",
+  "name": "antislop",
+  "version": "2.1.0",
+  "displayName": "Antislop",
+  "description": "Writing style and audit skills that suppress detectable AI writing patterns in prose.",
+  "author": {
+    "name": "Rami Tawil",
+    "url": "https://github.com/drunkrhin0"
+  },
+  "homepage": "https://github.com/drunkrhin0/antislop",
+  "repository": "https://github.com/drunkrhin0/antislop",
+  "license": "MIT",
+  "skills": [
+    "skills/antislop/SKILL.md",
+    "skills/antislop-audit/SKILL.md"
+  ],
+  "keywords": [
+    "writing",
+    "editing",
+    "ai-slop",
+    "prose",
+    "style-guide",
+    "linting",
+    "humanizer"
+  ]
+}
