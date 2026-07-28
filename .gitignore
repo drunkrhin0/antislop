@@ -2,3 +2,5 @@
 .claude
 .vscode/
 .idea/
+__pycache__/
+.scratch/

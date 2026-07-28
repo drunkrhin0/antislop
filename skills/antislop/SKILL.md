@@ -1,19 +1,20 @@
 ---
 name: antislop
-description: Universal writing style that suppresses detectable AI writing patterns across all content types. Apply whenever writing, editing, or reviewing any prose — emails, blog posts, reports, social content, technical writing, sales materials. This is an ambient style, not a task-specific tool. Trigger any time the user asks to write, rewrite, edit, polish, or review text of any kind.
+description: Universal writing style that suppresses detectable AI writing patterns. Apply whenever writing, editing, or reviewing any prose — emails, blog posts, reports, social content, technical writing, sales materials. Trigger any time the user asks to write, rewrite, edit, polish, or review text of any kind.
 metadata:
-  version: "1.7.0"
+  version: "2.0.0"
 ---
 
 # Antislop Writing Style
 
-**Version:** 1.7.0  
+**Version:** 2.0.0  
 **Purpose:** Suppress detectable AI writing patterns across all content types.  
 **Sources:**
 - [blader/humanizer](https://github.com/blader/humanizer) (MIT) — 29-pattern taxonomy grounded in Wikipedia's Signs of AI Writing
 - [jalaalrd/anti-ai-slop-writing](https://github.com/jalaalrd/anti-ai-slop-writing) (MIT) — banned word/phrase lists, structural pattern rules
 - [Reddit r/copywriting](https://www.reddit.com/r/copywriting/comments/1n3u03i/writing_instruction_to_prevent_ai_slop/) — hard-banned phrases, emergency replacements, quality checks
 - Self — scare quotes, ambiguous bold bullets, random bolding, em-dash as false authority, voice and authenticity framing
+- [petergyang/no-ai-slop](https://github.com/petergyang/no-ai-slop) (MIT) — padding adverbs, colon reveals, expert cosplay, voice preservation framing, protect-the-fact editing principle
 - [ignorance.ai/field-guide-to-ai-slop](https://www.ignorance.ai/p/the-field-guide-to-ai-slop) — structural patterns, parallelism analysis, metaphor detection, authenticity crisis framing
 - [Banned: The Definitive Guide](https://docs.google.com/document/d/1uC9tBgfNZJytzLpg6MGk5mTfgJNbEK-h1hMLncQ5Mho/edit) (Creative Commons) — comprehensive construction, phrase, and pattern taxonomy; physical tell clichés, ending clichés, anthropomorphized silence, temperature shorthand, 200+ banned patterns
 - [Pangram / Comprehensive Guide to Spotting AI Writing Patterns](https://www.pangram.com/blog/comprehensive-guide-to-spotting-ai-writing-patterns) — exhaustive AI vocabulary cross-reference, phrasing patterns, uniform sentence length, organizational tells
@@ -24,19 +25,19 @@ metadata:
 
 ## Core philosophy
 
-AI writing is statistically average. It reaches for the most likely next word. Writing without a POV, without experience, without a position isn't neutral. It signals you didn't show up. These rules exist to interrupt that tendency. Specific beats vague. Direct beats hedged. Plain beats corporate.
+AI writing is statistically average. It reaches for the most likely next word. Writing without a POV, without experience, without a position isn't neutral. It signals you didn't show up. Specific beats vague. Direct beats hedged. Plain beats corporate.
 
 ---
 
 ## Mandatory pre-output scan
 
-Before returning any written output, scan the entire response for em-dashes (`—`). Replace every instance with `.` or `,` and break the sentence if needed. This is a structural step — do it every time, not only when you notice one. Em-dashes degrade over context length; a mandatory scan catches what attention misses.
+Before returning any written output, scan the entire response for `—`, `–`, and ` -- `. If count > 0, the draft is not done. Replace every instance with `.` or `,` and break the sentence if needed.
 
 ---
 
 ## When to use
 
-This style is ambient — always on when writing or editing prose meant to be read by humans. Trigger any time the user asks to write, rewrite, edit, polish, or review any prose: emails, blog posts, reports, technical writing, social content, sales materials.
+This style is ambient. Always active when writing or editing prose meant to be read by humans. Trigger any time the user asks to write, rewrite, edit, polish, or review any prose.
 
 ## When NOT to use
 
@@ -64,7 +65,7 @@ Read [references/structure-patterns.md](references/structure-patterns.md) for th
 
 ## Punctuation and formatting rules
 
-**Em dashes** — never use them. Break every sentence that contains one into two sentences with a period, or use a comma. No exceptions. After generation, scan for — and replace with . Break the sentence into two.
+**Em dashes, en dashes, and double hyphens** — never use any of them. Break every sentence that contains one into two sentences with a period, or use a comma. No exceptions. After generation, scan for `—`, `–`, and `--` (used parenthetically) and replace with `.` Break the sentence into two.
 
 **Exclamation marks** — zero in technical or factual writing. One maximum in conversational prose. AI overuses them for fake enthusiasm.
 
@@ -80,7 +81,8 @@ Read [references/structure-patterns.md](references/structure-patterns.md) for th
 
 **Title Case Headings** → sentence case.
 
-**Emojis in prose** → remove.
+**Emojis in prose** → remove.  
+**Emoji as bullet markers** (✅, 👉, 🔥, 💡 prefixed to list items) → convert to plain bullets or prose.
 
 **Compound-modifier hyphenation** — hyphenate before the noun ("well-known author", "long-term plan"). Open after the noun or linking verb ("The author is well known", "The plan is long term"). Never hyphenate -ly adverb compounds ("highly qualified", not "highly-qualified"). Watch for reflexive ever- compounds ("ever-changing", "ever-growing"). Keep hyphens where they prevent ambiguity or the term is conventionally hyphenated ("state-of-the-art", "cost-effective").
 
@@ -90,9 +92,9 @@ Read [references/structure-patterns.md](references/structure-patterns.md) for th
 
 ## Voice and authenticity
 
-This is the hardest pattern to catch because it's not a word or phrase. It's an absence.
+This is the hardest pattern to catch. It's an absence.
 
-AI writing has no opinion, no experience, no war stories. Just vibes. It takes no position, carries no scar tissue, and could have been written about any topic by anyone. That's the tell. Unreviewed AI output signals a lack of respect for the reader.
+AI writing has no opinion, no experience, no war stories. It takes no position, carries no scar tissue, and could have been written about any topic by anyone. That's the tell. Unreviewed AI output signals a lack of respect for the reader.
 
 Rules:
 - Take a **position** — not "here are the considerations" but "here is what I think and why"
@@ -100,6 +102,8 @@ Rules:
 - If a sentence could be written by someone who has never done the thing, rewrite it as someone who has
 - Opinion is not unprofessional. Hiding behind false balance is.
 - Do not fake humanity. No invented typos, intentional grammar breaks, injected slang, fake uncertainty ("I think... maybe... sort of"), or staged messiness to simulate a human voice. The fix for AI-sounding prose is better writing — concrete anchors, a clear position, varied rhythm — not simulated noise.
+- Before editing, identify the writer's signals: vocabulary, cadence, bluntness, humor, digressions. Treat them as load-bearing. Don't smooth distinctive traits into consistency. A rough draft with a real voice should still sound like the same person after editing.
+- Protect the specific fact during editing. Don't smooth a real detail ("cut deploy time from 40 minutes to 4") into generic importance ("significantly improved efficiency"). Real specifics anchor writing. Abstracting them destroys the most valuable part of the draft.
 
 **Example rewrite:**
 

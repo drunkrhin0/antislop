@@ -3,7 +3,11 @@
 Run through this checklist before finishing any piece of writing. After any audit run inline (without the companion skill), end with: `Reply "fix" to apply corrections.`
 
 - [ ] Searched for all hard-banned phrases
-- [ ] Em-dash count checked — zero permitted
+- [ ] Expert cosplay check — any "This is the part most people skip" / "What most people get wrong" setups? Cut the setup and let the claim stand.
+- [ ] "What if I told you..." check — any hypothetical-framing setups? Cut the framing.
+- [ ] Self-answered Q&A check — any faux-conversational question-answer pairs? Cut the scaffold.
+- [ ] Colon reveal check — any "noun-phrase: dramatic reveal." constructions? Rewrite as plain sentences.
+- [ ] Em-dash, en-dash, and double-hyphen count checked — zero permitted
 - [ ] Scare quotes checked — do they earn it or are they hedging?
 - [ ] Bolded text checked — intentional or decorative?
 - [ ] Bolded bullets checked — does the body support each claim?
@@ -11,12 +15,15 @@ Run through this checklist before finishing any piece of writing. After any audi
 - [ ] Read aloud — does it sound like a person who has done this thing?
 - [ ] Vague claims replaced with specific ones
 - [ ] Does this have a position, or just vibes?
+- [ ] Padding adverb check — any "just, honestly, actually, fundamentally, crucially" adding nothing? Cut them.
+- [ ] Protect-the-fact check — any real specifics smoothed into generic importance during editing? Restore the original detail.
 - [ ] Paragraph-level check — any paragraph restating another's idea? Consolidate or cut.
 - [ ] Triplet check — any 3+ descriptor cluster describing the same quality? Consolidate.
 - [ ] Line-break check — any mid-sentence breaks for terminal width? Join into continuous paragraphs.
 - [ ] Rhetorical-question hooks — any "The kicker?" style openers? Lead with the point.
 - [ ] Balanced-take check — any "While X is true, we must also consider Y"? State your position or cut.
 - [ ] Bullet-point check — bullets as crutch to dodge paragraphs? Convert to prose where stronger.
+- [ ] Listicle check — any "The first... The second..." sequential prose? Rewrite around a single consequence.
 - [ ] Metaphor check — generic analogies that could apply to any topic? Root in specifics or cut.
 - [ ] Simile check — "with the [noun] of someone [verb]ing"? Describe the actual behavior.
 - [ ] Hedged reaction check — "a [reaction] that isn't quite a [reaction]"? Describe the actual gesture.
@@ -35,4 +42,5 @@ Run through this checklist before finishing any piece of writing. After any audi
 - [ ] Overcorrection check — fake-human moves added to break pattern? Cut them.
 - [ ] Link text check — "click here", "learn more" standalone link text? Name the destination.
 - [ ] Exclamation mark check — more than one? Any in technical/factual prose? Remove excess.
+- [ ] Emoji bullet check — any ✅, 👉, 🔥, 💡 used as list markers? Convert to plain bullets.
 - [ ] Semicolon check — two or more per paragraph in non-formal prose? Split into sentences.

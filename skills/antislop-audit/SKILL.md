@@ -1,16 +1,16 @@
 ---
 name: antislop-audit
-description: Audits text for AI slop patterns and returns a slop score (0-100) plus a violations list. Use when the user asks to check, audit, review, grade, or score text for AI patterns, AI slop, or writing quality. Also trigger when the user pastes text and asks "does this pass?", "is this sloppy?", "flag the AI patterns", or similar. Companion to the antislop writing style skill. Zero exceptions — flag every violation regardless of perceived intent or satire.
+description: Audits text for AI slop patterns and returns a slop score (0-100) plus a violations list. Use when the user asks to check, audit, review, grade, or score text for AI patterns, AI slop, or writing quality. Also trigger when the user pastes text and asks "does this pass?", "is this sloppy?", "flag the AI patterns", or similar.
 metadata:
-  version: "1.7.0"
+  version: "2.0.0"
 ---
 
 # Antislop Audit
 
-**Version:** 1.7.0  
+**Version:** 2.0.0  
 **Purpose:** Detect and score AI slop patterns in existing text. Flag every violation. No exceptions for intent.  
 **Companion skill:** antislop (writing style)  
-**Sources:** Same as antislop writing style: blader/humanizer, jalaalrd/anti-ai-slop-writing, Reddit r/copywriting, ignorance.ai/field-guide-to-ai-slop, Banned: The Definitive Guide, Pangram, Anbeeld/WRITING.md, Bugcrowd Design System, self
+**Sources:** Same as antislop writing style: blader/humanizer, jalaalrd/anti-ai-slop-writing, Reddit r/copywriting, ignorance.ai/field-guide-to-ai-slop, Banned: The Definitive Guide, Pangram, Anbeeld/WRITING.md, Bugcrowd Design System, petergyang/no-ai-slop, self
 
 ---
 
@@ -20,7 +20,7 @@ Trigger when the user asks to check, audit, review, grade, or score text for AI 
 
 ## When NOT to use
 
-This tool is for **self-review** — checking your own or a collaborator's text before publishing. Do not use it to accuse strangers of using AI. Pattern-based detection is probabilistic, not proof. A single flag does not indicate AI authorship; accumulation and pattern density are the tells. Do not run this against unsolicited text from people you are not collaborating with.
+For self-review only — checking your own or a collaborator's text before publishing. Do not use to accuse strangers of using AI. Pattern-based detection is probabilistic, not proof: a single flag does not indicate AI authorship. Accumulation and pattern density are the tells.
 
 ## Core rule
 
@@ -34,96 +34,32 @@ Flag the pattern. Do not reason about whether it was intentional. Intent is not 
 
 ### Step 1 — Scan for violations
 
-Read [references/pattern-reference.md](references/pattern-reference.md) for the full pattern list with severity levels. Work through every category. For each violation found, record:
+Read [references/pattern-reference.md](references/pattern-reference.md) before scoring any text. It is the generated artifact rendered from the rule registry (rules.json) and is the single source of truth for what counts as a finding: every banned word, phrase, filler phrase, structural pattern, formatting rule, and chatbot artifact, organized by category with each rule's severity attached. Load it now if you have not already — do not rely on memory or a prior pass, since the registry is what changes when rules are added, removed, or reweighted.
+
+Work through every category in the reference file. For each violation found, record:
 - **Category** (e.g. Banned vocab, Em-dash)
 - **Excerpt** — the exact offending text, quoted
 - **Rule breached** — one line description
 
-Do not skip categories. Do not combine violations. One instance = one violation entry.
+Do not skip categories. Do not combine violations: one instance is one violation entry.
 
 ### Step 2 — Count violations by severity
 
-**High severity** (each = -8 points):
-- Banned vocabulary
-- Banned phrases
-- Em-dash (any use — never permitted)
-- Scare quotes
-- Chatbot artifacts ("I hope this helps", "Great question")
-- Vague attribution ("experts believe", "research shows" without source)
-- Significance inflation ("pivotal moment", "transformative")
-- Rhetorical-question hooks ("The kicker?", "The issue?", "Do you know what I learned?")
-- Balanced-take hedging ("While X is true, we must also consider Y" formula)
-- Specificity theater (unverifiable specifics, decorative factuality, hidden-mechanism narration, synthetic quotes with no named source)
+Every rule in the reference file is tagged high, medium, or low. Use the severity attached to the rule you matched in Step 1, and apply its base weight per finding:
 
-**Medium severity** (each = -4 points):
-- Random bolding
-- Ambiguous bolded bullet (claim not supported by body text)
-- Banned openers/closers (Moreover, Furthermore, In conclusion, etc.)
-- Rule of three in a single sentence
-- Synonym cycling
-- Overlong sentence (3+ ideas, 2+ qualifiers, or 2+ disclaimers in one sentence)
-- Antithesis ("not just X, but Y", "not X, but Y") — decorative contrast
-- Negative parallelism / trailing negation
-- Copula avoidance ("serves as", "boasts", "features", "functions as", "stands as")
-- Parataxis (3+ consecutive short declarative sentences)
-- Passive voice / subjectless fragments
-- Excessive hedging ("could potentially possibly", "it might have some effect")
-- Rhetorical emphasis tail / moralizing tail
-- Generic subject loops (3+ sentences opening with the same vague pronoun)
-- False range ("from X to Y" as rhetorical filler)
-- Promotional language ("nestled within the breathtaking...")
-- Generic conclusion ("The future looks bright", "Exciting times ahead")
-- Notability name-dropping
-- Fragmented headers (heading followed by one-line restatement)
-- Negation flip
-- Paragraph-level redundancy
-- Triplet overlap (3+ descriptors naming the same quality)
-- Superficial -ing analyses ("highlighting", "underscoring" tacked onto sentence ends)
-- Bullet-point crutch
-- Awkward AI metaphors
-- Simile-as-adverb ("with the [noun] of someone [verb]ing")
-- Hedged reactions ("a laugh that isn't quite a laugh")
-- Temperature-as-emotion (hot/cold replacing specific emotional description)
-- Physical tell clichés (jaw/throat/breath/hands as emotion props)
-- Anthropomorphized silence ("the silence stretched")
-- All paragraphs the same length
-- Uniform sentence length
-- Ending clichés ("And for now, that was enough")
-- Catalog prose (paragraphs that are only names, dates, features)
-- System-tour prose (paragraph-to-category-bucket mapping)
-- Concession rhythm ("not X, but Y" as reflexive paragraph scaffold)
-- Type-definition endings ("the kind of X where Y" as default paragraph closure)
-- Generic action-describing link text ("click here", "learn more")
-- Artificial line breaks (mid-sentence breaks at terminal width)
-- Wh- sentence openers
-- Lazy extremes ("always", "never", "everything", "nothing")
-- False agency (inanimate things doing human verbs)
-- Weak verb constructions ("work to ensure", "seek to address")
-- Empty declaratives ("This matters", "Everything is connected")
-- Transformation chains ("X became Y. Y became Z.")
-- Transition glue ("With that in mind", "Against this backdrop")
-- Complexity signalling ("This is more complex than it appears")
-- Discovery narration ("As I explored this further")
-- Wisdom sandwich (paragraph framed by bookend aphorisms)
-- Corrective reveals ("You've been told X. Here's the truth: Y")
-- Punchy one-liner closure (every paragraph ending with short dramatic sentence)
-- "It turns out" as throat-clearing opener
+| Severity | Points per finding |
+|---|---|
+| High | -8 |
+| Medium | -4 |
+| Low | -2 |
 
-**Low severity** (each = -2 points):
-- Title Case Headings
-- Inline-header lists (**Term:** explanation)
-- Compound-modifier over-hyphenation
-- Curly quotes — should be straight quotes
-- Filler phrases ("in order to", "due to the fact that", "at this point in time")
-- Emojis in prose
-- Usage of unicode characters to convey a point (e.g. `→`)
-- Standalone "Because" fragments
-- Exclamation mark overuse
-- Semicolon overuse (2+ per paragraph)
+The reference file's own "Severity weights" table is authoritative if these ever drift from rules.json.
 
 ### Step 3 — Calculate score
 
 Start at 100. Subtract points per violation. Floor is 0.
+
+When multiple rules overlap on the same text span, assign one primary scored finding to that span. Report overlapping findings as related findings without another score deduction. Document-level findings are counted once unless materially independent sections exhibit separate instances.
 
 **Score bands:**
 - **85-100** — Clean. Reads like a person.
@@ -137,7 +73,12 @@ Always output in this exact structure:
 
 ---
 
-**Slop Score: [X]/100** — [band label]
+**Formulaic Writing Risk Score: [X]/100** — [band label]
+
+This score measures formulaic-writing risk and cannot prove AI authorship.
+
+**Word count:** [N]  
+**Scored findings:** [N] (primary) + [N] (related, unscored)
 
 **Violations ([N] total):**
 
@@ -160,4 +101,4 @@ Always output in this exact structure:
 - If the text is long (1000+ words), note the word count and confirm you've scanned all of it.
 - Never compliment the writing. Never soften the findings.
 - If score is above 85, say so plainly and stop. No padding.
-- After the summary, add one line: `Reply "fix" to apply corrections.`
+- When corrections are wanted and possible, end with: `Reply "fix" to apply corrections.` Otherwise omit the footer.

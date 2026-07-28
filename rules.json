@@ -1,0 +1,2292 @@
+{
+  "version": "2.0.0",
+  "description": "Canonical rule registry for Antislop writing rules. Source of truth for all generated artifacts.",
+  "base_weights": {
+    "high": 8,
+    "medium": 4,
+    "low": 2
+  },
+  "score_bands": {
+    "clean": {
+      "min": 85,
+      "max": 100,
+      "label": "Clean. Reads like a person."
+    },
+    "some_slop": {
+      "min": 65,
+      "max": 84,
+      "label": "Some slop. Fixable with targeted edits."
+    },
+    "heavy_slop": {
+      "min": 40,
+      "max": 64,
+      "label": "Heavy slop. Significant rewrite needed."
+    },
+    "severe": {
+      "min": 0,
+      "max": 39,
+      "label": "Severe. This reads like unreviewed AI output."
+    }
+  },
+  "rules": [
+    {
+      "id": "vocab-delve",
+      "text": "delve",
+      "category": "vocabulary",
+      "severity": "high",
+      "base_weight": 8,
+      "detection_class": "exact_match",
+      "profiles": [
+        "general"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "high"
+    },
+    {
+      "id": "vocab-leverage",
+      "text": "leverage",
+      "category": "vocabulary",
+      "severity": "high",
+      "base_weight": 8,
+      "detection_class": "exact_match",
+      "profiles": [
+        "general"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "high"
+    },
+    {
+      "id": "vocab-tapestry",
+      "text": "tapestry",
+      "category": "vocabulary",
+      "severity": "high",
+      "base_weight": 8,
+      "detection_class": "exact_match",
+      "profiles": [
+        "general"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "high"
+    },
+    {
+      "id": "vocab-testament",
+      "text": "testament",
+      "category": "vocabulary",
+      "severity": "high",
+      "base_weight": 8,
+      "detection_class": "exact_match",
+      "profiles": [
+        "general"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "high"
+    },
+    {
+      "id": "vocab-vibrant",
+      "text": "vibrant",
+      "category": "vocabulary",
+      "severity": "high",
+      "base_weight": 8,
+      "detection_class": "exact_match",
+      "profiles": [
+        "general"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "high"
+    },
+    {
+      "id": "vocab-pivotal",
+      "text": "pivotal",
+      "category": "vocabulary",
+      "severity": "high",
+      "base_weight": 8,
+      "detection_class": "exact_match",
+      "profiles": [
+        "general"
+      ],
+      "exceptions": [],
+      "overlaps": [
+        "struct-significance-inflation"
+      ],
+      "examples": [],
+      "confidence": "high"
+    },
+    {
+      "id": "vocab-utilize",
+      "text": "utilize",
+      "category": "vocabulary",
+      "severity": "high",
+      "base_weight": 8,
+      "detection_class": "exact_match",
+      "profiles": [
+        "general"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "high"
+    },
+    {
+      "id": "vocab-synergy",
+      "text": "synergy",
+      "category": "vocabulary",
+      "severity": "high",
+      "base_weight": 8,
+      "detection_class": "exact_match",
+      "profiles": [
+        "general"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "high"
+    },
+    {
+      "id": "vocab-holistic",
+      "text": "holistic",
+      "category": "vocabulary",
+      "severity": "high",
+      "base_weight": 8,
+      "detection_class": "exact_match",
+      "profiles": [
+        "general"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "high"
+    },
+    {
+      "id": "vocab-seamless",
+      "text": "seamless",
+      "category": "vocabulary",
+      "severity": "high",
+      "base_weight": 8,
+      "detection_class": "exact_match",
+      "profiles": [
+        "general"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "high"
+    },
+    {
+      "id": "vocab-robust",
+      "text": "robust",
+      "category": "vocabulary",
+      "severity": "high",
+      "base_weight": 8,
+      "detection_class": "exact_match",
+      "profiles": [
+        "general"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "high"
+    },
+    {
+      "id": "vocab-groundbreaking",
+      "text": "groundbreaking",
+      "category": "vocabulary",
+      "severity": "high",
+      "base_weight": 8,
+      "detection_class": "exact_match",
+      "profiles": [
+        "general"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "high"
+    },
+    {
+      "id": "vocab-cutting-edge",
+      "text": "cutting-edge",
+      "category": "vocabulary",
+      "severity": "high",
+      "base_weight": 8,
+      "detection_class": "exact_match",
+      "profiles": [
+        "general"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "high"
+    },
+    {
+      "id": "vocab-innovative",
+      "text": "innovative",
+      "category": "vocabulary",
+      "severity": "high",
+      "base_weight": 8,
+      "detection_class": "exact_match",
+      "profiles": [
+        "general"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "high"
+    },
+    {
+      "id": "vocab-dynamic",
+      "text": "dynamic",
+      "category": "vocabulary",
+      "severity": "high",
+      "base_weight": 8,
+      "detection_class": "exact_match",
+      "profiles": [
+        "general"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "high"
+    },
+    {
+      "id": "vocab-comprehensive",
+      "text": "comprehensive",
+      "category": "vocabulary",
+      "severity": "high",
+      "base_weight": 8,
+      "detection_class": "exact_match",
+      "profiles": [
+        "general"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "high"
+    },
+    {
+      "id": "vocab-embark",
+      "text": "embark",
+      "category": "vocabulary",
+      "severity": "high",
+      "base_weight": 8,
+      "detection_class": "exact_match",
+      "profiles": [
+        "general"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "high"
+    },
+    {
+      "id": "vocab-foster",
+      "text": "foster",
+      "category": "vocabulary",
+      "severity": "high",
+      "base_weight": 8,
+      "detection_class": "exact_match",
+      "profiles": [
+        "general"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "high"
+    },
+    {
+      "id": "vocab-revolutionize",
+      "text": "revolutionize",
+      "category": "vocabulary",
+      "severity": "high",
+      "base_weight": 8,
+      "detection_class": "exact_match",
+      "profiles": [
+        "general"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "high"
+    },
+    {
+      "id": "vocab-transformative",
+      "text": "transformative",
+      "category": "vocabulary",
+      "severity": "high",
+      "base_weight": 8,
+      "detection_class": "exact_match",
+      "profiles": [
+        "general"
+      ],
+      "exceptions": [],
+      "overlaps": [
+        "struct-significance-inflation"
+      ],
+      "examples": [],
+      "confidence": "high"
+    },
+    {
+      "id": "vocab-empower",
+      "text": "empower",
+      "category": "vocabulary",
+      "severity": "high",
+      "base_weight": 8,
+      "detection_class": "exact_match",
+      "profiles": [
+        "general"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "high"
+    },
+    {
+      "id": "vocab-unlock",
+      "text": "unlock",
+      "category": "vocabulary",
+      "severity": "high",
+      "base_weight": 8,
+      "detection_class": "exact_match",
+      "profiles": [
+        "general"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "high"
+    },
+    {
+      "id": "vocab-supercharge",
+      "text": "supercharge",
+      "category": "vocabulary",
+      "severity": "high",
+      "base_weight": 8,
+      "detection_class": "exact_match",
+      "profiles": [
+        "general"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "high"
+    },
+    {
+      "id": "vocab-significant",
+      "text": "significant",
+      "category": "vocabulary",
+      "severity": "high",
+      "base_weight": 8,
+      "detection_class": "exact_match",
+      "profiles": [
+        "general"
+      ],
+      "exceptions": [],
+      "overlaps": [
+        "struct-significance-inflation"
+      ],
+      "examples": [],
+      "confidence": "high"
+    },
+    {
+      "id": "vocab-commence",
+      "text": "commence",
+      "category": "vocabulary",
+      "severity": "high",
+      "base_weight": 8,
+      "detection_class": "exact_match",
+      "profiles": [
+        "general"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "high"
+    },
+    {
+      "id": "vocab-obtain",
+      "text": "obtain",
+      "category": "vocabulary",
+      "severity": "high",
+      "base_weight": 8,
+      "detection_class": "exact_match",
+      "profiles": [
+        "general"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "high"
+    },
+    {
+      "id": "vocab-implement",
+      "text": "implement",
+      "category": "vocabulary",
+      "severity": "high",
+      "base_weight": 8,
+      "detection_class": "exact_match",
+      "profiles": [
+        "general"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "high"
+    },
+    {
+      "id": "vocab-facilitate",
+      "text": "facilitate",
+      "category": "vocabulary",
+      "severity": "high",
+      "base_weight": 8,
+      "detection_class": "exact_match",
+      "profiles": [
+        "general"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "high"
+    },
+    {
+      "id": "vocab-subsequently",
+      "text": "subsequently",
+      "category": "vocabulary",
+      "severity": "high",
+      "base_weight": 8,
+      "detection_class": "exact_match",
+      "profiles": [
+        "general"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "high"
+    },
+    {
+      "id": "vocab-discontinue",
+      "text": "discontinue",
+      "category": "vocabulary",
+      "severity": "high",
+      "base_weight": 8,
+      "detection_class": "exact_match",
+      "profiles": [
+        "general"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "high"
+    },
+    {
+      "id": "vocab-dispatch",
+      "text": "dispatch",
+      "category": "vocabulary",
+      "severity": "high",
+      "base_weight": 8,
+      "detection_class": "exact_match",
+      "profiles": [
+        "general"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "high"
+    },
+    {
+      "id": "vocab-ascertain",
+      "text": "ascertain",
+      "category": "vocabulary",
+      "severity": "high",
+      "base_weight": 8,
+      "detection_class": "exact_match",
+      "profiles": [
+        "general"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "high"
+    },
+    {
+      "id": "vocab-navigate",
+      "text": "navigate",
+      "category": "vocabulary",
+      "severity": "high",
+      "base_weight": 8,
+      "detection_class": "exact_match",
+      "profiles": [
+        "general"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "high"
+    },
+    {
+      "id": "vocab-unpack",
+      "text": "unpack",
+      "category": "vocabulary",
+      "severity": "high",
+      "base_weight": 8,
+      "detection_class": "exact_match",
+      "profiles": [
+        "general"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "high"
+    },
+    {
+      "id": "vocab-enhance",
+      "text": "enhance",
+      "category": "vocabulary",
+      "severity": "high",
+      "base_weight": 8,
+      "detection_class": "exact_match",
+      "profiles": [
+        "general"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "high"
+    },
+    {
+      "id": "vocab-showcase",
+      "text": "showcase",
+      "category": "vocabulary",
+      "severity": "high",
+      "base_weight": 8,
+      "detection_class": "exact_match",
+      "profiles": [
+        "general"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "high"
+    },
+    {
+      "id": "vocab-interplay",
+      "text": "interplay",
+      "category": "vocabulary",
+      "severity": "high",
+      "base_weight": 8,
+      "detection_class": "exact_match",
+      "profiles": [
+        "general"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "high"
+    },
+    {
+      "id": "phrase-worth-noting",
+      "text": "It's worth noting that",
+      "category": "phrase",
+      "severity": "high",
+      "base_weight": 8,
+      "detection_class": "phrase_match",
+      "profiles": [
+        "general"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "medium"
+    },
+    {
+      "id": "phrase-today-world",
+      "text": "In today's fast-paced world / in today's landscape",
+      "category": "phrase",
+      "severity": "high",
+      "base_weight": 8,
+      "detection_class": "phrase_match",
+      "profiles": [
+        "general"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "medium"
+    },
+    {
+      "id": "phrase-ever-evolving",
+      "text": "Ever-evolving landscape / dynamic world of / in the realm of",
+      "category": "phrase",
+      "severity": "high",
+      "base_weight": 8,
+      "detection_class": "phrase_match",
+      "profiles": [
+        "general"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "medium"
+    },
+    {
+      "id": "phrase-at-core",
+      "text": "At its core / at the end of the day / the real question is / what really matters / fundamentally / in reality / the deeper issue is",
+      "category": "phrase",
+      "severity": "high",
+      "base_weight": 8,
+      "detection_class": "phrase_match",
+      "profiles": [
+        "general"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "medium"
+    },
+    {
+      "id": "phrase-dive-in",
+      "text": "Let's dive in / let's delve deeper",
+      "category": "phrase",
+      "severity": "high",
+      "base_weight": 8,
+      "detection_class": "phrase_match",
+      "profiles": [
+        "general"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "medium"
+    },
+    {
+      "id": "phrase-not-just",
+      "text": "Not just X, but Y",
+      "category": "phrase",
+      "severity": "high",
+      "base_weight": 8,
+      "detection_class": "phrase_match",
+      "profiles": [
+        "general"
+      ],
+      "exceptions": [
+        "when the contrast rules out a specific alternative the reader would otherwise assume"
+      ],
+      "overlaps": [
+        "struct-antithesis"
+      ],
+      "examples": [],
+      "confidence": "medium"
+    },
+    {
+      "id": "phrase-game-changer",
+      "text": "Game-changer",
+      "category": "phrase",
+      "severity": "high",
+      "base_weight": 8,
+      "detection_class": "phrase_match",
+      "profiles": [
+        "general"
+      ],
+      "exceptions": [
+        "when backed by specific metrics"
+      ],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "medium"
+    },
+    {
+      "id": "phrase-treasure-trove",
+      "text": "Treasure trove / uncharted waters / embark on a journey",
+      "category": "phrase",
+      "severity": "high",
+      "base_weight": 8,
+      "detection_class": "phrase_match",
+      "profiles": [
+        "general"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "medium"
+    },
+    {
+      "id": "phrase-cannot-denied",
+      "text": "It cannot be denied that",
+      "category": "phrase",
+      "severity": "high",
+      "base_weight": 8,
+      "detection_class": "phrase_match",
+      "profiles": [
+        "general"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "medium"
+    },
+    {
+      "id": "phrase-underscores",
+      "text": "This underscores the importance of",
+      "category": "phrase",
+      "severity": "high",
+      "base_weight": 8,
+      "detection_class": "phrase_match",
+      "profiles": [
+        "general"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "medium"
+    },
+    {
+      "id": "phrase-knowledge-cutoff",
+      "text": "As of my knowledge cutoff",
+      "category": "phrase",
+      "severity": "high",
+      "base_weight": 8,
+      "detection_class": "phrase_match",
+      "profiles": [
+        "general"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "medium"
+    },
+    {
+      "id": "phrase-research-shows",
+      "text": "Research shows / experts believe (without named source)",
+      "category": "phrase",
+      "severity": "high",
+      "base_weight": 8,
+      "detection_class": "phrase_match",
+      "profiles": [
+        "general"
+      ],
+      "exceptions": [
+        "when a specific source is named"
+      ],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "medium"
+    },
+    {
+      "id": "phrase-despite-thrive",
+      "text": "Despite challenges, continues to thrive",
+      "category": "phrase",
+      "severity": "high",
+      "base_weight": 8,
+      "detection_class": "phrase_match",
+      "profiles": [
+        "general"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "medium"
+    },
+    {
+      "id": "phrase-future-bright",
+      "text": "The future looks bright / exciting times ahead",
+      "category": "phrase",
+      "severity": "high",
+      "base_weight": 8,
+      "detection_class": "phrase_match",
+      "profiles": [
+        "general"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "medium"
+    },
+    {
+      "id": "phrase-let-sink-in",
+      "text": "Let that sink in",
+      "category": "phrase",
+      "severity": "high",
+      "base_weight": 8,
+      "detection_class": "phrase_match",
+      "profiles": [
+        "general"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "medium"
+    },
+    {
+      "id": "phrase-full-stop",
+      "text": "Full stop. / Period.",
+      "category": "phrase",
+      "severity": "high",
+      "base_weight": 8,
+      "detection_class": "phrase_match",
+      "profiles": [
+        "general"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "medium"
+    },
+    {
+      "id": "phrase-make-no-mistake",
+      "text": "Make no mistake",
+      "category": "phrase",
+      "severity": "high",
+      "base_weight": 8,
+      "detection_class": "phrase_match",
+      "profiles": [
+        "general"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "medium"
+    },
+    {
+      "id": "phrase-let-me-clear",
+      "text": "Let me be clear",
+      "category": "phrase",
+      "severity": "high",
+      "base_weight": 8,
+      "detection_class": "phrase_match",
+      "profiles": [
+        "general"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "medium"
+    },
+    {
+      "id": "phrase-explore",
+      "text": "I want to explore...",
+      "category": "phrase",
+      "severity": "high",
+      "base_weight": 8,
+      "detection_class": "phrase_match",
+      "profiles": [
+        "general"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "medium"
+    },
+    {
+      "id": "phrase-what-looks-like",
+      "text": "This is what X actually looks like",
+      "category": "phrase",
+      "severity": "high",
+      "base_weight": 8,
+      "detection_class": "phrase_match",
+      "profiles": [
+        "general"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "medium"
+    },
+    {
+      "id": "phrase-creeps-in",
+      "text": "creeps in",
+      "category": "phrase",
+      "severity": "high",
+      "base_weight": 8,
+      "detection_class": "phrase_match",
+      "profiles": [
+        "general"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "medium"
+    },
+    {
+      "id": "phrase-heres-thing",
+      "text": "Here's the thing: / Here's what [X] / Here's why [X] / Here's the problem though:",
+      "category": "phrase",
+      "severity": "high",
+      "base_weight": 8,
+      "detection_class": "phrase_match",
+      "profiles": [
+        "general"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "medium"
+    },
+    {
+      "id": "phrase-hint-plot-spoiler",
+      "text": "Hint: / Plot twist: / Spoiler:",
+      "category": "phrase",
+      "severity": "high",
+      "base_weight": 8,
+      "detection_class": "phrase_match",
+      "profiles": [
+        "general"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "medium"
+    },
+    {
+      "id": "phrase-walk-through",
+      "text": "Let me walk you through...",
+      "category": "phrase",
+      "severity": "high",
+      "base_weight": 8,
+      "detection_class": "phrase_match",
+      "profiles": [
+        "general"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "medium"
+    },
+    {
+      "id": "phrase-think-about-it",
+      "text": "Think about it:",
+      "category": "phrase",
+      "severity": "high",
+      "base_weight": 8,
+      "detection_class": "phrase_match",
+      "profiles": [
+        "general"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "medium"
+    },
+    {
+      "id": "phrase-thats-okay",
+      "text": "And that's okay.",
+      "category": "phrase",
+      "severity": "high",
+      "base_weight": 8,
+      "detection_class": "phrase_match",
+      "profiles": [
+        "general"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "medium"
+    },
+    {
+      "id": "phrase-transition-glue",
+      "text": "With that in mind / Against this backdrop / Taken together / Zooming out / Building on this",
+      "category": "phrase",
+      "severity": "high",
+      "base_weight": 8,
+      "detection_class": "phrase_match",
+      "profiles": [
+        "general"
+      ],
+      "exceptions": [],
+      "overlaps": [
+        "struct-transition-glue"
+      ],
+      "examples": [],
+      "confidence": "medium"
+    },
+    {
+      "id": "phrase-complexity-signal",
+      "text": "This is more complex than it appears / The reality is more nuanced / It's complicated",
+      "category": "phrase",
+      "severity": "high",
+      "base_weight": 8,
+      "detection_class": "phrase_match",
+      "profiles": [
+        "general"
+      ],
+      "exceptions": [],
+      "overlaps": [
+        "struct-complexity-signalling"
+      ],
+      "examples": [],
+      "confidence": "medium"
+    },
+    {
+      "id": "phrase-discovery-narration",
+      "text": "As I explored this further / What I found surprised me / The more I looked",
+      "category": "phrase",
+      "severity": "high",
+      "base_weight": 8,
+      "detection_class": "phrase_match",
+      "profiles": [
+        "general"
+      ],
+      "exceptions": [],
+      "overlaps": [
+        "struct-discovery-narration"
+      ],
+      "examples": [],
+      "confidence": "medium"
+    },
+    {
+      "id": "phrase-in-conclusion",
+      "text": "In conclusion / To summarize / To wrap up",
+      "category": "phrase",
+      "severity": "medium",
+      "base_weight": 4,
+      "detection_class": "phrase_match",
+      "profiles": [
+        "general"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "medium"
+    },
+    {
+      "id": "phrase-certainly",
+      "text": "Certainly / Absolutely / Great question",
+      "category": "phrase",
+      "severity": "medium",
+      "base_weight": 4,
+      "detection_class": "phrase_match",
+      "profiles": [
+        "general"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "medium"
+    },
+    {
+      "id": "phrase-absolutely-right",
+      "text": "You're absolutely right / That's a great point",
+      "category": "phrase",
+      "severity": "medium",
+      "base_weight": 4,
+      "detection_class": "phrase_match",
+      "profiles": [
+        "general"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "medium"
+    },
+    {
+      "id": "phrase-hope-helps",
+      "text": "I hope this helps! / Let me know if you have questions!",
+      "category": "phrase",
+      "severity": "medium",
+      "base_weight": 4,
+      "detection_class": "phrase_match",
+      "profiles": [
+        "general"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "medium"
+    },
+    {
+      "id": "phrase-moreover",
+      "text": "Moreover / Furthermore / Additionally",
+      "category": "phrase",
+      "severity": "medium",
+      "base_weight": 4,
+      "detection_class": "phrase_match",
+      "profiles": [
+        "general"
+      ],
+      "exceptions": [
+        "max once per 800 words; never consecutive"
+      ],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "medium"
+    },
+    {
+      "id": "filler-in-order",
+      "text": "In order to",
+      "category": "filler",
+      "severity": "low",
+      "base_weight": 2,
+      "detection_class": "phrase_match",
+      "profiles": [
+        "general"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "medium"
+    },
+    {
+      "id": "filler-due-to-fact",
+      "text": "Due to the fact that",
+      "category": "filler",
+      "severity": "low",
+      "base_weight": 2,
+      "detection_class": "phrase_match",
+      "profiles": [
+        "general"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "medium"
+    },
+    {
+      "id": "filler-at-point-in-time",
+      "text": "At this point in time",
+      "category": "filler",
+      "severity": "low",
+      "base_weight": 2,
+      "detection_class": "phrase_match",
+      "profiles": [
+        "general"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "medium"
+    },
+    {
+      "id": "filler-system-ability",
+      "text": "The system has the ability to",
+      "category": "filler",
+      "severity": "low",
+      "base_weight": 2,
+      "detection_class": "phrase_match",
+      "profiles": [
+        "general"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "medium"
+    },
+    {
+      "id": "filler-important-note",
+      "text": "It is important to note that",
+      "category": "filler",
+      "severity": "low",
+      "base_weight": 2,
+      "detection_class": "phrase_match",
+      "profiles": [
+        "general"
+      ],
+      "exceptions": [],
+      "overlaps": [
+        "phrase-worth-noting"
+      ],
+      "examples": [],
+      "confidence": "medium"
+    },
+    {
+      "id": "filler-crucial",
+      "text": "It's crucial to",
+      "category": "filler",
+      "severity": "low",
+      "base_weight": 2,
+      "detection_class": "phrase_match",
+      "profiles": [
+        "general"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "medium"
+    },
+    {
+      "id": "struct-rule-of-three",
+      "text": "Rule of three inside a single sentence",
+      "category": "structural",
+      "severity": "medium",
+      "base_weight": 4,
+      "detection_class": "structural",
+      "profiles": [
+        "*"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "medium"
+    },
+    {
+      "id": "struct-synonym-cycling",
+      "text": "Synonym cycling \u2014 pick a word and repeat it; don't rotate through near-synonyms",
+      "category": "structural",
+      "severity": "medium",
+      "base_weight": 4,
+      "detection_class": "structural",
+      "profiles": [
+        "*"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "medium"
+    },
+    {
+      "id": "struct-copula-avoidance",
+      "text": "Copula avoidance \u2014 'serves as', 'boasts', 'features', 'functions as', 'stands as' when 'is' or 'has' would do",
+      "category": "structural",
+      "severity": "medium",
+      "base_weight": 4,
+      "detection_class": "structural",
+      "profiles": [
+        "*"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "medium"
+    },
+    {
+      "id": "struct-ing-analyses",
+      "text": "Superficial -ing analyses \u2014 'highlighting', 'underscoring' tacked onto sentence ends",
+      "category": "structural",
+      "severity": "medium",
+      "base_weight": 4,
+      "detection_class": "structural",
+      "profiles": [
+        "*"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "medium"
+    },
+    {
+      "id": "struct-significance-inflation",
+      "text": "Significance inflation \u2014 'pivotal moment in the evolution of...'",
+      "category": "structural",
+      "severity": "high",
+      "base_weight": 8,
+      "detection_class": "structural",
+      "profiles": [
+        "*"
+      ],
+      "exceptions": [],
+      "overlaps": [
+        "vocab-pivotal",
+        "vocab-transformative",
+        "vocab-significant"
+      ],
+      "examples": [],
+      "confidence": "medium"
+    },
+    {
+      "id": "struct-passive-voice",
+      "text": "Passive voice / subjectless fragments \u2014 use active voice",
+      "category": "structural",
+      "severity": "medium",
+      "base_weight": 4,
+      "detection_class": "structural",
+      "profiles": [
+        "*"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "medium"
+    },
+    {
+      "id": "struct-emphasis-tails",
+      "text": "Rhetorical emphasis tails \u2014 ending sentences with '..., that's the thing' or moralizing tails",
+      "category": "structural",
+      "severity": "medium",
+      "base_weight": 4,
+      "detection_class": "structural",
+      "profiles": [
+        "*"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "medium"
+    },
+    {
+      "id": "struct-rhetorical-hooks",
+      "text": "Rhetorical-question hooks \u2014 'The kicker?', 'The issue?' \u2014 lead with the point instead",
+      "category": "structural",
+      "severity": "high",
+      "base_weight": 8,
+      "detection_class": "structural",
+      "profiles": [
+        "*"
+      ],
+      "exceptions": [],
+      "overlaps": [
+        "phrase-what-if-i-told",
+        "phrase-self-answered-qa"
+      ],
+      "examples": [],
+      "confidence": "medium"
+    },
+    {
+      "id": "struct-balanced-take",
+      "text": "Balanced-take hedging \u2014 'While X is true, we must also consider Y' \u2014 state your position or cut",
+      "category": "structural",
+      "severity": "high",
+      "base_weight": 8,
+      "detection_class": "structural",
+      "profiles": [
+        "*"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "medium"
+    },
+    {
+      "id": "struct-simile-adverb",
+      "text": "Simile-as-adverb \u2014 'with the [noun] of someone [verb]ing' \u2014 describe the actual behavior",
+      "category": "structural",
+      "severity": "medium",
+      "base_weight": 4,
+      "detection_class": "structural",
+      "profiles": [
+        "*"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "medium"
+    },
+    {
+      "id": "struct-hedged-reactions",
+      "text": "Hedged reactions \u2014 'a laugh that isn't quite a laugh' \u2014 describe the actual gesture",
+      "category": "structural",
+      "severity": "medium",
+      "base_weight": 4,
+      "detection_class": "structural",
+      "profiles": [
+        "*"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "medium"
+    },
+    {
+      "id": "struct-because-fragments",
+      "text": "Standalone 'Because' fragments \u2014 integrate or show through action",
+      "category": "structural",
+      "severity": "low",
+      "base_weight": 2,
+      "detection_class": "structural",
+      "profiles": [
+        "*"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "medium"
+    },
+    {
+      "id": "struct-temperature-emotion",
+      "text": "Temperature-as-emotion \u2014 'cold gaze', 'warmth spread' \u2014 name the actual feeling",
+      "category": "structural",
+      "severity": "medium",
+      "base_weight": 4,
+      "detection_class": "structural",
+      "profiles": [
+        "*"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "medium"
+    },
+    {
+      "id": "struct-physical-tells",
+      "text": "Physical tell clich\u00e9s \u2014 jaw tightening, throat bobbing \u2014 replace with character-specific responses",
+      "category": "structural",
+      "severity": "medium",
+      "base_weight": 4,
+      "detection_class": "structural",
+      "profiles": [
+        "*"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "medium"
+    },
+    {
+      "id": "struct-uniform-sentence",
+      "text": "Uniform sentence length \u2014 mix short and long. Aim for 20-30% under 10 words",
+      "category": "structural",
+      "severity": "medium",
+      "base_weight": 4,
+      "detection_class": "structural",
+      "profiles": [
+        "*"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "medium"
+    },
+    {
+      "id": "struct-overlong-sentence",
+      "text": "Overlong sentences \u2014 5+ commas, nested clauses \u2014 break into two or three",
+      "category": "structural",
+      "severity": "medium",
+      "base_weight": 4,
+      "detection_class": "structural",
+      "profiles": [
+        "*"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "medium"
+    },
+    {
+      "id": "struct-link-text",
+      "text": "Generic action-describing link text \u2014 'click here', 'learn more' \u2014 name what you're linking to",
+      "category": "structural",
+      "severity": "medium",
+      "base_weight": 4,
+      "detection_class": "structural",
+      "profiles": [
+        "*"
+      ],
+      "exceptions": [
+        "product UI buttons and marketing CTAs are not AI tells"
+      ],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "medium"
+    },
+    {
+      "id": "struct-all-same-length",
+      "text": "All paragraphs the same length",
+      "category": "structural",
+      "severity": "medium",
+      "base_weight": 4,
+      "detection_class": "structural",
+      "profiles": [
+        "*"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "medium"
+    },
+    {
+      "id": "struct-parataxis",
+      "text": "Parataxis \u2014 3+ consecutive short declarative sentences with no connective tissue",
+      "category": "structural",
+      "severity": "medium",
+      "base_weight": 4,
+      "detection_class": "structural",
+      "profiles": [
+        "*"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "medium"
+    },
+    {
+      "id": "struct-subject-loops",
+      "text": "Generic subject loops \u2014 3+ sentences opening with the same vague pronoun",
+      "category": "structural",
+      "severity": "medium",
+      "base_weight": 4,
+      "detection_class": "structural",
+      "profiles": [
+        "*"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "medium"
+    },
+    {
+      "id": "struct-fragmented-headers",
+      "text": "Fragmented headers \u2014 heading followed by restating paragraph",
+      "category": "structural",
+      "severity": "medium",
+      "base_weight": 4,
+      "detection_class": "structural",
+      "profiles": [
+        "*"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "medium"
+    },
+    {
+      "id": "struct-anthropomorphized-silence",
+      "text": "Anthropomorphized silence \u2014 'the silence stretched' \u2014 show effect on people instead",
+      "category": "structural",
+      "severity": "medium",
+      "base_weight": 4,
+      "detection_class": "structural",
+      "profiles": [
+        "*"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "medium"
+    },
+    {
+      "id": "struct-paragraph-redundancy",
+      "text": "Paragraph-level redundancy \u2014 paragraph 2 restating paragraph 1's conclusion",
+      "category": "structural",
+      "severity": "medium",
+      "base_weight": 4,
+      "detection_class": "structural",
+      "profiles": [
+        "*"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "medium"
+    },
+    {
+      "id": "struct-artificial-line-breaks",
+      "text": "Artificial line breaks \u2014 mid-sentence breaks at terminal width",
+      "category": "structural",
+      "severity": "medium",
+      "base_weight": 4,
+      "detection_class": "structural",
+      "profiles": [
+        "*"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "medium"
+    },
+    {
+      "id": "struct-bullet-crutch",
+      "text": "Bullet-point crutch \u2014 using bullets to dodge writing paragraphs",
+      "category": "structural",
+      "severity": "medium",
+      "base_weight": 4,
+      "detection_class": "structural",
+      "profiles": [
+        "*"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "medium"
+    },
+    {
+      "id": "struct-concession-rhythm",
+      "text": "Concession rhythm \u2014 'not X, but Y' used reflexively as paragraph scaffold",
+      "category": "structural",
+      "severity": "medium",
+      "base_weight": 4,
+      "detection_class": "structural",
+      "profiles": [
+        "*"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "medium"
+    },
+    {
+      "id": "struct-type-definition",
+      "text": "Type-definition endings \u2014 'the kind of X where Y' as default paragraph closure",
+      "category": "structural",
+      "severity": "medium",
+      "base_weight": 4,
+      "detection_class": "structural",
+      "profiles": [
+        "*"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "medium"
+    },
+    {
+      "id": "struct-announce-structure",
+      "text": "Announcing your structure ('First I'll discuss...')",
+      "category": "structural",
+      "severity": "medium",
+      "base_weight": 4,
+      "detection_class": "structural",
+      "profiles": [
+        "*"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "medium"
+    },
+    {
+      "id": "struct-antithesis",
+      "text": "Antithesis \u2014 decorative when the contrast is tone management, not argument. Load-bearing contrasts that rule out a specific alternative the reader would otherwise assume are not violations.",
+      "category": "structural",
+      "severity": "medium",
+      "base_weight": 4,
+      "detection_class": "structural",
+      "profiles": [
+        "*"
+      ],
+      "exceptions": [
+        "when the negative clause rules out a specific alternative the reader would otherwise assume"
+      ],
+      "overlaps": [
+        "phrase-not-just"
+      ],
+      "examples": [],
+      "confidence": "medium"
+    },
+    {
+      "id": "struct-negation-flip",
+      "text": "Negation flip \u2014 stating what something isn't before what it is, as padding",
+      "category": "structural",
+      "severity": "medium",
+      "base_weight": 4,
+      "detection_class": "structural",
+      "profiles": [
+        "*"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "medium"
+    },
+    {
+      "id": "struct-false-ranges",
+      "text": "False ranges as rhetorical filler",
+      "category": "structural",
+      "severity": "medium",
+      "base_weight": 4,
+      "detection_class": "structural",
+      "profiles": [
+        "*"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "medium"
+    },
+    {
+      "id": "struct-promotional",
+      "text": "Promotional language",
+      "category": "structural",
+      "severity": "medium",
+      "base_weight": 4,
+      "detection_class": "structural",
+      "profiles": [
+        "*"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "medium"
+    },
+    {
+      "id": "struct-notability-dropping",
+      "text": "Notability name-dropping without context",
+      "category": "structural",
+      "severity": "medium",
+      "base_weight": 4,
+      "detection_class": "structural",
+      "profiles": [
+        "*"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "medium"
+    },
+    {
+      "id": "struct-triplet-overlap",
+      "text": "Triplet overlap \u2014 3+ descriptors naming the same quality",
+      "category": "structural",
+      "severity": "medium",
+      "base_weight": 4,
+      "detection_class": "structural",
+      "profiles": [
+        "*"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "medium"
+    },
+    {
+      "id": "struct-awkward-metaphors",
+      "text": "Awkward AI metaphors \u2014 generic, plausible, unanchored to experience",
+      "category": "structural",
+      "severity": "medium",
+      "base_weight": 4,
+      "detection_class": "structural",
+      "profiles": [
+        "*"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "medium"
+    },
+    {
+      "id": "struct-ending-cliches",
+      "text": "Ending clich\u00e9s \u2014 'And for now, that was enough'",
+      "category": "structural",
+      "severity": "medium",
+      "base_weight": 4,
+      "detection_class": "structural",
+      "profiles": [
+        "*"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "medium"
+    },
+    {
+      "id": "struct-specificity-theater",
+      "text": "Specificity theater \u2014 invented specifics to pass a 'be concrete' check",
+      "category": "structural",
+      "severity": "high",
+      "base_weight": 8,
+      "detection_class": "structural",
+      "profiles": [
+        "*"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "medium"
+    },
+    {
+      "id": "struct-catalog-prose",
+      "text": "Catalog prose \u2014 paragraphs that are only names/milestones with no consequence",
+      "category": "structural",
+      "severity": "medium",
+      "base_weight": 4,
+      "detection_class": "structural",
+      "profiles": [
+        "*"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "medium"
+    },
+    {
+      "id": "struct-system-tour",
+      "text": "System-tour prose \u2014 paragraphs mapping one-to-one with category buckets",
+      "category": "structural",
+      "severity": "medium",
+      "base_weight": 4,
+      "detection_class": "structural",
+      "profiles": [
+        "*"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "medium"
+    },
+    {
+      "id": "struct-transition-glue",
+      "text": "Transition glue \u2014 'With that in mind', 'Against this backdrop', 'Zooming out'",
+      "category": "structural",
+      "severity": "medium",
+      "base_weight": 4,
+      "detection_class": "structural",
+      "profiles": [
+        "*"
+      ],
+      "exceptions": [],
+      "overlaps": [
+        "phrase-transition-glue"
+      ],
+      "examples": [],
+      "confidence": "medium"
+    },
+    {
+      "id": "struct-complexity-signalling",
+      "text": "Complexity signalling \u2014 'This is more complex than it appears'",
+      "category": "structural",
+      "severity": "medium",
+      "base_weight": 4,
+      "detection_class": "structural",
+      "profiles": [
+        "*"
+      ],
+      "exceptions": [],
+      "overlaps": [
+        "phrase-complexity-signal"
+      ],
+      "examples": [],
+      "confidence": "medium"
+    },
+    {
+      "id": "struct-discovery-narration",
+      "text": "Discovery narration \u2014 'As I explored this further'",
+      "category": "structural",
+      "severity": "medium",
+      "base_weight": 4,
+      "detection_class": "structural",
+      "profiles": [
+        "*"
+      ],
+      "exceptions": [],
+      "overlaps": [
+        "phrase-discovery-narration"
+      ],
+      "examples": [],
+      "confidence": "medium"
+    },
+    {
+      "id": "struct-wisdom-sandwich",
+      "text": "Wisdom sandwich \u2014 paragraph framed by bookend aphorisms",
+      "category": "structural",
+      "severity": "medium",
+      "base_weight": 4,
+      "detection_class": "structural",
+      "profiles": [
+        "*"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "medium"
+    },
+    {
+      "id": "struct-corrective-reveals",
+      "text": "Corrective reveals \u2014 'You've been told X. Here's the truth: Y.'",
+      "category": "structural",
+      "severity": "medium",
+      "base_weight": 4,
+      "detection_class": "structural",
+      "profiles": [
+        "*"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "medium"
+    },
+    {
+      "id": "struct-punchy-closure",
+      "text": "Punchy one-liner closure \u2014 every paragraph ending with a short dramatic sentence",
+      "category": "structural",
+      "severity": "medium",
+      "base_weight": 4,
+      "detection_class": "structural",
+      "profiles": [
+        "*"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "medium"
+    },
+    {
+      "id": "struct-weak-verbs",
+      "text": "Weak verb constructions \u2014 'work to ensure', 'seek to address'",
+      "category": "structural",
+      "severity": "medium",
+      "base_weight": 4,
+      "detection_class": "structural",
+      "profiles": [
+        "*"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "medium"
+    },
+    {
+      "id": "struct-empty-declaratives",
+      "text": "Empty declaratives \u2014 'This matters', 'Everything is connected'",
+      "category": "structural",
+      "severity": "medium",
+      "base_weight": 4,
+      "detection_class": "structural",
+      "profiles": [
+        "*"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "medium"
+    },
+    {
+      "id": "struct-transformation-chains",
+      "text": "Transformation chains \u2014 'X became Y. Y became Z.'",
+      "category": "structural",
+      "severity": "medium",
+      "base_weight": 4,
+      "detection_class": "structural",
+      "profiles": [
+        "*"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "medium"
+    },
+    {
+      "id": "struct-it-turns-out",
+      "text": "'It turns out' as throat-clearing opener",
+      "category": "structural",
+      "severity": "medium",
+      "base_weight": 4,
+      "detection_class": "structural",
+      "profiles": [
+        "*"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "medium"
+    },
+    {
+      "id": "fmt-em-dash",
+      "text": "Em-dash (\u2014), en-dash (\u2013), and double-hyphen (--) used as substitute \u2014 never use any of them. Break the sentence into two with a period or comma. No exceptions.",
+      "category": "formatting",
+      "severity": "high",
+      "base_weight": 8,
+      "detection_class": "exact_match",
+      "profiles": [
+        "*"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "high"
+    },
+    {
+      "id": "fmt-title-case",
+      "text": "Title Case Headings \u2014 use sentence case",
+      "category": "formatting",
+      "severity": "low",
+      "base_weight": 2,
+      "detection_class": "pattern_match",
+      "profiles": [
+        "*"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "medium"
+    },
+    {
+      "id": "fmt-inline-header",
+      "text": "Inline-header lists ('**Term:** explanation') \u2014 convert to prose",
+      "category": "formatting",
+      "severity": "low",
+      "base_weight": 2,
+      "detection_class": "pattern_match",
+      "profiles": [
+        "*"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "medium"
+    },
+    {
+      "id": "fmt-compound-hyphen",
+      "text": "Compound-modifier over-hyphenation",
+      "category": "formatting",
+      "severity": "low",
+      "base_weight": 2,
+      "detection_class": "pattern_match",
+      "profiles": [
+        "*"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "medium"
+    },
+    {
+      "id": "fmt-curly-quotes",
+      "text": "Curly quotes \u2014 should be straight quotes",
+      "category": "formatting",
+      "severity": "low",
+      "base_weight": 2,
+      "detection_class": "exact_match",
+      "profiles": [
+        "*"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "high"
+    },
+    {
+      "id": "fmt-emojis",
+      "text": "Emojis in prose \u2014 remove",
+      "category": "formatting",
+      "severity": "low",
+      "base_weight": 2,
+      "detection_class": "pattern_match",
+      "profiles": [
+        "*"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "medium"
+    },
+    {
+      "id": "fmt-exclamation",
+      "text": "Exclamation mark overuse",
+      "category": "formatting",
+      "severity": "low",
+      "base_weight": 2,
+      "detection_class": "pattern_match",
+      "profiles": [
+        "*"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "medium"
+    },
+    {
+      "id": "fmt-semicolon",
+      "text": "Semicolon overuse (2+ per paragraph)",
+      "category": "formatting",
+      "severity": "low",
+      "base_weight": 2,
+      "detection_class": "pattern_match",
+      "profiles": [
+        "*"
+      ],
+      "exceptions": [
+        "formal or academic register"
+      ],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "medium"
+    },
+    {
+      "id": "chatbot-hope-helps",
+      "text": "I hope this helps!",
+      "category": "chatbot",
+      "severity": "high",
+      "base_weight": 8,
+      "detection_class": "phrase_match",
+      "profiles": [
+        "*"
+      ],
+      "exceptions": [],
+      "overlaps": [
+        "phrase-hope-helps"
+      ],
+      "examples": [],
+      "confidence": "medium"
+    },
+    {
+      "id": "chatbot-let-me-know",
+      "text": "Let me know if you have questions!",
+      "category": "chatbot",
+      "severity": "high",
+      "base_weight": 8,
+      "detection_class": "phrase_match",
+      "profiles": [
+        "*"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "medium"
+    },
+    {
+      "id": "chatbot-great-question",
+      "text": "Great question!",
+      "category": "chatbot",
+      "severity": "high",
+      "base_weight": 8,
+      "detection_class": "phrase_match",
+      "profiles": [
+        "*"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "medium"
+    },
+    {
+      "id": "chatbot-certainly-absolutely",
+      "text": "Certainly! / Absolutely!",
+      "category": "chatbot",
+      "severity": "high",
+      "base_weight": 8,
+      "detection_class": "phrase_match",
+      "profiles": [
+        "*"
+      ],
+      "exceptions": [],
+      "overlaps": [
+        "phrase-certainly"
+      ],
+      "examples": [],
+      "confidence": "medium"
+    },
+    {
+      "id": "chatbot-cutoff-disclaimers",
+      "text": "While details are limited based on available information",
+      "category": "chatbot",
+      "severity": "high",
+      "base_weight": 8,
+      "detection_class": "phrase_match",
+      "profiles": [
+        "*"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "medium"
+    },
+    {
+      "id": "phrase-expert-cosplay",
+      "text": "This is the part most people skip / What most people get wrong / Here's what nobody tells you / The part everyone misses \u2014 expert cosplay. Cut the setup and let the claim stand on its own.",
+      "category": "phrase",
+      "severity": "high",
+      "base_weight": 8,
+      "detection_class": "phrase_match",
+      "profiles": [
+        "general"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "medium"
+    },
+    {
+      "id": "struct-colon-reveal",
+      "text": "Colon reveals \u2014 noun-phrase colon lowercase-dramatic-reveal. 'The best part: it learns.' Rewrite as a plain sentence. Colons are for lists, labels, and quotes, not fake drama.",
+      "category": "structural",
+      "severity": "medium",
+      "base_weight": 4,
+      "detection_class": "structural",
+      "profiles": [
+        "*"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "medium"
+    },
+    {
+      "id": "filler-padding-adverbs",
+      "text": "Padding adverbs \u2014 'just, honestly, actually, fundamentally, crucially, importantly' used as padding rather than carrying weight. Flag when they add nothing.",
+      "category": "filler",
+      "severity": "low",
+      "base_weight": 2,
+      "detection_class": "pattern_match",
+      "profiles": [
+        "general"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "medium"
+    },
+    {
+      "id": "phrase-what-if-i-told",
+      "text": "\"What if I told you...\" \u2014 hypothetical-framing rhetorical setup that poses a claim as a revelation. Cut the framing and state the claim directly.",
+      "category": "phrase",
+      "severity": "high",
+      "base_weight": 8,
+      "detection_class": "phrase_match",
+      "profiles": [
+        "general"
+      ],
+      "exceptions": [],
+      "overlaps": [
+        "struct-rhetorical-hooks"
+      ],
+      "examples": [],
+      "confidence": "medium"
+    },
+    {
+      "id": "phrase-self-answered-qa",
+      "text": "Self-answered question pairs \u2014 \"Can AI write like a human? No, but...\" / \"Is slop inevitable? I don't think so.\" Faux-conversational setup posing a question then immediately answering it. Cut the Q&A scaffold and state the point directly.",
+      "category": "phrase",
+      "severity": "high",
+      "base_weight": 8,
+      "detection_class": "phrase_match",
+      "profiles": [
+        "general"
+      ],
+      "exceptions": [],
+      "overlaps": [
+        "struct-rhetorical-hooks"
+      ],
+      "examples": [],
+      "confidence": "medium"
+    },
+    {
+      "id": "fmt-emoji-bullets",
+      "text": "Emoji as bullet-point markers (e.g. \u2705, \ud83d\udc49, \ud83d\udd25, \ud83d\udca1 used to prefix list items) \u2014 convert to plain bullets or prose. Emoji markers are a formatting crutch, distinct from emoji in prose.",
+      "category": "formatting",
+      "severity": "low",
+      "base_weight": 2,
+      "detection_class": "pattern_match",
+      "profiles": [
+        "*"
+      ],
+      "exceptions": [],
+      "overlaps": [],
+      "examples": [],
+      "confidence": "medium"
+    },
+    {
+      "id": "struct-listicle-trenchcoat",
+      "text": "Listicle in a trenchcoat \u2014 sequential transitions disguised as prose ('The first reason... The second... A third...') that turn a paragraph into a disguised numbered list. Rewrite around a single consequence or relationship instead of counting items.",
+      "category": "structural",
+      "severity": "medium",
+      "base_weight": 4,
+      "detection_class": "structural",
+      "profiles": [
+        "*"
+      ],
+      "exceptions": [],
+      "overlaps": [
+        "struct-bullet-crutch"
+      ],
+      "examples": [],
+      "confidence": "medium"
+    }
+  ],
+  "profiles": {
+    "general": {
+      "default": true,
+      "description": "Default profile for all prose. All rules active."
+    },
+    "technical": {
+      "default": false,
+      "description": "Technical documentation, API references, engineering docs. Contextual vocabulary like \"significant\" and \"robust\" are precise domain terms, not slop."
+    }
+  },
+  "_profile_guide": {
+    "_comment": "To add a new profile: (1) add it to the profiles dict above, (2) for each rule that should be exempt, change its profiles list from [\"general\"] to [\"general\", \"new-profile\"]. Rules with profiles=[\"*\"] are universal. Rules with profiles=[\"general\"] fire only in general. If a rule should NOT fire in your new profile, leave it out of the profiles list.",
+    "example": "To add a \"creative\" profile where \"dynamic\" is allowed: 1) Add \"creative\": {\"default\": false, \"description\": \"...\"} to profiles. 2) Leave vocab-dynamic at [\"general\"] so it does NOT fire in creative."
+  }
+}

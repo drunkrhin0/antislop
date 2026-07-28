@@ -1,5 +1,19 @@
 # AGENTS
 
+## Agent skills
+
+### Issue tracker
+
+Specs and implementation tickets live under `.scratch/<feature-slug>/`. See `docs/agents/issue-tracker.md`.
+
+### Triage labels
+
+Local tickets use the default Matt Pocock triage roles. See `docs/agents/triage-labels.md`.
+
+### Domain docs
+
+This is a single-context repository with a root `CONTEXT.md` and system decisions under `docs/adr/`. See `docs/agents/domain.md`.
+
 ## What this project does
 
 Antislop is a pair of AI agent skills that suppress detectable AI writing patterns. **antislop** is an ambient writing style that triggers automatically when asked to write or edit prose. **antislop-audit** scores text 0-100 and returns a violations list with severity and excerpts. Works with any agent supporting the SKILL.md or skills system.
@@ -9,8 +23,20 @@ There is also an agent file (`.opencode/agents/antislop.md`) that bundles both m
 ## How to run and test
 
 ```bash
-# Lint all SKILL.md files
-bash /tmp/lint-test.sh
+# Full propagation check: generate.py --check + validate.py, one report
+bash check.sh
+
+# Unit tests (stdlib unittest, no external deps)
+python3 -m unittest discover -s tests
+
+# Structural invariants only
+python3 validate.py --skills-dir skills --expect-version 2.0.0
+
+# Committed artifacts match the registry
+python3 generate.py --check
+
+# Score arbitrary text against the registry
+echo "some text" | python3 score.py --profile general
 
 # Lint via CI (requires Docker)
 act push -W .forgejo/workflows/lint-skills.yml
@@ -21,6 +47,10 @@ cp skills/antislop-audit/SKILL.md ~/.claude/skills/antislop-audit/
 
 # Test the agent — copy to global agents dir
 cp .opencode/agents/antislop.md ~/.config/opencode/agents/
+
+# Test the Claude Code plugin
+claude plugin validate .claude-plugin/plugin.json
+claude --plugin-dir .
 ```
 
 To test repo changes in an agent conversation, copy the updated `SKILL.md` into the agent's skills directory and restart.
@@ -37,7 +67,7 @@ This works with Claude.ai, ChatGPT, Cursor, Windsurf, Zed, or any tool that acce
 
 ## Key architecture decisions
 
-**`skills/antislop/SKILL.md` is the canonical source.** `skills/antislop/GEMINI.md` and `skills/antislop-audit/SKILL.md` are synced derivatives. When adding a rule, update all three plus severity categories and pattern references in the audit file. The lint CI enforces version consistency across all four version-bearing files.
+**`rules.json` is the canonical source, not any single SKILL.md.** `generate.py` renders `pattern-reference.md` from it deterministically; `score.py` scores against it directly. `skills/antislop/GEMINI.md` and `.opencode/agents/antislop.md` are hand-maintained derivatives, not generated — when adding a rule, update those alongside the registry. `validate.py` enforces version consistency across all eleven version-bearing files (see Conventions below), not just four — that was the 1.x-era check.
 
 **Structure section is grouped by level.** Sentence-level, Paragraph-level, Discourse-level. This came from the realization that 25+ flat bullet points were unparseable under context pressure. Place new rules in the right sub-group.
 
@@ -55,11 +85,12 @@ This works with Claude.ai, ChatGPT, Cursor, Windsurf, Zed, or any tool that acce
 
 - Sentence case headings everywhere — no Title Case
 - Skill files stay under 500 lines (current: 154 / 383 / 163)
-- Version bumps touch five places: metadata.version in each SKILL.md, inline **Version:** in each body, and gemini-extension.json
+- Version bumps touch eleven files: `metadata.version` and inline `**Version:**` in each SKILL.md, `gemini-extension.json`, `GEMINI.md`, `.opencode/agents/antislop.md`, `rules.json`, both `lint-skills.yml` workflows, the production assertion in `tests/test_validate.py`, and `.claude-plugin/plugin.json`. Nothing checks the plugin manifest automatically, so it drifts silently. `pattern-reference.md` is generated, so regenerate rather than edit it. Verify with `python3 validate.py --skills-dir skills --expect-version <new>` and `bash check.sh`. Test fixtures keep their deliberately wrong versions.
 - README follows antislop rules itself: zero em-dashes, no banned vocabulary
 - Forgejo is the primary CI. Workflows live in `.forgejo/workflows/`. GitHub is a mirror only.
 - When to Use / When NOT to Use sections are mandatory — the lint CI fails without them
 - Agent file (`.opencode/agents/antislop.md`) is a derivative synced alongside GEMINI.md and antislop-audit/SKILL.md
+- `.claude-plugin/marketplace.json` self-hosts the plugin (`claude plugin marketplace add <repo-url>`). It carries no version field of its own, so it's not part of the eleven-file version-bump list, but its `plugins[].description` should stay in sync with `plugin.json`'s `description` by hand.
 
 ## Known gotchas
 
@@ -73,7 +104,7 @@ This works with Claude.ai, ChatGPT, Cursor, Windsurf, Zed, or any tool that acce
 
 **`.opencode/agents/antislop.md` is not a direct port of either SKILL.md.** It combines style and audit rules with subagent framing: no Canvas, no skill-specific When to Use sections, intent matching for mode detection. Don't treat it as a 1:1 mirror when syncing rules. The 500-line skill convention does not apply to the agent file.
 
-**Global replacements cause collateral damage.** A `sed 's/—/,/g'` across markdown replaced em-dashes in code spans and explanations, not just prose. Always verify after bulk edits.
+**Global replacements cause collateral damage.** A `sed 's/—/,/g'` across markdown replaced em-dashes in code spans and explanations, not just prose. Always verify after bulk edits. `validate.py` now checks for this: it rejects the ASCII stand-ins a bulk replace leaves behind (` -- ` for an em dash, `->` for an arrow) outside code spans, and flags a shared line carrying different marks in different artifacts. Marks quoted inside backticks stay exempt, since the files have to name what they ban.
 
 **Forgejo runner can't resolve public hostname.** The Forgejo runner container is on the local Docker network and cannot resolve `git.drunkrhin0.au` (DNS fails). All `git clone` and `curl` calls in Forgejo workflows must use the internal IP `192.168.1.62:3000`. The runner also can't use `actions/checkout` with the default URL — it fails with `Could not resolve host: git.drunkrhin0.au`. Workaround: skip `actions/checkout` entirely and do a manual `git clone` in a custom step using the internal URL.
 
@@ -84,8 +115,6 @@ This works with Claude.ai, ChatGPT, Cursor, Windsurf, Zed, or any tool that acce
 **Forgejo's `container:` key with `runs-on: docker` is unreliable.** The runner is registered with label `docker:docker://node:lts` (a Debian-based image). The `container:` field to specify a different image (like `alpine:3.20`) may not override the default. The `apk` package manager fails because the actual container is Debian, not Alpine. Use `runs-on: ubuntu-latest` instead and rely on the runner having standard tools pre-installed.
 
 **Bash parameter expansion `#http://` only strips `http://`, not `https://`.** If `GITHUB_SERVER_URL` is `https://git.drunkrhin0.au`, the expansion `${GITHUB_SERVER_URL#http://}` leaves it unchanged, producing `https://https://...` in the resulting URL. Use a more robust method or hardcode the URL.
-
-**`/tmp/lint-test.sh` doesn't exist.** The AGENTS.md references it but the script was never created. Use `act push -W .forgejo/workflows/lint-skills.yml` instead (requires Docker).
 
 **`GITHUB_REPOSITORY` is a full SSH URL on this Forgejo runner, not `owner/repo`.** The runner sets `GITHUB_REPOSITORY=ssh://git@git.drunkrhin0.au/drunkrhin0/antislop` rather than just `drunkrhin0/antislop`. Concatenating it into a URL produces garbage like `http://192.168.1.62:3000/ssh://git@...`. Hardcode the repo path instead, or strip the SSH prefix with parameter expansion.
 

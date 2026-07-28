@@ -7,6 +7,7 @@ Load this file when reviewing prose for structural AI tells.
 - Rule of three inside a single sentence ("innovation, inspiration, and insights")
 - Synonym cycling — pick a word and repeat it; don't rotate through near-synonyms
 - Copula avoidance — "serves as", "boasts", "features", "functions as", "stands as" when "is" or "has" would do
+- Colon reveals — noun-phrase colon lowercase-dramatic-reveal. "The best part: it learns." "The catch: nobody tested it." Rewrite as a plain sentence. Colons are for lists, labels, and quotes, not fake drama.
 - Superficial -ing analyses — "highlighting", "underscoring", "symbolizing" tacked onto sentence ends. Say what actually happened.
 - Significance inflation ("pivotal moment in the evolution of...")
 - Passive voice / subjectless fragments — use active voice
@@ -32,6 +33,7 @@ Load this file when reviewing prose for structural AI tells.
 - Paragraph-level redundancy — paragraph 2 restating paragraph 1's conclusion
 - Artificial line breaks — mid-sentence breaks at terminal width
 - Bullet-point crutch — using bullets to dodge writing paragraphs
+- Listicle in a trenchcoat — sequential transitions disguised as prose ("The first reason... The second... A third..."). Rewrite around a single consequence instead of counting items.
 - Concession rhythm — "not X, but Y" used reflexively as paragraph scaffold
 - Type-definition endings — "the kind of X where Y" as default paragraph closure
 

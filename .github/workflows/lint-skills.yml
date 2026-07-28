@@ -10,13 +10,7 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          git clone --depth 1 --branch "${{ github.head_ref || github.ref_name }}" \
-            "http://x-access-token:${GITHUB_TOKEN}@192.168.1.62:3000/drunkrhin0/antislop.git" \
-            .
+      - uses: actions/checkout@v4
 
       - name: Validate repository invariants
         run: python3 validate.py --skills-dir skills --expect-version 2.0.0
