@@ -306,6 +306,13 @@ def main():
 
     registry = load_registry(args.registry)
 
+    valid_profiles = set(registry.get("profiles", {}).keys())
+    if args.profile not in valid_profiles:
+        print(json.dumps({
+            "error": f"unknown profile '{args.profile}'. Valid: {sorted(valid_profiles)}"
+        }))
+        sys.exit(2)
+
     # Read text
     if args.file:
         with open(args.file) as f:
