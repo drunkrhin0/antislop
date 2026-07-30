@@ -13,7 +13,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Validate repository invariants
-        run: python3 validate.py --skills-dir skills --expect-version 2.0.1
+        run: python3 validate.py --skills-dir skills --expect-version 2.0.2
 
       - name: Check generated artifacts match registry
         run: python3 generate.py --check

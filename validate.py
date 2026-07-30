@@ -17,7 +17,7 @@ Checks:
 
 Usage:
     python3 validate.py --skills-dir skills
-    python3 validate.py --skills-dir skills --expect-version 2.0.1
+    python3 validate.py --skills-dir skills --expect-version 2.0.2
     python3 validate.py --help
 
 Fixture files under tests/fixtures/ are named SKILL.md.fixture, not SKILL.md

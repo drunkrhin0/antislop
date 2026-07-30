@@ -30,7 +30,7 @@ bash check.sh
 python3 -m unittest discover -s tests
 
 # Structural invariants only
-python3 validate.py --skills-dir skills --expect-version 2.0.1
+python3 validate.py --skills-dir skills --expect-version 2.0.2
 
 # Committed artifacts match the registry
 python3 generate.py --check
@@ -140,6 +140,8 @@ If creating a `.forgejo/workflows/release-skills.yml` Forgejo-native version of 
 **Forgejo release workflow ran its release steps on every push to main, not just tag pushes.** Unlike the GitHub version, `.forgejo/workflows/release-skills.yml` triggers on both `push: branches: [main]` (to auto-create the version tag) and `push: tags:` (to build and publish the release). The "Resolve version from tag" / "Build zips" / "Create release" steps had no guard distinguishing the two, so on the raw branch-push trigger `GITHUB_REF_NAME` was `main` itself, not a real tag, producing `Finding release for tag main...` and a 401 from the release-creation call. Fixed by gating those three steps on `if: startsWith(github.ref, 'refs/tags/')`.
 
 **Forgejo ignores the top-level `permissions:` block entirely.** GitHub Actions uses `permissions: contents: write` to grant the default token release-creation rights (commit `f3b7269`). Adding the same block to `.forgejo/workflows/release-skills.yml` does nothing — Forgejo logs a warning ("Job release or its workflow has a permissions field, which is not supported in Forgejo and will be ignored") and proceeds with whatever the default token already has. Forgejo's equivalent is repo-level "Authorized Integrations" settings, not a workflow-file field. Removed the no-op block rather than leave a warning every run.
+
+**Zip the skill from inside `skills/`, not from the repo root.** `zip -r antislop-vX.Y.Z.zip skills/antislop/` bakes the `skills/` prefix into the archive, so the unpacked tree is `skills/antislop/SKILL.md`. Drag-and-drop installers (Claude, Gemini CLI) look for `SKILL.md` at the root or one folder in, and silently reject anything deeper. Both release workflows now use `(cd skills && zip -r "../antislop-${VERSION}.zip" antislop/)`, which produces `antislop/SKILL.md`. The Gemini bundle stages into `build/antislop/` for the same reason — a folder literally named `gemini/` also worked, but carried no skill identity. Verify any change to the build step with `unzip -l` before releasing.
 
 **Release-creation call needs a valid `RELEASE_TOKEN` repo secret.** A malformed, expired, or wrong-scope one fails with `token is malformed: token contains an invalid number of segments` on the Forgejo API call in "Create release and upload assets." This is a Forgejo repo-settings problem (Settings → Actions → Secrets), not a workflow-file bug, and isn't fixable from a commit — check/regenerate the PAT there if release creation 401s.
 

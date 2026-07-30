@@ -31,10 +31,14 @@ jobs:
       - name: Build zips
         run: |
           SUFFIX="${TAG#antislop-}"
-          zip -r "antislop-${SUFFIX}.zip" skills/antislop/
-          zip -r "antislop-audit-${SUFFIX}.zip" skills/antislop-audit/
-          mkdir -p gemini && cp skills/antislop/GEMINI.md skills/antislop/gemini-extension.json gemini/
-          zip -r "gemini-${SUFFIX}.zip" gemini/
+          # zip from inside the parent dir so SKILL.md lands in the archive's
+          # top-level folder (antislop/SKILL.md). Zipping skills/antislop/ from
+          # the repo root buries it a level deeper, and drag-and-drop installers
+          # only look one level in.
+          (cd skills && zip -r "../antislop-${SUFFIX}.zip" antislop/)
+          (cd skills && zip -r "../antislop-audit-${SUFFIX}.zip" antislop-audit/)
+          mkdir -p build/antislop && cp skills/antislop/GEMINI.md skills/antislop/gemini-extension.json build/antislop/
+          (cd build && zip -r "../gemini-${SUFFIX}.zip" antislop/)
 
       - uses: softprops/action-gh-release@v2
         with:

@@ -1,7 +1,7 @@
 # Pattern reference (generated)
 
 This file is generated from rules.json. Do not edit directly.
-Registry version: 2.0.1
+Registry version: 2.0.2
 Profile: general
 Profile description: Default profile for all prose. All rules active.
 
