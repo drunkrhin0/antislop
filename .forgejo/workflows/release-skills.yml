@@ -162,7 +162,7 @@ jobs:
           fi
 
           echo "Uploading assets..."
-          for ZIP in antislop-${VERSION}.zip antislop-audit-${VERSION}.zip gemini-${VERSION}.zip; do
+          for ZIP in antislop-${VERSION}.zip antislop-audit-${VERSION}.zip gemini-${VERSION}.zip kiro-${VERSION}.zip; do
             [ -f "$ZIP" ] || continue
             STATUS=$(curl -s -X POST "${API}/repos/${REPO}/releases/${RELEASE_ID}/assets?name=${ZIP}" \
               -H "${AUTH}" -H "Content-Type: application/zip" \
