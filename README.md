@@ -56,6 +56,26 @@ claude plugin install antislop@drunkrhin0
 
 Not listed on Anthropic's community marketplace (that submission is a separate, manual step), but self-hosted install works today.
 
+### Kiro
+
+AWS Kiro reads antislop content two separate ways: a Power for the IDE and Web app, and the skills directly through Kiro's own skills support.
+
+**Powers panel, local folder.** In Kiro, open the Powers panel (the lightning bolt icon), choose Add Custom Power, then Import power from a folder, and point it at the absolute path to `powers/antislop` in your clone. This is the path that can be checked directly against the files in this repo. It has not been run against a real Kiro install on this machine, so treat the result as unverified until someone tries it.
+
+**GitHub URL, intended path, untested.** The plan is to install straight from a subdirectory URL:
+
+```
+https://github.com/drunkrhin0/antislop/tree/main/powers/antislop
+```
+
+Kiro's install docs say subdirectory URLs work. The official `kirodotdev/powers` repo puts each power at the top level of its own repository, for example `neon/POWER.md`. This repo nests the power one level deeper, at `powers/antislop/POWER.md`, so whether Kiro's importer follows that extra level is unconfirmed. The GitHub mirror is also behind and does not carry this work yet, so the URL above installs nothing today. Both the nesting question and the mirror push need to clear before this path is real.
+
+**Workspace skills.** `.kiro/skills/antislop` and `.kiro/skills/antislop-audit` are relative symlinks into `skills/`. Cloning the repo and opening it as a Kiro workspace gives you both skills with no copying.
+
+**Manual, `~/.kiro/skills/`.** Powers are IDE and Web only. `kiro-cli` has no `powers` subcommand, so this is the path for Kiro CLI users. See the row in the manual-install table below.
+
+Not listed on Kiro's power registry (submission at https://kiro.dev/powers/submit/ is a separate, manual step, same as the Anthropic community marketplace above). Unlike the Claude Code plugin, no Kiro install path here has been confirmed working: the folder import has not been run, and the GitHub URL waits on the mirror push and on confirming that Kiro's importer follows the subdirectory nesting.
+
 ### Gemini web app (gemini.google.com)
 
 Requires Gemini Advanced. Create a Gem:
@@ -90,6 +110,7 @@ Copy skill files straight into your agent's directory. No plugin system, no CLI 
 | Claude Code | `~/.claude/skills/` | `skills/antislop/`, `skills/antislop-audit/` |
 | opencode | `~/.config/opencode/skills/` | `skills/antislop/`, `skills/antislop-audit/` |
 | Gemini CLI | `~/.gemini/extensions/antislop/` | `skills/antislop/gemini-extension.json`, `skills/antislop/GEMINI.md` |
+| Kiro CLI | `~/.kiro/skills/` | `skills/antislop/`, `skills/antislop-audit/` |
 
 ```bash
 # Claude Code / opencode
@@ -98,6 +119,9 @@ cp -r skills/antislop skills/antislop-audit ~/.claude/skills/
 # Gemini CLI
 mkdir -p ~/.gemini/extensions/antislop
 cp skills/antislop/gemini-extension.json skills/antislop/GEMINI.md ~/.gemini/extensions/antislop/
+
+# Kiro CLI
+cp -r skills/antislop skills/antislop-audit ~/.kiro/skills/
 ```
 
 Gemini CLI picks up the extension automatically on next launch.
@@ -129,6 +153,90 @@ Returns a Formulaic Writing Risk Score (0-100), a violations table with severity
 To add a new profile, see the `_profile_guide` in `rules.json`.
 
 The score measures formulaic-writing risk and cannot prove AI authorship.
+
+### Review a full tender or proposal
+
+The workflow below works with any AI assistant that can follow a system prompt, load a skill, or accept pasted instructions. Antislop does not require a particular assistant.
+
+Use Markdown when possible. It preserves headings, tables, lists, and section boundaries. Plain text also works. DOCX and PDF files can be opened directly by an assistant that supports those formats, but `score.py` accepts text through standard input, so extract those files first when using the local scorer.
+
+```bash
+# DOCX to Markdown, if pandoc is installed
+pandoc tender.docx -t gfm -o tender.md
+
+# PDF to text, preserving layout where possible
+pdftotext -layout tender.pdf tender.txt
+
+# Score the complete extracted document
+python3 score.py --profile general < tender.txt
+```
+
+For a confidential tender, redact client identifiers before sending it to an external assistant. Keep an untouched local copy for comparison.
+
+Run the review in three passes. Use a fresh conversation for each pass so the assistant does not treat its earlier rewrite as authoritative.
+
+If the assistant has no skill or system-prompt support, provide the contents of `skills/antislop/SKILL.md` and `skills/antislop-audit/SKILL.md` as its instructions before starting the passes.
+
+First, ask for an inventory and audit:
+
+```text
+Read the complete tender document at [absolute path]. Do not rewrite it yet.
+
+Return:
+1. The heading and section inventory.
+2. A fact ledger containing every number, commitment, qualification, product claim, and customer requirement.
+3. A Formulaic Writing Risk Score.
+4. Violations grouped by section with short excerpts.
+5. Unsupported claims and contradictions.
+
+Do not invent facts. Return analysis only.
+```
+
+Second, ask for a controlled rewrite:
+
+```text
+Rewrite the tender section by section to remove detectable AI writing patterns.
+
+Preserve every factual claim, number, requirement, qualification, product limitation, and customer-specific detail. Do not invent evidence, capabilities, certifications, outcomes, or commitments. Keep the original heading structure.
+
+Return the revised document only.
+```
+
+Third, compare the original and revised documents:
+
+```text
+Compare the original tender with the revised tender.
+
+Report every fact, number, claim, requirement, qualification, or commitment that changed. Also report added claims, removed claims, weakened caveats, and contradictions. Do not rewrite anything.
+```
+
+Accept the rewrite only after a human confirms that the fact ledger matches the source, every requirement remains answered, and no unsupported claim was introduced. The scorer measures formulaic-writing risk. It does not verify tender accuracy, compliance, or commercial approval.
+
+### Antislop harness structure
+
+The harness keeps rule maintenance, assistant integration, deterministic checks, and human approval as separate parts of the workflow.
+
+```mermaid
+flowchart TD
+    A["rules.json<br/>canonical rule registry"] --> B["generate.py"]
+    B --> C["Skills and derivatives<br/>SKILL.md, GEMINI.md, agent files"]
+    B --> D["Generated references<br/>pattern-reference.md and steering files"]
+    A --> E["score.py<br/>deterministic risk score"]
+    C --> F["Any compatible assistant<br/>skill, system prompt, plugin, or manual instructions"]
+    D --> F
+    F --> G["Draft or revised prose"]
+    G --> H["antislop-audit<br/>violations and corrections"]
+    G --> E
+    E --> I["Risk score and findings"]
+    H --> J["Human review<br/>facts, requirements, evidence, and tone"]
+    I --> J
+    J -->|"needs changes"| F
+    J -->|"approved"| K["Final document"]
+    B --> L["check.sh and CI<br/>artifact and invariant checks"]
+    L --> M["Merge gate"]
+```
+
+The assistant can suggest or rewrite text. `rules.json`, `generate.py`, `score.py`, tests, CI, and branch protection provide deterministic controls. A human still owns factual accuracy, tender compliance, commercial commitments, approval, and merge.
 
 ---
 

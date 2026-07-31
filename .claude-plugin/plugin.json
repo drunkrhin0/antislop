@@ -2,7 +2,7 @@
   "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
   "name": "antislop",
   "displayName": "Antislop",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "Writing style and audit skills that suppress detectable AI writing patterns in prose.",
   "author": {
     "name": "Rami Tawil",

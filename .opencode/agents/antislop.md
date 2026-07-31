@@ -10,7 +10,7 @@ permission:
 
 # Antislop agent
 
-**Version:** 2.0.2
+**Version:** 2.0.3
 **Purpose:** Two capabilities in one agent. Suppress AI writing patterns when writing/editing. Score and flag them when auditing.
 **Mode:** Subagent (read-only). Returns corrected text or audit results. The primary agent or user writes files.
 

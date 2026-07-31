@@ -1,6 +1,6 @@
 # Antislop — Writing Style + Audit
 
-**Version:** 2.0.2  
+**Version:** 2.0.3
 **Purpose:** Two capabilities in one extension. Suppress AI writing patterns when writing/editing. Score and flag them when auditing.
 
 **Sources:** [drunkrhin0/antislop](https://github.com/drunkrhin0/antislop) (MIT) — canonical source. Derived from blader/humanizer (MIT), jalaalrd/anti-ai-slop-writing (MIT), Reddit r/copywriting, [ignorance.ai/field-guide-to-ai-slop](https://www.ignorance.ai/p/the-field-guide-to-ai-slop), [Banned: The Definitive Guide](https://docs.google.com/document/d/1uC9tBgfNZJytzLpg6MGk5mTfgJNbEK-h1hMLncQ5Mho/edit), [Pangram](https://www.pangram.com/blog/comprehensive-guide-to-spotting-ai-writing-patterns), [Anbeeld/WRITING.md](https://github.com/Anbeeld/WRITING.md), [Bugcrowd Design System — Tone & Language](https://bugcrowd.design/docs/guidelines/content-guidelines/language/), [petergyang/no-ai-slop](https://github.com/petergyang/no-ai-slop) (MIT), self.
@@ -148,7 +148,7 @@ delve, leverage, tapestry, testament, vibrant, pivotal, utilize, synergy, holist
 
 **Title Case Headings** → sentence case.
 
-**Emojis in prose** → remove.  
+**Emojis in prose** → remove.
 **Emoji as bullet markers** (✅, 👉, 🔥, 💡 prefixed to list items) → convert to plain bullets or prose.
 
 **Compound-modifier hyphenation** — hyphenate before the noun ("well-known author"). Open after linking verbs ("The author is well known"). Never hyphenate -ly adverb compounds ("highly qualified", not "highly-qualified"). Watch for ever- compounds ("ever-changing").
@@ -387,7 +387,7 @@ Always output in this exact structure:
 
 This score measures formulaic-writing risk and cannot prove AI authorship.
 
-**Word count:** [N]  
+**Word count:** [N]
 **Scored findings:** [N] (primary) + [N] (related, unscored)
 
 **Violations ([N] total):**

@@ -26,6 +26,10 @@ def make_sandbox():
     for name in ("rules.json", "generate.py", "registry.py", "validate.py", "fix.py"):
         shutil.copy(os.path.join(ROOT, name), os.path.join(tmp, name))
     shutil.copytree(os.path.join(ROOT, "skills"), os.path.join(tmp, "skills"))
+    # generate.py --check also covers the antislop Power's steering files
+    # (ticket 02), so the sandbox needs powers/ too or generate.py --check
+    # reports every steering file MISSING regardless of what fix.py fixed.
+    shutil.copytree(os.path.join(ROOT, "powers"), os.path.join(tmp, "powers"))
     return tmp
 
 

@@ -109,6 +109,7 @@ jobs:
           (cd skills && zip -r "../antislop-audit-${VERSION}.zip" antislop-audit/)
           mkdir -p build/antislop && cp skills/antislop/GEMINI.md skills/antislop/gemini-extension.json build/antislop/
           (cd build && zip -r "../gemini-${VERSION}.zip" antislop/)
+          (cd powers/antislop && zip -r "../../kiro-${VERSION}.zip" .)
           ls -la *.zip
 
       - name: Create release and upload assets

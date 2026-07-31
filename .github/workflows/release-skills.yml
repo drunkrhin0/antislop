@@ -39,6 +39,7 @@ jobs:
           (cd skills && zip -r "../antislop-audit-${SUFFIX}.zip" antislop-audit/)
           mkdir -p build/antislop && cp skills/antislop/GEMINI.md skills/antislop/gemini-extension.json build/antislop/
           (cd build && zip -r "../gemini-${SUFFIX}.zip" antislop/)
+          (cd powers/antislop && zip -r "../../kiro-${SUFFIX}.zip" .)
 
       - uses: softprops/action-gh-release@v2
         with:
