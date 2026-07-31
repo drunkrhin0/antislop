@@ -3,6 +3,9 @@
 
 The rule registry (rules.json) is the single source of truth. This generator
 renders rule sections deterministically and verifies committed files match.
+Generated artifacts include the antislop-audit pattern reference and the
+antislop Power's steering files (verbatim copies of the skill's reference
+docs, plus the rendered pattern reference reused for audit mode).
 
 Usage:
     python3 generate.py --check                    # verify committed files match
@@ -151,16 +154,107 @@ def render_pattern_reference(registry, profile="general"):
     return "\n".join(sections) + "\n"
 
 
-def generate_all(registry, profile="general"):
-    """Generate all artifacts for a given profile. Returns dict of relative path -> content."""
+def read_source_file(repo_root, relpath):
+    """Read a source file relative to repo_root and return its raw text.
+
+    Used for artifacts that are verbatim copies of another committed file,
+    so the copy can be produced without depending on the process working
+    directory.
+    """
+    full_path = os.path.join(repo_root, relpath)
+    with open(full_path) as f:
+        return f.read()
+
+
+def strip_frontmatter(text):
+    """Strip a leading YAML frontmatter block from text and return the body.
+
+    Only the opening delimiter is required to be line 1 (a bare '---'); the
+    closing delimiter is the *first* subsequent line that is exactly '---'.
+    This is a line-anchored scan rather than a global split/regex so it does
+    not get fooled by horizontal rules ('---' used as a markdown divider)
+    further down in the body — those only matter once the scan has already
+    found the closing delimiter and moved on. If the text does not open with
+    '---' on its own line, it is returned unchanged (no frontmatter to
+    strip).
+    """
+    lines = text.split("\n")
+    if not lines or lines[0].strip() != "---":
+        return text
+    for i in range(1, len(lines)):
+        if lines[i].strip() == "---":
+            return "\n".join(lines[i + 1:]).lstrip("\n")
+    return text  # opened with '---' but no closing delimiter — leave as-is
+
+
+def render_audit_mode(registry, repo_root, pattern_reference):
+    """Compose the Power's audit-mode steering file from two existing sources.
+
+    Ticket 02 originally pointed this at render_pattern_reference() alone,
+    which is wrong: that render is just the rules table and severity
+    weights, with no scoring method, no output format, and no authorship
+    disclaimer. Kiro's audit mode needs both halves that already exist
+    elsewhere, composed rather than hand-written, so a rule change or a
+    SKILL.md edit both still propagate with no manual step:
+
+      1. skills/antislop-audit/SKILL.md's body (frontmatter stripped) —
+         carries "Core rule", "How to run an audit", the output format, and
+         the "cannot prove AI authorship" disclaimer.
+      2. render_pattern_reference(registry, profile) — the same rendering
+         used for pattern-reference.md, appended below it.
+    """
+    skill_text = read_source_file(repo_root, "skills/antislop-audit/SKILL.md")
+    skill_body = strip_frontmatter(skill_text).rstrip("\n")
+    sections = [
+        "# Audit mode (generated)",
+        "",
+        "This file is generated from skills/antislop-audit/SKILL.md (body, "
+        "frontmatter stripped) and rules.json (pattern reference). Do not "
+        "edit directly.",
+        "",
+        "---",
+        "",
+        skill_body,
+        "",
+        "---",
+        "",
+        pattern_reference.rstrip("\n"),
+        "",
+    ]
+    return "\n".join(sections)
+
+
+def generate_all(registry, repo_root, profile="general"):
+    """Generate all artifacts for a given profile. Returns dict of relative path -> content.
+
+    repo_root anchors the verbatim-copy sources (and, for check_mode, the
+    committed outputs) so this does not depend on the process working
+    directory.
+    """
+    pattern_reference = render_pattern_reference(registry, profile)
     return {
-        "skills/antislop-audit/references/pattern-reference.md": render_pattern_reference(registry, profile),
+        "skills/antislop-audit/references/pattern-reference.md": pattern_reference,
+        "powers/antislop/steering/vocabulary.md": read_source_file(
+            repo_root, "skills/antislop/references/vocabulary.md"
+        ),
+        "powers/antislop/steering/structure-patterns.md": read_source_file(
+            repo_root, "skills/antislop/references/structure-patterns.md"
+        ),
+        "powers/antislop/steering/examples.md": read_source_file(
+            repo_root, "skills/antislop/references/examples.md"
+        ),
+        "powers/antislop/steering/audit-checklist.md": read_source_file(
+            repo_root, "skills/antislop/references/audit-checklist.md"
+        ),
+        "powers/antislop/steering/audit-mode.md": render_audit_mode(
+            registry, repo_root, pattern_reference
+        ),
     }
 
 
 def check_mode(registry, repo_root, profile="general"):
     """Compare generated output against committed files. Returns list of diffs."""
-    generated = generate_all(registry, profile)
+    generated = generate_all(registry, repo_root, profile)
     diffs = []
     for relpath, expected_content in generated.items():
         full_path = os.path.join(repo_root, relpath)
@@ -174,9 +268,9 @@ def check_mode(registry, repo_root, profile="general"):
     return diffs
 
 
-def write_mode(registry, output_dir, profile="general"):
+def write_mode(registry, repo_root, output_dir, profile="general"):
     """Write generated files to output directory."""
-    generated = generate_all(registry, profile)
+    generated = generate_all(registry, repo_root, profile)
     for relpath, content in generated.items():
         full_path = os.path.join(output_dir, relpath)
         os.makedirs(os.path.dirname(full_path), exist_ok=True)
@@ -222,8 +316,9 @@ def main():
               file=sys.stderr)
         sys.exit(2)
 
+    repo_root = os.path.dirname(os.path.abspath(args.registry))
+
     if args.check:
-        repo_root = os.path.dirname(os.path.abspath(args.registry))
         diffs = check_mode(registry, repo_root, args.profile)
         if diffs:
             print(f"\nFAILED — {len(diffs)} artifact(s) differ from generated:\n")
@@ -234,8 +329,8 @@ def main():
             print("ALL ARTIFACTS MATCH")
             sys.exit(0)
     elif args.output_dir:
-        write_mode(registry, args.output_dir, args.profile)
-        print(f"\nGenerated {len(generate_all(registry, args.profile))} file(s) to {args.output_dir}")
+        write_mode(registry, repo_root, args.output_dir, args.profile)
+        print(f"\nGenerated {len(generate_all(registry, repo_root, args.profile))} file(s) to {args.output_dir}")
     else:
         parser.print_help()
         sys.exit(0)

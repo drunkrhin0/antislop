@@ -17,7 +17,7 @@ Checks:
 
 Usage:
     python3 validate.py --skills-dir skills
-    python3 validate.py --skills-dir skills --expect-version 2.0.2
+    python3 validate.py --skills-dir skills --expect-version 2.0.3
     python3 validate.py --help
 
 Fixture files under tests/fixtures/ are named SKILL.md.fixture, not SKILL.md
@@ -30,6 +30,9 @@ import json
 import os
 import re
 import sys
+
+
+EMOJI_RE = re.compile(r"[\U0001F300-\U0001F9FF\U00002702-\U000027B0]")
 
 
 def parse_frontmatter(text):
@@ -87,9 +90,14 @@ def parse_frontmatter(text):
 
 def extract_version_from_body(text):
     """Extract **Version:** X.Y.Z from the body (after frontmatter)."""
-    # Skip frontmatter
-    parts = text.split("---", 2)
-    body = parts[2] if len(parts) >= 3 else text
+    lines = text.split("\n")
+    body_start = 0
+    if lines and lines[0].strip() == "---":
+        for i in range(1, len(lines)):
+            if lines[i].strip() == "---":
+                body_start = i + 1
+                break
+    body = "\n".join(lines[body_start:])
     m = re.search(r"\*\*Version:\*\*\s*([0-9][0-9a-z.\-]*)", body)
     return m.group(1) if m else None
 
@@ -151,9 +159,153 @@ def validate_skill_file(path):
     for i, line in enumerate(text.splitlines(), 1):
         if re.match(r"^#{1,6}\s", line):
             # Check for common emoji ranges
-            if re.search(r"[\U0001F300-\U0001F9FF\U00002702-\U000027B0]", line):
+            if EMOJI_RE.search(line):
                 errors.append(f"{relpath}: emoji in heading at line {i}")
 
+    return errors
+
+
+ALLOWED_POWER_KEYS = {"name", "displayName", "description", "keywords", "author"}
+BROAD_POWER_KEYWORDS = {"test", "api", "data", "help", "debug"}
+STEERING_MAP_HEADING = "## When to Load Steering Files"
+
+
+def parse_keyword_list(raw):
+    """Parse bracketed or comma-separated keyword values without PyYAML."""
+    if raw is None:
+        return []
+    if isinstance(raw, list):
+        return [str(value).strip() for value in raw]
+    value = raw.strip()
+    if value.startswith("[") and value.endswith("]"):
+        value = value[1:-1]
+    entries = []
+    current = []
+    quote = None
+    for char in value:
+        if char in ('"', "'"):
+            if quote == char:
+                quote = None
+            elif quote is None:
+                quote = char
+            else:
+                current.append(char)
+        elif char == "," and quote is None:
+            item = "".join(current).strip()
+            if item:
+                entries.append(item)
+            current = []
+        else:
+            current.append(char)
+    item = "".join(current).strip()
+    if item:
+        entries.append(item)
+    return [item.strip().strip('"').strip("'") for item in entries]
+
+
+def find_power_files(powers_dir):
+    """Find all POWER.md files under powers_dir."""
+    return sorted(
+        os.path.join(root, filename)
+        for root, _dirs, files in os.walk(powers_dir)
+        for filename in files
+        if filename == "POWER.md"
+    )
+
+
+def validate_power_file(path):
+    """Validate Kiro Power frontmatter, body, and steering map."""
+    errors = []
+    relpath = os.path.relpath(path)
+    with open(path) as f:
+        text = f.read()
+    fm = parse_frontmatter(text)
+
+    for key in ("name", "displayName", "description"):
+        if not fm.get(key):
+            errors.append(f"{relpath}: missing frontmatter '{key}:'")
+    for key in fm:
+        if key not in ALLOWED_POWER_KEYS:
+            errors.append(
+                f"{relpath}: frontmatter key '{key}' is not allowed in a Power "
+                "(only name, displayName, description, keywords, author)"
+            )
+
+    name = fm.get("name")
+    if name:
+        dirname = os.path.basename(os.path.dirname(os.path.abspath(path)))
+        if name != dirname:
+            errors.append(f"{relpath}: frontmatter name '{name}' does not match containing directory '{dirname}'")
+        if not re.match(r"^[a-z0-9]+(-[a-z0-9]+)*$", name):
+            errors.append(f"{relpath}: frontmatter name '{name}' is not lowercase kebab-case")
+
+    display_name = fm.get("displayName")
+    if display_name:
+        words = display_name.split()
+        if not 2 <= len(words) <= 5:
+            errors.append(f"{relpath}: displayName '{display_name}' must be 2 to 5 words")
+        if EMOJI_RE.search(display_name):
+            errors.append(f"{relpath}: displayName '{display_name}' contains an emoji")
+        minor_words = {"a", "an", "the", "and", "or", "for", "to", "of", "in", "on", "at", "with"}
+        title_tokens = [token for word in words for token in word.split("-")]
+        title_ok = True
+        for index, token in enumerate(title_tokens):
+            if token.lower() in minor_words and index > 0:
+                continue
+            if len(token) > 2 and token.isupper() or not token[:1].isupper():
+                title_ok = False
+                break
+        if not title_ok:
+            errors.append(f"{relpath}: displayName '{display_name}' is not Title Case")
+
+    description = fm.get("description")
+    if description:
+        sentences = [s for s in re.split(r"(?<=[.!?])\s+(?=[A-Z])", description.strip()) if s]
+        if len(sentences) > 3:
+            errors.append(f"{relpath}: description has {len(sentences)} sentences (must be 3 or fewer)")
+
+    keywords = parse_keyword_list(fm.get("keywords"))
+    if not 5 <= len(keywords) <= 7:
+        errors.append(f"{relpath}: keywords has {len(keywords)} entries (must be 5 to 7)")
+    for keyword in keywords:
+        if keyword.lower() in BROAD_POWER_KEYWORDS:
+            errors.append(f"{relpath}: keyword '{keyword}' is too broad (avoid test, api, data, help, debug)")
+
+    if extract_version_from_body(text) is None:
+        errors.append(f"{relpath}: missing '**Version:**' line in body")
+
+    if STEERING_MAP_HEADING not in text:
+        errors.append(f"{relpath}: missing '{STEERING_MAP_HEADING}' section")
+    else:
+        start = text.index(STEERING_MAP_HEADING) + len(STEERING_MAP_HEADING)
+        rest = text[start:]
+        next_heading = re.search(r"\n##\s", rest)
+        section = rest[: next_heading.start()] if next_heading else rest
+        referenced = set(re.findall(r"\*\*([\w.\-]+\.md)\*\*", section))
+        steering_dir = os.path.join(os.path.dirname(path), "steering")
+        actual = set(os.listdir(steering_dir)) if os.path.isdir(steering_dir) else set()
+        actual = {filename for filename in actual if filename.endswith(".md")}
+        for missing in sorted(referenced - actual):
+            errors.append(f"{relpath}: steering file '{missing}' is listed in '{STEERING_MAP_HEADING}' but does not exist under steering/")
+        for unlisted in sorted(actual - referenced):
+            errors.append(f"{relpath}: steering file '{unlisted}' exists under steering/ but is not listed in '{STEERING_MAP_HEADING}'")
+
+    license_heading = "## License and support"
+    if license_heading in text:
+        start = text.index(license_heading) + len(license_heading)
+        rest = text[start:]
+        next_heading = re.search(r"\n##\s", rest)
+        section = rest[: next_heading.start()] if next_heading else rest
+        requirements = {
+            "license": r"\b(?:MIT|Apache|BSD|GPL|ISC)\b|\blicen[cs]e\b",
+            "support contact": r"\bsupport\b|\bcontact\b|\bissue(?:s)?\b",
+            "privacy statement": r"\bprivacy\b|\btelemetry\b|\bcollects?\b|\bdata leaves\b",
+        }
+        for label, pattern in requirements.items():
+            if not re.search(pattern, section, re.IGNORECASE):
+                errors.append(f"{relpath}: license and support section missing {label}")
+    else:
+        errors.append(f"{relpath}: missing '{license_heading}' section")
     return errors
 
 
@@ -215,6 +367,16 @@ def check_expected_version(skills_dir, expected):
         ver = data.get("version")
         if ver and ver != expected:
             errors.append(f"{os.path.relpath(gemini_json)}: version={ver}, expected {expected}")
+
+    root = repo_root_for(skills_dir)
+    power_path = os.path.join(root, "powers", "antislop", "POWER.md")
+    if os.path.exists(power_path):
+        with open(power_path) as f:
+            power_version = extract_version_from_body(f.read())
+        if power_version and power_version != expected:
+            errors.append(f"{os.path.relpath(power_path)}: version={power_version}, expected {expected}")
+    else:
+        errors.append(f"{os.path.relpath(power_path)}: missing")
 
     return errors
 
@@ -295,6 +457,7 @@ def check_antithesis_consistency(skills_dir):
 EXTRA_ARTIFACTS = [
     os.path.join(".opencode", "agents", "antislop.md"),
     os.path.join("skills", "antislop", "GEMINI.md"),
+    os.path.join("powers", "antislop", "POWER.md"),
     "README.md",
 ]
 
@@ -418,6 +581,11 @@ def main():
         default=None,
         help="Require all artifacts to be at this version (e.g. 1.8.0)",
     )
+    parser.add_argument(
+        "--powers-dir",
+        default="powers",
+        help="Path to Kiro Powers directory (default: powers)",
+    )
     args = parser.parse_args()
 
     skills_dir = args.skills_dir
@@ -431,6 +599,9 @@ def main():
     skill_files = find_skill_files(skills_dir)
     for path in skill_files:
         all_errors.extend(validate_skill_file(path))
+
+    for path in find_power_files(args.powers_dir):
+        all_errors.extend(validate_power_file(path))
 
     # Cross-file checks
     all_errors.extend(check_cross_file_versions(skills_dir))

@@ -2,13 +2,13 @@
 name: antislop
 description: Universal writing style that suppresses detectable AI writing patterns. Apply whenever writing, editing, or reviewing any prose — emails, blog posts, reports, social content, technical writing, sales materials. Trigger any time the user asks to write, rewrite, edit, polish, or review text of any kind.
 metadata:
-  version: "2.0.2"
+  version: "2.0.3"
 ---
 
 # Antislop Writing Style
 
-**Version:** 2.0.2  
-**Purpose:** Suppress detectable AI writing patterns across all content types.  
+**Version:** 2.0.3
+**Purpose:** Suppress detectable AI writing patterns across all content types.
 **Sources:**
 - [blader/humanizer](https://github.com/blader/humanizer) (MIT) — 29-pattern taxonomy grounded in Wikipedia's Signs of AI Writing
 - [jalaalrd/anti-ai-slop-writing](https://github.com/jalaalrd/anti-ai-slop-writing) (MIT) — banned word/phrase lists, structural pattern rules
@@ -81,7 +81,7 @@ Read [references/structure-patterns.md](references/structure-patterns.md) for th
 
 **Title Case Headings** → sentence case.
 
-**Emojis in prose** → remove.  
+**Emojis in prose** → remove.
 **Emoji as bullet markers** (✅, 👉, 🔥, 💡 prefixed to list items) → convert to plain bullets or prose.
 
 **Compound-modifier hyphenation** — hyphenate before the noun ("well-known author", "long-term plan"). Open after the noun or linking verb ("The author is well known", "The plan is long term"). Never hyphenate -ly adverb compounds ("highly qualified", not "highly-qualified"). Watch for reflexive ever- compounds ("ever-changing", "ever-growing"). Keep hyphens where they prevent ambiguity or the term is conventionally hyphenated ("state-of-the-art", "cost-effective").

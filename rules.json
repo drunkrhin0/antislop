@@ -1,5 +1,5 @@
 {
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "Canonical rule registry for Antislop writing rules. Source of truth for all generated artifacts.",
   "base_weights": {
     "high": 8,

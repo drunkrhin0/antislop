@@ -8,7 +8,7 @@ Specs and implementation tickets live under `.scratch/<feature-slug>/`. See `doc
 
 ### Triage labels
 
-Local tickets use the default Matt Pocock triage roles. See `docs/agents/triage-labels.md`.
+Local tickets use the labels configured on this repo's Forgejo instance, not the default Matt Pocock set. See `docs/agents/triage-labels.md` for the live list.
 
 ### Domain docs
 
@@ -30,7 +30,7 @@ bash check.sh
 python3 -m unittest discover -s tests
 
 # Structural invariants only
-python3 validate.py --skills-dir skills --expect-version 2.0.2
+python3 validate.py --skills-dir skills --expect-version 2.0.3
 
 # Committed artifacts match the registry
 python3 generate.py --check
@@ -51,6 +51,11 @@ cp .opencode/agents/antislop.md ~/.config/opencode/agents/
 # Test the Claude Code plugin
 claude plugin validate .claude-plugin/plugin.json
 claude --plugin-dir .
+
+# Point Kiro at the Power: Powers panel -> Add Custom Power -> Import power from a folder -> absolute path to powers/antislop
+
+# Kiro skills, manual path
+cp -r skills/antislop skills/antislop-audit ~/.kiro/skills/
 ```
 
 To test repo changes in an agent conversation, copy the updated `SKILL.md` into the agent's skills directory and restart.
@@ -67,7 +72,7 @@ This works with Claude.ai, ChatGPT, Cursor, Windsurf, Zed, or any tool that acce
 
 ## Key architecture decisions
 
-**`rules.json` is the canonical source, not any single SKILL.md.** `generate.py` renders `pattern-reference.md` from it deterministically; `score.py` scores against it directly. `skills/antislop/GEMINI.md` and `.opencode/agents/antislop.md` are hand-maintained derivatives, not generated — when adding a rule, update those alongside the registry. `validate.py` enforces version consistency across all eleven version-bearing files (see Conventions below), not just four — that was the 1.x-era check.
+**`rules.json` is the canonical source, not any single SKILL.md.** `generate.py` renders `pattern-reference.md` from it deterministically; `score.py` scores against it directly. `skills/antislop/GEMINI.md` and `.opencode/agents/antislop.md` are hand-maintained derivatives, not generated — when adding a rule, update those alongside the registry. `validate.py` enforces version consistency across all twelve version-bearing files (see Conventions below), not just four — that was the 1.x-era check.
 
 **Structure section is grouped by level.** Sentence-level, Paragraph-level, Discourse-level. This came from the realization that 25+ flat bullet points were unparseable under context pressure. Place new rules in the right sub-group.
 
@@ -81,16 +86,18 @@ This works with Claude.ai, ChatGPT, Cursor, Windsurf, Zed, or any tool that acce
 
 **Agent file is a hand-maintained derivative.** `.opencode/agents/antislop.md` combines style and audit rules with subagent-specific framing, like GEMINI.md. It has its own two-mode structure and subagent context. When adding a rule, update the agent file alongside the other derivatives.
 
+**The Kiro Power is generated, not hand-synced.** `powers/antislop/POWER.md` is hand-written, like GEMINI.md and the opencode agent file, since its always-on core is a curation decision rather than something `rules.json` can render. Its five `steering/*.md` files are different: `generate.py` renders them and `generate.py --check` verifies them byte for byte. GEMINI.md and the opencode agent file each carry a "when adding a rule, update this too" cost. The Power's steering files carry the opposite cost: a rule addition in `rules.json` propagates to Kiro with no manual step. See `docs/adr/0003-kiro-power-generated-not-hand-synced.md`.
+
 ## Conventions
 
 - Sentence case headings everywhere — no Title Case
 - Skill files stay under 500 lines (current: 154 / 383 / 163)
-- Version bumps touch eleven files: `metadata.version` and inline `**Version:**` in each SKILL.md, `gemini-extension.json`, `GEMINI.md`, `.opencode/agents/antislop.md`, `rules.json`, both `lint-skills.yml` workflows, the production assertion in `tests/test_validate.py`, and `.claude-plugin/plugin.json`. Nothing checks the plugin manifest automatically, so it drifts silently. `pattern-reference.md` is generated, so regenerate rather than edit it. Verify with `python3 validate.py --skills-dir skills --expect-version <new>` and `bash check.sh`. Test fixtures keep their deliberately wrong versions.
+- Version bumps touch twelve files: `metadata.version` and inline `**Version:**` in each SKILL.md, `gemini-extension.json`, `GEMINI.md`, `.opencode/agents/antislop.md`, `powers/antislop/POWER.md`, `rules.json`, both `lint-skills.yml` workflows, the production assertion in `tests/test_validate.py`, and `.claude-plugin/plugin.json`. Nothing checks the plugin manifest automatically, so it drifts silently. `pattern-reference.md` is generated, so regenerate rather than edit it. Verify with `python3 validate.py --skills-dir skills --expect-version <new>` and `bash check.sh`. Test fixtures keep their deliberately wrong versions.
 - README follows antislop rules itself: zero em-dashes, no banned vocabulary
 - Forgejo is the primary CI. Workflows live in `.forgejo/workflows/`. GitHub is a mirror only.
 - When to Use / When NOT to Use sections are mandatory — the lint CI fails without them
 - Agent file (`.opencode/agents/antislop.md`) is a derivative synced alongside GEMINI.md and antislop-audit/SKILL.md
-- `.claude-plugin/marketplace.json` self-hosts the plugin (`claude plugin marketplace add <repo-url>`). It carries no version field of its own, so it's not part of the eleven-file version-bump list, but its `plugins[].description` should stay in sync with `plugin.json`'s `description` by hand.
+- `.claude-plugin/marketplace.json` self-hosts the plugin (`claude plugin marketplace add <repo-url>`). It carries no version field of its own, so it's not part of the twelve-file version-bump list, but its `plugins[].description` should stay in sync with `plugin.json`'s `description` by hand.
 
 ## Known gotchas
 
