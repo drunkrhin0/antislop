@@ -34,7 +34,8 @@ This installs to `~/.claude/skills/` so the skills are available across all proj
 
 Just ask your agent to install `drunkrhin0/antislop` from GitHub. Most will figure it out. The repo includes an `AGENTS.md` file for automatic skill discovery.
 
-### Claude Code plugin
+<details>
+<summary>Claude Code</summary>
 
 The repo ships a `.claude-plugin/plugin.json` manifest, so it loads as a Claude Code plugin straight from a local clone. No copying files into `~/.claude/skills/` first.
 
@@ -43,67 +44,82 @@ git clone https://github.com/drunkrhin0/antislop.git
 claude --plugin-dir ./antislop
 ```
 
-Claude Code finds `skills/antislop/SKILL.md` and `skills/antislop-audit/SKILL.md` under the default `skills/` scan, so the manifest does not need to list them one by one. Once loaded, the skills sit under the `antislop` namespace, for example `/antislop:antislop-audit`.
+Claude Code finds `skills/antislop/SKILL.md` and `skills/antislop-audit/SKILL.md` under the default `skills/` scan. Once loaded, the skills sit under the `antislop` namespace — `/antislop:antislop-audit`.
 
-Run `claude plugin validate .claude-plugin/plugin.json` to check the manifest before you rely on it. The repo also ships a `.claude-plugin/marketplace.json`, so pointing `validate` at the bare repo root validates the marketplace file instead. Pass the manifest path explicitly to check the plugin.
+Run `claude plugin validate .claude-plugin/plugin.json` to check the manifest. The repo also ships a `.claude-plugin/marketplace.json` (pass the manifest path explicitly when validating).
 
-The repo also self-hosts its own marketplace, so you can install without a local clone:
+Self-hosted marketplace install, no local clone needed:
 
 ```bash
 claude plugin marketplace add https://git.drunkrhin0.au/drunkrhin0/antislop.git
 claude plugin install antislop@drunkrhin0
 ```
 
-Not listed on Anthropic's community marketplace (that submission is a separate, manual step), but self-hosted install works today.
+Not listed on Anthropic's community marketplace — that submission is a separate, manual step.
 
-### Kiro
+</details>
 
-AWS Kiro reads antislop content two separate ways: a Power for the IDE and Web app, and the skills directly through Kiro's own skills support.
+<details>
+<summary>Kiro</summary>
 
-**Powers panel, local folder.** In Kiro, open the Powers panel (the lightning bolt icon), choose Add Custom Power, then Import power from a folder, and point it at the absolute path to `powers/antislop` in your clone. This is the path that can be checked directly against the files in this repo. It has not been run against a real Kiro install on this machine, so treat the result as unverified until someone tries it.
+**Power (IDE and Web app).** Open the Powers panel (lightning bolt icon), Add Custom Power → Import power from a folder, point it at the absolute path to `powers/antislop` in your clone. The Power handles both writing style (ambient) and audit mode (on demand — ask for a score, grade, or violations list).
 
-**GitHub URL, intended path, untested.** The plan is to install straight from a subdirectory URL:
+**Workspace skills.** `.kiro/skills/antislop` and `.kiro/skills/antislop-audit` are relative symlinks into `skills/`. Clone the repo and open it as a Kiro workspace — both skills are available with no copying.
 
+**Manual, `~/.kiro/skills/`.** Required for Kiro CLI users (there is no `kiro-cli powers` subcommand):
+
+```bash
+cp -r skills/antislop skills/antislop-audit ~/.kiro/skills/
 ```
-https://github.com/drunkrhin0/antislop/tree/main/powers/antislop
-```
 
-Kiro's install docs say subdirectory URLs work. The official `kirodotdev/powers` repo puts each power at the top level of its own repository, for example `neon/POWER.md`. This repo nests the power one level deeper, at `powers/antislop/POWER.md`, so whether Kiro's importer follows that extra level is unconfirmed. The GitHub mirror is also behind and does not carry this work yet, so the URL above installs nothing today. Both the nesting question and the mirror push need to clear before this path is real.
+Not listed on Kiro's power registry yet. Submission at https://kiro.dev/powers/submit/ is a separate, manual step.
 
-**Workspace skills.** `.kiro/skills/antislop` and `.kiro/skills/antislop-audit` are relative symlinks into `skills/`. Cloning the repo and opening it as a Kiro workspace gives you both skills with no copying.
+</details>
 
-**Manual, `~/.kiro/skills/`.** Powers are IDE and Web only. `kiro-cli` has no `powers` subcommand, so this is the path for Kiro CLI users. See the row in the manual-install table below.
+<details>
+<summary>Gemini</summary>
 
-Not listed on Kiro's power registry (submission at https://kiro.dev/powers/submit/ is a separate, manual step, same as the Anthropic community marketplace above). Unlike the Claude Code plugin, no Kiro install path here has been confirmed working: the folder import has not been run, and the GitHub URL waits on the mirror push and on confirming that Kiro's importer follows the subdirectory nesting.
-
-### Gemini web app (gemini.google.com)
-
-Requires Gemini Advanced. Create a Gem:
+**Web app (gemini.google.com).** Requires Gemini Advanced. Create a Gem:
 
 1. Left sidebar → **Gem manager** → **New Gem**
 2. Name it "Antislop"
 3. Paste the contents of `skills/antislop/GEMINI.md` into the instructions field
 4. Save and use that Gem for writing
 
-Free tier: paste `skills/antislop/GEMINI.md` at the start of any chat instead.
+Free tier: paste `skills/antislop/GEMINI.md` at the start of any chat.
 
-### Agent (subagent)
+**CLI.** Copy the extension into `~/.gemini/extensions/`:
 
-A spawnable subagent with two modes: style (writing) and audit (scoring). Lives in `.opencode/agents/antislop.md` in the repo. The agent file format is opencode-specific, but the rules content works as a system prompt in any LLM.
+```bash
+mkdir -p ~/.gemini/extensions/antislop
+cp skills/antislop/gemini-extension.json skills/antislop/GEMINI.md ~/.gemini/extensions/antislop/
+```
 
-Project-level use works automatically when the repo is cloned. opencode discovers `.opencode/agents/` in project directories. For global install, copy the agent file:
+Gemini CLI picks up the extension automatically on next launch.
+
+</details>
+
+<details>
+<summary>opencode (agent)</summary>
+
+A spawnable subagent with two modes: style (writing) and audit (scoring). Lives in `.opencode/agents/antislop.md`.
+
+Project-level use works automatically when the repo is cloned — opencode discovers `.opencode/agents/` in project directories. For global install:
 
 ```bash
 cp .opencode/agents/antislop.md ~/.config/opencode/agents/
 ```
 
-Mention `@antislop` in opencode, or let the primary agent spawn it automatically when it detects a writing or auditing task. The agent is read-only: it returns corrected text or audit results, and the primary agent or user writes files.
+Mention `@antislop` in opencode, or let the primary agent spawn it automatically when it detects a writing or auditing task. The agent is read-only: it returns corrected text or audit results; the primary agent or user writes files.
 
-The agent is a hand-maintained derivative of the canonical SKILL.md files, like GEMINI.md. When adding a rule, update the agent file alongside the other derivatives.
+The agent file format is opencode-specific, but the rules content works as a system prompt in any LLM.
 
-### Manual
+</details>
 
-Copy skill files straight into your agent's directory. No plugin system, no CLI install step.
+<details>
+<summary>Manual install</summary>
+
+Copy skill files straight into your agent's directory:
 
 | Agent | Target directory | What to copy |
 |---|---|---|
@@ -124,7 +140,7 @@ cp skills/antislop/gemini-extension.json skills/antislop/GEMINI.md ~/.gemini/ext
 cp -r skills/antislop skills/antislop-audit ~/.kiro/skills/
 ```
 
-Gemini CLI picks up the extension automatically on next launch.
+</details>
 
 ---
 
