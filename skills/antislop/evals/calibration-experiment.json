@@ -1,0 +1,29 @@
+{
+  "schema": "calibration-experiment-1",
+  "fixture_revision": "antislop-calibration-1",
+  "fixture_path": "calibration-fixtures.json",
+  "registry": "rules.json",
+  "score_direction": "higher_is_better",
+  "baseline": {
+    "name": "antislop-3.0.0",
+    "kind": "antislop-score",
+    "registry": "rules.json",
+    "categories": null
+  },
+  "candidate": {
+    "name": "antislop-forbidden-only",
+    "kind": "antislop-score",
+    "registry": "rules.json",
+    "categories": ["forbidden"]
+  },
+  "holdout_ids": ["calibration-detection-structural-holdout"],
+  "expected_fixture_hash": "aeaf15e50d60c2caf7140420ea664e122ae5db8b88b5c0ac49ea06a8bf7be3e5",
+  "fail_on_false_positive_regression": false,
+  "fail_on_recall_regression": false,
+  "fail_on_preservation_regression": false,
+  "max_false_positive_rate": null,
+  "max_recall_regression": null,
+  "max_preservation_failures": null,
+  "max_mae": null,
+  "note": "Production self-run: the baseline is the full 3.0.0 scorer and the candidate is a forbidden-only detector set, so the report surfaces per-category recall regressions on mechanism and structural instead of hiding them behind one average. Gate flags stay off for the production corpus; the fail-on false-positive, recall, and preservation paths are proven in tests/test_calibration.py."
+}

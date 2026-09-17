@@ -1,0 +1,60 @@
+{
+  "cases": [
+    {
+      "id": "direct-promotional-copy",
+      "text": "Send invoices in two clicks. Export every record as CSV.",
+      "expected_rule_ids": []
+    },
+    {
+      "id": "marketing-phrase-cluster",
+      "text": "A beacon of progress, nestled within a plethora of options, the product can unleash a myriad of results and boasts a simple setup.",
+      "expected_rule_ids": [
+        "marketing-beacon-of",
+        "marketing-boasts",
+        "marketing-myriad-of",
+        "marketing-nestled",
+        "marketing-plethora-of",
+        "marketing-unleash"
+      ]
+    },
+    {
+      "id": "inherited-general-rule",
+      "text": "Our guide will delve into invoice exports. The dashboard boasts a searchable record of every payment.",
+      "expected_rule_ids": ["marketing-boasts", "vocab-delve"]
+    },
+    {
+      "id": "multiple-phrase-variants",
+      "text": "The first lodge is nestled in the valley. The second is nestled within the old town. One boasts a pool, and the other boasts an outdoor cinema.",
+      "expected_rule_ids": ["marketing-boasts", "marketing-nestled"],
+      "expected_counts": {
+        "marketing-boasts": 2,
+        "marketing-nestled": 2
+      }
+    },
+    {
+      "id": "ready-to-closer",
+      "text": "The trial takes two minutes to configure. Ready to start?",
+      "expected_rule_ids": ["marketing-rhetorical-closer"]
+    },
+    {
+      "id": "want-to-closer",
+      "text": "The trial takes two minutes to configure. Want to get started?",
+      "expected_rule_ids": ["marketing-rhetorical-closer"]
+    },
+    {
+      "id": "are-you-ready-closer",
+      "text": "The trial takes two minutes to configure. Are you ready to begin?",
+      "expected_rule_ids": ["marketing-rhetorical-closer"]
+    },
+    {
+      "id": "ordinary-product-question",
+      "text": "The trial takes two minutes to configure. Does it support CSV export?",
+      "expected_rule_ids": []
+    },
+    {
+      "id": "phrase-boundaries",
+      "text": "The museum's beacon offered pilots a reference point. Its myriad office records were archived alongside notes about a building nestled withinin the district and a report that boasts anarchy as its subject.",
+      "expected_rule_ids": []
+    }
+  ]
+}

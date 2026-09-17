@@ -1,0 +1,327 @@
+{
+  "skill_name": "antislop-say-human",
+  "schema": "say-human-fixtures-1",
+  "evals": [
+    {
+      "id": "say-human-evidence-source",
+      "kind": "label",
+      "source": "The cache evicts entries after they expire.",
+      "claim": "The cache evicts entries after they expire.",
+      "expected_evidence": "source",
+      "false_positive_rationale": "A claim present verbatim in the supplied source text is evidence class source.",
+      "reviewer_notes": "One claim in the source evidence class."
+    },
+    {
+      "id": "say-human-evidence-logic",
+      "kind": "label",
+      "source": "The worker lost its lease. The queue backed up.",
+      "claim": "The queue backed up because the worker lost its lease.",
+      "expected_evidence": "logic",
+      "false_positive_rationale": "A causal claim not stated verbatim in the source follows by logic from the supplied material.",
+      "reviewer_notes": "One claim in the logic evidence class."
+    },
+    {
+      "id": "say-human-evidence-experience",
+      "kind": "label",
+      "source": "The deploy was slow.",
+      "claim": "In my experience, the deploy was slow.",
+      "expected_evidence": "experience",
+      "false_positive_rationale": "A first-person experiential claim is evidence class experience.",
+      "reviewer_notes": "One claim in the experience evidence class."
+    },
+    {
+      "id": "say-human-evidence-inference",
+      "kind": "label",
+      "source": "Three of ten hosts fail.",
+      "claim": "The error likely affects more hosts.",
+      "expected_evidence": "inference",
+      "false_positive_rationale": "A hedged claim not stated in the source is evidence class inference.",
+      "reviewer_notes": "One claim in the inference evidence class."
+    },
+    {
+      "id": "say-human-evidence-unknown",
+      "kind": "label",
+      "source": "The fix shipped.",
+      "claim": "The fix doubled throughput.",
+      "expected_evidence": "unknown",
+      "false_positive_rationale": "A claim with no basis in the source and no experience, logic, or inference markers is evidence class unknown.",
+      "reviewer_notes": "One claim in the unknown evidence class."
+    },
+    {
+      "id": "say-human-repair-required-unknown-stops",
+      "kind": "repair",
+      "source": "We utilize the API to fetch records.",
+      "required_claims": ["It doubles throughput."],
+      "expected_decision": "needs-source",
+      "expected_needs_source": ["It doubles throughput."],
+      "expected_text": "We utilize the API to fetch records.",
+      "false_positive_rationale": "Required evidence is unknown, so rewriting stops and a source is requested.",
+      "reviewer_notes": "Acceptance: required unknown evidence stops rewriting and requests a source."
+    },
+    {
+      "id": "say-human-repair-required-known-proceeds",
+      "kind": "repair",
+      "source": "We utilize the API to fetch records. The new endpoint doubles throughput.",
+      "required_claims": ["The new endpoint doubles throughput."],
+      "expected_decision": "applied",
+      "expected_evidence": {
+        "We utilize the API to fetch records.": "source",
+        "The new endpoint doubles throughput.": "source"
+      },
+      "expected_replacement_evidence": [
+        ["vocab-utilize", "source"]
+      ],
+      "expected_text": "We use the API to fetch records. The new endpoint doubles throughput.",
+      "false_positive_rationale": "The required claim is present in the supplied source, so its evidence is known and the repair proceeds.",
+      "reviewer_notes": "Every fact-dependent repair exposes its evidence class."
+    },
+    {
+      "id": "say-human-repair-protected-technical-spans",
+      "kind": "repair",
+      "source": "We utilize the API. Run `fetch(123)` against https://example.com/api/v1 and check get_user_by_id with 30 items.",
+      "expected_decision": "applied",
+      "expected_preserved": [
+        "`fetch(123)`",
+        "https://example.com/api/v1",
+        "get_user_by_id",
+        "30"
+      ],
+      "expected_text": "We use the API. Run `fetch(123)` against https://example.com/api/v1 and check get_user_by_id with 30 items.",
+      "false_positive_rationale": "Inline code, URLs, API names, and numbers survive byte for byte while the prose repair applies.",
+      "reviewer_notes": "Acceptance: protected technical spans survive byte for byte."
+    },
+    {
+      "id": "say-human-repair-voice-trait-preserved",
+      "kind": "repair",
+      "source": "We utilize the API, kinda. It works.",
+      "voice_traits": ["kinda"],
+      "expected_decision": "applied",
+      "expected_preserved": ["kinda"],
+      "expected_text": "We use the API, kinda. It works.",
+      "false_positive_rationale": "A supplied informal voice trait stays unchanged and no new slang is added.",
+      "reviewer_notes": "Evaluation fixture: a supplied informal voice trait remains unchanged without adding new slang."
+    },
+    {
+      "id": "say-human-repair-mixed-chinese-technical-spans",
+      "kind": "repair",
+      "source": "系统启动时间缩短了。We utilize the API. 调用 `fetchRecords` 和 https://example.com/api/v1 共 30 次。",
+      "locale": "zh-CN",
+      "expected_decision": "applied",
+      "expected_preserved": [
+        "`fetchRecords`",
+        "https://example.com/api/v1",
+        "30"
+      ],
+      "expected_text": "系统启动时间缩短了。We use the API. 调用 `fetchRecords` 和 https://example.com/api/v1 共 30 次。",
+      "false_positive_rationale": "Mixed Chinese prose with inline code, a URL, an API identifier, and a number survives byte for byte under the zh-CN locale.",
+      "reviewer_notes": "Evaluation fixture: mixed Chinese prose, inline code, URL, API identifier, and number."
+    },
+    {
+      "id": "say-human-repair-release-note-unsupported-claim",
+      "kind": "repair",
+      "source": "Added a retry queue. It now supports WebSockets.",
+      "venue": "release-note",
+      "supplied_changes": ["Added a retry queue."],
+      "expected_decision": "needs-source",
+      "expected_needs_source": ["It now supports WebSockets."],
+      "expected_venue_statuses": {
+        "change-evidence": "missing"
+      },
+      "false_positive_rationale": "A release note must use only supplied change evidence; the unsupported WebSockets feature claim requests a source.",
+      "reviewer_notes": "Evaluation fixture: a release note with an unsupported feature claim."
+    },
+    {
+      "id": "say-human-repair-release-note-grounded",
+      "kind": "repair",
+      "source": "Added a retry queue.",
+      "venue": "release-note",
+      "supplied_changes": ["Added a retry queue."],
+      "expected_decision": "no-change",
+      "expected_venue_statuses": {
+        "change-evidence": "keep"
+      },
+      "false_positive_rationale": "Every release-note claim is grounded in the supplied change evidence.",
+      "reviewer_notes": "Acceptance: release-note output uses only supplied change evidence."
+    },
+    {
+      "id": "say-human-repair-large-deletion-refused",
+      "kind": "repair",
+      "source": "The API returns records. Here is my reasoning: this is a very long internal planning trace that should be removed entirely from the output.",
+      "expected_decision": "needs-authority",
+      "expected_text": "The API returns records. Here is my reasoning: this is a very long internal planning trace that should be removed entirely from the output.",
+      "false_positive_rationale": "A large deletion is refused without explicit edit authority and a visible diff is reported.",
+      "reviewer_notes": "Acceptance: large deletions require explicit edit authority and a visible diff."
+    },
+    {
+      "id": "say-human-repair-large-deletion-authorized",
+      "kind": "repair",
+      "source": "The API returns records. Here is my reasoning: this is a very long internal planning trace that should be removed entirely from the output.",
+      "authorize_delete": true,
+      "expected_decision": "applied",
+      "expected_preserved": ["The API returns records."],
+      "false_positive_rationale": "With explicit edit authority the large deletion applies and the diff is visible.",
+      "reviewer_notes": "Acceptance: authorized large deletions apply with a visible diff."
+    },
+    {
+      "id": "say-human-repair-technical-documentation-routing",
+      "kind": "repair",
+      "source": "Run `fetch --all` and call get_user_by_id(7) against https://example.com/api. We utilize the API.",
+      "venue": "technical-documentation",
+      "expected_decision": "applied",
+      "expected_preserved": [
+        "`fetch --all`",
+        "get_user_by_id(7)",
+        "https://example.com/api"
+      ],
+      "expected_venue_statuses": {
+        "technical-spans": "keep",
+        "claim-grounding": "keep"
+      },
+      "false_positive_rationale": "Technical documentation preserves its technical spans byte for byte.",
+      "reviewer_notes": "Venue routing: technical documentation to a distinct fixture."
+    },
+    {
+      "id": "say-human-repair-marketing-voice-routing",
+      "kind": "repair",
+      "source": "We utilize the API. kinda reliable.",
+      "venue": "marketing",
+      "voice_traits": ["kinda"],
+      "expected_decision": "applied",
+      "expected_venue_statuses": {
+        "voice-trait": "keep",
+        "no-invention": "keep"
+      },
+      "false_positive_rationale": "Marketing prose keeps the supplied informal voice trait and adds no invented slang.",
+      "reviewer_notes": "Venue routing: marketing to a distinct fixture."
+    },
+    {
+      "id": "say-human-repair-presentation-numbers-routing",
+      "kind": "repair",
+      "source": "Throughput improved 3x. We utilize the API with 12 retries.",
+      "venue": "presentation",
+      "expected_decision": "applied",
+      "expected_preserved": ["3x", "12"],
+      "expected_venue_statuses": {
+        "numbers-preserved": "keep",
+        "claim-grounding": "keep"
+      },
+      "false_positive_rationale": "Presentation prose preserves its exact numbers.",
+      "reviewer_notes": "Venue routing: presentations to a distinct fixture."
+    },
+    {
+      "id": "say-human-repair-social-voice-routing",
+      "kind": "repair",
+      "source": "We utilize the API. kinda works for me.",
+      "venue": "social",
+      "voice_traits": ["kinda"],
+      "expected_decision": "applied",
+      "expected_venue_statuses": {
+        "voice-trait": "keep",
+        "no-invention": "keep"
+      },
+      "false_positive_rationale": "Social prose keeps the supplied informal voice trait and adds no invented experience.",
+      "reviewer_notes": "Venue routing: social prose to a distinct fixture."
+    },
+    {
+      "id": "say-human-locale-zh-punct-width",
+      "kind": "locale",
+      "source": "他说:你好,世界。",
+      "locale": "zh-CN",
+      "expected_active": true,
+      "expected_findings": ["zh-cn-punct-width"],
+      "false_positive_rationale": "Half-width punctuation adjacent to Han is a punctuation-width finding under zh-CN.",
+      "reviewer_notes": "Positive fixture: half-width punctuation."
+    },
+    {
+      "id": "say-human-locale-zh-punct-width-fullwidth-clean",
+      "kind": "locale",
+      "source": "他说：你好，世界。",
+      "locale": "zh-CN",
+      "expected_active": true,
+      "expected_clean": ["zh-cn-punct-width"],
+      "false_positive_rationale": "Full-width punctuation in Chinese prose is clean.",
+      "reviewer_notes": "False-positive fixture: full-width punctuation."
+    },
+    {
+      "id": "say-human-locale-zh-code-url-protected",
+      "kind": "locale",
+      "source": "运行 `fetch(123)` 请求 https://example.com/api/v1 接口。",
+      "locale": "zh-CN",
+      "expected_active": true,
+      "expected_clean": ["zh-cn-punct-width", "zh-cn-spacing"],
+      "false_positive_rationale": "Half-width characters inside inline code and URLs are protected spans and never fire.",
+      "reviewer_notes": "False-positive fixture: code and URLs protected."
+    },
+    {
+      "id": "say-human-locale-zh-spacing",
+      "kind": "locale",
+      "source": "使用Python开发",
+      "locale": "zh-CN",
+      "expected_active": true,
+      "expected_findings": ["zh-cn-spacing"],
+      "false_positive_rationale": "A missing Chinese-Western space between Han and Latin text is a spacing finding.",
+      "reviewer_notes": "Positive fixture: missing Chinese-Western spacing."
+    },
+    {
+      "id": "say-human-locale-zh-spacing-clean",
+      "kind": "locale",
+      "source": "使用 Python 开发",
+      "locale": "zh-CN",
+      "expected_active": true,
+      "expected_clean": ["zh-cn-spacing"],
+      "false_positive_rationale": "Correctly spaced Chinese-Western text is clean.",
+      "reviewer_notes": "False-positive fixture: proper spacing."
+    },
+    {
+      "id": "say-human-locale-zh-translationese",
+      "kind": "locale",
+      "source": "他被大家所熟知",
+      "locale": "zh-CN",
+      "expected_active": true,
+      "expected_findings": ["zh-cn-translationese"],
+      "false_positive_rationale": "A high-confidence translationese pattern fires under zh-CN.",
+      "reviewer_notes": "Positive fixture: translationese pattern."
+    },
+    {
+      "id": "say-human-locale-zh-translationese-clean",
+      "kind": "locale",
+      "source": "我们修复了缓存问题。现在启动很快。",
+      "locale": "zh-CN",
+      "expected_active": true,
+      "expected_clean": ["zh-cn-translationese"],
+      "false_positive_rationale": "Idiomatic Chinese without the high-confidence translationese patterns is clean.",
+      "reviewer_notes": "False-positive fixture: idiomatic Chinese."
+    },
+    {
+      "id": "say-human-locale-auto-routed",
+      "kind": "locale",
+      "source": "系统启动时间缩短了。我们很高兴。",
+      "locale": "",
+      "expected_active": true,
+      "expected_clean": ["zh-cn-punct-width", "zh-cn-spacing", "zh-cn-translationese"],
+      "false_positive_rationale": "Han-dominant text is reliably routed to zh-CN even without an explicit selection.",
+      "reviewer_notes": "Acceptance: zh-CN rules activate when reliably routed."
+    },
+    {
+      "id": "say-human-locale-not-routed",
+      "kind": "locale",
+      "source": "This is purely English prose with no Chinese characters at all.",
+      "locale": "",
+      "expected_active": false,
+      "expected_clean": ["zh-cn-punct-width", "zh-cn-spacing", "zh-cn-translationese"],
+      "false_positive_rationale": "English prose is not routed to zh-CN, so no locale rule fires.",
+      "reviewer_notes": "Acceptance: zh-CN rules activate only when selected or reliably routed."
+    },
+    {
+      "id": "say-human-locale-mixed-script",
+      "kind": "locale",
+      "source": "使用Python开发接口,速度很快。",
+      "locale": "zh-CN",
+      "expected_active": true,
+      "expected_findings": ["zh-cn-punct-width", "zh-cn-spacing"],
+      "expected_clean": ["zh-cn-translationese"],
+      "false_positive_rationale": "Mixed-script prose fires the punctuation-width and spacing rules while staying clean on translationese.",
+      "reviewer_notes": "Acceptance: Chinese punctuation fixtures include mixed-script cases."
+    }
+  ]
+}

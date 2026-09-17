@@ -1,0 +1,86 @@
+{
+  "skill_name": "antislop-drift",
+  "schema": "false-positive-corpus-1",
+  "evals": [
+    {
+      "id": "fp-technical-term",
+      "category": "technical_term",
+      "profile": "technical",
+      "source": "The model reports statistical significance for the financial leverage ratio.",
+      "candidate": "The model reports statistical significance for the financial leverage ratio.",
+      "expected_action": "leave_alone",
+      "why_keep": "Precise domain terms under the technical profile are not targets; correcting them would destroy the meaning.",
+      "required_terms": ["financial leverage ratio", "statistical significance"],
+      "forbidden_additions": ["streamline", "cutting-edge"]
+    },
+    {
+      "id": "fp-literal-metaphor",
+      "category": "literal_metaphor",
+      "source": "The database is the bottleneck for every query in the batch.",
+      "candidate": "The database is the bottleneck for every query in the batch.",
+      "expected_action": "leave_alone",
+      "why_keep": "The bottleneck metaphor is literal: the database really is the constraint. No correction is warranted.",
+      "required_terms": ["bottleneck"],
+      "forbidden_additions": ["throughput challenge", "optimize"]
+    },
+    {
+      "id": "fp-necessary-repetition",
+      "category": "necessary_repetition",
+      "source": "Fail closed on any unauthenticated request, and fail closed on any request without a valid lease.",
+      "candidate": "Fail closed on any unauthenticated request, and fail closed on any request without a valid lease.",
+      "expected_action": "leave_alone",
+      "why_keep": "Repeating the boundary is the point; removing the repetition would lose the emphasis.",
+      "required_terms": ["fail closed"],
+      "forbidden_additions": ["streamline", "best practice"]
+    },
+    {
+      "id": "fp-formal-register",
+      "category": "formal_register",
+      "source": "The committee has determined that the policy shall apply to all contractors and shall be reviewed on an annual basis.",
+      "candidate": "The committee has determined that the policy shall apply to all contractors and shall be reviewed on an annual basis.",
+      "expected_action": "leave_alone",
+      "why_keep": "Formal policy prose is legitimate register; rewriting it into casual voice would change the document's authority.",
+      "required_terms": ["shall apply"],
+      "forbidden_additions": ["friendly", "streamlined"]
+    },
+    {
+      "id": "fp-quotation",
+      "category": "quotation",
+      "source": "The customer wrote: \"This platform is a game-changer for our team.\"",
+      "candidate": "The customer wrote: \"This platform is a game-changer for our team.\"",
+      "expected_action": "leave_alone",
+      "why_keep": "Quoted material is reported speech, not the author's wording; the phrase inside the quotation is not a target.",
+      "required_terms": ["game-changer"],
+      "forbidden_additions": ["transformation", "delight"]
+    },
+    {
+      "id": "fp-author-supplied",
+      "category": "author_supplied",
+      "source": "Our approved messaging keeps the name \"Always On\" for the support tier, and the marketing team insists we keep it.",
+      "candidate": "Our approved messaging keeps the name \"Always On\" for the support tier, and the marketing team insists we keep it.",
+      "expected_action": "leave_alone",
+      "why_keep": "Author-supplied naming, not filler; changing it would discard deliberate phrasing.",
+      "required_terms": ["Always On"],
+      "forbidden_additions": ["uptime promise", "seamless"]
+    },
+    {
+      "id": "fp-light-copyedit-scope",
+      "category": "formal_register",
+      "source": "The policy applies to vendors, contractors, and auditors, only.",
+      "candidate": "The policy applies to vendors, contractors, and auditors only.",
+      "expected_action": "light_copyedit",
+      "why_keep": "Only the comma needs removal; the scope of the policy stays unchanged.",
+      "required_terms": ["auditors"],
+      "forbidden_additions": ["streamlined", "stakeholders", "comprehensive"]
+    },
+    {
+      "id": "fp-light-copyedit-abbreviation",
+      "category": "necessary_repetition",
+      "source": "The dashboard is slow after 4 p.m, not all day.",
+      "candidate": "The dashboard is slow after 4 p.m., not all day.",
+      "expected_action": "light_copyedit",
+      "why_keep": "Abbreviation punctuation is enough; the scope phrase not all day must stay.",
+      "forbidden_additions": ["performance challenges", "proactive"]
+    }
+  ]
+}

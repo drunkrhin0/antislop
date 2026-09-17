@@ -1,0 +1,3 @@
+{"jsonrpc":"2.0","id":1,"method":"tools/list"}
+{"jsonrpc":"2.0","id":2,"method":"tools/call","params":{"name":"prepare_rewrite","arguments":{"text":"The release finished on Friday.","voice":"blunt","context":"investor-email","mechanics":"british"}}}
+{"jsonrpc":"2.0","id":3,"method":"tools/call","params":{"name":"validate_rewrite","arguments":{"source_text":"The release finished on Friday.","candidate_text":"The release landed Friday."}}}

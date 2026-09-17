@@ -1,0 +1,106 @@
+{
+  "skill_name": "antislop-repair",
+  "schema": "repair-fixtures-1",
+  "evals": [
+    {
+      "id": "repair-markdown-prose-and-protected-regions",
+      "source": "# Deployment notes\n\nWe utilize the deployment checklist below.\n\n```python\ndef probe(url):\n    return url + \"/health\"\n```\n\nInstall with `pip install antislop` and see https://example.com/docs.\n\n| Metric | Value |\n|--------|-------|\n| utilize rate | 40 ms |\n| error rate | 0.5% |\n\n> The worker \"utilize\" retried the job.\n",
+      "expected_decision": "accept",
+      "expected_replacement_count": 1,
+      "expected_replacements": [
+        {"rule_id": "vocab-utilize", "action": "replace"}
+      ],
+      "expected_unresolved": ["vocab-utilize"],
+      "expected_preserved": [
+        "heading", "code_block", "quoted", "url", "table", "blockquote"
+      ],
+      "expected_text": "# Deployment notes\n\nWe use the deployment checklist below.\n\n```python\ndef probe(url):\n    return url + \"/health\"\n```\n\nInstall with `pip install antislop` and see https://example.com/docs.\n\n| Metric | Value |\n|--------|-------|\n| utilize rate | 40 ms |\n| error rate | 0.5% |\n\n> The worker \"utilize\" retried the job.\n",
+      "false_positive_rationale": "Prose inside a Markdown file is repaired while every protected region (heading, code fence, inline code, URL, table, and quoted blockquote) stays byte-identical; the ban hits only the prose occurrence.",
+      "reviewer_notes": "The same banned word inside a table and a quote is left untouched and recorded unresolved."
+    },
+    {
+      "id": "repair-exact-phrase-one-replacement",
+      "source": "We utilize the API to fetch records.",
+      "expected_decision": "accept",
+      "expected_replacement_count": 1,
+      "expected_replacements": [
+        {"rule_id": "vocab-utilize", "action": "replace"}
+      ],
+      "expected_text": "We use the API to fetch records.",
+      "false_positive_rationale": "A deterministic forbidden rule with a literal correction records exactly one replacement with its rule ID, span, original, and replacement.",
+      "reviewer_notes": "One recorded replacement, preservation passed."
+    },
+    {
+      "id": "repair-structural-split-retains-clauses",
+      "source": "The batch job stalled, the queue filled up, and the retry loop doubled the load, but the worker eventually recovered.",
+      "expected_decision": "accept",
+      "expected_replacement_count": 1,
+      "expected_replacements": [
+        {"rule_id": "struct-overlong-sentence", "action": "split"}
+      ],
+      "expected_text": "The batch job stalled, the queue filled up, and the retry loop doubled the load. But the worker eventually recovered.",
+      "false_positive_rationale": "The one supported deterministic structural case splits an overlong sentence at a comma-preceded conjunction, keeping both clauses and the conjunction so their punctuation meaning survives the fidelity gate.",
+      "reviewer_notes": "Structural repair fires only for this supported deterministic case."
+    },
+    {
+      "id": "repair-proposed-number-change-fails",
+      "source": "The fix cut deploy time to 40 minutes.",
+      "proposed_edits": [
+        {"start": 27, "end": 29, "replacement": "50"}
+      ],
+      "expected_decision": "reject",
+      "false_positive_rationale": "A proposed repair that changes a protected number fails the preservation gate: the write is prevented and the run returns a nonzero status.",
+      "reviewer_notes": "Number-changing attempt rejected end to end."
+    },
+    {
+      "id": "repair-proposed-qualifier-change-fails",
+      "source": "The call completes in about 40 ms.",
+      "proposed_edits": [
+        {"start": 22, "end": 27, "replacement": "roughly"}
+      ],
+      "expected_decision": "reject",
+      "false_positive_rationale": "A proposed repair that changes a scope qualifier fails the preservation gate; the attempt is never written.",
+      "reviewer_notes": "Qualifier-changing attempt rejected."
+    },
+    {
+      "id": "repair-leaked-reasoning-outside-removed-inside-kept",
+      "source": "Let me think about this step by step. We utilize the API. He said, \"Let me think about this step by step.\"",
+      "expected_decision": "accept",
+      "expected_integrity_removed": 1,
+      "expected_integrity_kept": 1,
+      "expected_text": "We use the API. He said, \"Let me think about this step by step.\"",
+      "false_positive_rationale": "Leaked reasoning or planning wrappers are integrity findings; the wrapper outside a quote is removed while the identical words inside a quote are protected and kept.",
+      "reviewer_notes": "Outside removed, inside a quote byte-identical."
+    },
+    {
+      "id": "repair-technical-profile-keeps-domain-terms",
+      "profile": "technical",
+      "source": "The service is robust and significant.",
+      "expected_decision": "no-change",
+      "expected_replacement_count": 0,
+      "false_positive_rationale": "Contextual terms like robust and significant are literal domain vocabulary under the technical profile; they are not active rules there and are never rewritten.",
+      "reviewer_notes": "Technical profile proves literal domain terms stay untouched."
+    },
+    {
+      "id": "repair-general-profile-rewrites-domain-terms",
+      "profile": "general",
+      "source": "The service is robust.",
+      "expected_decision": "accept",
+      "expected_replacement_count": 1,
+      "expected_replacements": [
+        {"rule_id": "vocab-robust", "action": "replace"}
+      ],
+      "expected_text": "The service is reliable.",
+      "false_positive_rationale": "The same term that is a literal domain term under the technical profile is a banned word under the general profile and is repaired there.",
+      "reviewer_notes": "Profile gate proven by the same term in two profiles."
+    },
+    {
+      "id": "repair-clean-prose-no-change",
+      "source": "The worker lost its lease and the queue drained the backlog overnight.",
+      "expected_decision": "no-change",
+      "expected_replacement_count": 0,
+      "false_positive_rationale": "Clean prose produces no repair and no second change; the interface never invents work.",
+      "reviewer_notes": "No-change is the terminal state for clean input."
+    }
+  ]
+}

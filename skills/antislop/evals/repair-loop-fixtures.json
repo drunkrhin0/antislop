@@ -1,0 +1,172 @@
+{
+  "skill_name": "antislop-repair-loop",
+  "schema": "repair-loop-fixtures-1",
+  "evals": [
+    {
+      "id": "repair-loop-one-phrase-first-attempt",
+      "source": "We utilize the API to fetch records.",
+      "expected_decision": "accept",
+      "expected_attempt_count": 1,
+      "expected_retry_count": 0,
+      "expected_replaced_rule_ids": ["vocab-utilize"],
+      "expected_text": "We use the API to fetch records.",
+      "false_positive_rationale": "A single named phrase finding is detected, its smallest source span selected, the registered correction applied, the finding verified gone, and the fidelity gate passed on the first attempt.",
+      "reviewer_notes": "The per-attempt trace names the input finding, selected span, correction ID, output finding, fidelity result, and accept decision."
+    },
+    {
+      "id": "repair-loop-two-independent-findings",
+      "source": "We utilize the API and then leverage the SDK.",
+      "expected_decision": "accept",
+      "expected_attempt_count": 1,
+      "expected_retry_count": 0,
+      "expected_replaced_rule_ids": ["vocab-utilize", "vocab-leverage"],
+      "expected_unchanged_text": "the API and then",
+      "expected_text": "We use the API and then use the SDK.",
+      "false_positive_rationale": "Two independent findings are repaired in one attempt by two span-exact corrections; the paragraph between the spans is never sent through broad rewriting and stays byte-identical.",
+      "reviewer_notes": "Between-span text untouched proves unaffected spans are not rewritten."
+    },
+    {
+      "id": "repair-loop-retry-once",
+      "source": "We utilize the staging API and we utilize the SDK.",
+      "attempt_corrections": [
+        [
+          {"rule_id": "vocab-utilize", "start": 3, "end": 10, "replacement": "use", "correction_id": "registry:vocab-utilize:first"}
+        ],
+        [
+          {"rule_id": "vocab-utilize", "replacement": "use"}
+        ]
+      ],
+      "expected_decision": "accept",
+      "expected_attempt_count": 2,
+      "expected_retry_count": 1,
+      "expected_replaced_rule_ids": ["vocab-utilize"],
+      "expected_text": "We use the staging API and we use the SDK.",
+      "false_positive_rationale": "The first correction leaves its target finding (the second occurrence) in place, fidelity still passes, so the loop retries; the second attempt clears the named finding and is accepted.",
+      "reviewer_notes": "Retry occurred only because the target finding remained and fidelity still passed; the second attempt used the registered correction."
+    },
+    {
+      "id": "repair-loop-quantity-change-rolls-back",
+      "source": "The fix cut deploy time to 40 minutes.",
+      "attempt_corrections": [
+        [
+          {"rule_id": "proposed", "start": 27, "end": 29, "replacement": "50"}
+        ]
+      ],
+      "expected_decision": "rollback",
+      "expected_attempt_count": 1,
+      "expected_rollback": true,
+      "false_positive_rationale": "A correction that changes a protected quantity fails the fidelity gate; the loop rolls back immediately and returns the source unchanged.",
+      "reviewer_notes": "Quantity change rolled back end to end; rollback.applied is true and text equals the source."
+    },
+    {
+      "id": "repair-loop-date-change-rolls-back",
+      "source": "Ships on 2024-01-15.",
+      "attempt_corrections": [
+        [
+          {"rule_id": "proposed", "start": 9, "end": 19, "replacement": "2025-06-01"}
+        ]
+      ],
+      "expected_decision": "rollback",
+      "expected_attempt_count": 1,
+      "expected_rollback": true,
+      "false_positive_rationale": "A correction that changes a protected date fails the fidelity gate; the loop rolls back immediately.",
+      "reviewer_notes": "Date change rolled back."
+    },
+    {
+      "id": "repair-loop-name-change-rolls-back",
+      "source": "According to NIST, the standard requires encryption.",
+      "attempt_corrections": [
+        [
+          {"rule_id": "proposed", "start": 13, "end": 17, "replacement": "IETF"}
+        ]
+      ],
+      "expected_decision": "rollback",
+      "expected_attempt_count": 1,
+      "expected_rollback": true,
+      "false_positive_rationale": "A correction that changes a named actor reaches the named human-review state in the fidelity gate; the loop treats that as a fidelity failure and rolls back immediately rather than guessing.",
+      "reviewer_notes": "Name and attribution change rolled back through the fidelity review state."
+    },
+    {
+      "id": "repair-loop-quote-change-rolls-back",
+      "source": "He said, \"ship it\".",
+      "attempt_corrections": [
+        [
+          {"rule_id": "proposed", "start": 9, "end": 18, "replacement": "\"ship it now\""}
+        ]
+      ],
+      "expected_decision": "rollback",
+      "expected_attempt_count": 1,
+      "expected_rollback": true,
+      "false_positive_rationale": "A correction that changes quoted source text fails the fidelity gate; the loop rolls back immediately.",
+      "reviewer_notes": "Quoted span change rolled back."
+    },
+    {
+      "id": "repair-loop-technical-term-change-rolls-back",
+      "source": "The service is SOC 2 compliant.",
+      "required_terms": ["SOC 2"],
+      "attempt_corrections": [
+        [
+          {"rule_id": "proposed", "start": 15, "end": 20, "replacement": "ISO"}
+        ]
+      ],
+      "expected_decision": "rollback",
+      "expected_attempt_count": 1,
+      "expected_rollback": true,
+      "false_positive_rationale": "A correction that changes a required technical term fails the fidelity gate; the loop rolls back immediately and never rewrites literal domain terminology.",
+      "reviewer_notes": "Technical term change rolled back through the required-term protected span."
+    },
+    {
+      "id": "repair-loop-retries-exhausted-rolls-back",
+      "source": "We utilize the API.",
+      "attempt_corrections": [
+        [
+          {"rule_id": "vocab-utilize", "replacement": "Utilize"}
+        ],
+        [
+          {"rule_id": "vocab-utilize", "replacement": "Utilize"}
+        ]
+      ],
+      "expected_decision": "rollback",
+      "expected_attempt_count": 2,
+      "expected_retry_count": 1,
+      "expected_rollback": true,
+      "false_positive_rationale": "When every bounded attempt leaves its target finding and fidelity still passes, the retry budget is exhausted and the loop rolls back to the source instead of continuing.",
+      "reviewer_notes": "The retry count is strictly bounded and the rollback returns the source byte-identical."
+    },
+    {
+      "id": "repair-loop-budget-bounded-rolls-back",
+      "source": "We utilize the API to fetch records.",
+      "char_budget": 2,
+      "expected_decision": "rollback",
+      "expected_attempt_count": 1,
+      "expected_rollback": true,
+      "expected_budget_exceeded": true,
+      "false_positive_rationale": "The changed-character budget is a strict loop bound; an attempt whose cumulative change exceeds it rolls back immediately.",
+      "reviewer_notes": "budget_exceeded is true and the report carries the budget."
+    },
+    {
+      "id": "repair-loop-clean-no-op",
+      "source": "The worker lost its lease and the queue drained the backlog overnight.",
+      "expected_decision": "no-change",
+      "expected_attempt_count": 0,
+      "expected_retry_count": 0,
+      "expected_rollback": false,
+      "false_positive_rationale": "Clean text returns a no-op trace: no attempts, no corrections, zero changed characters, and the source returned unchanged.",
+      "reviewer_notes": "The loop leaves already clean text unchanged."
+    },
+    {
+      "id": "repair-loop-no-adapter-translation-network",
+      "source": "We utilize the API.",
+      "expected_decision": "accept",
+      "expected_attempt_count": 1,
+      "expected_execution": {
+        "detector_adapter": false,
+        "translation_step": false,
+        "network_call": false,
+        "model_call": false
+      },
+      "false_positive_rationale": "The trace proves the loop ran no detector adapter, no translation step, no model call, and no network call; corrections came from the local deterministic registry.",
+      "reviewer_notes": "execution section is part of every trace, clean or repaired."
+    }
+  ]
+}

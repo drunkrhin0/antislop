@@ -1,0 +1,263 @@
+{
+  "skill_name": "antislop-clarity-review",
+  "schema": "clarity-review-fixtures-1",
+  "evals": [
+    {
+      "id": "review-clean-prose-no-finding",
+      "medium": "argument",
+      "source": "We switched from VMs to containers three years ago. It cut our deploy time by 40% and eliminated half our infrastructure headaches. We spent six months fixing our logging and monitoring first.",
+      "expected_decision": "no-finding",
+      "expected_statuses": {},
+      "false_positive_rationale": "Clean prose with an evidenced claim produces no finding; the system never invents work.",
+      "reviewer_notes": "The same text scores clean and reviews as no-finding."
+    },
+    {
+      "id": "review-ask-author-missing-example",
+      "medium": "argument",
+      "source": "The launch had some problems. A customer once reported an incident, and we fixed things quickly. This taught us to prepare better.",
+      "expected_decision": "ask-author",
+      "expected_statuses": {
+        "struct-specificity-theater": "ask-author",
+        "struct-empty-declaratives": "ask-author"
+      },
+      "expected_author_questions": [
+        "[TK: which subject? what happened",
+        "[TK: what specifically changed or matters, and to whom?"
+      ],
+      "no_invention": true,
+      "false_positive_rationale": "A draft that needs an author-owned example gets targeted questions, never invented incident details.",
+      "reviewer_notes": "Specific-looking vagueness and an empty lesson become [TK] questions."
+    },
+    {
+      "id": "review-mechanism-importance-unsupported",
+      "medium": "argument",
+      "source": "This change is crucial for our team.",
+      "expected_decision": "ask-author",
+      "expected_statuses": {
+        "mechanism-importance": "ask-author"
+      },
+      "expected_author_questions": [
+        "[TK: what is the mechanism, and what evidence supports this significance?]"
+      ],
+      "false_positive_rationale": "An importance claim with no mechanism, actor, result, or limit nearby is unsupported significance and asks the author.",
+      "reviewer_notes": "Importance without mechanism."
+    },
+    {
+      "id": "review-mechanism-importance-evidenced",
+      "medium": "argument",
+      "source": "This change is crucial: it cut deploy time from 40 minutes to 4, and the caching layer did most of the work.",
+      "expected_decision": "keep",
+      "expected_statuses": {
+        "mechanism-importance": "keep"
+      },
+      "false_positive_rationale": "The same claim with the mechanism and measured result named beside it is an evidenced consequence, not a finding.",
+      "reviewer_notes": "Evidenced consequence distinguishes from unsupported significance."
+    },
+    {
+      "id": "review-mechanism-causality-unsupported",
+      "medium": "argument",
+      "source": "Frequent refactoring causes significantly more bugs.",
+      "expected_decision": "ask-author",
+      "expected_statuses": {
+        "mechanism-causality": "ask-author"
+      },
+      "expected_author_questions": [
+        "[TK: what is the cause, and what measured result supports it?]"
+      ],
+      "false_positive_rationale": "A causal claim without a named cause, result, or number is unsupported and asks the author.",
+      "reviewer_notes": "Causality without mechanism."
+    },
+    {
+      "id": "review-mechanism-causality-evidenced",
+      "medium": "argument",
+      "source": "Frequent refactoring caused 37% more bugs across our 14-service codebase.",
+      "expected_decision": "keep",
+      "expected_statuses": {
+        "mechanism-causality": "keep"
+      },
+      "false_positive_rationale": "The causal claim with a measured result beside it is an evidenced consequence.",
+      "reviewer_notes": "Evidenced causal consequence."
+    },
+    {
+      "id": "review-mechanism-superiority-unsupported",
+      "medium": "argument",
+      "source": "Our solution is the best.",
+      "expected_decision": "ask-author",
+      "expected_statuses": {
+        "mechanism-superiority": "ask-author"
+      },
+      "expected_author_questions": [
+        "[TK: what is the basis of comparison or the measured result?]"
+      ],
+      "false_positive_rationale": "A superiority claim with no basis of comparison asks the author for it.",
+      "reviewer_notes": "Superiority without basis."
+    },
+    {
+      "id": "review-mechanism-superiority-evidenced",
+      "medium": "argument",
+      "source": "Our solution ranked best across all 40 runs of the load test.",
+      "expected_decision": "keep",
+      "expected_statuses": {
+        "mechanism-superiority": "keep"
+      },
+      "false_positive_rationale": "The superiority claim with a measured basis beside it is an evidenced consequence.",
+      "reviewer_notes": "Evidenced superiority basis."
+    },
+    {
+      "id": "review-medium-reference-restated-heading-earned",
+      "medium": "reference",
+      "source": "## Retry limits\n\nThe default retry limit is 3.\n\n## Timeout\n\nThe default timeout is 30 seconds.",
+      "expected_decision": "keep",
+      "expected_statuses": {
+        "struct-fragmented-headers": "keep"
+      },
+      "false_positive_rationale": "A reference page earns predictable heading-plus-first-line pairs; the same structure is a feature, not a defect.",
+      "reviewer_notes": "Same restated-heading structure reviewed under reference earns keep."
+    },
+    {
+      "id": "review-medium-argument-restated-heading-defect",
+      "medium": "argument",
+      "source": "## Retry limits\n\nThe default retry limit is 3.\n\n## Timeout\n\nThe default timeout is 30 seconds.",
+      "expected_decision": "revise",
+      "expected_statuses": {
+        "struct-fragmented-headers": "revise"
+      },
+      "false_positive_rationale": "The identical structure under argument routing is a defect: a heading restated by its first line weakens the argument.",
+      "reviewer_notes": "Same structure as the reference fixture, opposite status by medium."
+    },
+    {
+      "id": "review-medium-evocation-balanced-sentence-earned",
+      "medium": "evocation",
+      "source": "At dusk, the blue pigment almost disappears. Step sideways and the silver ground catches the room's light, returning the river a piece at a time.",
+      "expected_decision": "no-finding",
+      "expected_statuses": {},
+      "false_positive_rationale": "An evocative passage owes concrete imagery and a feeling, not a thesis or supporting data; balanced clauses serving the effect are not findings.",
+      "reviewer_notes": "Museum-label evocation reviewed without demanding evidence."
+    },
+    {
+      "id": "review-medium-reference-balanced-sentence-earned",
+      "medium": "reference",
+      "source": "The API is not a database; it is a query layer over the stored events.",
+      "expected_decision": "no-finding",
+      "expected_statuses": {},
+      "false_positive_rationale": "A definitional contrast in a reference entry is load-bearing and neutral, not decorative antithesis.",
+      "reviewer_notes": "Same balanced two-part structure is earned in a reference page too."
+    },
+    {
+      "id": "review-medium-evocation-significance-earned",
+      "medium": "evocation",
+      "source": "The pigment's loss is crucial: at dusk it vanishes, and the silver ground returns the river a piece at a time.",
+      "expected_decision": "keep",
+      "expected_statuses": {
+        "mechanism-importance": "keep"
+      },
+      "false_positive_rationale": "Significance language that concrete imagery earns is kept in an evocation; the same sentence under argument would ask the author.",
+      "reviewer_notes": "Medium routing modulates structural expectations, never absolute bans."
+    },
+    {
+      "id": "review-voice-sample-style-only",
+      "medium": "argument",
+      "source": "Logs deserve a second read before you trust a deploy. Errors hide in the tail of the output.",
+      "voice_sample": "I remember the 2021 outage at 2am. We lost the lease and paid for it.",
+      "sample_facts": [
+        "I remember the 2021 outage",
+        "We lost the lease"
+      ],
+      "expected_decision": "no-finding",
+      "expected_statuses": {},
+      "false_positive_rationale": "A voice sample contributes style only; when no personal fact migrates into the draft, the review is clean.",
+      "reviewer_notes": "Voice sample transfers cadence, not biography."
+    },
+    {
+      "id": "review-voice-sample-leak-flagged",
+      "medium": "argument",
+      "source": "Logs deserve a second read. I remember the 2021 outage at 2am, and we lost the lease.",
+      "voice_sample": "I remember the 2021 outage at 2am. We lost the lease and paid for it.",
+      "sample_facts": [
+        "I remember the 2021 outage",
+        "We lost the lease"
+      ],
+      "expected_decision": "revise",
+      "expected_statuses": {
+        "evaluation-voice-sample": "revise"
+      },
+      "false_positive_rationale": "Personal facts from the voice sample must not migrate into the draft; the review flags them for replacement.",
+      "reviewer_notes": "Sample biography leaking into the target is caught."
+    },
+    {
+      "id": "review-em-dash-absolute-everywhere",
+      "medium": "evocation",
+      "source": "The blue pigment almost disappears — the silver ground catches it.",
+      "expected_decision": "revise",
+      "expected_statuses": {
+        "fmt-em-dash": "revise"
+      },
+      "false_positive_rationale": "The zero-em-dash rule is absolute and applies in every medium, including an evocation.",
+      "reviewer_notes": "Medium routing never weakens the em-dash ban."
+    },
+    {
+      "id": "review-tk-never-invented",
+      "medium": "argument",
+      "source": "A package once caused a security problem, and we improved our process.",
+      "expected_decision": "ask-author",
+      "expected_statuses": {
+        "struct-specificity-theater": "ask-author"
+      },
+      "expected_author_questions": [
+        "[TK: which subject? what happened"
+      ],
+      "no_invention": true,
+      "false_positive_rationale": "The vague example becomes a targeted [TK] question; the review never invents the package, the incident, or the outcome.",
+      "reviewer_notes": "[TK] markers stay questions; generated facts are forbidden."
+    },
+    {
+      "id": "review-cut-ceremony",
+      "medium": "argument",
+      "source": "In conclusion, it's worth noting that I hope this helps!",
+      "expected_decision": "cut",
+      "expected_statuses": {
+        "phrase-in-conclusion": "cut",
+        "phrase-worth-noting": "cut",
+        "chatbot-hope-helps": "cut"
+      },
+      "false_positive_rationale": "A passage that adds only ceremony, throat-clearing, and a chatbot sign-off is cut, not revised.",
+      "reviewer_notes": "Ceremony-only passage resolves to cut."
+    },
+    {
+      "id": "review-medium-guide-predictable-steps",
+      "medium": "guide",
+      "source": "## Rotate the key\n\n1. Create the replacement key.\n2. Deploy it to staging.\n3. Verify one signed request.\n4. Revoke the old key.\n\n> Warning: Revoke only after step 3.",
+      "expected_decision": "no-finding",
+      "expected_statuses": {},
+      "false_positive_rationale": "A guide owes correct steps, conditions, and warnings, not essay-like variation; the numbered procedure and warning are expected.",
+      "reviewer_notes": "Procedural structure is a feature in a guide."
+    },
+    {
+      "id": "review-medium-message-request-and-deadline",
+      "medium": "message",
+      "source": "Could you approve the accessibility copy by Thursday at 2 p.m.? We need it before Friday's release candidate.",
+      "expected_decision": "no-finding",
+      "expected_statuses": {},
+      "false_positive_rationale": "A message leads with the request and the deadline; the register stays plain and the ask stays visible.",
+      "reviewer_notes": "Message reviewed for request, decision, and next action."
+    },
+    {
+      "id": "review-medium-explanation-named-mechanism",
+      "medium": "explanation",
+      "source": "The lease expires, the worker cannot renew it, and the queue loses the item.",
+      "expected_decision": "no-finding",
+      "expected_statuses": {},
+      "false_positive_rationale": "An explanation owes an accurate mechanism at the reader's level; the causal chain is present and named.",
+      "reviewer_notes": "Explanation with the mechanism supplied."
+    },
+    {
+      "id": "review-medium-narrative-scene-earned",
+      "medium": "narrative",
+      "source": "The worker died at 2am, its lease expired, and the queue fell silent.",
+      "expected_decision": "no-finding",
+      "expected_statuses": {},
+      "false_positive_rationale": "Narrative causality that carries scene and consequence is earned; no unsupported mechanism is claimed.",
+      "reviewer_notes": "Narrative reviewed without demanding evidence."
+    }
+  ]
+}

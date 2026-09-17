@@ -1,0 +1,267 @@
+{
+  "skill_name": "antislop-density-precision",
+  "schema": "density-precision-fixtures-1",
+  "evals": [
+    {
+      "id": "density-one-legitimate-term",
+      "medium": "argument",
+      "source": "We utilize the API for the retry path.",
+      "expected_density_count": 0,
+      "expected_decision": "revise",
+      "expected_statuses": {
+        "vocab-utilize": "revise"
+      },
+      "expected_absent_rules": [
+        "struct-passage-density"
+      ],
+      "false_positive_rationale": "A single flagged term is isolated legitimate use and never reaches the three-distinct-term cluster threshold.",
+      "reviewer_notes": "One term, no density finding."
+    },
+    {
+      "id": "density-two-separated-terms",
+      "medium": "argument",
+      "source": "We leverage synergy for the new build. The build pipeline compiles each commit and runs the test suite before promoting the artifact. The deployment system writes a manifest, verifies the checksum, and notifies the on-call engineer when the rollout finishes. Monitoring aggregates the metrics and pages the owner when latency exceeds the configured budget. The cache stores recent results so repeated queries return quickly without touching the database again. Operators rotate credentials on a schedule and record the rotation in the audit log. The nightly job cleans expired sessions and compacts the history table. Alert routing checks the recipient list once per shift and deduplicates pages by incident. The metrics endpoint returns counts for the last hour and the week before it. Then we delve into the details.",
+      "expected_density_count": 0,
+      "expected_decision": "revise",
+      "expected_statuses": {
+        "vocab-leverage": "revise",
+        "vocab-synergy": "revise",
+        "vocab-delve": "revise"
+      },
+      "expected_absent_rules": [
+        "struct-passage-density"
+      ],
+      "false_positive_rationale": "Two flagged terms are separated by more than the documented passage window, so no window ever holds three distinct flagged terms.",
+      "reviewer_notes": "Separated terms fall in different windows."
+    },
+    {
+      "id": "density-three-clustered-terms",
+      "medium": "argument",
+      "source": "We leverage synergy to unlock value.",
+      "expected_density_count": 1,
+      "expected_density_rule_ids": [
+        "vocab-leverage",
+        "vocab-synergy",
+        "vocab-unlock"
+      ],
+      "expected_decision": "revise",
+      "expected_statuses": {
+        "struct-passage-density": "revise"
+      },
+      "expected_present_rules": [
+        "struct-passage-density"
+      ],
+      "false_positive_rationale": "Three distinct flagged terms inside one passage window trigger a density finding that names the contributing rule IDs.",
+      "reviewer_notes": "The cluster reports its contributing rules."
+    },
+    {
+      "id": "precision-unsupported-exact-statistic",
+      "medium": "argument",
+      "source": "75% of organizations fail within a year.",
+      "expected_precision_count": 1,
+      "expected_decision": "ask-author",
+      "expected_statuses": {
+        "struct-unsourced-precision": "ask-author"
+      },
+      "expected_author_questions": [
+        "[TK: what is the source for this figure?]"
+      ],
+      "expected_unsourced_statistics": [
+        "75%"
+      ],
+      "false_positive_rationale": "An exact percentage with no nearby source, supplied fact, estimate, or technical framing asks the author for the source; the number is never declared false.",
+      "reviewer_notes": "Unsupported exact statistic becomes an ask-author question."
+    },
+    {
+      "id": "precision-sourced-statistic",
+      "medium": "argument",
+      "source": "According to a 2024 survey, 75% of organizations fail within a year.",
+      "expected_precision_count": 0,
+      "expected_decision": "no-finding",
+      "expected_exempt_statistics": [
+        "75%"
+      ],
+      "false_positive_rationale": "A nearby citation and attribution mark the statistic sourced, so the same figure produces a clean fixture.",
+      "reviewer_notes": "Nearby source exempts the exact statistic."
+    },
+    {
+      "id": "precision-supplied-fact",
+      "medium": "argument",
+      "source": "Our audit of 40 applications found 75% had default credentials.",
+      "expected_precision_count": 0,
+      "expected_decision": "no-finding",
+      "expected_exempt_statistics": [
+        "40 applications",
+        "75%"
+      ],
+      "false_positive_rationale": "An author-owned measurement ('our audit ... found') marks both figures as supplied facts, never unsourced precision.",
+      "reviewer_notes": "Supplied facts are exempt even though they are exact."
+    },
+    {
+      "id": "precision-estimated-statistic",
+      "medium": "argument",
+      "source": "Roughly 75% of organizations fail within a year.",
+      "expected_precision_count": 0,
+      "expected_decision": "no-finding",
+      "expected_exempt_statistics": [
+        "75%"
+      ],
+      "false_positive_rationale": "An estimate marker immediately before the figure marks it approximate, so the exact-statistic finding does not apply.",
+      "reviewer_notes": "Estimates are not exact unsourced precision."
+    },
+    {
+      "id": "precision-technical-constant",
+      "medium": "reference",
+      "source": "The SLA guarantees 99.99% availability, and the standard allows 0.1% packet loss on the transit link.",
+      "expected_precision_count": 0,
+      "expected_decision": "no-finding",
+      "expected_exempt_statistics": [
+        "0.1%",
+        "99.99%"
+      ],
+      "false_positive_rationale": "Technical-spec framing (SLA, standard) marks the percentages as constants of a standard, not unsourced evidence claims.",
+      "reviewer_notes": "Technical constants are exempt."
+    },
+    {
+      "id": "rather-than-decorative",
+      "medium": "argument",
+      "source": "We write for clarity rather than for effect.",
+      "expected_decision": "revise",
+      "expected_statuses": {
+        "struct-rather-than": "revise"
+      },
+      "expected_present_rules": [
+        "struct-rather-than"
+      ],
+      "false_positive_rationale": "A contrast that manages tone with no choice-framing verb and no measured result is decorative antithesis.",
+      "reviewer_notes": "Decorative comparison is a revise finding."
+    },
+    {
+      "id": "rather-than-load-bearing",
+      "medium": "argument",
+      "source": "We use an in-memory retry queue rather than re-reading the database on every attempt.",
+      "expected_decision": "no-finding",
+      "expected_absent_rules": [
+        "struct-rather-than"
+      ],
+      "false_positive_rationale": "The comparison frames a real choice between concrete options (use ... rather than), so it is load-bearing and produces no finding.",
+      "reviewer_notes": "Load-bearing comparison stays clean."
+    },
+    {
+      "id": "heading-functional-hierarchy",
+      "medium": "reference",
+      "source": "# Deployment notes\n\n## Setup\n\n### Configuration\n\n## Rollback\n\nThe prior image is restored by the last action in the runbook.",
+      "expected_decision": "no-finding",
+      "expected_absent_rules": [
+        "struct-heading-hierarchy"
+      ],
+      "false_positive_rationale": "A contiguous H1 to H2 to H3 ladder, then an ascent back to H2, is a functional technical hierarchy and stays clean.",
+      "reviewer_notes": "Intentional accessibility and technical ladders are preserved."
+    },
+    {
+      "id": "heading-anomalous-hierarchy",
+      "medium": "reference",
+      "source": "# Deployment notes\n\n### Setup\n\nThe installer runs the agent binary.",
+      "expected_decision": "revise",
+      "expected_statuses": {
+        "struct-heading-hierarchy": "revise"
+      },
+      "expected_present_rules": [
+        "struct-heading-hierarchy"
+      ],
+      "false_positive_rationale": "H1 jumping straight to H3 skips a heading level on descent and is reported as an anomaly.",
+      "reviewer_notes": "A skipped level breaks the ladder."
+    },
+    {
+      "id": "engagement-specific-opening",
+      "medium": "argument",
+      "source": "Did the 2021 outage change how you back up your databases? We now test restores monthly.",
+      "expected_decision": "no-finding",
+      "expected_absent_rules": [
+        "struct-engagement-bait"
+      ],
+      "false_positive_rationale": "A specific, answerable question naming a real event is not a generic engagement hook.",
+      "reviewer_notes": "Specific openings stay clean."
+    },
+    {
+      "id": "engagement-generic-opening",
+      "medium": "argument",
+      "source": "Have you ever wondered why backups fail at the worst moment? The archive tool stops when the disk fills.",
+      "expected_decision": "revise",
+      "expected_statuses": {
+        "struct-engagement-bait": "revise"
+      },
+      "expected_present_rules": [
+        "struct-engagement-bait"
+      ],
+      "false_positive_rationale": "A generic attention hook asks for engagement instead of leading with the point.",
+      "reviewer_notes": "Generic engagement bait is a revise finding."
+    },
+    {
+      "id": "template-heading-argument-defect",
+      "medium": "argument",
+      "source": "## What is leadership\n\nLeadership requires choosing between competing values every day.",
+      "expected_decision": "revise",
+      "expected_statuses": {
+        "struct-template-headings": "revise"
+      },
+      "expected_present_rules": [
+        "struct-template-headings"
+      ],
+      "false_positive_rationale": "An explanatory template heading in an argument is a generic category label instead of a specific claim.",
+      "reviewer_notes": "Template heading under argument routing is a defect."
+    },
+    {
+      "id": "template-heading-explanation-earned",
+      "medium": "explanation",
+      "source": "## What is a lease?\n\nA lease grants one party the right to use an asset for a fixed term without transferring ownership.",
+      "expected_decision": "keep",
+      "expected_statuses": {
+        "struct-template-headings": "keep"
+      },
+      "expected_present_rules": [
+        "struct-template-headings"
+      ],
+      "false_positive_rationale": "An explanation medium earns the explanatory template heading, so the same heading reviews to keep.",
+      "reviewer_notes": "Medium routing preserves the earned template structure."
+    },
+    {
+      "id": "self-promotion-flagged",
+      "medium": "argument",
+      "source": "We are proud to announce our industry-leading platform.",
+      "expected_decision": "revise",
+      "expected_statuses": {
+        "struct-self-promotion": "revise"
+      },
+      "expected_present_rules": [
+        "struct-self-promotion"
+      ],
+      "false_positive_rationale": "Self-promotional framing asserted without specifics is a revise finding; the reader is asked to take the judgment on trust.",
+      "reviewer_notes": "Asserted self-promotion is a defect."
+    },
+    {
+      "id": "self-promotion-measured-comparison",
+      "medium": "reference",
+      "source": "Our encoder matches the industry-leading baseline within 0.3 dB.",
+      "expected_decision": "no-finding",
+      "expected_absent_rules": [
+        "struct-self-promotion"
+      ],
+      "false_positive_rationale": "The promotional phrase is load-bearing as a measured comparison against a named baseline, so it produces no finding.",
+      "reviewer_notes": "Measured comparison is the load-bearing positive case."
+    },
+    {
+      "id": "trailing-affirmation-cut",
+      "medium": "message",
+      "source": "In conclusion, I hope this helps! Let me know if you have questions!",
+      "expected_decision": "cut",
+      "expected_statuses": {
+        "phrase-in-conclusion": "cut",
+        "chatbot-hope-helps": "cut",
+        "chatbot-let-me-know": "cut"
+      },
+      "false_positive_rationale": "Trailing affirmations and sign-off ceremony add nothing and resolve to cut, not revise.",
+      "reviewer_notes": "Trailing affirmations are cut."
+    }
+  ]
+}

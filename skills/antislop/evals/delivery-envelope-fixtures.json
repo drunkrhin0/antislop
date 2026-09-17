@@ -1,0 +1,208 @@
+{
+  "skill_name": "antislop",
+  "evals": [
+    {
+      "id": "verify-no-changes-verified",
+      "kind": "verify",
+      "source": "Run `fetch` with version 2.4. When the cache is cold, then one record should come back.",
+      "body": "Run `fetch` with version 2.4. When the cache is cold, then one record should come back.",
+      "expected_decision": "verified",
+      "false_positive_rationale": "A valid document can return no changes and still produce a successful verification record."
+    },
+    {
+      "id": "verify-clean-revision-preserves-contract",
+      "kind": "verify",
+      "source": "We utilize the old endpoint; the fix may take effect on 2026-09-01 and usually completes in about 3 hours.",
+      "body": "We use the old endpoint; the fix may take effect on 2026-09-01 and usually completes in about 3 hours.",
+      "required_facts": ["the fix may take effect"],
+      "required_terms": ["endpoint"],
+      "semantic_dimensions": {"uncertainty": "preserve"},
+      "expected_decision": "verified",
+      "false_positive_rationale": "A word-level revision that keeps every protected literal, qualifier, and uncertainty marker is a verified delivery."
+    },
+    {
+      "id": "verify-drops-may",
+      "kind": "verify",
+      "source": "The change may fix the flaky test.",
+      "body": "The change fixes the flaky test.",
+      "semantic_dimensions": {"uncertainty": "preserve"},
+      "expected_decision": "failed",
+      "expected_failure_kinds": ["qualifier_changed"],
+      "reviewer_notes": "Dropping 'may' removes an uncertainty marker; the verification must fail."
+    },
+    {
+      "id": "verify-changes-date",
+      "kind": "verify",
+      "source": "The release ships on 2026-09-01.",
+      "body": "The release ships on 2026-09-02.",
+      "expected_decision": "failed",
+      "expected_failure_kinds": ["protected_literal_changed"]
+    },
+    {
+      "id": "verify-strengthens-promise",
+      "kind": "verify",
+      "source": "The fix may resolve the issue.",
+      "body": "We guarantee the fix resolves the issue.",
+      "semantic_dimensions": {"promise_intensity": "refuse"},
+      "expected_decision": "failed",
+      "expected_failure_kinds": ["qualifier_changed", "promise_changed"]
+    },
+    {
+      "id": "verify-forbidden-addition",
+      "kind": "verify",
+      "source": "The system restarts overnight.",
+      "body": "The system restarts overnight, and the change is truly revolutionary.",
+      "forbidden_additions": ["revolutionary"],
+      "expected_decision": "failed",
+      "expected_failure_kinds": ["forbidden_addition"]
+    },
+    {
+      "id": "verify-required-fact-missing",
+      "kind": "verify",
+      "source": "The cache stores entries until they expire.",
+      "body": "The cache evicts entries when full.",
+      "required_facts": ["The cache stores entries until they expire"],
+      "expected_decision": "failed",
+      "expected_failure_kinds": ["required_fact_missing"]
+    },
+    {
+      "id": "verify-attribution-changed",
+      "kind": "verify",
+      "source": "According to Dr. Reyes, the fix works.",
+      "body": "The fix works.",
+      "expected_decision": "failed",
+      "expected_failure_kinds": ["attribution_changed"]
+    },
+    {
+      "id": "chunked-retains-cross-section-fact-and-register",
+      "kind": "chunked",
+      "chunks": [
+        {
+          "source": "The migration renames the /api/v1/legacy endpoint to /api/v2.",
+          "required_facts": ["renames the /api/v1/legacy endpoint"],
+          "required_terms": ["migration"]
+        },
+        {
+          "source": "The cutover may take about 6 hours.",
+          "required_facts": ["take about 6 hours"],
+          "required_terms": ["cutover"]
+        }
+      ],
+      "body": "The migration renames the /api/v1/legacy endpoint to /api/v2. The cutover may take about 6 hours.",
+      "semantic_dimensions": {"uncertainty": "preserve"},
+      "expected_decision": "verified",
+      "false_positive_rationale": "A fact in one chunk and a qualifier in another both survive in the whole body; the assembled source carries the register."
+    },
+    {
+      "id": "chunked-drops-cross-section-fact",
+      "kind": "chunked",
+      "chunks": [
+        {
+          "source": "The migration renames the /api/v1/legacy endpoint to /api/v2.",
+          "required_facts": ["renames the /api/v1/legacy endpoint"]
+        },
+        {
+          "source": "The cutover may take about 6 hours.",
+          "required_facts": ["take about 6 hours"]
+        }
+      ],
+      "body": "The migration points at a new endpoint. The cutover may take about 6 hours.",
+      "expected_decision": "failed",
+      "expected_failure_kinds": ["required_fact_missing", "protected_literal_missing"],
+      "reviewer_notes": "The fact and the protected path live in chunk one; the assembled body drops both."
+    },
+    {
+      "id": "chunked-drops-whole-document-register",
+      "kind": "chunked",
+      "chunks": [
+        {
+          "source": "The migration renames the /api/v1/legacy endpoint to /api/v2.",
+          "required_facts": ["renames the /api/v1/legacy endpoint"]
+        },
+        {
+          "source": "The cutover may take about 6 hours.",
+          "required_facts": ["take about 6 hours"]
+        }
+      ],
+      "body": "The migration renames the /api/v1/legacy endpoint to /api/v2. The cutover will take about 6 hours.",
+      "semantic_dimensions": {"uncertainty": "preserve"},
+      "expected_decision": "failed",
+      "expected_failure_kinds": ["qualifier_changed"],
+      "reviewer_notes": "The cross-section fact survives while the uncertainty marker from the other chunk is dropped; the register check must fail."
+    },
+    {
+      "id": "envelope-separates-body-from-report",
+      "kind": "envelope",
+      "source": "We utilize this approach to delve deeper.",
+      "body": "We use this approach to explore further.",
+      "medium": "argument",
+      "bind_source": true,
+      "revision_plan": {
+        "edits": [
+          {"rule_id": "vocab-utilize", "action": "replace", "replacement": "use"},
+          {"rule_id": "vocab-delve", "action": "replace", "replacement": "explore"}
+        ]
+      },
+      "report_has_findings": true,
+      "expected_decision": "verified",
+      "expected_verification_decision": "verified",
+      "false_positive_rationale": "The review report carries findings while the delivered body carries none of that report's commentary; the envelope keeps them separate."
+    },
+    {
+      "id": "envelope-no-changes-verified",
+      "kind": "envelope",
+      "source": "Run `fetch` with version 2.4. When the cache is cold, then one record should come back.",
+      "body": "Run `fetch` with version 2.4. When the cache is cold, then one record should come back.",
+      "medium": "argument",
+      "bind_source": true,
+      "expected_decision": "verified",
+      "expected_verification_decision": "verified"
+    },
+    {
+      "id": "envelope-failed-verification-recorded",
+      "kind": "envelope",
+      "source": "The change may fix the flaky test.",
+      "body": "The change fixes the flaky test.",
+      "semantic_dimensions": {"uncertainty": "preserve"},
+      "bind_source": true,
+      "expected_decision": "failed",
+      "expected_verification_decision": "failed",
+      "reviewer_notes": "An envelope may honestly bind a failed verification; the stored failure keeps the envelope failed with no envelope-integrity defect."
+    },
+    {
+      "id": "envelope-stale-body-after-verification",
+      "kind": "envelope",
+      "source": "Run `fetch` with version 2.4. When the cache is cold, then one record should come back.",
+      "body": "Run `fetch` with version 2.4. When the cache is cold, then one record should come back.",
+      "bind_source": true,
+      "tamper": "body",
+      "expected_decision": "failed",
+      "expected_failure_kinds": ["stale_verification"],
+      "expected_verification_decision": "verified",
+      "reviewer_notes": "A body changed by one character after verification is stale; the stored verification can no longer be evidence about this edit."
+    },
+    {
+      "id": "envelope-mismatched-source-record",
+      "kind": "envelope",
+      "source": "Run `fetch` with version 2.4. When the cache is cold, then one record should come back.",
+      "body": "Run `fetch` with version 2.4. When the cache is cold, then one record should come back.",
+      "bind_source": true,
+      "tamper": "source",
+      "expected_decision": "failed",
+      "expected_failure_kinds": ["mismatched_verification"],
+      "expected_verification_decision": "verified",
+      "reviewer_notes": "A source record edited after verification no longer matches the digest the verification covers."
+    },
+    {
+      "id": "envelope-missing-verification",
+      "kind": "envelope",
+      "source": "Run `fetch` with version 2.4. When the cache is cold, then one record should come back.",
+      "body": "Run `fetch` with version 2.4. When the cache is cold, then one record should come back.",
+      "bind_source": true,
+      "tamper": "drop-verification",
+      "expected_decision": "failed",
+      "expected_failure_kinds": ["missing_verification"],
+      "reviewer_notes": "An envelope with no verification report cannot be evidence for any edit."
+    }
+  ]
+}

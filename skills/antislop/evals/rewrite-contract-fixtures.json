@@ -1,0 +1,321 @@
+{
+  "skill_name": "antislop-rewrite-contract",
+  "schema": "rewrite-contract-fixtures-1",
+  "evals": [
+    {
+      "id": "rewrite-clean-input-unchanged",
+      "source": "The worker lost its lease and the queue drained the backlog overnight.",
+      "candidate": "The worker lost its lease and the queue drained the backlog overnight.",
+      "expected_decision": "accept",
+      "expected_preservation": "passed",
+      "expected_selected": [],
+      "expected_changed": [],
+      "expected_preserved": [],
+      "expected_rejected": [],
+      "expected_new": [],
+      "false_positive_rationale": "Clean input produces no findings, no selection, no newly introduced findings, and a passing preservation check.",
+      "reviewer_notes": "The acceptance check must not invent work on clean prose."
+    },
+    {
+      "id": "rewrite-selected-findings-only",
+      "source": "We utilize the API and then delve into the failure.",
+      "candidate": "We use the API and then delve into the failure.",
+      "selected_rule_ids": [
+        "vocab-utilize"
+      ],
+      "expected_decision": "accept",
+      "expected_preservation": "passed",
+      "expected_selected": [
+        "vocab-utilize"
+      ],
+      "expected_changed": [
+        {
+          "rule_id": "vocab-utilize",
+          "count": 1
+        }
+      ],
+      "expected_preserved": [
+        {
+          "rule_id": "vocab-delve",
+          "count": 1
+        }
+      ],
+      "expected_rejected": [],
+      "expected_new": [],
+      "false_positive_rationale": "Applying only the selected finding leaves the unselected delve untouched and preserves it in the candidate.",
+      "reviewer_notes": "Selection scope is respected; only vocab-utilize is addressed."
+    },
+    {
+      "id": "rewrite-rejected-selected-finding",
+      "source": "We utilize the API and then delve into the failure.",
+      "candidate": "We use the API and then delve into the failure.",
+      "selected_rule_ids": [
+        "vocab-utilize",
+        "vocab-delve"
+      ],
+      "expected_decision": "review",
+      "expected_preservation": "passed",
+      "expected_selected": [
+        "vocab-utilize",
+        "vocab-delve"
+      ],
+      "expected_changed": [
+        {
+          "rule_id": "vocab-utilize",
+          "count": 1
+        }
+      ],
+      "expected_preserved": [],
+      "expected_rejected": [
+        {
+          "rule_id": "vocab-delve",
+          "count": 1
+        }
+      ],
+      "expected_new": [],
+      "false_positive_rationale": "A selected finding the rewrite left in place outside any protected region is reported as rejected and requires an author decision.",
+      "reviewer_notes": "Selected but unaddressed findings never pass silently."
+    },
+    {
+      "id": "rewrite-protected-markdown-regions",
+      "source": "# Notes\n\nWe utilize the checklist below.\n\n```python\ndef probe(url):\n    return url + \"/health\"\n```\n\nSee [docs](https://example.com/docs) and run `pip install antislop`.\n\n| Metric | Value |\n|--------|-------|\n| utilize rate | 40 ms |\n| error rate | 0.5% |\n\n> The worker \"utilize\" retried the job.\n",
+      "candidate": "# Notes\n\nWe use the checklist below.\n\n```python\ndef probe(url):\n    return url + \"/health\"\n```\n\nSee [docs](https://example.com/docs) and run `pip install antislop`.\n\n| Metric | Value |\n|--------|-------|\n| utilize rate | 40 ms |\n| error rate | 0.5% |\n\n> The worker \"utilize\" retried the job.\n",
+      "selected_rule_ids": [
+        "vocab-utilize"
+      ],
+      "expected_decision": "accept",
+      "expected_preservation": "passed",
+      "expected_selected": [
+        "vocab-utilize"
+      ],
+      "expected_changed": [
+        {
+          "rule_id": "vocab-utilize",
+          "count": 1
+        }
+      ],
+      "expected_preserved": [
+        {
+          "rule_id": "vocab-utilize",
+          "count": 2
+        }
+      ],
+      "expected_rejected": [],
+      "expected_new": [],
+      "false_positive_rationale": "Prose inside a Markdown file is rewritten while the heading, code fence, inline code, Markdown link, table, and quoted blockquote stay byte-identical; the banned words inside the table and the quote survive as protected findings.",
+      "reviewer_notes": "One prose occurrence clears, two protected occurrences stay."
+    },
+    {
+      "id": "rewrite-code-fence-protected",
+      "source": "We utilize the API.\n\n```python\ndef deploy():\n    return \"utilize\"\n```\n",
+      "candidate": "We use the API.\n\n```python\ndef deploy():\n    return \"utilize\"\n```\n",
+      "selected_rule_ids": [
+        "vocab-utilize"
+      ],
+      "expected_decision": "accept",
+      "expected_preservation": "passed",
+      "expected_selected": [
+        "vocab-utilize"
+      ],
+      "expected_changed": [
+        {
+          "rule_id": "vocab-utilize",
+          "count": 1
+        }
+      ],
+      "expected_preserved": [
+        {
+          "rule_id": "vocab-utilize",
+          "count": 1
+        }
+      ],
+      "expected_rejected": [],
+      "expected_new": [],
+      "false_positive_rationale": "The banned word inside a fenced code block is protected and byte-identical; only the prose occurrence is rewritten.",
+      "reviewer_notes": "Code is never rewritten by a controlled rewrite."
+    },
+    {
+      "id": "rewrite-mermaid-diagram-protected",
+      "source": "We utilize the pipeline.\n\n```mermaid\nflowchart LR\n    A[Start] --> B{Check}\n    B -->|yes| C[Deploy]\n```\n",
+      "candidate": "We use the pipeline.\n\n```mermaid\nflowchart LR\n    A[Start] --> B{Check}\n    B -->|yes| C[Deploy]\n```\n",
+      "selected_rule_ids": [
+        "vocab-utilize"
+      ],
+      "expected_decision": "accept",
+      "expected_preservation": "passed",
+      "expected_selected": [
+        "vocab-utilize"
+      ],
+      "expected_changed": [
+        {
+          "rule_id": "vocab-utilize",
+          "count": 1
+        }
+      ],
+      "expected_preserved": [],
+      "expected_rejected": [],
+      "expected_new": [],
+      "false_positive_rationale": "A Mermaid diagram inside a fenced code block is protected; the prose before it is rewritten and preservation passes.",
+      "reviewer_notes": "Diagrams stay byte-identical."
+    },
+    {
+      "id": "rewrite-url-preserved",
+      "source": "See https://example.com/docs for the reference, and we utilize it daily.",
+      "candidate": "See https://example.com/docs for the reference, and we use it daily.",
+      "selected_rule_ids": [
+        "vocab-utilize"
+      ],
+      "expected_decision": "accept",
+      "expected_preservation": "passed",
+      "expected_selected": [
+        "vocab-utilize"
+      ],
+      "expected_changed": [
+        {
+          "rule_id": "vocab-utilize",
+          "count": 1
+        }
+      ],
+      "expected_preserved": [],
+      "expected_rejected": [],
+      "expected_new": [],
+      "false_positive_rationale": "The URL is a protected span and stays byte-identical while the prose finding clears.",
+      "reviewer_notes": "URLs are never rewritten."
+    },
+    {
+      "id": "rewrite-quoted-material-protected",
+      "source": "The customer said \"we utilize the old tool\" and we delve into that now.",
+      "candidate": "The customer said \"we utilize the old tool\" and we dig into that now.",
+      "selected_rule_ids": [
+        "vocab-utilize",
+        "vocab-delve"
+      ],
+      "expected_decision": "accept",
+      "expected_preservation": "passed",
+      "expected_selected": [
+        "vocab-utilize",
+        "vocab-delve"
+      ],
+      "expected_changed": [
+        {
+          "rule_id": "vocab-delve",
+          "count": 1
+        }
+      ],
+      "expected_preserved": [
+        {
+          "rule_id": "vocab-utilize",
+          "count": 1
+        }
+      ],
+      "expected_rejected": [],
+      "expected_new": [],
+      "false_positive_rationale": "The quoted customer material is protected and stays byte-identical; the unquoted delve finding clears.",
+      "reviewer_notes": "Quoted material is never rewritten."
+    },
+    {
+      "id": "rewrite-factual-number-drift-fails",
+      "source": "The fix cut deploy time to 40 minutes and we utilize the API.",
+      "candidate": "The fix cut deploy time to 50 minutes and we use the API.",
+      "selected_rule_ids": [
+        "vocab-utilize"
+      ],
+      "expected_decision": "reject",
+      "expected_preservation": "failed",
+      "expected_selected": [
+        "vocab-utilize"
+      ],
+      "expected_changed": [
+        {
+          "rule_id": "vocab-utilize",
+          "count": 1
+        }
+      ],
+      "expected_preserved": [],
+      "expected_rejected": [],
+      "expected_new": [],
+      "false_positive_rationale": "A rewrite that changes a protected number fails the preservation check even when it clears the selected finding.",
+      "reviewer_notes": "A changed protected value fails closed."
+    },
+    {
+      "id": "rewrite-new-findings-visible",
+      "source": "We utilize the API and the queue drained overnight.",
+      "candidate": "We use the API and the queue drained overnight and it is seamless.",
+      "selected_rule_ids": [
+        "vocab-utilize"
+      ],
+      "expected_decision": "accept",
+      "expected_preservation": "passed",
+      "expected_selected": [
+        "vocab-utilize"
+      ],
+      "expected_changed": [
+        {
+          "rule_id": "vocab-utilize",
+          "count": 1
+        }
+      ],
+      "expected_preserved": [],
+      "expected_rejected": [],
+      "expected_new": [
+        "vocab-seamless"
+      ],
+      "false_positive_rationale": "A newly introduced banned word in the candidate is reported as a new finding and never hidden by a passing preservation check.",
+      "reviewer_notes": "Re-audit surfaces new findings separately."
+    },
+    {
+      "id": "rewrite-user-declared-span-preserved",
+      "source": "The service meets SOC 2 and we utilize it.",
+      "candidate": "The service meets SOC 2 and we use it.",
+      "selected_rule_ids": [
+        "vocab-utilize"
+      ],
+      "protected_terms": [
+        "SOC 2"
+      ],
+      "expected_decision": "accept",
+      "expected_preservation": "passed",
+      "expected_selected": [
+        "vocab-utilize"
+      ],
+      "expected_changed": [
+        {
+          "rule_id": "vocab-utilize",
+          "count": 1
+        }
+      ],
+      "expected_preserved": [],
+      "expected_rejected": [],
+      "expected_new": [],
+      "false_positive_rationale": "An extra user-declared protected span stays byte-identical through the rewrite and the preservation check passes.",
+      "reviewer_notes": "Custom protected spans are enforced like fixed regions."
+    },
+    {
+      "id": "rewrite-user-declared-span-changed-fails",
+      "source": "The service meets SOC 2 and we utilize it.",
+      "candidate": "The service is fully compliant now and we use it.",
+      "selected_rule_ids": [
+        "vocab-utilize"
+      ],
+      "protected_terms": [
+        "SOC 2"
+      ],
+      "expected_decision": "reject",
+      "expected_preservation": "failed",
+      "expected_selected": [
+        "vocab-utilize"
+      ],
+      "expected_changed": [
+        {
+          "rule_id": "vocab-utilize",
+          "count": 1
+        }
+      ],
+      "expected_preserved": [],
+      "expected_rejected": [],
+      "expected_new": [],
+      "false_positive_rationale": "Removing a user-declared protected span fails the preservation check exactly like a changed protected value.",
+      "reviewer_notes": "Declared spans are load-bearing."
+    }
+  ]
+}

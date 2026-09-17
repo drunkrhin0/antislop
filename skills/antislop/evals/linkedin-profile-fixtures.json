@@ -1,0 +1,191 @@
+{
+  "skill_name": "antislop-linkedin-profile",
+  "schema": "linkedin-profile-fixtures-1",
+  "evals": [
+    {
+      "id": "linkedin-lesson-post",
+      "post_type": "lesson",
+      "source": "We cut our cold start from 1.8s to 0.4s by switching caches. The worker kept losing its lease at 02:14. We replaced the scheduler. The error rate dropped to 3%. The lesson: move the lease check before the dispatch.",
+      "expected_decision": "no-finding",
+      "expected_route": {
+        "setup": "keep",
+        "challenge": "keep",
+        "action": "keep",
+        "result": "keep",
+        "lesson": "keep",
+        "position": "n/a",
+        "announcement": "n/a",
+        "steps": "n/a"
+      },
+      "false_positive_rationale": "A lesson post that supplies setup, challenge, action, result, and lesson routes each fitting element as keep and the non-fitting elements as n/a, with no scored finding.",
+      "reviewer_notes": "One fixture per post type; post-type routing decides which structural elements are applicable."
+    },
+    {
+      "id": "linkedin-case-study-post",
+      "post_type": "case-study",
+      "source": "We ran two schedulers side by side. The old one failed whenever the lease expired. We switched the lease check before the dispatch. Downtime fell from 40 minutes to 4. Next time we will load test first.",
+      "expected_decision": "no-finding",
+      "expected_route": {
+        "setup": "keep",
+        "challenge": "keep",
+        "action": "keep",
+        "result": "keep",
+        "lesson": "keep",
+        "position": "n/a",
+        "announcement": "n/a",
+        "steps": "n/a"
+      },
+      "false_positive_rationale": "A case-study post with the full SCARL arc routes every fitting element as keep and the rest as n/a, with no scored finding.",
+      "reviewer_notes": "SCARL elements fit the case-study post type and stay optional."
+    },
+    {
+      "id": "linkedin-announcement-post",
+      "post_type": "announcement",
+      "source": "We shipped the retry queue today. It stops jobs from dropping when the lease expires. Version 2.4 is live.",
+      "expected_decision": "no-finding",
+      "expected_route": {
+        "announcement": "keep",
+        "setup": "n/a",
+        "challenge": "n/a",
+        "action": "n/a",
+        "result": "n/a",
+        "lesson": "n/a",
+        "position": "n/a",
+        "steps": "n/a"
+      },
+      "false_positive_rationale": "An announcement post needs no hook, call to action, or SCARL structure; every non-announcement element is n/a and the post passes clean.",
+      "reviewer_notes": "The announcement is the only applicable element for the announcement post type."
+    },
+    {
+      "id": "linkedin-opinion-post",
+      "post_type": "opinion",
+      "source": "I think code reviews should happen before the merge, not after the incident. The review finds the mistake while it is cheap to fix. A merge without a review trades a short wait for a long outage.",
+      "expected_decision": "no-finding",
+      "expected_route": {
+        "position": "keep",
+        "setup": "n/a",
+        "challenge": "n/a",
+        "action": "n/a",
+        "result": "n/a",
+        "lesson": "n/a",
+        "announcement": "n/a",
+        "steps": "n/a"
+      },
+      "false_positive_rationale": "An opinion post with a committed position routes position as keep and every story or how-to element as n/a, with no scored finding.",
+      "reviewer_notes": "A committed position is the applicable element for the opinion post type."
+    },
+    {
+      "id": "linkedin-practical-guide-post",
+      "post_type": "practical-guide",
+      "source": "How to make deploys boring. First, pin every dependency. Second, run the smoke test in CI. Third, gate the release on the test passing.",
+      "expected_decision": "no-finding",
+      "expected_route": {
+        "steps": "keep",
+        "setup": "n/a",
+        "challenge": "n/a",
+        "action": "n/a",
+        "result": "n/a",
+        "lesson": "n/a",
+        "position": "n/a",
+        "announcement": "n/a"
+      },
+      "false_positive_rationale": "A practical-guide post with concrete ordered steps routes steps as keep and every story element as n/a, with no scored finding.",
+      "reviewer_notes": "Concrete steps are the applicable element for the practical-guide post type."
+    },
+    {
+      "id": "linkedin-no-cta-needed",
+      "post_type": "case-study",
+      "source": "We ran two schedulers side by side. The old one failed whenever the lease expired. We switched the lease check before the dispatch. Downtime fell from 40 minutes to 4.",
+      "expected_decision": "no-finding",
+      "expected_route": {
+        "setup": "keep",
+        "challenge": "keep",
+        "action": "keep",
+        "result": "keep",
+        "lesson": "n/a",
+        "position": "n/a",
+        "announcement": "n/a",
+        "steps": "n/a"
+      },
+      "false_positive_rationale": "A case study that ends at the result needs no call to action; a post with no CTA is never a finding.",
+      "reviewer_notes": "Calls to action are optional everywhere; a post without one passes clean."
+    },
+    {
+      "id": "linkedin-optional-structure-absent",
+      "post_type": "lesson",
+      "source": "A lease that outlives the worker timeout lets a crashed worker hold the queue. Keep the lease shorter than the worker timeout.",
+      "expected_decision": "no-finding",
+      "expected_route": {
+        "setup": "n/a",
+        "challenge": "n/a",
+        "action": "n/a",
+        "result": "n/a",
+        "lesson": "n/a",
+        "position": "n/a",
+        "announcement": "n/a",
+        "steps": "n/a"
+      },
+      "false_positive_rationale": "A lesson post with no SCARL structure and no hook passes clean; optional elements are never forced and absence is recorded as n/a.",
+      "reviewer_notes": "SCARL, hooks, hashtags, and short paragraphs stay optional; the route never demands them."
+    },
+    {
+      "id": "linkedin-voice-sample-achievement",
+      "post_type": "case-study",
+      "source": "Our 200-person team shipped the new scheduler in a month.",
+      "voice_sample": "A sample written by the author about running a team.",
+      "sample_facts": ["200-person team"],
+      "expected_decision": "revise",
+      "expected_statuses": {
+        "evaluation-voice-sample": "revise"
+      },
+      "expected_leaked_facts": ["200-person team"],
+      "false_positive_rationale": "The achievement in the voice sample transfers to the target, which the voice-sample guard flags: a sample transfers style only, never personal facts or achievements.",
+      "reviewer_notes": "Acceptance: user-supplied examples transfer style signals only."
+    },
+    {
+      "id": "linkedin-preservation-metric-dropped",
+      "post_type": "announcement",
+      "source": "We shipped the retry queue today.",
+      "required_facts": ["it doubled throughput"],
+      "expected_decision": "revise",
+      "expected_missing_facts": ["it doubled throughput"],
+      "expected_statuses": {
+        "evaluation-voice-sample": "revise"
+      },
+      "false_positive_rationale": "A supplied metric the author gave for the post is dropped from the draft, so preservation reports it missing and the review asks for it back.",
+      "reviewer_notes": "Acceptance: supplied achievements, metrics, opinions, and experience are preserved exactly."
+    },
+    {
+      "id": "linkedin-preservation-metric-kept",
+      "post_type": "announcement",
+      "source": "We shipped the retry queue today. It doubled throughput for cold starts.",
+      "required_facts": ["doubled throughput"],
+      "expected_decision": "no-finding",
+      "expected_missing_facts": [],
+      "false_positive_rationale": "A supplied metric kept word-stable in the post is preserved exactly and produces no finding.",
+      "reviewer_notes": "Word-stable fact matching reuses the drift matcher."
+    },
+    {
+      "id": "linkedin-reach-promise",
+      "post_type": "lesson",
+      "source": "Posting this will boost your reach and engagement. We switched caches.",
+      "expected_decision": "ask-author",
+      "expected_statuses": {
+        "social-reach-promise": "ask-author"
+      },
+      "false_positive_rationale": "A reach and engagement promise with no mechanism or measured result nearby asks the author for the evidence; Antislop never promises a reach or engagement result.",
+      "reviewer_notes": "Boundary: no reach or engagement promise, and no algorithmic benefit claim."
+    },
+    {
+      "id": "linkedin-em-dash-absolute",
+      "post_type": "lesson",
+      "source": "We cut the deploy time — from 40 minutes to 4. We switched caches.",
+      "expected_decision": "revise",
+      "expected_statuses": {
+        "fmt-em-dash": "revise"
+      },
+      "false_positive_rationale": "The zero-em-dash rule stays absolute under the social-linkedin profile; a post with an em dash is a finding even when the rest of the post is clean.",
+      "reviewer_notes": "Boundary: the zero-em-dash rule is never relaxed."
+    }
+  ]
+}

@@ -41,6 +41,88 @@
         "The email draft has a clear position on the severity",
         "The email avoids hedging language like 'it's worth noting' or 'in today's world'"
       ]
+    },
+    {
+      "id": 5,
+      "prompt": "Rewrite this product description so it doesn't sound like AI wrote it: Our revolutionary platform empowers teams to leverage cutting-edge AI to streamline workflows and drive transformative business outcomes.",
+      "should_trigger": true,
+      "assertions": [
+        "The skill was loaded before the response was generated",
+        "The output replaces 'revolutionary', 'empowers', 'leverage', 'cutting-edge', 'streamline', 'transformative' with plain language",
+        "The output has specific claims instead of vague benefits"
+      ]
+    },
+    {
+      "id": 6,
+      "prompt": "Can you review this conference talk abstract and make it more direct? In this talk, we will delve into the ever-evolving landscape of cloud security, exploring innovative approaches to safeguarding digital assets in today's complex threat environment.",
+      "should_trigger": true,
+      "assertions": [
+        "The skill was loaded before the response was generated",
+        "The output removes 'delve into', 'ever-evolving landscape', 'innovative approaches', 'safeguarding digital assets', 'complex threat environment'",
+        "The output states what the talk actually covers in specific terms"
+      ]
+    },
+    {
+      "id": 7,
+      "prompt": "Create a YAML configuration for a Kubernetes deployment with 3 replicas.",
+      "should_trigger": false,
+      "assertions": [
+        "The skill was NOT loaded for this task",
+        "The response is YAML configuration, not prose editing"
+      ]
+    },
+    {
+      "id": 8,
+      "prompt": "What is 2 + 2?",
+      "should_trigger": false,
+      "assertions": [
+        "The skill was NOT loaded for this task",
+        "The response is a direct factual answer"
+      ]
+    },
+    {
+      "id": 9,
+      "prompt": "Rewrite this so it doesn't sound formulaic: We are excited to launch our new platform—it is faster, simpler, and more secure than anything we have shipped before.",
+      "should_trigger": true,
+      "assertions": [
+        "The skill was loaded before the response was generated",
+        "The output contains no em-dashes; the em dash is replaced with a period or comma",
+        "The output avoids banned vocabulary and phrases",
+        "The output states a specific advantage instead of a superlative claim"
+      ]
+    },
+    {
+      "id": 10,
+      "prompt": "Rewrite this project update without changing its meaning or my blunt tone: The migration significantly improved reliability: it created a stronger foundation for future growth and became our north star for operations.",
+      "should_trigger": true,
+      "assertions": [
+        "The skill was loaded before the response was generated",
+        "The rewrite preserves the original claim and direct tone",
+        "The rewrite replaces the weak verb plus adverb with the actual change or a measured result",
+        "The rewrite removes the transition-glue colon and replaces the abstract north-star metaphor with a concrete operational description",
+        "The rewrite does not add invented facts"
+      ]
+    },
+    {
+      "id": 11,
+      "prompt": "Rewrite this status line as readable technical prose without changing its meaning: Parser rejects bad date → exit 2, no write.",
+      "should_trigger": true,
+      "assertions": [
+        "The skill was loaded before the response was generated",
+        "The rewrite restores articles and verbs instead of preserving compressed shorthand",
+        "The rewrite spells out the arrow relationship in words",
+        "The rewrite preserves all three facts: rejection of a bad date, exit code 2, and no write"
+      ]    },
+    {
+      "id": 12,
+      "prompt": "Write a short email to my team about the Q3 deadline change",
+      "should_trigger": true,
+      "assertions": [
+        "The skill was loaded before the response was generated",
+        "The response is an email draft, not a clarification question",
+        "The missing deadline is represented by a clear bracketed placeholder and is not invented",
+        "The draft tells the author to replace the placeholder"
+      ]
     }
   ]
 }

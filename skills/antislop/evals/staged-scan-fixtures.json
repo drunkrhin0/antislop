@@ -1,0 +1,78 @@
+{
+  "skill_name": "antislop-staged-scan",
+  "schema": "staged-scan-fixtures-1",
+  "evals": [
+    {
+      "id": "scan-strict-punctuation-advisory-rhythm",
+      "source": "The parser validates every incoming request before the handler thread begins its work. The worker drains the pending queue and writes a complete audit record for each task. The scheduler retries each failed job \u2014 with a fixed exponential backoff policy applied. The gateway checks the bearer token and enforces the per-tenant quota before accepting. The runner collects the finished results and posts them to the shared durable store.",
+      "expected_surface_strict": 1,
+      "expected_surface_advisory": 0,
+      "expected_structural_decision": "intervene",
+      "expected_structural_count": 1,
+      "false_positive_rationale": "A strict punctuation defect (the em-dash) is a surface finding that affects the exit status, while the uniform sentence lengths are an advisory rhythm concern that the bounded structural review reports as its single intervention.",
+      "reviewer_notes": "The two-stage split keeps the deterministic defect separate from the human-review concern."
+    },
+    {
+      "id": "scan-clean-document-no-structural-work",
+      "source": "We switched from VMs to containers three years ago. It cut our deploy time by 40% and eliminated half our infrastructure headaches. We spent six months fixing our logging and monitoring first.",
+      "expected_surface_strict": 0,
+      "expected_surface_advisory": 0,
+      "expected_structural_decision": "no-change",
+      "expected_structural_count": 0,
+      "false_positive_rationale": "Clean prose produces no surface finding and the structural stage returns no work; the review never invents an intervention.",
+      "reviewer_notes": "No change is a valid structural result."
+    },
+    {
+      "id": "scan-code-masked-for-prose-checks",
+      "source": "```python\nresult = utilize()\n```\n\nWe utilize the API and run `utilize()` here.",
+      "expected_surface_strict": 1,
+      "expected_surface_advisory": 0,
+      "expected_structural_decision": "no-change",
+      "expected_structural_count": 0,
+      "false_positive_rationale": "Fenced and inline code are masked before any prose check runs, so the banned word is found exactly once, in the prose, and never inside the code.",
+      "reviewer_notes": "The single finding span sits in the prose sentence."
+    },
+    {
+      "id": "corpus-same-shape-converges",
+      "corpus": [
+        {
+          "id": "launch-one",
+          "text": "Every launch looked the same until the demo broke. The room went quiet and the clicker jammed.\n\nThen the backup laptop saved the talk. I learned that rehearsing with the real hardware changes everything. We shipped the next release with a dry run first."
+        },
+        {
+          "id": "launch-two",
+          "text": "Every launch looked the same until the demo froze. The room went silent and the remote jammed.\n\nThen the backup machine carried the talk. I learned that rehearsing on the real hardware changes everything. We shipped the next release with a full dry run first."
+        },
+        {
+          "id": "launch-three",
+          "text": "Every launch looked the same until the demo crashed. The room fell silent and the clicker stopped.\n\nThen the backup laptop finished the talk. I learned that rehearsing against the real hardware changes everything. We shipped the next release with one full dry run first."
+        }
+      ],
+      "expected_corpus_state": "convergence",
+      "expected_convergence_count": 3,
+      "false_positive_rationale": "Three documents that repeat the same hook, reveal, lesson, and close share a repeated document shape across every pair, so the corpus comparison reports three convergence findings.",
+      "reviewer_notes": "Every pair shares all four slots."
+    },
+    {
+      "id": "corpus-distinct-shapes-no-convergence",
+      "corpus": [
+        {
+          "id": "build-move",
+          "text": "We moved the build to a faster cluster and cut wait times by a third.\n\nThe rollout went out in stages. Operators watched the queue and rolled back twice. The final cut took four minutes and the fleet stayed healthy."
+        },
+        {
+          "id": "interview-loop",
+          "text": "Our interview loop changed when we added a take-home task.\n\nCandidates now show real work before the panel meets. We compare the result against a rubric and check for copied patterns."
+        },
+        {
+          "id": "shed-rebuild",
+          "text": "The garden shed collapsed after the winter storms.\n\nWe rebuilt it with treated timber and a deeper footing. The new frame has lasted two seasons without a sag."
+        }
+      ],
+      "expected_corpus_state": "no-convergence",
+      "expected_convergence_count": 0,
+      "false_positive_rationale": "Three documents with distinct legitimate structures share no repeated shape, so the corpus comparison reports no convergence and no cross-document claim.",
+      "reviewer_notes": "Distinct hooks, reveals, lessons, and closes."
+    }
+  ]
+}

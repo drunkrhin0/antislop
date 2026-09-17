@@ -12,180 +12,44 @@ jobs:
     steps:
       - name: Checkout
         env:
-          RELEASE_TOKEN: ${{ secrets.RELEASE_TOKEN }}
+          EVENT_SHA: ${{ github.sha }}
         run: |
-          git clone --depth 1 \
-            "http://x-access-token:${RELEASE_TOKEN}@192.168.1.62:3000/drunkrhin0/antislop.git" \
-            .
-
-      - name: Install pyyaml
-        run: pip install --break-system-packages pyyaml
-
-      - name: Lint SKILL.md and extension files
-        shell: bash
-        run: |
-          set -euo pipefail
-          FAILURES=0
-
-          # ------------------------------------------------------------------
-          # Helper: extract frontmatter field via Python YAML parser
-          # Handles unquoted colons, multi-line values, and other edge cases
-          # ------------------------------------------------------------------
-          frontmatter_field() {
-            local file="$1" field="$2"
-            python3 -c "
-          import yaml, sys
-          lines = []
-          in_fm = False
-          for line in open(sys.argv[1]):
-              if line.strip() == '---':
-                  in_fm = not in_fm
-                  continue
-              if in_fm:
-                  lines.append(line)
-              elif lines:
-                  break
-          d = yaml.safe_load(''.join(lines)) or {}
-          print(d.get(sys.argv[2], ''))
-          " "$file" "$field" 2>/dev/null || echo ""
-          }
-
-          # ------------------------------------------------------------------
-          # Helper: extract metadata.version from YAML frontmatter
-          # ------------------------------------------------------------------
-          metadata_version() {
-            local file="$1"
-            python3 -c "
-          import yaml, sys
-          lines = []
-          in_fm = False
-          for line in open(sys.argv[1]):
-              if line.strip() == '---':
-                  in_fm = not in_fm
-                  continue
-              if in_fm:
-                  lines.append(line)
-              elif lines:
-                  break
-          d = yaml.safe_load(''.join(lines)) or {}
-          print((d.get('metadata') or {}).get('version', ''))
-          " "$file" 2>/dev/null || echo ""
-          }
-
-          # ------------------------------------------------------------------
-          # Helper: count a FAIL
-          # ------------------------------------------------------------------
-          fail() {
-            echo "  FAIL  $*" >&2
-            FAILURES=$((FAILURES + 1))
-          }
-
-          # ------------------------------------------------------------------
-          # 1. Frontmatter completeness
-          # ------------------------------------------------------------------
-          echo ""
-          echo "=== Frontmatter checks ==="
-          while IFS= read -r -d '' file; do
-            name=$(frontmatter_field "$file" "name")
-            ver=$(metadata_version "$file")
-            desc=$(frontmatter_field "$file" "description")
-
-            if [ -z "$name" ]; then  fail "$file: missing frontmatter 'name:'";  fi
-            if [ -z "$ver" ];  then  fail "$file: missing metadata.version";  fi
-            if [ -z "$desc" ]; then  fail "$file: missing frontmatter 'description:'";  fi
-
-            if [ -n "$name" ] && [ -n "$ver" ]; then
-              echo "  PASS  $file  name=$name  version=$ver"
-            fi
-          done < <(find . -name SKILL.md -not -path './.opencode/*' -print0)
-
-          # ------------------------------------------------------------------
-          # 2. Version consistency: metadata vs inline body
-          # ------------------------------------------------------------------
-          echo ""
-          echo "=== Version consistency (metadata vs body) ==="
-          while IFS= read -r -d '' file; do
-            fm_ver=$(metadata_version "$file")
-            body_ver=$(sed -n 's/^\*\*Version:\*\* *\([0-9.]*\).*/\1/p' "$file" | head -1)
-            if [ -z "$body_ver" ]; then
-              fail "$file: no **Version:** X.Y found in body"
-            elif [ "$fm_ver" != "$body_ver" ]; then
-              fail "$file: metadata version=$fm_ver, body version=$body_ver"
-            else
-              echo "  PASS  $file  version=$fm_ver"
-            fi
-          done < <(find . -name SKILL.md -not -path './.opencode/*' -print0)
-
-          # ------------------------------------------------------------------
-          # 3. Cross-file: skills/antislop/SKILL.md vs gemini-extension.json
-          # ------------------------------------------------------------------
-          echo ""
-          echo "=== Cross-file version sync ==="
-          SKILL_VER=$(metadata_version "skills/antislop/SKILL.md")
-          if [ -f skills/antislop/gemini-extension.json ]; then
-            GEMINI_VER=$(python3 -c "import json; d=json.load(open('skills/antislop/gemini-extension.json')); print(d['version'])" 2>/dev/null || echo "")
-            if [ -z "$GEMINI_VER" ]; then
-              fail "skills/antislop/gemini-extension.json: could not parse version"
-            elif [ "$SKILL_VER" != "$GEMINI_VER" ]; then
-              fail "version drift: SKILL.md=$SKILL_VER, gemini-extension.json=$GEMINI_VER"
-            else
-              echo "  PASS  skills/antislop/SKILL.md=$SKILL_VER == gemini-extension.json=$GEMINI_VER"
-            fi
-          else
-            echo "  SKIP  gemini-extension.json not found"
-          fi
-
-          # ------------------------------------------------------------------
-          # 4. Line count (warn at 500, agent file excluded)
-          # ------------------------------------------------------------------
-          echo ""
-          echo "=== Line count (limit: 500) ==="
-          while IFS= read -r -d '' file; do
-            lines=$(wc -l < "$file")
-            if [ "$lines" -gt 500 ]; then
-              echo "  WARN  $file: $lines lines (over 500 — consider references/ for long content)"
-            else
-              echo "  PASS  $file: $lines lines"
-            fi
-          done < <(find . -name SKILL.md -print0)
-
-          # ------------------------------------------------------------------
-          # 6. Required sections
-          # ------------------------------------------------------------------
-          echo ""
-          echo "=== Required sections ==="
-          while IFS= read -r -d '' file; do
-            if ! grep -q '## When NOT to use' "$file"; then
-              fail "$file: missing '## When NOT to use' section"
-            else
-              echo "  PASS  $file: When NOT to use"
-            fi
-          done < <(find . -name SKILL.md -print0)
-
-          # ------------------------------------------------------------------
-          # 7. No emoji in rule headings (skipped on non-GNU grep)
-          # ------------------------------------------------------------------
-          echo ""
-          echo "=== Emoji-free headings ==="
-          while IFS= read -r -d '' file; do
-            if grep -qP '^#{1,6}\s.*[\x{1F300}-\x{1F9FF}]' "$file" 2>/dev/null; then
-              matches=$(grep -nP '^#{1,6}\s.*[\x{1F300}-\x{1F9FF}]' "$file")
-              fail "$file: emoji(s) in heading(s): $(echo "$matches" | tr '\n' ' ')"
-            elif ! echo | grep -qP '' 2>/dev/null; then
-              echo "  SKIP  $file (GNU grep not available — emoji check skipped)"
-            else
-              echo "  PASS  $file: no emojis in headings"
-            fi
-          done < <(find . -name SKILL.md -print0)
-
-          # ------------------------------------------------------------------
-          # Summary
-          # ------------------------------------------------------------------
-          echo ""
-          echo "============================================="
-          if [ "$FAILURES" -eq 0 ]; then
-            echo "ALL CHECKS PASSED"
-          else
-            echo "$FAILURES failure(s) — see above"
+          if [[ ! "${EVENT_SHA}" =~ ^[0-9a-f]{40}$ ]]; then
+            echo "Invalid checkout SHA" >&2
             exit 1
           fi
+          git init -q .
+          # This public repository can be fetched anonymously. The runner's
+          # documented internal route is HTTP-only, so never attach a token or
+          # askpass helper to this transport.
+          git remote add origin \
+            "http://192.168.1.62:3000/drunkrhin0/antislop.git"
+          GIT_TERMINAL_PROMPT=0 git fetch --depth 1 origin "${EVENT_SHA}"
+          git checkout FETCH_HEAD
+
+      - name: Run combined propagation report
+        run: bash check.sh
+
+      - name: Validate repository invariants
+        run: python3 validate.py --skills-dir skills --expect-version-from rules.json
+
+      - name: Check generated artifacts match registry
+        run: python3 generate.py --check
+
+      - name: Run test suite
+        run: python3 -m unittest discover -s tests -v
+
+      - name: Test release packaging end to end
+        run: bash scripts/test-release-e2e.sh
+
+      - name: Build portable plugin archive
+        run: bash scripts/build-plugin-archive.sh dist
+
+      - name: Upload portable plugin archive
+        uses: actions/upload-artifact@v3
+        with:
+          name: antislop-plugin-${{ github.sha }}
+          path: |
+            dist/antislop-plugin-*.zip
+            dist/antislop-plugin-*.zip.sha256
+          retention-days: 30

@@ -1,0 +1,277 @@
+{
+  "skill_name": "antislop-human-review",
+  "schema": "human-review-fixtures-1",
+  "evals": [
+    {
+      "id": "hr-markdown-exact-wording-edit",
+      "scenario": "markdown-exact-wording-edit",
+      "rationale": "Markdown opens rendered for review, but the Markdown source stays the write target; the author's exact after text is carried across verbatim.",
+      "source": "# Roadmap\n\nWe ship the audit CLI in the next release.\n",
+      "expected_source_path": "docs/roadmap.md",
+      "expected_verbatim_after": "We ship the audit CLI this quarter.",
+      "expected_source_edit": "# Roadmap\n\nWe ship the audit CLI this quarter.\n",
+      "batch": {
+        "status": "feedback",
+        "pages": [
+          {
+            "file": "/abs/path/docs/roadmap.md",
+            "comments": [],
+            "edits": [
+              {
+                "label": "Roadmap intro",
+                "kind": "edited",
+                "before": "We ship the audit CLI in the next release.",
+                "after": "We ship the audit CLI this quarter.",
+                "after_html": null
+              }
+            ]
+          }
+        ],
+        "overall_note": null
+      },
+      "expected_pages": 1,
+      "timeout": false,
+      "acceptance": false,
+      "requires_post_audit": true,
+      "expects_ack": true
+    },
+    {
+      "id": "hr-formatting-edit-after-html",
+      "scenario": "formatting-edit-after-html",
+      "rationale": "before_html and after_html record a formatting change, not new words; the formatting is translated into the source syntax, with strong becoming bold in Markdown.",
+      "source": "# Launch\n\nThe deadline is set.\n",
+      "expected_source_path": "posts/launch.md",
+      "expected_verbatim_after": "The deadline is set.",
+      "expected_source_edit": "# Launch\n\nThe **deadline** is set.\n",
+      "batch": {
+        "status": "feedback",
+        "pages": [
+          {
+            "file": "/abs/path/posts/launch.md",
+            "comments": [],
+            "edits": [
+              {
+                "label": "Deadline line",
+                "kind": "edited",
+                "before": "The deadline is set.",
+                "after": "The deadline is set.",
+                "before_html": "<p>The deadline is set.</p>",
+                "after_html": "<p>The <strong>deadline</strong> is set.</p>"
+              }
+            ]
+          }
+        ],
+        "overall_note": null
+      },
+      "expected_pages": 1,
+      "timeout": false,
+      "acceptance": false,
+      "requires_post_audit": true,
+      "expects_ack": true
+    },
+    {
+      "id": "hr-anchored-selection-comment",
+      "scenario": "anchored-selection-comment",
+      "rationale": "A selection comment carries a quote and an anchor; the exact quoted string appears in the source and locates the comment target.",
+      "source": "# Notes\n\nSet the retry limit to five before you deploy.\n",
+      "expected_source_path": "docs/notes.md",
+      "expected_verbatim_after": null,
+      "expected_source_edit": "# Notes\n\nSet the retry limit to five before you deploy.\n",
+      "batch": {
+        "status": "feedback",
+        "pages": [
+          {
+            "file": "/abs/path/docs/notes.md",
+            "comments": [
+              {
+                "id": "c_1",
+                "kind": "selection",
+                "quote": "retry limit to five",
+                "anchor": {
+                  "prefix": "Set the ",
+                  "quote": "retry limit to five",
+                  "suffix": " before you deploy"
+                },
+                "feedback": "Should this be five or eight?"
+              }
+            ],
+            "edits": []
+          }
+        ],
+        "overall_note": null
+      },
+      "expected_pages": 1,
+      "timeout": false,
+      "acceptance": false,
+      "requires_post_audit": true,
+      "expects_ack": true
+    },
+    {
+      "id": "hr-multiple-pages-batch",
+      "scenario": "multiple-pages-batch",
+      "rationale": "One batch can cover several pages; every page in the batch must be handled, not just the first.",
+      "source": "# Intro\n\nThe index page opens with a lead.\n",
+      "expected_source_path": "site/index.md",
+      "expected_verbatim_after": [
+        "The index page opens with a strong lead.",
+        "The about page keeps one verified claim."
+      ],
+      "expected_source_edit": "# Intro\n\nThe index page opens with a strong lead.\n",
+      "batch": {
+        "status": "feedback",
+        "pages": [
+          {
+            "file": "/abs/path/site/index.md",
+            "comments": [],
+            "edits": [
+              {
+                "label": "Lead line",
+                "kind": "edited",
+                "before": "The index page opens with a lead.",
+                "after": "The index page opens with a strong lead.",
+                "after_html": null
+              }
+            ]
+          },
+          {
+            "file": "/abs/path/site/about.md",
+            "comments": [],
+            "edits": [
+              {
+                "label": "About line",
+                "kind": "edited",
+                "before": "The about page keeps one claim.",
+                "after": "The about page keeps one verified claim.",
+                "after_html": null
+              }
+            ]
+          }
+        ],
+        "overall_note": "Tighten both pages."
+      },
+      "expected_pages": 2,
+      "timeout": false,
+      "acceptance": false,
+      "requires_post_audit": true,
+      "expects_ack": true
+    },
+    {
+      "id": "hr-localhost-url-edit-to-source",
+      "scenario": "localhost-url-edit-to-source",
+      "rationale": "A page with kind url was edited directly in the review UI; its url names a localhost route, not a writable file. The assistant locates the matching source and applies the edit there, never writing the rendered HTTP response back.",
+      "source": "export function WikiPage() {\n  return <p>Welcome to the wiki.</p>;\n}\n",
+      "expected_source_path": "src/wiki/page.tsx",
+      "expected_verbatim_after": "Welcome to the wiki, where edits land in source.",
+      "expected_source_edit": "export function WikiPage() {\n  return <p>Welcome to the wiki, where edits land in source.</p>;\n}\n",
+      "batch": {
+        "status": "feedback",
+        "pages": [
+          {
+            "kind": "url",
+            "url": "http://localhost:3000/wiki",
+            "file": "http://localhost:3000/wiki",
+            "comments": [],
+            "edits": [
+              {
+                "label": "Wiki intro",
+                "kind": "edited",
+                "before": "Welcome to the wiki.",
+                "after": "Welcome to the wiki, where edits land in source.",
+                "after_html": null
+              }
+            ]
+          }
+        ],
+        "overall_note": null
+      },
+      "expected_pages": 1,
+      "timeout": false,
+      "acceptance": false,
+      "requires_post_audit": true,
+      "expects_ack": true
+    },
+    {
+      "id": "hr-timeout-not-acceptance",
+      "scenario": "timeout-not-acceptance",
+      "rationale": "A timeout means no feedback arrived yet; it is never acceptance and never approval.",
+      "source": "# Draft\n\nNothing has been edited yet.\n",
+      "expected_source_path": "draft/notes.md",
+      "expected_verbatim_after": null,
+      "expected_source_edit": null,
+      "batch": {
+        "status": "timeout"
+      },
+      "expected_pages": 0,
+      "timeout": true,
+      "acceptance": false,
+      "requires_post_audit": true,
+      "expects_ack": false
+    },
+    {
+      "id": "hr-ack-after-all-edits",
+      "scenario": "acknowledgement-after-all-edits",
+      "rationale": "The acknowledgement runs after every page in the batch has been handled, so the handled batch is not reprocessed.",
+      "source": "# Plan\n\nRoll out in stages.\n",
+      "expected_source_path": "docs/plan.md",
+      "expected_verbatim_after": "Roll out in two stages.",
+      "expected_source_edit": "# Plan\n\nRoll out in two stages.\n",
+      "batch": {
+        "status": "feedback",
+        "pages": [
+          {
+            "file": "/abs/path/docs/plan.md",
+            "comments": [],
+            "edits": [
+              {
+                "label": "Rollout line",
+                "kind": "edited",
+                "before": "Roll out in stages.",
+                "after": "Roll out in two stages.",
+                "after_html": null
+              }
+            ]
+          }
+        ],
+        "overall_note": null
+      },
+      "expected_pages": 1,
+      "timeout": false,
+      "acceptance": false,
+      "requires_post_audit": true,
+      "expects_ack": true
+    },
+    {
+      "id": "hr-post-review-audit",
+      "scenario": "post-review-audit",
+      "rationale": "The final antislop runs after the human edits are applied, so the audit sees the revised source, not the pre-edit draft.",
+      "source": "# Release\n\nWe ship on Friday.\n",
+      "expected_source_path": "posts/release.md",
+      "expected_verbatim_after": "We ship on Friday, verified.",
+      "expected_source_edit": "# Release\n\nWe ship on Friday, verified.\n",
+      "batch": {
+        "status": "feedback",
+        "pages": [
+          {
+            "file": "/abs/path/posts/release.md",
+            "comments": [],
+            "edits": [
+              {
+                "label": "Ship line",
+                "kind": "edited",
+                "before": "We ship on Friday.",
+                "after": "We ship on Friday, verified.",
+                "after_html": null
+              }
+            ]
+          }
+        ],
+        "overall_note": null
+      },
+      "expected_pages": 1,
+      "timeout": false,
+      "acceptance": false,
+      "requires_post_audit": true,
+      "expects_ack": true
+    }
+  ]
+}

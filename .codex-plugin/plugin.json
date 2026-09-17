@@ -1,0 +1,37 @@
+{
+  "name": "antislop",
+  "version": "3.0.0",
+  "description": "Two prose skills: Antislop routes writing and audit work, while generate-slop creates explicit synthetic fixtures.",
+  "author": {
+    "name": "Rami Tawil",
+    "url": "https://github.com/drunkrhin0"
+  },
+  "homepage": "https://github.com/drunkrhin0/antislop",
+  "repository": "https://github.com/drunkrhin0/antislop",
+  "license": "MIT",
+  "keywords": [
+    "writing",
+    "editing",
+    "prose",
+    "style-guide",
+    "linting"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Antislop",
+    "shortDescription": "Write, audit, preserve, or generate prose fixtures.",
+  "longDescription": "Use Antislop for writing and audit work, or explicitly invoke generate-slop for controlled synthetic fixtures.",
+    "developerName": "Rami Tawil",
+    "category": "Productivity",
+    "capabilities": [
+      "Write",
+      "Analyze"
+    ],
+    "websiteURL": "https://github.com/drunkrhin0/antislop",
+    "defaultPrompt": [
+      "Rewrite this prose while preserving its facts and voice.",
+      "Audit this text for formulaic writing patterns.",
+      "Generate a synthetic high-density slop fixture for this topic."
+    ]
+  }
+}

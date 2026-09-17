@@ -1,0 +1,16 @@
+---
+name: "totally-different-name"
+displayName: "Test Power Fixture"
+description: "This is a test fixture. It exists to validate one specific check. Nothing else about it matters."
+keywords: ["alpha", "bravo", "charlie", "delta", "echo"]
+author: "Test Author"
+---
+
+# Test Power
+
+**Version:** 1.0.0
+
+## When to Load Steering Files
+
+- **one.md**: trigger description for the first steering file.
+- **two.md**: trigger description for the second steering file.

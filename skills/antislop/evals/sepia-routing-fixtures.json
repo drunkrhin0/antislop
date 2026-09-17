@@ -1,0 +1,351 @@
+{
+  "skill_name": "antislop-sepia-routing",
+  "schema": "sepia-routing-fixtures-1",
+  "evals": [
+    {
+      "id": "sepia-review-never-rewrites",
+      "operation": "review",
+      "venue": "ticket",
+      "source": "We utilize the API to fetch records.",
+      "expected_decision": "revise",
+      "expected_statuses": {
+        "vocab-utilize": "revise"
+      },
+      "false_positive_rationale": "A deterministic banned word is a finding with a quoted span, rule, status, and reason; the review never rewrites the sentence.",
+      "reviewer_notes": "Review reports and stops; no rewrite path exists."
+    },
+    {
+      "id": "sepia-review-refactor-authority-differs",
+      "operation": "review",
+      "venue": "ticket",
+      "source": "We utilize the API to fetch records.",
+      "expected_decision": "revise",
+      "expected_statuses": {
+        "vocab-utilize": "revise"
+      },
+      "false_positive_rationale": "The same paragraph under Review reports a finding and leaves the artifact unchanged; the matching Refactor fixture applies the accepted edit.",
+      "reviewer_notes": "Output authority differs by operation: review reports, refactor edits."
+    },
+    {
+      "id": "sepia-refactor-authority-differs",
+      "operation": "refactor",
+      "venue": "ticket",
+      "source": "We utilize the API to fetch records.",
+      "accepted_edits": [
+        {
+          "rule_id": "vocab-utilize",
+          "replacement": "use"
+        }
+      ],
+      "expected_decision": "applied",
+      "expected_applied_rule_ids": ["vocab-utilize"],
+      "expected_text": "We use the API to fetch records.",
+      "false_positive_rationale": "Refactor applies only the accepted minimal edit; the same source the Review fixture left untouched is edited here.",
+      "reviewer_notes": "The authority difference proves review and refactor are distinct operations."
+    },
+    {
+      "id": "sepia-review-postmortem-features-present",
+      "operation": "review",
+      "venue": "postmortem",
+      "source": "At 02:14 the queue backed up because the worker lost its lease. 40% of users saw errors for 12 minutes. We don't know why the alert was silent.",
+      "expected_decision": "no-finding",
+      "expected_venue_statuses": {
+        "timeline": "keep",
+        "impact": "keep",
+        "contributing-factors": "keep",
+        "uncertainty": "keep",
+        "repro": "n/a",
+        "acceptance": "n/a"
+      },
+      "false_positive_rationale": "A postmortem that supplies a timeline, impact in numbers, a causal chain, and honest uncertainty meets every venue expectation.",
+      "reviewer_notes": "Venue routing activates distinct postmortem expectations."
+    },
+    {
+      "id": "sepia-review-postmortem-missing-timeline",
+      "operation": "review",
+      "venue": "postmortem",
+      "source": "The service went down. It came back up. We changed the process afterwards.",
+      "expected_decision": "revise",
+      "expected_venue_statuses": {
+        "timeline": "missing",
+        "impact": "missing",
+        "contributing-factors": "missing",
+        "uncertainty": "missing"
+      },
+      "false_positive_rationale": "A postmortem without a timeline, impact, contributing factors, or uncertainty reports each as a missing venue expectation.",
+      "reviewer_notes": "The decision moves to revise when an applicable venue feature is absent."
+    },
+    {
+      "id": "sepia-review-n-a-by-venue",
+      "operation": "review",
+      "venue": "ticket",
+      "source": "Reproduce with version 2.4: run `fetch --all`. When the cache is cold, then three records come back instead of one. Opened at 09:00.",
+      "expected_decision": "no-finding",
+      "expected_venue_statuses": {
+        "repro": "keep",
+        "acceptance": "keep",
+        "timeline": "n/a"
+      },
+      "false_positive_rationale": "A timeline is a postmortem feature and does not apply to a ticket venue, so it is recorded n/a instead of being demanded.",
+      "reviewer_notes": "n/a records that a structural feature does not apply to the venue."
+    },
+    {
+      "id": "sepia-review-overcorrection-formal-semicolon",
+      "operation": "review",
+      "venue": "technical-article",
+      "source": "The deploy failed; the cache kept evicting entries; users saw timeouts for 40 minutes.",
+      "expected_decision": "over-correction",
+      "expected_statuses": {
+        "fmt-semicolon": "over-correction"
+      },
+      "false_positive_rationale": "A formal-register semicolon cluster in a technical article is the rule's documented exception; applying the rule would flatten valid register.",
+      "reviewer_notes": "over-correction records where a rule would flatten valid voice or structure."
+    },
+    {
+      "id": "sepia-review-overcorrection-author-habit",
+      "operation": "review",
+      "venue": "ticket",
+      "author_habits": ["the author writes 'utilize' in their own tickets"],
+      "source": "We utilize the API to fetch records. Reproduce with version 2.4: run `fetch`. When the cache is cold, then one record should come back.",
+      "expected_decision": "over-correction",
+      "expected_statuses": {
+        "vocab-utilize": "over-correction"
+      },
+      "false_positive_rationale": "The flagged term is the author's verified habit; applying the rule would flatten their voice, so the finding is over-correction.",
+      "reviewer_notes": "Author habits are recorded as over-correction, never reinterpreted as an AI signal."
+    },
+    {
+      "id": "sepia-review-quoted-banned-word",
+      "operation": "review",
+      "venue": "developer-reply",
+      "source": "Fixed the review comment; the writer quoted \"leverage\" in their note, and I'm not sure why.",
+      "expected_decision": "keep",
+      "expected_statuses": {
+        "vocab-leverage": "keep"
+      },
+      "false_positive_rationale": "A banned word inside quoted material keeps its texture; the false-positive case proves quoting is not flagged.",
+      "reviewer_notes": "Quoted banned words are a false-positive case."
+    },
+    {
+      "id": "sepia-review-conventional-headings",
+      "operation": "review",
+      "venue": "release-note",
+      "source": "## Added\n\nAdded a retry queue.\n\n## Removed\n\nRemoved the legacy scheduler.",
+      "expected_decision": "keep",
+      "expected_statuses": {
+        "struct-fragmented-headers": "keep"
+      },
+      "false_positive_rationale": "Conventional heading-plus-first-line pairs are earned in a release note's template; the false-positive case proves they are not flagged.",
+      "reviewer_notes": "Conventional headings are a false-positive case."
+    },
+    {
+      "id": "sepia-review-qud-reflection-tail",
+      "operation": "review",
+      "venue": "technical-article",
+      "source": "The deploy broke the cold start on Tuesday. It cut cold start from 1.8s to 0.4s.\n\nThe team changed the alert threshold on Friday. The monitor went quiet.\n\nIn the end, what mattered was the team's resilience.",
+      "expected_decision": "cut",
+      "expected_statuses": {
+        "sepia-qud-reflection-tail": "cut"
+      },
+      "false_positive_rationale": "The final paragraph opens with a generic reflection marker after earlier paragraphs changed topic without earning it; the deterministic condition fires.",
+      "reviewer_notes": "The reflection tail is the exact deterministic QUD condition; the paragraph question check stays guidance."
+    },
+    {
+      "id": "sepia-review-fiction-valid",
+      "operation": "review",
+      "profile": "fiction",
+      "source": "The garden went quiet.\n\nThe door stayed shut. A neighbor called, once.\n\nThe tomatoes ripened anyway.",
+      "expected_decision": "no-finding",
+      "false_positive_rationale": "Unresolved tension and irregular paragraphs are valid fiction structure; under the opt-in fiction profile they produce no finding.",
+      "reviewer_notes": "Fiction guidance is opt-in and never universal."
+    },
+    {
+      "id": "sepia-review-fiction-relaxes-mechanism",
+      "operation": "review",
+      "profile": "fiction",
+      "source": "The silence caused the garden to wither. A door stayed shut. The tomatoes ripened anyway.",
+      "expected_decision": "over-correction",
+      "expected_statuses": {
+        "mechanism-causality": "over-correction"
+      },
+      "false_positive_rationale": "Narrative causality is valid fiction voice; the mechanism rule is relaxed to over-correction under the fiction profile.",
+      "reviewer_notes": "The same claim under general asks the author; under fiction it is recorded as over-correction."
+    },
+    {
+      "id": "sepia-review-fiction-not-relaxed-under-general",
+      "operation": "review",
+      "venue": "postmortem",
+      "source": "The silence caused the garden to wither. A door stayed shut. The tomatoes ripened anyway.",
+      "expected_decision": "ask-author",
+      "expected_statuses": {
+        "mechanism-causality": "ask-author"
+      },
+      "false_positive_rationale": "Under the general profile the fiction relaxations do not apply; the same causal claim asks the author for the mechanism.",
+      "reviewer_notes": "Fiction guidance cannot affect general or technical scoring."
+    },
+    {
+      "id": "sepia-refactor-applies-only-accepted",
+      "operation": "refactor",
+      "venue": "ticket",
+      "source": "We utilize the API to fetch records and leverage the cache.",
+      "accepted_edits": [
+        {
+          "rule_id": "vocab-utilize",
+          "replacement": "use"
+        }
+      ],
+      "expected_decision": "applied",
+      "expected_applied_rule_ids": ["vocab-utilize"],
+      "expected_rejected_rule_ids": ["vocab-leverage"],
+      "expected_unresolved_rule_ids": ["vocab-leverage"],
+      "expected_unchanged_text": "and leverage the cache.",
+      "false_positive_rationale": "Refactor applies only the accepted edit; the unaccepted finding is reported as rejected and remains in the candidate as unresolved.",
+      "reviewer_notes": "Accepted minimal edits only; rejected and unresolved findings are reported."
+    },
+    {
+      "id": "sepia-refactor-reports-unresolved",
+      "operation": "refactor",
+      "venue": "ticket",
+      "source": "We utilize the API. It's worth noting that it's fast.",
+      "accepted_edits": [
+        {
+          "rule_id": "vocab-utilize",
+          "replacement": "use"
+        }
+      ],
+      "expected_decision": "applied",
+      "expected_applied_rule_ids": ["vocab-utilize"],
+      "expected_unresolved_rule_ids": ["phrase-worth-noting"],
+      "false_positive_rationale": "The accepted edit clears its finding; the finding with no registered literal correction stays and is reported as unresolved, never silently fixed.",
+      "reviewer_notes": "Unresolved findings are reported, never auto-repaired."
+    },
+    {
+      "id": "sepia-refactor-no-change",
+      "operation": "refactor",
+      "venue": "ticket",
+      "source": "We utilize the API to fetch records.",
+      "expected_decision": "no-change",
+      "false_positive_rationale": "With no accepted edits the refactor lists the full finding set and changes nothing.",
+      "reviewer_notes": "No accepted edits means no change."
+    },
+    {
+      "id": "sepia-recreate-postmortem-keeps-inventory",
+      "operation": "recreate",
+      "venue": "postmortem",
+      "source": "At 02:14 the queue backed up because the worker lost its lease. 40% of users saw errors for 12 minutes. We don't know why the alert was silent.",
+      "candidate": "The queue backed up because the worker lost its lease. 40% of users saw errors for 12 minutes. We don't know why the alert was silent. It started at 02:14.",
+      "required_facts": [
+        "40% of users saw errors"
+      ],
+      "expected_decision": "accept",
+      "false_positive_rationale": "The fresh draft keeps the timeline, impact, contributing factors, and uncertainty the source supplied.",
+      "reviewer_notes": "Recreate extracts the source inventory and verifies the candidate keeps it."
+    },
+    {
+      "id": "sepia-recreate-postmortem-drops-timeline",
+      "operation": "recreate",
+      "venue": "postmortem",
+      "source": "At 02:14 the queue backed up because the worker lost its lease. 40% of users saw errors for 12 minutes. We don't know why the alert was silent.",
+      "candidate": "The queue backed up because the worker lost its lease. 40% of users saw errors. We are investigating.",
+      "required_facts": [
+        "40% of users saw errors"
+      ],
+      "expected_decision": "reject",
+      "expected_missing_kinds": ["venue_feature"],
+      "false_positive_rationale": "A postmortem draft that drops the timeline, the impact duration, and the uncertainty fails the venue preservation check.",
+      "reviewer_notes": "The postmortem must keep timeline, impact, contributing factors, and uncertainty."
+    },
+    {
+      "id": "sepia-recreate-ticket-keeps-repro-acceptance",
+      "operation": "recreate",
+      "venue": "ticket",
+      "source": "Reproduce with version 2.4: run `fetch --all`. When the cache is cold, then three records come back instead of one.",
+      "candidate": "Run `fetch --all` with version 2.4. When the cache is cold, then three records come back instead of one.",
+      "required_facts": [
+        "three records come back instead of one"
+      ],
+      "expected_decision": "accept",
+      "false_positive_rationale": "The ticket draft keeps the reproduction steps and the acceptance condition.",
+      "reviewer_notes": "The ticket must keep reproduction steps and acceptance conditions."
+    },
+    {
+      "id": "sepia-recreate-ticket-drops-acceptance",
+      "operation": "recreate",
+      "venue": "ticket",
+      "source": "Reproduce with version 2.4: run `fetch --all`. When the cache is cold, then three records come back instead of one.",
+      "candidate": "The cache returns wrong results sometimes.",
+      "required_facts": [
+        "three records come back instead of one"
+      ],
+      "expected_decision": "reject",
+      "expected_missing_kinds": ["venue_feature", "fact"],
+      "false_positive_rationale": "A ticket draft that drops the reproduction steps and the acceptance condition fails preservation.",
+      "reviewer_notes": "Reproduction steps and acceptance conditions are the ticket's preserved inventory."
+    },
+    {
+      "id": "sepia-recreate-developer-reply-verified-action-caveat",
+      "operation": "recreate",
+      "venue": "developer-reply",
+      "source": "Fixed the retry bug. The queue drops jobs on redeploy, but only when the lease expires; I'm not sure if the alert fires.",
+      "candidate": "Fixed. The queue drops jobs when the lease expires on redeploy. I'm not sure the alert fires.",
+      "expected_decision": "accept",
+      "false_positive_rationale": "The reply leads with the verified action and keeps the honest caveat.",
+      "reviewer_notes": "The developer reply must lead with the verified action and its caveat."
+    },
+    {
+      "id": "sepia-recreate-developer-reply-drops-caveat",
+      "operation": "recreate",
+      "venue": "developer-reply",
+      "source": "Fixed the retry bug. The queue drops jobs on redeploy, but only when the lease expires; I'm not sure if the alert fires.",
+      "candidate": "Fixed. The queue drops jobs when the lease expires on redeploy.",
+      "expected_decision": "reject",
+      "expected_missing_kinds": ["venue_feature"],
+      "false_positive_rationale": "A reply that keeps the verified action but drops the uncertainty caveat fails the venue preservation check.",
+      "reviewer_notes": "The caveat is part of the developer-reply inventory."
+    },
+    {
+      "id": "sepia-recreate-release-note-grounded",
+      "operation": "recreate",
+      "venue": "release-note",
+      "source": "Breaking: the retry flag is renamed to `--retries`. Cold start drops from 1.8s to 0.4s.",
+      "candidate": "Breaking change: `--retries` replaces the old flag. Cold start drops from 1.8s to 0.4s.",
+      "required_facts": [
+        "Cold start drops from 1.8s to 0.4s"
+      ],
+      "expected_decision": "accept",
+      "false_positive_rationale": "The release note is grounded in the supplied changes and keeps the breaking-change marker.",
+      "reviewer_notes": "The release note must stay grounded in supplied changes."
+    },
+    {
+      "id": "sepia-recreate-release-note-drops-fact",
+      "operation": "recreate",
+      "venue": "release-note",
+      "source": "Breaking: the retry flag is renamed to `--retries`. Cold start drops from 1.8s to 0.4s.",
+      "candidate": "We improved performance and reliability.",
+      "required_facts": [
+        "Cold start drops from 1.8s to 0.4s"
+      ],
+      "expected_decision": "reject",
+      "expected_missing_kinds": ["fact", "venue_feature"],
+      "false_positive_rationale": "A release note with no artifact behind its claims fails preservation; every claim must carry its supplied change.",
+      "reviewer_notes": "A release note grounded in supplied changes, never inflated."
+    },
+    {
+      "id": "sepia-recreate-extracts-facts-quotes-claims",
+      "operation": "recreate",
+      "venue": "postmortem",
+      "source": "The runbook says: \"always drain the queue first.\" The worker lost its lease at 02:14, which caused the backlog.",
+      "candidate": "The worker lost its lease at 02:14.",
+      "required_facts": [
+        "The worker lost its lease"
+      ],
+      "declared_claims": [
+        "which caused the backlog"
+      ],
+      "expected_decision": "reject",
+      "expected_missing_kinds": ["quote", "claim"],
+      "false_positive_rationale": "Recreate extracts facts, claims, and quotes from the source; a draft that drops the quoted runbook line and the causal claim fails verification while keeping the fact.",
+      "reviewer_notes": "Source extraction happens before drafting and is verified afterward."
+    }
+  ]
+}

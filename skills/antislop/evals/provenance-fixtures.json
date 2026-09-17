@@ -1,0 +1,254 @@
+{
+  "skill_name": "antislop-provenance",
+  "schema": "provenance-fixtures-1",
+  "evals": [
+    {
+      "id": "provenance-house-rule-em-dash",
+      "kind": "rule",
+      "rule_id": "fmt-em-dash",
+      "detection": "contract",
+      "profile": "general",
+      "source": "The platform is faster, simpler, and more secure\u2014or so the pitch claims.",
+      "expected_evidence_class": "project-policy",
+      "expected_decay": "current",
+      "rationale": "A project house rule with no external study stays forbidden, deterministic, universal, and zero-count even when corpus observations change.",
+      "reviewer_notes": "Zero-em-dash policy is stable project policy."
+    },
+    {
+      "id": "provenance-stale-lexical-cutoff",
+      "kind": "rule",
+      "rule_id": "phrase-knowledge-cutoff",
+      "detection": "score",
+      "profile": "general",
+      "source": "As of my knowledge cutoff, the API had shipped three releases.",
+      "expected_finding": true,
+      "expected_evidence_class": "upstream-evidence",
+      "expected_decay": "review",
+      "rationale": "A dated lexical heuristic marked for review stays active and still fires; listing it in the review queue never disables it automatically.",
+      "reviewer_notes": "Review-queue membership does not change review_mode or semantic_type."
+    },
+    {
+      "id": "provenance-structural-sentence-variance",
+      "kind": "rule",
+      "rule_id": "struct-sentence-length-variance",
+      "detection": "structural",
+      "profile": "general",
+      "source": "The parser validates every incoming request before the handler thread begins its work. The worker drains the pending queue and writes a complete audit record for each task. The scheduler retries each failed job with a fixed exponential backoff policy applied. The gateway checks the bearer token and enforces the per-tenant quota before accepting. The runner collects the finished results and posts them to the shared durable store.",
+      "expected_finding": true,
+      "expected_evidence_class": "project-fixture",
+      "expected_decay": "current",
+      "rationale": "A structural rule with local executable fixtures is pinned by this repo's detector and fixture corpus, with the upstream Tengo metric recorded as design evidence.",
+      "reviewer_notes": "Local fixtures pin the detector behavior."
+    },
+    {
+      "id": "provenance-structural-passive-density",
+      "kind": "rule",
+      "rule_id": "struct-passive-density",
+      "detection": "structural",
+      "profile": "general",
+      "source": "The proposal was reviewed by the committee. Several concerns were raised during the meeting. The budget is considered adequate for the first phase. A decision has been made to proceed. The vendor was selected after a long evaluation. Implementation details will be finalized next quarter.",
+      "expected_finding": true,
+      "expected_evidence_class": "project-fixture",
+      "expected_decay": "current",
+      "rationale": "A strict structural rule with an external numeric threshold (35%+ passive) names its identified source and its local fixture, so the threshold cannot drift into an unsourced strict rule.",
+      "reviewer_notes": "Strict detector rule pins its local fixture."
+    },
+    {
+      "id": "provenance-structural-paragraph-duplication",
+      "kind": "rule",
+      "rule_id": "struct-paragraph-duplication",
+      "detection": "structural",
+      "profile": "general",
+      "source": "The deployment pipeline compiles the binary, runs the unit test suite, and pushes the container image to the registry before the load balancer cuts over to the new version.\n\nThe deployment pipeline compiles the binary, runs the unit test suite, and pushes the container image to the registry before the load balancer cuts over to the patched version.",
+      "expected_finding": true,
+      "expected_evidence_class": "project-fixture",
+      "expected_decay": "current",
+      "rationale": "Near-verbatim paragraph duplication is strict and pins its identified source and local fixture the same way.",
+      "reviewer_notes": "Strict duplication finding."
+    },
+    {
+      "id": "provenance-nominalization-positive",
+      "kind": "candidate",
+      "candidate_id": "candidate-nominalization",
+      "profile": "general",
+      "source": "The implementation of the utilization of this optimization requires the allocation of additional resources.",
+      "expected_clean": false,
+      "rationale": "Buried verbs as nouns (implementation, utilization, optimization, allocation) hide the action behind weak verbs.",
+      "reviewer_notes": "Positive case for the nominalization candidate."
+    },
+    {
+      "id": "provenance-nominalization-clean-length",
+      "kind": "candidate",
+      "candidate_id": "candidate-nominalization",
+      "profile": "general",
+      "source": "We implemented this optimization and allocated the additional resources the work requires.",
+      "expected_clean": true,
+      "clean_kind": "matched-length",
+      "rationale": "The same content written with verbs stays clean at a matched length, so the candidate cannot be accused of firing on text length.",
+      "reviewer_notes": "Matched-length clean case."
+    },
+    {
+      "id": "provenance-nominalization-clean-profile",
+      "kind": "candidate",
+      "candidate_id": "candidate-nominalization",
+      "profile": "general",
+      "source": "The team implemented the optimization and allocated the additional resources that the second review required before the scheduled release.",
+      "expected_clean": true,
+      "clean_kind": "matched-profile",
+      "rationale": "A clean general-profile case at a clearly different length proves the candidate tracks nominalization, not profile.",
+      "reviewer_notes": "Matched-profile clean case."
+    },
+    {
+      "id": "provenance-scientific-marketing",
+      "kind": "candidate",
+      "candidate_id": "candidate-scientific-register",
+      "profile": "general",
+      "source": "Our platform leverages a methodology that optimizes every metric with cutting-edge parameters for maximum synergy.",
+      "expected_clean": false,
+      "rationale": "Scientific register in empty marketing copy borrows authority it has not earned.",
+      "reviewer_notes": "Positive case for scientific-register mismatch."
+    },
+    {
+      "id": "provenance-scientific-research",
+      "kind": "candidate",
+      "candidate_id": "candidate-scientific-register",
+      "profile": "general",
+      "source": "The enzyme catalyzes the reaction, the metabolite accumulates under anaerobic conditions, and the buffer maintains a stable pH across the run.",
+      "expected_clean": true,
+      "clean_kind": "matched-profile",
+      "rationale": "The same scientific terms in research prose are earned register, so the candidate produces no finding there.",
+      "reviewer_notes": "Scientific terms in research prose stay clean."
+    },
+    {
+      "id": "provenance-scientific-clean-length",
+      "kind": "candidate",
+      "candidate_id": "candidate-scientific-register",
+      "profile": "general",
+      "source": "Our platform is fast, simple, and secure, and it ships the features that your team needs today.",
+      "expected_clean": true,
+      "clean_kind": "matched-length",
+      "rationale": "Marketing copy without scientific register stays clean at a matched length.",
+      "reviewer_notes": "Matched-length clean case."
+    },
+    {
+      "id": "provenance-punctuation-sparse",
+      "kind": "candidate",
+      "candidate_id": "candidate-punctuation-scarcity",
+      "profile": "general",
+      "source": "The system loads the configuration file connects to the database then starts the listener without waiting for the health check to finish first",
+      "expected_clean": false,
+      "rationale": "An unpunctuated stretch of clean prose is the sparse-punctuation signal the reviewed project describes.",
+      "reviewer_notes": "Positive case for punctuation scarcity."
+    },
+    {
+      "id": "provenance-punctuation-clean-length",
+      "kind": "candidate",
+      "candidate_id": "candidate-punctuation-scarcity",
+      "profile": "general",
+      "source": "The system loads the configuration file, connects to the database, and then starts the listener, without waiting for the health check to finish first.",
+      "expected_clean": true,
+      "clean_kind": "matched-length",
+      "rationale": "The same content with normal punctuation stays clean at a matched length.",
+      "reviewer_notes": "Matched-length clean case."
+    },
+    {
+      "id": "provenance-punctuation-clean-profile",
+      "kind": "candidate",
+      "candidate_id": "candidate-punctuation-scarcity",
+      "profile": "general",
+      "source": "Load the configuration file; connect to the database; then start the listener only after the health check finishes.",
+      "expected_clean": true,
+      "clean_kind": "matched-profile",
+      "rationale": "A clean general-profile case at a different length proves the candidate tracks punctuation density, not profile.",
+      "reviewer_notes": "Matched-profile clean case."
+    },
+    {
+      "id": "provenance-conjunction-chain",
+      "kind": "candidate",
+      "candidate_id": "candidate-conjunction-chains",
+      "profile": "general",
+      "source": "The daemon loads the config and validates the schema and connects to the database and then starts the listener.",
+      "expected_clean": false,
+      "rationale": "Clauses chained together with repeated 'and' instead of being cut into separate sentences.",
+      "reviewer_notes": "Positive case for a conjunction chain."
+    },
+    {
+      "id": "provenance-grammatical-enumeration",
+      "kind": "candidate",
+      "candidate_id": "candidate-conjunction-chains",
+      "profile": "general",
+      "source": "The daemon loads the config, validates the schema, connects to the database, and then starts the listener.",
+      "expected_clean": true,
+      "clean_kind": [
+        "matched-length",
+        "matched-profile"
+      ],
+      "rationale": "A grammatical enumeration with commas is not a chain and stays clean; it also matches the positive case in both length and profile.",
+      "reviewer_notes": "Enumeration is clean, chain is not."
+    },
+    {
+      "id": "provenance-length-uniform",
+      "kind": "candidate",
+      "candidate_id": "candidate-sentence-length-variation",
+      "profile": "general",
+      "source": "The parser validates every incoming request before the handler thread begins its work. The worker drains the pending queue and writes a complete audit record for each task. The scheduler retries each failed job with a fixed exponential backoff policy applied. The gateway checks the bearer token and enforces the per-tenant quota before accepting. The runner collects the finished results and posts them to the shared durable store.",
+      "expected_clean": false,
+      "rationale": "Sentences of stubbornly similar length run at far below the variation found in human writing.",
+      "reviewer_notes": "Positive case for sentence-length variation."
+    },
+    {
+      "id": "provenance-length-varied",
+      "kind": "candidate",
+      "candidate_id": "candidate-sentence-length-variation",
+      "profile": "general",
+      "source": "Short. Then a much longer sentence that keeps adding clauses and qualifiers until it has clearly run past the length of the first one by a wide margin and a half. Brief again. And one more deliberately long-winded sentence, the kind that drags on with subordinate clauses and extra detail long after the point has been made, to stretch the average. Terse. Final sentence with a middling length that lands between the extremes.",
+      "expected_clean": true,
+      "clean_kind": "matched-length",
+      "rationale": "The same sentence count with real length variation stays clean at a matched length.",
+      "reviewer_notes": "Matched-length clean case."
+    },
+    {
+      "id": "provenance-length-clean-profile",
+      "kind": "candidate",
+      "candidate_id": "candidate-sentence-length-variation",
+      "profile": "general",
+      "source": "Short. Then a long winding sentence that keeps adding clauses and qualifiers past the point, and then a brief fragment. Medium. Another longer sentence with subordinate clauses and extra detail that stretches the average, followed by a terse close.",
+      "expected_clean": true,
+      "clean_kind": "matched-profile",
+      "rationale": "A clean general-profile case at a different length proves the candidate tracks rhythm, not profile.",
+      "reviewer_notes": "Matched-profile clean case."
+    },
+    {
+      "id": "provenance-quote-decorative",
+      "kind": "candidate",
+      "candidate_id": "candidate-quote-voice",
+      "profile": "general",
+      "source": "The CEO said, 'We are deeply committed to innovation and to delivering value for every stakeholder in our ecosystem.'",
+      "expected_clean": false,
+      "rationale": "An overly formal quote that perfectly states a position and matches the surrounding article's style is the flat quote voice the reviewed project flags.",
+      "reviewer_notes": "Positive case for quote voice."
+    },
+    {
+      "id": "provenance-quote-clean-length",
+      "kind": "candidate",
+      "candidate_id": "candidate-quote-voice",
+      "profile": "general",
+      "source": "The CEO said, 'We cut the build time in half and shipped the fix on Friday,' then laughed about the scramble.",
+      "expected_clean": true,
+      "clean_kind": "matched-length",
+      "rationale": "A short, specific, messy quote stays clean at a matched length.",
+      "reviewer_notes": "Matched-length clean case."
+    },
+    {
+      "id": "provenance-quote-clean-profile",
+      "kind": "candidate",
+      "candidate_id": "candidate-quote-voice",
+      "profile": "general",
+      "source": "'That server was down for three hours and nobody noticed,' the engineer said. 'We only caught it because the pager went off at four in the morning.'",
+      "expected_clean": true,
+      "clean_kind": "matched-profile",
+      "rationale": "A real-sounding quote with a distinct voice stays clean in the same profile at a different length.",
+      "reviewer_notes": "Matched-profile clean case."
+    }
+  ]
+}

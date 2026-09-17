@@ -4,7 +4,6 @@ on:
   push:
     tags:
       - 'antislop-v*'
-      - 'antislop-audit-v*'
   workflow_dispatch:
     inputs:
       tag:
@@ -18,27 +17,79 @@ jobs:
   release:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-
       - name: Resolve tag
+        env:
+          MANUAL_TAG: ${{ inputs.tag }}
         run: |
           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
-            echo "TAG=${{ github.event.inputs.tag }}" >> "$GITHUB_ENV"
+            case "${MANUAL_TAG}" in
+              *$'\n'*) exit 1 ;;
+            esac
+            if [[ ! "${MANUAL_TAG}" =~ ^antislop-v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+              echo "::error::release tag must match antislop-vMAJOR.MINOR.PATCH" >&2
+              exit 1
+            fi
+            echo "TAG=${MANUAL_TAG}" >> "$GITHUB_ENV"
           else
+            case "${GITHUB_REF_NAME}" in
+              *$'\n'*) echo "::error::release tag must not contain newlines" >&2; exit 1 ;;
+            esac
+            if [[ ! "${GITHUB_REF_NAME}" =~ ^antislop-v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+              echo "::error::pushed release tag must match antislop-vMAJOR.MINOR.PATCH" >&2
+              exit 1
+            fi
             echo "TAG=${GITHUB_REF_NAME}" >> "$GITHUB_ENV"
           fi
 
-      - name: Build zips
-        run: |
-          SUFFIX="${TAG#antislop-}"
-          zip -r "antislop-${SUFFIX}.zip" skills/antislop/
-          zip -r "antislop-audit-${SUFFIX}.zip" skills/antislop-audit/
-          mkdir -p gemini && cp skills/antislop/GEMINI.md skills/antislop/gemini-extension.json gemini/
-          zip -r "gemini-${SUFFIX}.zip" gemini/
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          ref: ${{ env.TAG }}
+          fetch-depth: 0
 
-      - uses: softprops/action-gh-release@v2
+      - name: Resolve version
+        run: |
+          VERSION="${TAG#antislop-v}"
+          echo "VERSION=${VERSION}" >> "$GITHUB_ENV"
+
+      - name: Install PyYAML
+        env:
+          PYYAML_VERSION: '6.0.3'
+        run: pip install --quiet --break-system-packages "pyyaml==${PYYAML_VERSION}"
+
+      - name: Verify release candidate
+        run: |
+          set -euo pipefail
+          git fetch origin refs/heads/main:refs/remotes/origin/main
+          if ! git merge-base --is-ancestor HEAD refs/remotes/origin/main; then
+            echo "Release candidate is not reachable from protected main" >&2
+            exit 1
+          fi
+          CANONICAL_VERSION=$(python3 -c \
+            'import json; print(json.load(open("rules.json"))["version"])')
+          EXPECTED_TAG="antislop-v${CANONICAL_VERSION}"
+          if [[ "${TAG}" != "${EXPECTED_TAG}" ]]; then
+            echo "Release tag ${TAG} does not match ${EXPECTED_TAG}" >&2
+            exit 1
+          fi
+          python3 generate.py --check
+          python3 validate.py --skills-dir skills --expect-version-from rules.json
+          bash check.sh
+          python3 -m unittest discover -s tests -v
+
+      - name: Build release assets
+        run: |
+          # zip from inside the parent dir so SKILL.md lands in the archive's
+          # top-level folder (antislop/SKILL.md). Zipping skills/antislop/ from
+          # the repo root buries it a level deeper, and drag-and-drop installers
+          # only look one level in.
+          (cd skills && zip -r "../antislop-${VERSION}.zip" antislop/)
+          (cd powers/antislop && zip -r "../../antislop-kiro-${VERSION}.zip" .)
+          bash scripts/build-plugin-archive.sh .
+
+      - uses: softprops/action-gh-release@3bb12739c298aeb8a4eeaf626c5b8d85266b0e65
         with:
           tag_name: ${{ env.TAG }}
+          body_path: docs/release-notes-${{ env.VERSION }}.md
           files: |
             *.zip
           generate_release_notes: true

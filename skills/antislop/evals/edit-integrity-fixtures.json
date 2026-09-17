@@ -1,0 +1,189 @@
+{
+  "skill_name": "antislop-edit-integrity",
+  "schema": "edit-integrity-fixtures-1",
+  "evals": [
+    {
+      "id": "edit-audit-reports-without-rewriting",
+      "operation": "audit",
+      "source": "We delve into the problem.",
+      "candidate": "We delve into the problem.",
+      "expected_decision": "accept",
+      "expected_findings": [
+        {"target": "source", "rule_id": "vocab-delve", "span": [3, 8], "risk_class": "forbidden"}
+      ],
+      "false_positive_rationale": "An audit reports findings and leaves the artifact byte-identical; the finding span stays exact.",
+      "reviewer_notes": "Audit operation over the same source it scores."
+    },
+    {
+      "id": "edit-audit-vs-revise-audit",
+      "operation": "audit",
+      "source": "We delve into the problem.",
+      "candidate": "We dig into the problem.",
+      "expected_decision": "reject",
+      "false_positive_rationale": "The same output that is a valid revise is a rejected audit: audit authority forbids any rewritten passage.",
+      "reviewer_notes": "Different output authority proven against the same source/candidate pair."
+    },
+    {
+      "id": "edit-audit-vs-revise-revise",
+      "operation": "revise",
+      "source": "We delve into the problem.",
+      "candidate": "We dig into the problem.",
+      "expected_decision": "accept",
+      "expected_findings": [
+        {"target": "source", "rule_id": "vocab-delve", "span": [3, 8], "risk_class": "forbidden"}
+      ],
+      "absent_findings": [
+        {"target": "candidate", "rule_id": "vocab-delve"}
+      ],
+      "false_positive_rationale": "A revise may edit the wording; the same candidate that failed as an audit passes as a revise because the edit is the operation's job.",
+      "reviewer_notes": "Same source/candidate pair as edit-audit-vs-revise-audit, opposite decision by operation."
+    },
+    {
+      "id": "edit-revise-keeps-negation-and-terms",
+      "operation": "revise",
+      "source": "We delve into the problem. The access token is not required for read-only calls.",
+      "candidate": "We dig into the problem. The access token is not required for read-only calls.",
+      "expected_decision": "accept",
+      "required_facts": ["The access token is not required for read-only calls"],
+      "semantic_dimensions": {"negation": "preserve"},
+      "expected_findings": [
+        {"target": "source", "rule_id": "vocab-delve", "span": [3, 8], "risk_class": "forbidden"}
+      ],
+      "absent_findings": [
+        {"target": "candidate", "rule_id": "vocab-delve"}
+      ],
+      "false_positive_rationale": "The least invasive revise replaces one banned word and preserves every inventory item, including the negation.",
+      "reviewer_notes": "Revise preserves claims, negation, and the exact finding span."
+    },
+    {
+      "id": "edit-revise-certainty-strengthening-rejected",
+      "operation": "revise",
+      "source": "The feature may cause data loss, so test it first.",
+      "candidate": "The feature causes data loss, so test it first.",
+      "expected_decision": "reject",
+      "semantic_dimensions": {"uncertainty": "preserve"},
+      "false_positive_rationale": "A revise that turns a possible outcome into a certain one strengthens certainty; the modal is load-bearing and must survive.",
+      "reviewer_notes": "Certainty strengthening rejected under revise authority."
+    },
+    {
+      "id": "edit-revise-causal-strengthening-rejected",
+      "operation": "revise",
+      "source": "The delay was probably caused by the lease loss.",
+      "candidate": "The delay was caused by the lease loss.",
+      "expected_decision": "reject",
+      "semantic_dimensions": {"uncertainty": "preserve", "causality": "preserve"},
+      "false_positive_rationale": "Dropping the hedge upgrades a tentative causal claim to a definite one; revise must not strengthen causality or certainty.",
+      "reviewer_notes": "Causal strengthening rejected; the uncertainty marker must stay."
+    },
+    {
+      "id": "edit-draft-voice-sample-style-only",
+      "operation": "draft",
+      "source": "My first deploy at 2am taught me to read logs twice, and I still remember the 2021 outage.",
+      "candidate": "Logs deserve a second read before you trust a deploy. Errors hide in the tail of the output.",
+      "expected_decision": "accept",
+      "required_facts": [
+        "Logs deserve a second read before you trust a deploy",
+        "Errors hide in the tail of the output"
+      ],
+      "forbidden_additions": [
+        "My first deploy at 2am taught me to read logs twice",
+        "the 2021 outage"
+      ],
+      "false_positive_rationale": "A voice sample lends vocabulary, cadence, and paragraph shape, but its personal story and memories must not appear in the target.",
+      "reviewer_notes": "Voice sample contributes style traits only."
+    },
+    {
+      "id": "edit-draft-voice-donates-memory",
+      "operation": "draft",
+      "source": "My first deploy at 2am taught me to read logs twice.",
+      "candidate": "Deploys need care. My first deploy at 2am taught me to read logs twice.",
+      "expected_decision": "reject",
+      "required_facts": ["Deploys need care"],
+      "forbidden_additions": [
+        "My first deploy at 2am taught me to read logs twice"
+      ],
+      "false_positive_rationale": "The draft copies a personal memory straight out of the voice sample; experiences cannot be donated to a new document.",
+      "reviewer_notes": "Voice-sample memory leaking into the target."
+    },
+    {
+      "id": "edit-revise-structured-document-preserved",
+      "operation": "revise",
+      "source": "<div aria-label=\"Checkout summary\"><p>We delve into pricing below. Pricing starts at <strong>29.99</strong> per month.</p><blockquote>\"Security is a process.\"</blockquote><p>See <a href=\"https://example.com/docs\">the docs</a> for details [add release date].</p></div>",
+      "candidate": "<div aria-label=\"Checkout summary\"><p>We dig into pricing below. Pricing starts at <strong>29.99</strong> per month.</p><blockquote>\"Security is a process.\"</blockquote><p>See <a href=\"https://example.com/docs\">the docs</a> for details [add release date].</p></div>",
+      "expected_decision": "accept",
+      "required_terms": ["Checkout summary"],
+      "required_facts": ["Pricing starts at"],
+      "false_positive_rationale": "Legal, regulated, accessibility, and quotation structure keeps its required wording: the aria label, quote, number, link, and placeholder all survive the light revise.",
+      "reviewer_notes": "Accessibility labels, citations, quotes, links, and placeholders retained."
+    },
+    {
+      "id": "edit-revise-changed-link-target-rejected",
+      "operation": "revise",
+      "source": "See https://example.com/docs for the reference.",
+      "candidate": "See https://example.net/docs for the reference.",
+      "expected_decision": "reject",
+      "false_positive_rationale": "A changed link target is an output-integrity failure: the candidate silently points somewhere new.",
+      "reviewer_notes": "Changed link target caught as a protected URL change."
+    },
+    {
+      "id": "edit-revise-leaked-prompt-token-rejected",
+      "operation": "revise",
+      "source": "Rewrite the conclusion in plain language.",
+      "candidate": "Rewrite the conclusion in plain language.\n<|im_start|>system you are a helpful assistant<|im_end|>",
+      "expected_decision": "reject",
+      "false_positive_rationale": "A leaked prompt token is an output defect; the revise introduced it and the integrity check must catch it.",
+      "reviewer_notes": "Leaked prompt token detected as an introduced integrity defect."
+    },
+    {
+      "id": "edit-revise-placeholder-added-rejected",
+      "operation": "revise",
+      "source": "The plan covers migration, onboarding, and rollback.",
+      "candidate": "The plan covers migration, onboarding, and rollback. [INSERT PRICING HERE]",
+      "expected_decision": "reject",
+      "false_positive_rationale": "A placeholder added to the output is an unresolved defect, not an edit; the integrity check must flag it.",
+      "reviewer_notes": "Unresolved placeholder introduced by the candidate."
+    },
+    {
+      "id": "edit-transform-reorder-sections-preserved",
+      "operation": "transform",
+      "source": "Deploy time fell to 40 minutes after caching.\n\nThe queue worker lost its lease, which caused the backlog.\n\nOnly three merchants were affected, and access expires after 24 hours.",
+      "candidate": "Only three merchants were affected, and access expires after 24 hours.\n\nThe queue worker lost its lease, which caused the backlog.\n\nDeploy time fell to 40 minutes after caching.",
+      "expected_decision": "accept",
+      "required_facts": [
+        "Deploy time fell to 40 minutes after caching",
+        "the queue worker lost its lease",
+        "Only three merchants were affected",
+        "access expires after 24 hours"
+      ],
+      "semantic_dimensions": {"causality": "preserve", "scope": "preserve"},
+      "false_positive_rationale": "A transform may reorder sections but must retain every claim and caveat; the reorder is disclosed as a shape change and the inventory multiset stays intact.",
+      "reviewer_notes": "Section reorder retains each claim and caveat and passes the fidelity preservation contract."
+    },
+    {
+      "id": "edit-transform-dropped-caveat-rejected",
+      "operation": "transform",
+      "source": "Deploy time fell to 40 minutes after caching.\n\nOnly three merchants were affected, and access expires after 24 hours.",
+      "candidate": "Deploy time fell to 40 minutes after caching.\n\nOnly three merchants were affected.",
+      "expected_decision": "reject",
+      "required_facts": [
+        "Deploy time fell to 40 minutes after caching",
+        "Only three merchants were affected",
+        "access expires after 24 hours"
+      ],
+      "false_positive_rationale": "A transform that drops a caveat fails preservation even if the shape improved; every claim and caveat must survive.",
+      "reviewer_notes": "Transform drops the access-expiry caveat."
+    },
+    {
+      "id": "edit-review-information-gain",
+      "operation": "revise",
+      "source": "The queue worker lost its lease, which caused the backlog.",
+      "candidate": "The queue worker lost its lease, which caused the backlog. Operators watch renewal logs to catch this earlier.",
+      "expected_decision": "review",
+      "review_prompts": {
+        "information_gain": "Check that the added background stays on-topic and carries no unverified claims."
+      },
+      "false_positive_rationale": "Long-form information gain is a human-review prompt, never a universal score deduction; the edit resolves to review, not a penalty.",
+      "reviewer_notes": "Information gain stays apart from the Formulaic Writing Risk Score."
+    }
+  ]
+}

@@ -1,0 +1,97 @@
+{
+  "skill_name": "antislop-humanizer-review",
+  "schema": "humanizer-3-fixtures-1",
+  "source_review": "humanizer-3.0.0",
+  "evals": [
+    {
+      "id": "humanizer-vague-association-positive",
+      "rule_id": "struct-vague-association",
+      "kind": "positive",
+      "source": "The rollout is associated with better reliability, but the report does not name a mechanism or comparison.",
+      "expected_finding": true,
+      "rationale": "The sentence gestures at a relationship without identifying the evidence that supports it.",
+      "reviewer_notes": "A human reviewer must preserve a source-supported association instead of upgrading it."
+    },
+    {
+      "id": "humanizer-vague-association-clean",
+      "rule_id": "struct-vague-association",
+      "kind": "clean",
+      "source": "The retry budget fell from 8% to 3% after the rollout, according to the deployment report.",
+      "expected_finding": false,
+      "rationale": "The source, comparison, and measured result make the claim concrete without inventing a stronger relationship.",
+      "reviewer_notes": "A concrete, attributed result is a clean boundary case."
+    },
+    {
+      "id": "humanizer-previous-version-positive",
+      "rule_id": "struct-previous-version",
+      "kind": "positive",
+      "source": "Previously, the cache was local. This is an important change that makes the current release better.",
+      "expected_finding": true,
+      "rationale": "The historical aside delays the current behavior and adds an unearned significance claim.",
+      "reviewer_notes": "The rule does not ban a required compatibility or migration comparison."
+    },
+    {
+      "id": "humanizer-previous-version-clean",
+      "rule_id": "struct-previous-version",
+      "kind": "clean",
+      "source": "Version 2.4 stored cache entries locally; version 3.0 stores them in the shared cache required by the migration guide.",
+      "expected_finding": false,
+      "rationale": "The explicit version comparison is a required migration fact, not a rhetorical aside.",
+      "reviewer_notes": "Dated release history remains protected source material."
+    },
+    {
+      "id": "humanizer-source-fidelity-positive",
+      "rule_id": "pref-source-fidelity",
+      "kind": "positive",
+      "source": "Rewrite the note in a warmer voice, but keep the 2026-09-06 date, the 8% to 3% result, the quoted customer sentence, and the conditional rollback step.",
+      "expected_finding": true,
+      "rationale": "The requested style change must preserve every supplied inventory item.",
+      "reviewer_notes": "Preferred guidance is recorded as an obligation, never as a score deduction."
+    },
+    {
+      "id": "humanizer-source-fidelity-clean",
+      "rule_id": "pref-source-fidelity",
+      "kind": "clean",
+      "source": "Rewrite the note in a warmer voice and ask the author for the missing result before drafting the final sentence.",
+      "expected_finding": false,
+      "rationale": "Asking for missing author material respects the no-invention boundary.",
+      "reviewer_notes": "The clean case confirms that a targeted question is the accepted repair."
+    },
+    {
+      "id": "humanizer-synonym-cycling-positive",
+      "rule_id": "struct-synonym-cycling",
+      "kind": "positive",
+      "source": "The service is quick, rapid, speedy, and swift under load.",
+      "expected_finding": true,
+      "rationale": "Near-synonyms rotate through one sentence instead of naming one stable concept.",
+      "reviewer_notes": "Do not flag ordinary repeated terminology in a technical passage."
+    },
+    {
+      "id": "humanizer-synonym-cycling-clean",
+      "rule_id": "struct-synonym-cycling",
+      "kind": "clean",
+      "source": "The service is fast under load, and the report uses the same term consistently.",
+      "expected_finding": false,
+      "rationale": "One term is repeated for the same concept, preserving technical precision.",
+      "reviewer_notes": "Stable terminology is the clean boundary."
+    },
+    {
+      "id": "humanizer-false-ranges-positive",
+      "rule_id": "struct-false-ranges",
+      "kind": "positive",
+      "source": "From setup to launch and everything in between, the process is a complete success.",
+      "expected_finding": true,
+      "rationale": "The range is rhetorical filler and the success claim supplies no result.",
+      "reviewer_notes": "A load-bearing numeric or temporal range remains valid."
+    },
+    {
+      "id": "humanizer-false-ranges-clean",
+      "rule_id": "struct-false-ranges",
+      "kind": "clean",
+      "source": "The migration covers setup, schema validation, and launch in that order.",
+      "expected_finding": false,
+      "rationale": "The concrete stages replace a vague range with a checkable sequence.",
+      "reviewer_notes": "Specific enumerations are not false ranges."
+    }
+  ]
+}

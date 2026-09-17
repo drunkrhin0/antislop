@@ -1,0 +1,113 @@
+{
+  "skill_name": "antislop-calibration",
+  "schema": "calibration-fixtures-1",
+  "description": "Frozen labeled fixtures for the calibration harness (issue #89). Each fixture records profile, genre, locale, source, and label provenance and carries four kinds of labels: expected findings, clean spans, preservation obligations, and forbidden additions.",
+  "evals": [
+    {
+      "id": "calibration-detection-vocabulary",
+      "profile": "general",
+      "genre": "argument",
+      "locale": "en-US",
+      "source": "hand-authored calibration fixture",
+      "label_provenance": "human-hand-labeled",
+      "holdout": false,
+      "text": "We leverage our robust platform to delve into the significant threat landscape.",
+      "expected_findings": [
+        {"target": "text", "rule_id": "vocab-leverage", "category": "vocabulary", "span": [3, 11]},
+        {"target": "text", "rule_id": "vocab-robust", "category": "vocabulary", "span": [16, 22]},
+        {"target": "text", "rule_id": "vocab-delve", "category": "vocabulary", "span": [35, 40]},
+        {"target": "text", "rule_id": "vocab-significant", "category": "vocabulary", "span": [50, 61]}
+      ],
+      "score_target": {"target": "text", "value": 0, "label_provenance": "human-labeled reference"},
+      "false_positive_rationale": "Four exact forbidden vocabulary rules fire at exact character offsets; a candidate that finds all four and nothing else shows perfect recall with no false positives."
+    },
+    {
+      "id": "calibration-detection-phrase-mechanism",
+      "profile": "general",
+      "genre": "explanation",
+      "locale": "en-US",
+      "source": "hand-authored calibration fixture",
+      "label_provenance": "human-hand-labeled",
+      "holdout": false,
+      "text": "It's worth noting that the result is significant for the rollout.",
+      "expected_findings": [
+        {"target": "text", "rule_id": "phrase-worth-noting", "category": "phrase", "span": [0, 22]},
+        {"target": "text", "rule_id": "vocab-significant", "category": "vocabulary", "span": [37, 48]},
+        {"target": "text", "rule_id": "mechanism-importance", "category": "mechanism", "span": [37, 48]}
+      ],
+      "ranked_findings": [
+        {"target": "text", "rule_id": "vocab-significant"},
+        {"target": "text", "rule_id": "mechanism-importance"}
+      ],
+      "score_target": {"target": "text", "value": 0, "label_provenance": "human-labeled reference"},
+      "false_positive_rationale": "A phrase rule, a vocabulary rule, and an advisory mechanism rule overlap the same text; the severity ordering labels rank the scored vocabulary finding above the advisory mechanism finding."
+    },
+    {
+      "id": "calibration-detection-structural-holdout",
+      "profile": "general",
+      "genre": "narrative",
+      "locale": "en-US",
+      "source": "hand-authored calibration fixture",
+      "label_provenance": "human-hand-labeled",
+      "holdout": true,
+      "text": "The fix was deployed by the team. The incident was logged by the operator. The root cause was identified by the engineer. The patch was tested by the QA lead. The rollout was approved by the manager. The data was verified by the analyst. The result was confirmed by the vendor.",
+      "expected_findings": [
+        {"target": "text", "rule_id": "struct-passive-density", "category": "structural", "span": [0, 277]}
+      ],
+      "score_target": {"target": "text", "value": 61, "label_provenance": "human-labeled reference"},
+      "false_positive_rationale": "A document-level structural metric fires on the whole passage; a numeric target of 61 calibrates the score against a frozen passage. Holdout: never used to tune thresholds."
+    },
+    {
+      "id": "calibration-detection-unlabeled-category",
+      "profile": "general",
+      "genre": "message",
+      "locale": "en-US",
+      "source": "hand-authored calibration fixture",
+      "label_provenance": "human-hand-labeled",
+      "holdout": false,
+      "text": "Great question! The fix is ready.",
+      "expected_findings": [
+        {"target": "text", "rule_id": "chatbot-great-question", "category": "chatbot", "span": [0, 15]}
+      ],
+      "clean_spans": [
+        {"target": "text", "span": [16, 33], "note": "Clean prose; the overlapping phrase-certainly finding at the start is unlabeled and stays unknown, never counted as recall or converted to zero."}
+      ],
+      "score_target": {"target": "text", "value": 0, "label_provenance": "human-labeled reference"},
+      "false_positive_rationale": "Only the chatbot finding is labeled; the phrase finding beside it is deliberately unlabeled so the harness proves missing labels stay missing."
+    },
+    {
+      "id": "calibration-rewrite-lowers-risk-drops-qualifier",
+      "profile": "general",
+      "genre": "guide",
+      "locale": "en-US",
+      "source": "hand-authored calibration fixture",
+      "label_provenance": "human-hand-labeled",
+      "holdout": false,
+      "source_text": "The queue worker lost its lease, and the fix is robust in about 40 ms.",
+      "candidate_text": "The queue worker lost its lease, and the fix is reliable in 40 ms.",
+      "expected_findings": [
+        {"target": "source", "rule_id": "vocab-robust", "category": "vocabulary", "span": [48, 54]}
+      ],
+      "preservation": [
+        {"kind": "term", "value": "about"}
+      ],
+      "score_target": {"target": "source", "value": 0, "label_provenance": "human-labeled reference"},
+      "false_positive_rationale": "Removing the banned word raises the risk score while dropping the 'about' qualifier changes the timing claim. The harness reports the score improvement and the preservation failure together; the improvement never hides the dropped qualifier."
+    },
+    {
+      "id": "calibration-detection-clean-technical",
+      "profile": "technical",
+      "genre": "reference",
+      "locale": "en-US",
+      "source": "hand-authored calibration fixture",
+      "label_provenance": "human-hand-labeled",
+      "holdout": false,
+      "text": "The model reports statistical significance at a confidence of 0.95.",
+      "clean_spans": [
+        {"target": "text", "span": [0, 67], "category": "vocabulary", "note": "Technical phrasing that resembles a banned word is legitimate domain language; a vocabulary finding here would be a false positive."}
+      ],
+      "score_target": {"target": "text", "value": 100, "label_provenance": "human-labeled reference"},
+      "false_positive_rationale": "A clean technical passage under the technical profile must produce no findings; the clean span pins the false-positive rate and the numeric target pins the score."
+    }
+  ]
+}

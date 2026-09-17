@@ -1,0 +1,92 @@
+{
+  "evals": [
+    {
+      "id": "anbeeld-preserve-copyedit",
+      "operation": "revise",
+      "source": "Version 3.0.0 shipped on 2026-09-14. The service is stable today. Run /srv/app/config.yaml with `deploy --env prod`. 'Vendor text.' Keep [TODO: owner]. The API uses leverage. See https://example.com/release.",
+      "candidate": "Version 3.0.0 shipped on 2026-09-14. The service is stable now. Run /srv/app/config.yaml with `deploy --env prod`. 'Vendor text.' Keep [TODO: owner]. The API uses leverage. See https://example.com/release.",
+      "required_terms": ["leverage"],
+      "expected_decision": "accept",
+      "reviewer_notes": "Narrow copyedit changes plain wording and preserves source-owned material."
+    },
+    {
+      "id": "anbeeld-reject-number-mutation",
+      "operation": "revise",
+      "source": "Version 3.0.0 shipped on 2026-09-14. The service is stable today. Run /srv/app/config.yaml with `deploy --env prod`. 'Vendor text.' Keep [TODO: owner]. The API uses leverage. See https://example.com/release.",
+      "candidate": "Version 3.1.0 shipped on 2026-09-14. The service is stable now. Run /srv/app/config.yaml with `deploy --env prod`. 'Vendor text.' Keep [TODO: owner]. The API uses leverage. See https://example.com/release.",
+      "required_terms": ["leverage"],
+      "expected_decision": "reject",
+      "reviewer_notes": "Changing a supplied version is a correctness failure."
+    },
+    {
+      "id": "anbeeld-reject-code-quote-mutation",
+      "operation": "revise",
+      "source": "Version 3.0.0 shipped on 2026-09-14. The service is stable today. Run /srv/app/config.yaml with `deploy --env prod`. 'Vendor text.' Keep [TODO: owner]. The API uses leverage. See https://example.com/release.",
+      "candidate": "Version 3.0.0 shipped on 2026-09-14. The service is stable now. Run /srv/app/config.yaml with `deploy --env staging`. 'Changed vendor text.' Keep [TODO: owner]. The API uses leverage. See https://example.com/release.",
+      "required_terms": ["leverage"],
+      "expected_decision": "reject",
+      "reviewer_notes": "Inline code and quoted source text are protected."
+    },
+    {
+      "id": "anbeeld-reject-link-mutation",
+      "operation": "revise",
+      "source": "Version 3.0.0 shipped on 2026-09-14. The service is stable today. Run /srv/app/config.yaml with `deploy --env prod`. 'Vendor text.' Keep [TODO: owner]. The API uses leverage. See https://example.com/release.",
+      "candidate": "Version 3.0.0 shipped on 2026-09-14. The service is stable now. Run /srv/app/config.yaml with `deploy --env prod`. 'Vendor text.' Keep [TODO: owner]. The API uses leverage. See https://example.com/changed.",
+      "required_terms": ["leverage"],
+      "expected_decision": "reject",
+      "reviewer_notes": "A link target is source data."
+    },
+    {
+      "id": "anbeeld-authorized-number-change",
+      "operation": "revise",
+      "source": "Version 3.0.0 shipped on 2026-09-14. The service is stable today. Run /srv/app/config.yaml with `deploy --env prod`. 'Vendor text.' Keep [TODO: owner]. The API uses leverage. See https://example.com/release.",
+      "candidate": "Version 3.1.0 shipped on 2026-09-14. The service is stable now. Run /srv/app/config.yaml with `deploy --env prod`. 'Vendor text.' Keep [TODO: owner]. The API uses leverage. See https://example.com/release.",
+      "required_terms": ["leverage"],
+      "authorized_changes": [{"category": "number"}],
+      "expected_decision": "accept",
+      "reviewer_notes": "The explicit user exception is recorded instead of silently weakening the gate."
+    },
+    {
+      "id": "anbeeld-transform-reorder",
+      "operation": "transform",
+      "source": "Version 3.0.0 shipped on 2026-09-14. Run /srv/app/config.yaml with `deploy --env prod`.\n\nThe service is stable today. The API uses leverage.",
+      "candidate": "The service is stable today. The API uses leverage.\n\nVersion 3.0.0 shipped on 2026-09-14. Run /srv/app/config.yaml with `deploy --env prod`.",
+      "required_terms": ["leverage"],
+      "expected_decision": "accept",
+      "reviewer_notes": "A pure paragraph reorder preserves the inventory and discloses a shape change."
+    },
+    {
+      "id": "anbeeld-transform-drop",
+      "operation": "transform",
+      "source": "Version 3.0.0 shipped on 2026-09-14. Run /srv/app/config.yaml with `deploy --env prod`.\n\nThe service is stable today. The API uses leverage.",
+      "candidate": "The service is stable today. The API uses leverage.",
+      "required_terms": ["leverage"],
+      "expected_decision": "reject",
+      "reviewer_notes": "Transform cannot drop a source block or its protected facts."
+    },
+    {
+      "id": "anbeeld-audit-empty",
+      "operation": "audit",
+      "source": "Version 3.0.0 shipped on 2026-09-14. The service is stable today.",
+      "candidate": "Version 3.0.0 shipped on 2026-09-14. The service is stable today.",
+      "expected_decision": "accept",
+      "reviewer_notes": "An empty audit result is valid and byte-identical."
+    },
+    {
+      "id": "anbeeld-audit-rewrite",
+      "operation": "audit",
+      "source": "Version 3.0.0 shipped on 2026-09-14. The service is stable today.",
+      "candidate": "Version 3.0.0 shipped on 2026-09-14. The service is very stable today.",
+      "expected_decision": "reject",
+      "reviewer_notes": "Audit reports findings and does not rewrite the artifact."
+    },
+    {
+      "id": "anbeeld-reject-output-token",
+      "operation": "revise",
+      "source": "Version 3.0.0 shipped on 2026-09-14. The service is stable today.",
+      "candidate": "Version 3.0.0 shipped on 2026-09-14. The service is stable now. <|user|>",
+      "expected_decision": "reject",
+      "reviewer_notes": "Output-integrity defects are correctness failures, not style findings."
+    }
+  ]
+}

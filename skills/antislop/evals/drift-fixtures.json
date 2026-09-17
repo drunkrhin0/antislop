@@ -1,0 +1,177 @@
+{
+  "skill_name": "antislop-drift",
+  "schema": "drift-fixtures-1",
+  "evals": [
+    {
+      "id": "drift-negation-reversal",
+      "source": "The access token is not required for read-only API calls.",
+      "candidate": "The access token is required for read-only API calls.",
+      "expected_decision": "reject",
+      "semantic_dimensions": {"negation": "preserve"},
+      "false_positive_rationale": "Dropping the negation reverses the access contract; a lower word count never licenses a polarity flip.",
+      "reviewer_notes": "Negation reversal. Adapted from the semantic-drift checker's negation group."
+    },
+    {
+      "id": "drift-obligation-strengthening",
+      "source": "Contractors may request read-only access to staging.",
+      "candidate": "Contractors must request read-only access to staging.",
+      "expected_decision": "reject",
+      "semantic_dimensions": {"obligation": "preserve"},
+      "false_positive_rationale": "Moving from permissive to mandatory changes the obligation; the rewrite must keep the original force.",
+      "reviewer_notes": "Obligation strengthening. Adapted from the obligation group in semantic_drift.py."
+    },
+    {
+      "id": "drift-scope-expansion",
+      "source": "Contractors have read-only access to the staging environment.",
+      "candidate": "Contractors have full access to the staging environment.",
+      "expected_decision": "reject",
+      "semantic_dimensions": {"scope": "preserve"},
+      "false_positive_rationale": "Expanding read-only to full access broadens the grant; scope must survive the rewrite.",
+      "reviewer_notes": "Scope expansion. Adapted from the scope and exclusivity group."
+    },
+    {
+      "id": "drift-condition-removal",
+      "source": "Access expires after 24 hours if the incident remains open.",
+      "candidate": "Access expires after 24 hours.",
+      "expected_decision": "reject",
+      "semantic_dimensions": {"temporal_condition": "preserve"},
+      "protected_spans": [{"category": "number", "start": 21, "end": 23}],
+      "false_positive_rationale": "Removing the condition silently widens when the access rule applies; the duration alone is not the whole contract.",
+      "reviewer_notes": "Condition removal. Exact protected span offsets must stay stable."
+    },
+    {
+      "id": "drift-causal-strengthening",
+      "source": "The delay was probably caused by the lease loss.",
+      "candidate": "The delay was caused by the lease loss.",
+      "expected_decision": "reject",
+      "semantic_dimensions": {"causality": "preserve", "uncertainty": "preserve"},
+      "false_positive_rationale": "Dropping the hedge turns a tentative causal claim into a definite one; the uncertainty marker must stay.",
+      "reviewer_notes": "Causal strengthening. The causality group survives but the uncertainty group is lost."
+    },
+    {
+      "id": "drift-uncertainty-removal",
+      "source": "The feature may cause data loss, so test it first.",
+      "candidate": "The feature causes data loss, so test it first.",
+      "expected_decision": "reject",
+      "semantic_dimensions": {"uncertainty": "preserve"},
+      "false_positive_rationale": "Removing the modal makes a possible outcome read as certain; uncertainty is load-bearing.",
+      "reviewer_notes": "Uncertainty removal. A candidate cannot pass by dropping an uncertainty marker."
+    },
+    {
+      "id": "drift-promise-inflation",
+      "source": "The tool helps reduce deployment time.",
+      "candidate": "The tool guarantees a seamless deployment every time.",
+      "expected_decision": "reject",
+      "semantic_dimensions": {"promise_intensity": "refuse"},
+      "forbidden_additions": ["guarantees a seamless deployment"],
+      "false_positive_rationale": "Adding guarantee and seamless wording inflates the promise the source never made; such additions must be refused.",
+      "reviewer_notes": "Promise inflation. Added promise-intensity markers are refused, not scored."
+    },
+    {
+      "id": "drift-provenance-fact",
+      "source": "The report covers the 2026 threat landscape and the Q1 rollout.",
+      "candidate": "The report covers the 2026 threat landscape and the Q1 rollout.",
+      "expected_decision": "accept",
+      "provenance": [
+        {"text": "The report covers the 2026 threat landscape", "label": "fact"}
+      ],
+      "protected_spans": [{"category": "number", "start": 22, "end": 26}],
+      "false_positive_rationale": "A source fact retained as fact passes; the number span must stay byte-identical.",
+      "reviewer_notes": "Source fact retained as fact."
+    },
+    {
+      "id": "drift-provenance-inference",
+      "source": "The findings suggest phishing is rising among finance teams.",
+      "candidate": "The findings suggest phishing is rising among finance teams.",
+      "expected_decision": "accept",
+      "provenance": [
+        {"text": "phishing is rising among finance teams", "label": "inference", "hedge": "suggest"}
+      ],
+      "false_positive_rationale": "An inference retained as an inference passes because the hedge survives.",
+      "reviewer_notes": "Inference retained as inference. Dropping the hedge would upgrade it to a fact and fail."
+    },
+    {
+      "id": "drift-provenance-unknown-unresolved",
+      "source": "Plans call for a dashboard to surface adoption trends, though the source of those numbers is not yet identified.",
+      "candidate": "Plans call for a dashboard to surface adoption trends, though the source of those numbers is not yet identified.",
+      "expected_decision": "accept",
+      "provenance": [
+        {"text": "the source of those numbers is not yet identified", "label": "unknown"}
+      ],
+      "false_positive_rationale": "An unknown left unresolved passes; inventing the source would be an unsupported addition.",
+      "reviewer_notes": "Unknown left unresolved. unknown is the Antislop status for missing or unclassified provenance."
+    },
+    {
+      "id": "drift-provenance-placeholder-kept",
+      "source": "The report covers the 2026 threat landscape [add specifics].",
+      "candidate": "The report covers the 2026 threat landscape [add specifics].",
+      "expected_decision": "accept",
+      "provenance": [
+        {"text": "[add specifics]", "label": "placeholder"}
+      ],
+      "false_positive_rationale": "Keeping a placeholder as a placeholder is honest; asserting its content without evidence is not.",
+      "reviewer_notes": "Placeholder kept unresolved."
+    },
+    {
+      "id": "drift-technical-term-resembling-banned-word",
+      "profile": "technical",
+      "source": "The model tracks financial leverage and reports a significant p-value of 0.03.",
+      "candidate": "The model tracks financial leverage and reports a significant p-value of 0.03.",
+      "expected_decision": "accept",
+      "required_terms": ["financial leverage", "p-value"],
+      "required_facts": ["reports a significant p-value of 0.03"],
+      "protected_spans": [{"category": "number", "start": 73, "end": 77}],
+      "false_positive_rationale": "financial leverage and significant are precise domain terms under the technical profile, not banned filler; a rewrite must keep them.",
+      "reviewer_notes": "Required technical term that resembles a banned word must remain."
+    },
+    {
+      "id": "drift-necessary-repetition-kept",
+      "source": "Fail closed on any unauthenticated request, and fail closed on any request without a valid lease.",
+      "candidate": "Fail closed on any unauthenticated request, and fail closed on any request without a valid lease.",
+      "expected_decision": "accept",
+      "required_terms": ["fail closed"],
+      "false_positive_rationale": "Repeating the boundary is load-bearing; removing the second fail closed would lose the emphasis.",
+      "reviewer_notes": "Necessary repetition that should not receive a correction."
+    },
+    {
+      "id": "drift-concise-rewrite-loses-mechanism",
+      "source": "We delve into the failure because the queue worker lost its lease.",
+      "candidate": "The team investigated the failure.",
+      "expected_decision": "reject",
+      "required_facts": ["the queue worker lost its lease"],
+      "semantic_dimensions": {"causality": "preserve"},
+      "false_positive_rationale": "The rewrite scores lower risk but drops the causal mechanism and the fact that names it; concision is not preservation.",
+      "reviewer_notes": "Concise rewrite that loses the causal mechanism must fail despite a lower risk score."
+    },
+    {
+      "id": "drift-correct-rewrite-removes-formula",
+      "source": "We delve into the incident because the queue worker lost its lease, and only three merchants were affected.",
+      "candidate": "The incident happened because the queue worker lost its lease, and only three merchants were affected.",
+      "expected_decision": "accept",
+      "required_facts": ["the queue worker lost its lease", "only three merchants were affected"],
+      "required_terms": ["lease"],
+      "semantic_dimensions": {"causality": "preserve", "scope": "preserve"},
+      "expected_findings": [
+        {"target": "source", "rule_id": "vocab-delve", "span": [3, 8], "risk_class": "forbidden"}
+      ],
+      "absent_findings": [
+        {"target": "candidate", "rule_id": "vocab-delve"}
+      ],
+      "false_positive_rationale": "Removing the formula is correct only when every required item survives; the finding span must be exact.",
+      "reviewer_notes": "Correct rewrite that removes a formula while preserving every required item."
+    },
+    {
+      "id": "drift-review-summary-loss",
+      "source": "We delve into the incident because the queue worker lost its lease, and only three merchants were affected.",
+      "candidate": "The incident happened because the queue worker lost its lease, and only three merchants were affected.",
+      "expected_decision": "review",
+      "review_prompts": {
+        "sentence_load": "Check that no sentence was dropped to shorten the rewrite.",
+        "topic_swap": "Check that the rewrite stays on the incident topic and does not swap in adjacent context.",
+        "summary_loss": "Check that the mechanism, scope, and condition from the source survive."
+      },
+      "false_positive_rationale": "Sentence-load, topic-swap, and summary-loss checks are human-review prompts, not score inputs.",
+      "reviewer_notes": "Review prompts stay separate from the Formulaic Writing Risk Score and resolve to a human-review result."
+    }
+  ]
+}

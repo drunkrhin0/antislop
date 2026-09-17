@@ -1,0 +1,503 @@
+{
+  "skill_name": "antislop",
+  "schema": "tagore-substance-fixtures-1",
+  "evals": [
+    {
+      "id": "substance-empty-prose-clean-mechanics",
+      "kind": "report",
+      "locale": "en-US",
+      "label_provenance": "human-hand-labeled",
+      "source": "hand-authored for issue #102 acceptance criteria",
+      "text": "The project matters. It represents an important step forward that could change how we work. The implications matter for everyone involved. We are optimistic. The work is going well.",
+      "medium": "argument",
+      "expected_statuses": {
+        "directness": "evidenced",
+        "rhythm": "evidenced",
+        "trust": "evidenced",
+        "authenticity": "evidenced",
+        "density": "evidenced",
+        "specificity": "unsupported",
+        "restraint": "unsupported",
+        "voice": "unsupported"
+      },
+      "expected_risk_score": 100,
+      "expected_label_none": true,
+      "false_positive_rationale": "Mechanically clean but empty prose: every mechanics dimension has evidence, the substance group flags the missing specificity, restraint, and voice, and the risk score stays 100 in the clean band, separate from substance.",
+      "reviewer_notes": "The clean-but-soulless failure mode that Tagore's substance subtotal floor exists to catch."
+    },
+    {
+      "id": "substance-reference-entry-pov-not-applicable",
+      "kind": "report",
+      "locale": "en-US",
+      "label_provenance": "human-hand-labeled",
+      "source": "hand-authored for issue #102 acceptance criteria",
+      "text": "Postgres 16 supports MERGE with a WHERE clause. The ON clause can filter the rows that the MERGE action applies to. RETURNING is available for the modified rows.",
+      "medium": "reference",
+      "expected_statuses": {
+        "directness": "evidenced",
+        "rhythm": "not-applicable",
+        "trust": "evidenced",
+        "authenticity": "evidenced",
+        "density": "evidenced",
+        "specificity": "evidenced",
+        "restraint": "evidenced",
+        "voice": "not-applicable"
+      },
+      "expected_risk_score": 100,
+      "expected_label_none": true,
+      "false_positive_rationale": "A specific terse reference entry names its subject, and point of view and rhythm variation are not applicable to the reference medium.",
+      "reviewer_notes": "Clean terse reference prose can mark dimensions not-applicable without a judgment forced."
+    },
+    {
+      "id": "substance-opinion-without-stakes",
+      "kind": "report",
+      "locale": "en-US",
+      "label_provenance": "human-hand-labeled",
+      "source": "hand-authored for issue #102 acceptance criteria",
+      "text": "I think this library is the best option for us.",
+      "medium": "argument",
+      "expected_statuses": {
+        "voice": "unsupported"
+      },
+      "expected_label_none": true,
+      "false_positive_rationale": "A first-person opinion with no consequence or stake: the voice dimension reports the stance and asks what depends on it.",
+      "reviewer_notes": "Opinion without stakes is thin voice, not a missing opinion."
+    },
+    {
+      "id": "substance-opinion-with-consequences",
+      "kind": "report",
+      "locale": "en-US",
+      "label_provenance": "human-hand-labeled",
+      "source": "hand-authored for issue #102 acceptance criteria",
+      "text": "I think this library is the best option for us. Without it, our release process stalls and the on-call team gets paged nightly.",
+      "medium": "argument",
+      "expected_statuses": {
+        "voice": "evidenced"
+      },
+      "expected_label_none": true,
+      "false_positive_rationale": "A first-person opinion carries a named consequence, so the voice dimension is evidenced.",
+      "reviewer_notes": "Author-supported opinion with consequences."
+    },
+    {
+      "id": "substance-voice-unknown-quoted",
+      "kind": "report",
+      "locale": "en-US",
+      "label_provenance": "human-hand-labeled",
+      "source": "hand-authored for issue #102 acceptance criteria",
+      "text": "The lead said the migration was a mistake. 'I think we should have stayed on the old schema,' she told us. 'We had no buffer for rollback.'",
+      "medium": "argument",
+      "expected_statuses": {
+        "voice": "unknown"
+      },
+      "expected_label_none": true,
+      "false_positive_rationale": "Stance and stakes appear only inside quoted speech, so the author's own position is not established and the review reports unknown instead of guessing.",
+      "reviewer_notes": "unknown is used when author facts or intent are missing."
+    },
+    {
+      "id": "substance-specificity-unknown",
+      "kind": "report",
+      "locale": "en-US",
+      "label_provenance": "human-hand-labeled",
+      "source": "hand-authored for issue #102 acceptance criteria",
+      "text": "We feel strongly about this.",
+      "medium": "argument",
+      "expected_statuses": {
+        "specificity": "unknown",
+        "restraint": "unknown"
+      },
+      "expected_label_none": true,
+      "false_positive_rationale": "No concrete referent and no vague gesture fire, so the review reports unknown and asks the author what the passage names.",
+      "reviewer_notes": "A genuinely ambiguous short claim stays unknown rather than forcing a verdict."
+    },
+    {
+      "id": "substance-metronomic-rhythm",
+      "kind": "report",
+      "locale": "en-US",
+      "label_provenance": "human-hand-labeled",
+      "source": "hand-authored for issue #102 acceptance criteria",
+      "text": "The fox jumps. The dog sleeps. The cat runs. The bird sings. The cow eats.",
+      "medium": "argument",
+      "expected_statuses": {
+        "rhythm": "unsupported"
+      },
+      "expected_label_none": true,
+      "false_positive_rationale": "Five consecutive three-word sentences form a metronomic run; only rhythm is asserted here.",
+      "reviewer_notes": "Uniform sentence length is the metronomic tell."
+    },
+    {
+      "id": "substance-announcement-directness",
+      "kind": "report",
+      "locale": "en-US",
+      "label_provenance": "human-hand-labeled",
+      "source": "hand-authored for issue #102 acceptance criteria",
+      "text": "In this post, let's dive into how caching works. Here's what you need to know.",
+      "medium": "argument",
+      "expected_statuses": {
+        "directness": "unsupported"
+      },
+      "expected_label_none": true,
+      "false_positive_rationale": "Signposting and throat-clearing openers announce instead of stating the thing.",
+      "reviewer_notes": "Announcements are the directness failure."
+    },
+    {
+      "id": "substance-trust-handholding",
+      "kind": "report",
+      "locale": "en-US",
+      "label_provenance": "human-hand-labeled",
+      "source": "hand-authored for issue #102 acceptance criteria",
+      "text": "Let me explain what this means. In other words, the system is simple. Simply put, it works.",
+      "medium": "argument",
+      "expected_statuses": {
+        "trust": "unsupported"
+      },
+      "expected_label_none": true,
+      "false_positive_rationale": "Hand-holding and over-explanation tell the reader what they already know.",
+      "reviewer_notes": "Over-explanation is the trust failure."
+    },
+    {
+      "id": "substance-authenticity-artifact",
+      "kind": "report",
+      "locale": "en-US",
+      "label_provenance": "human-hand-labeled",
+      "source": "hand-authored for issue #102 acceptance criteria",
+      "text": "I hope this helps! Let me know if you have any questions.",
+      "medium": "message",
+      "expected_statuses": {
+        "authenticity": "unsupported"
+      },
+      "expected_label_none": true,
+      "false_positive_rationale": "A correspondence artifact is cited as evidence; the review never claims the text sounds human or AI.",
+      "reviewer_notes": "Authenticity evidence quotes the marker without labeling authorship."
+    },
+    {
+      "id": "substance-density-cuttable",
+      "kind": "report",
+      "locale": "en-US",
+      "label_provenance": "human-hand-labeled",
+      "source": "hand-authored for issue #102 acceptance criteria",
+      "text": "In order to improve the system, we need to fix the cache. Overall, the results are promising.",
+      "medium": "argument",
+      "expected_statuses": {
+        "density": "unsupported"
+      },
+      "expected_label_none": true,
+      "false_positive_rationale": "Filler and ceremony spans carry no information and are cuttable.",
+      "reviewer_notes": "Anything cuttable is the density failure."
+    },
+    {
+      "id": "substance-restraint-puffery",
+      "kind": "report",
+      "locale": "en-US",
+      "label_provenance": "human-hand-labeled",
+      "source": "hand-authored for issue #102 acceptance criteria",
+      "text": "Our industry-leading, groundbreaking platform stands as a testament to innovation.",
+      "medium": "argument",
+      "expected_statuses": {
+        "restraint": "unsupported"
+      },
+      "expected_label_none": true,
+      "false_positive_rationale": "Significance inflation and promotional superlatives puff the claim up instead of stating its actual size.",
+      "reviewer_notes": "Puffery is the restraint failure."
+    },
+    {
+      "id": "substance-contribution-accepted",
+      "kind": "contribution",
+      "locale": "en-US",
+      "label_provenance": "human-hand-labeled",
+      "source": "hand-authored for issue #102 acceptance criteria",
+      "distinct_tell": "Launch posts open with a cheerleading announcement far more often than human writing.",
+      "rule": {
+        "id": "proposal-cheer-announce",
+        "name": "Cheerleading announcement opener",
+        "pattern": "\\b(?:we are|we're) (?:excited|thrilled) to announce\\b",
+        "rewrite": "Cut the announcement and state what the product actually does."
+      },
+      "before_text": "We are thrilled to announce the launch of Quill.",
+      "after_text": "Quill is a note-taking app we built after the tools we tried were too rigid.",
+      "model_context": "Claude 3.5 Sonnet, launch-post drafts",
+      "frequency_context": "about 60% of sampled drafts, near zero in the hand-written corpus",
+      "synthetic": false,
+      "fixtures": {
+        "positive": [
+          {
+            "text": "We are thrilled to announce our new editor.",
+            "expect": "finding"
+          }
+        ],
+        "clean": [
+          {
+            "text": "The editor ships today with inline review.",
+            "expect": "no-finding"
+          }
+        ]
+      },
+      "expected_accepted": true,
+      "expected_failures": [],
+      "false_positive_rationale": "A complete proposal satisfies every contract item.",
+      "reviewer_notes": "The positive and clean fixtures are a paired regression set."
+    },
+    {
+      "id": "substance-contribution-missing-clean-fixture",
+      "kind": "contribution",
+      "locale": "en-US",
+      "label_provenance": "human-hand-labeled",
+      "source": "hand-authored for issue #102 acceptance criteria",
+      "distinct_tell": "Launch posts open with a cheerleading announcement far more often than human writing.",
+      "rule": {
+        "id": "proposal-cheer-announce",
+        "name": "Cheerleading announcement opener",
+        "pattern": "\\b(?:we are|we're) (?:excited|thrilled) to announce\\b",
+        "rewrite": "Cut the announcement and state what the product actually does."
+      },
+      "before_text": "We are thrilled to announce the launch of Quill.",
+      "after_text": "Quill is a note-taking app we built after the tools we tried were too rigid.",
+      "model_context": "Claude 3.5 Sonnet, launch-post drafts",
+      "frequency_context": "about 60% of sampled drafts",
+      "fixtures": {
+        "positive": [
+          {
+            "text": "We are thrilled to announce our new editor.",
+            "expect": "finding"
+          }
+        ]
+      },
+      "expected_accepted": false,
+      "expected_failures": [
+        "clean false-positive fixture is missing"
+      ],
+      "false_positive_rationale": "A proposed rule change with only a positive fixture is rejected because the clean false-positive fixture is missing.",
+      "reviewer_notes": "Regression fixtures must be paired."
+    },
+    {
+      "id": "substance-contribution-missing-distinct-tell",
+      "kind": "contribution",
+      "locale": "en-US",
+      "label_provenance": "human-hand-labeled",
+      "source": "hand-authored for issue #102 acceptance criteria",
+      "rule": {
+        "id": "proposal-cheer-announce",
+        "name": "Cheerleading announcement opener",
+        "pattern": "\\b(?:we are|we're) (?:excited|thrilled) to announce\\b",
+        "rewrite": "Cut the announcement and state what the product actually does."
+      },
+      "before_text": "We are thrilled to announce the launch of Quill.",
+      "after_text": "Quill is a note-taking app we built after the tools we tried were too rigid.",
+      "model_context": "Claude 3.5 Sonnet, launch-post drafts",
+      "frequency_context": "about 60% of sampled drafts",
+      "fixtures": {
+        "positive": [
+          {
+            "text": "We are thrilled to announce our new editor.",
+            "expect": "finding"
+          }
+        ],
+        "clean": [
+          {
+            "text": "The editor ships today with inline review.",
+            "expect": "no-finding"
+          }
+        ]
+      },
+      "expected_accepted": false,
+      "expected_failures": [
+        "distinct_tell"
+      ],
+      "false_positive_rationale": "A proposal without evidence of a distinct tell is rejected.",
+      "reviewer_notes": "Evidence of a distinct tell is a required contract item."
+    },
+    {
+      "id": "substance-contribution-missing-context",
+      "kind": "contribution",
+      "locale": "en-US",
+      "label_provenance": "human-hand-labeled",
+      "source": "hand-authored for issue #102 acceptance criteria",
+      "distinct_tell": "Launch posts open with a cheerleading announcement far more often than human writing.",
+      "rule": {
+        "id": "proposal-cheer-announce",
+        "name": "Cheerleading announcement opener",
+        "pattern": "\\b(?:we are|we're) (?:excited|thrilled) to announce\\b",
+        "rewrite": "Cut the announcement and state what the product actually does."
+      },
+      "before_text": "We are thrilled to announce the launch of Quill.",
+      "after_text": "Quill is a note-taking app we built after the tools we tried were too rigid.",
+      "fixtures": {
+        "positive": [
+          {
+            "text": "We are thrilled to announce our new editor.",
+            "expect": "finding"
+          }
+        ],
+        "clean": [
+          {
+            "text": "The editor ships today with inline review.",
+            "expect": "no-finding"
+          }
+        ]
+      },
+      "expected_accepted": false,
+      "expected_failures": [
+        "context"
+      ],
+      "false_positive_rationale": "Model and frequency context are missing and not marked unknown, so the context item fails.",
+      "reviewer_notes": "Context is required where known; otherwise it must be marked context_unknown."
+    },
+    {
+      "id": "substance-contribution-context-unknown-ok",
+      "kind": "contribution",
+      "locale": "en-US",
+      "label_provenance": "human-hand-labeled",
+      "source": "hand-authored for issue #102 acceptance criteria",
+      "distinct_tell": "Launch posts open with a cheerleading announcement far more often than human writing.",
+      "rule": {
+        "id": "proposal-cheer-announce",
+        "name": "Cheerleading announcement opener",
+        "pattern": "\\b(?:we are|we're) (?:excited|thrilled) to announce\\b",
+        "rewrite": "Cut the announcement and state what the product actually does."
+      },
+      "before_text": "We are thrilled to announce the launch of Quill.",
+      "after_text": "Quill is a note-taking app we built after the tools we tried were too rigid.",
+      "context_unknown": true,
+      "synthetic": true,
+      "fixtures": {
+        "positive": [
+          {
+            "text": "We are thrilled to announce our new editor.",
+            "expect": "finding"
+          }
+        ],
+        "clean": [
+          {
+            "text": "The editor ships today with inline review.",
+            "expect": "no-finding"
+          }
+        ]
+      },
+      "expected_accepted": true,
+      "expected_failures": [],
+      "false_positive_rationale": "Marking model and frequency context unknown satisfies the context item, and labeled synthetic examples are accepted.",
+      "reviewer_notes": "Synthetic examples are fine if labeled as such."
+    },
+    {
+      "id": "substance-contribution-after-still-has-pattern",
+      "kind": "contribution",
+      "locale": "en-US",
+      "label_provenance": "human-hand-labeled",
+      "source": "hand-authored for issue #102 acceptance criteria",
+      "distinct_tell": "Launch posts open with a cheerleading announcement far more often than human writing.",
+      "rule": {
+        "id": "proposal-cheer-announce",
+        "name": "Cheerleading announcement opener",
+        "pattern": "\\b(?:we are|we're) (?:excited|thrilled) to announce\\b",
+        "rewrite": "Cut the announcement and state what the product actually does."
+      },
+      "before_text": "We are thrilled to announce the launch of Quill.",
+      "after_text": "We are excited to announce that Quill now ships.",
+      "model_context": "Claude 3.5 Sonnet, launch-post drafts",
+      "frequency_context": "about 60% of sampled drafts",
+      "fixtures": {
+        "positive": [
+          {
+            "text": "We are thrilled to announce our new editor.",
+            "expect": "finding"
+          }
+        ],
+        "clean": [
+          {
+            "text": "The editor ships today with inline review.",
+            "expect": "no-finding"
+          }
+        ]
+      },
+      "expected_accepted": false,
+      "expected_failures": [
+        "after text still contains"
+      ],
+      "false_positive_rationale": "An after text that still contains the pattern proves no clean rewrite, so the before and after item fails.",
+      "reviewer_notes": "The after text must be pattern-free."
+    },
+    {
+      "id": "substance-contribution-multiple-rules",
+      "kind": "contribution",
+      "locale": "en-US",
+      "label_provenance": "human-hand-labeled",
+      "source": "hand-authored for issue #102 acceptance criteria",
+      "distinct_tell": "Launch posts open with a cheerleading announcement far more often than human writing.",
+      "rules": [
+        {
+          "id": "proposal-cheer-announce",
+          "name": "Cheerleading announcement opener",
+          "pattern": "\\b(?:we are|we're) (?:excited|thrilled) to announce\\b",
+          "rewrite": "Cut the announcement and state what the product actually does."
+        },
+        {
+          "id": "proposal-bounce",
+          "name": "Bouncy opener",
+          "pattern": "\\bbounce\\b",
+          "rewrite": "Cut the bounce."
+        }
+      ],
+      "before_text": "We are thrilled to announce the launch of Quill.",
+      "after_text": "Quill is a note-taking app we built after the tools we tried were too rigid.",
+      "model_context": "Claude 3.5 Sonnet, launch-post drafts",
+      "frequency_context": "about 60% of sampled drafts",
+      "fixtures": {
+        "positive": [
+          {
+            "text": "We are thrilled to announce our new editor.",
+            "expect": "finding"
+          }
+        ],
+        "clean": [
+          {
+            "text": "The editor ships today with inline review.",
+            "expect": "no-finding"
+          }
+        ]
+      },
+      "expected_accepted": false,
+      "expected_failures": [
+        "narrow_rule"
+      ],
+      "false_positive_rationale": "More than one rule in one proposal violates the one narrow rule contract item.",
+      "reviewer_notes": "One pattern per proposal."
+    },
+    {
+      "id": "substance-contribution-positive-without-pattern",
+      "kind": "contribution",
+      "locale": "en-US",
+      "label_provenance": "human-hand-labeled",
+      "source": "hand-authored for issue #102 acceptance criteria",
+      "distinct_tell": "Launch posts open with a cheerleading announcement far more often than human writing.",
+      "rule": {
+        "id": "proposal-cheer-announce",
+        "name": "Cheerleading announcement opener",
+        "pattern": "\\b(?:we are|we're) (?:excited|thrilled) to announce\\b",
+        "rewrite": "Cut the announcement and state what the product actually does."
+      },
+      "before_text": "We are thrilled to announce the launch of Quill.",
+      "after_text": "Quill is a note-taking app we built after the tools we tried were too rigid.",
+      "model_context": "Claude 3.5 Sonnet, launch-post drafts",
+      "frequency_context": "about 60% of sampled drafts",
+      "fixtures": {
+        "positive": [
+          {
+            "text": "The editor ships today with inline review.",
+            "expect": "finding"
+          }
+        ],
+        "clean": [
+          {
+            "text": "The editor ships today with inline review.",
+            "expect": "no-finding"
+          }
+        ]
+      },
+      "expected_accepted": false,
+      "expected_failures": [
+        "positive fixture"
+      ],
+      "false_positive_rationale": "A positive fixture that does not contain the pattern is rejected.",
+      "reviewer_notes": "Each positive fixture must exhibit the pattern."
+    }
+  ]
+}

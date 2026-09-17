@@ -1,0 +1,129 @@
+{
+  "skill_name": "antislop-output-integrity",
+  "schema": "output-integrity-fixtures-1",
+  "evals": [
+    {
+      "id": "oi-provider-citation-beside-legitimate-citation",
+      "source": "The rollout used the earlier design [Smith 2020](https://example.com/design). The schema team flagged [source: internal] and left it unresolved in the report they handed back.",
+      "expected_counts": {
+        "provider_citation": 1,
+        "placeholder": 0,
+        "tracking_parameter": 0,
+        "leaked_reasoning": 0,
+        "zero_width": 0,
+        "homoglyph": 0
+      },
+      "expected_finding_count": 1,
+      "false_positive_rationale": "Provider citation residue ('[source: internal]') is a finding, while the legitimate Markdown citation '[Smith 2020](https://example.com/design)' is a protected markdown link and never fires.",
+      "reviewer_notes": "The single finding span sits on the bracket token, not on the resolved link."
+    },
+    {
+      "id": "oi-placeholder-in-deliverable-prose",
+      "source": "The release note still says [PLACEHOLDER] for the customer impact section, and the review checklist expects the owner name there before it ships to the wider team.",
+      "template": false,
+      "expected_counts": {
+        "provider_citation": 0,
+        "placeholder": 1,
+        "tracking_parameter": 0,
+        "leaked_reasoning": 0,
+        "zero_width": 0,
+        "homoglyph": 0
+      },
+      "expected_finding_count": 1,
+      "false_positive_rationale": "An unresolved placeholder in deliverable prose is an output defect, reported as an integrity finding and never as formulaic-writing risk.",
+      "reviewer_notes": "Placeholder detection fires because the deliverable is prose, not a documented template."
+    },
+    {
+      "id": "oi-placeholder-in-documented-template",
+      "source": "Onboarding template for new tenants.\n\nWelcome: [PLACEHOLDER tenant name]\nPrimary contact: [PLACEHOLDER email]\nKickoff date: [PLACEHOLDER date]\nSecurity review: [PLACEHOLDER owner]\nExpected duration: [PLACEHOLDER weeks]",
+      "template": true,
+      "expected_counts": {
+        "provider_citation": 0,
+        "placeholder": 0,
+        "tracking_parameter": 0,
+        "leaked_reasoning": 0,
+        "zero_width": 0,
+        "homoglyph": 0
+      },
+      "expected_finding_count": 0,
+      "false_positive_rationale": "Deliberate placeholders in a documented template are the template's structure, not prose defects, so template mode reports no placeholder finding.",
+      "reviewer_notes": "Template mode suppresses the placeholder check while every other integrity check still runs."
+    },
+    {
+      "id": "oi-zero-width-char-and-legitimate-identifier",
+      "source": "The caf\u00e9 menu\u200b lists the daily specials and the chef's name, and the fixed menu repeats the same items every week without a change.",
+      "expected_counts": {
+        "provider_citation": 0,
+        "placeholder": 0,
+        "tracking_parameter": 0,
+        "leaked_reasoning": 0,
+        "zero_width": 1,
+        "homoglyph": 0
+      },
+      "expected_finding_count": 1,
+      "false_positive_rationale": "The zero-width space is exposed with its code point and safe interpretation, while the legitimate accented identifier 'caf\u00e9' is never flagged and the text is never mutated.",
+      "reviewer_notes": "The finding carries U+200B and a safe interpretation instead of a silent replacement."
+    },
+    {
+      "id": "oi-tracking-url-and-functional-signed-url",
+      "source": "Share the campaign link https://example.com/?utm_source=newsletter&utm_medium=email, and keep the functional signed link https://example.com/download?sig=a1b2c3&expires=1700000000 for direct access without any tracking.",
+      "expected_counts": {
+        "provider_citation": 0,
+        "placeholder": 0,
+        "tracking_parameter": 1,
+        "leaked_reasoning": 0,
+        "zero_width": 0,
+        "homoglyph": 0
+      },
+      "expected_finding_count": 1,
+      "false_positive_rationale": "A URL whose query is analytics-only (utm_source, utm_medium) is a tracking finding; a signed URL whose query carries functional data (sig, expires) is left alone.",
+      "reviewer_notes": "Tracking detection distinguishes common analytics parameters from functional query data."
+    },
+    {
+      "id": "oi-quoted-bad-example-and-fenced-code-protected",
+      "source": "The reviewer wrote: \"As an AI language model, let me think step by step.\" It stays quoted.\n\n```text\n[PLACEHOLDER] https://example.com/?utm_source=code&utm_medium=scan\nAs an AI, I would say something here.\n```\n\nThe paragraph above the code is clean prose and stays clean.",
+      "expected_counts": {
+        "provider_citation": 0,
+        "placeholder": 0,
+        "tracking_parameter": 0,
+        "leaked_reasoning": 0,
+        "zero_width": 0,
+        "homoglyph": 0
+      },
+      "expected_finding_count": 0,
+      "false_positive_rationale": "The quoted bad example and the fenced code block both contain trigger strings, but tokenization protects quotes and code, so no integrity finding fires.",
+      "reviewer_notes": "Quoted material and fenced code are protected spans for every deterministic check."
+    },
+    {
+      "id": "oi-homoglyph-mixed-script-token",
+      "source": "The team called the fake page pr\u043educt, using a Cyrillic letter inside an otherwise Latin word, while the genuine caf\u00e9 name stayed untouched.",
+      "expected_counts": {
+        "provider_citation": 0,
+        "placeholder": 0,
+        "tracking_parameter": 0,
+        "leaked_reasoning": 0,
+        "zero_width": 0,
+        "homoglyph": 1
+      },
+      "expected_finding_count": 1,
+      "false_positive_rationale": "A Cyrillic letter embedded in an otherwise Latin word ('pr\u043educt') is a high-confidence homoglyph, while the genuine accented identifier 'caf\u00e9' is not.",
+      "reviewer_notes": "The mixed-script rule keeps genuine foreign words and accented identifiers untouched."
+    },
+    {
+      "id": "oi-short-sample-uncertainty",
+      "source": "The meeting ran long.",
+      "expected_counts": {
+        "provider_citation": 0,
+        "placeholder": 0,
+        "tracking_parameter": 0,
+        "leaked_reasoning": 0,
+        "zero_width": 0,
+        "homoglyph": 0
+      },
+      "expected_finding_count": 0,
+      "expected_sample_status": "short-sample",
+      "false_positive_rationale": "A short sample reports uncertainty about coverage instead of fabricating a confident clean verdict.",
+      "reviewer_notes": "The finding counts still report what the deterministic checks observed."
+    }
+  ]
+}

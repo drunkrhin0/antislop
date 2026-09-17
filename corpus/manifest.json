@@ -1,0 +1,37 @@
+{
+  "version": 1,
+  "purpose": "Register-labelled controls for adapted deterministic rules.",
+  "cases": [
+    {
+      "id": "docs-placeholder-literal",
+      "register": "docs",
+      "text": "Use `[Your Name]` when documenting the template syntax. Ordinary explanatory words keep this sample above the scoring minimum.",
+      "expected_absent": [
+        "struct-unfilled-placeholders"
+      ]
+    },
+    {
+      "id": "docs-real-procedure",
+      "register": "docs",
+      "text": "Run the deployment in order:\n1. Back up the database.\n2. Pause queue consumers.\n3. Apply the migration.\n4. Start the reader.\n5. Resume queue consumers.\n\nOrdinary explanatory words keep this sample above the scoring minimum for the test.",
+      "expected_absent": [
+        "struct-numbered-list-inflation"
+      ]
+    },
+    {
+      "id": "blog-repeated-list",
+      "register": "blog",
+      "text": "The article gives five reasons:\n1. Faster setup for teams.\n2. Faster onboarding for teams.\n3. Faster reviews for teams.\n4. Faster delivery for teams.\n5. Faster reporting for teams.\n\nOrdinary explanatory words keep this sample above the scoring minimum.",
+      "expected_present": [
+        "struct-numbered-list-inflation"
+      ]
+    },
+    {
+      "id": "plain-punctuation",
+      "register": "casual",
+      "text": "The release finished — then the operator wrote “done” in the log. Ordinary words keep this sample above the scoring minimum today.",
+      "expected_present": [],
+      "note": "Em-dash and curly-quote rules are enforced by the review layer, not the general scorer."
+    }
+  ]
+}

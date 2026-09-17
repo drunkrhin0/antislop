@@ -1,0 +1,159 @@
+{
+  "skill_name": "antislop",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Audit this paragraph: In today's rapidly evolving cybersecurity landscape, organizations must leverage cutting-edge solutions to stay ahead of the curve. Our platform provides a comprehensive, end-to-end approach to vulnerability management that streamlines workflows and drives actionable insights.",
+      "should_trigger": true,
+      "assertions": [
+        "The skill was loaded before the response was generated",
+        "The output includes a numeric score between 0 and 100",
+        "The output identifies 'leveraging', 'cutting-edge', 'stay ahead of the curve', 'comprehensive', 'end-to-end', 'streamlines', and 'actionable insights' as violations",
+        "The score is below 40 (severe slop)"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Does this pass? We ran Nessus against the /24 and found 12 hosts with CVE-2024-3094. Three are internet-facing. Patches are queued for next maintenance window. No compensating controls in place yet.",
+      "should_trigger": true,
+      "assertions": [
+        "The skill was loaded before the response was generated",
+        "The output includes a numeric score",
+        "The score is above 85 (clean — reads like a person)",
+        "No violations are flagged for technical specificity or directness"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "Can you explain what a CVE is and how CVSS scoring works?",
+      "should_trigger": false,
+      "assertions": [
+        "The skill was NOT loaded for this task",
+        "The response is an explanation, not an audit"
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "Review this report summary for AI patterns: Furthermore, it is important to note that the threat landscape is constantly evolving. By leveraging our advanced detection capabilities, we can provide a holistic view of your security posture. Our team of experts is dedicated to ensuring optimal outcomes.",
+      "should_trigger": true,
+      "assertions": [
+        "The skill was loaded before the response was generated",
+        "The output identifies 'furthermore', 'it is important to note', 'constantly evolving', 'leveraging', 'holistic', and 'optimal outcomes' as violations",
+        "The score is below 40 (severe slop)"
+      ]
+    },
+    {
+      "id": 5,
+      "prompt": "Flag the AI patterns in this: It goes without saying that our best-in-class solution is second to none. Let's dive into why this game-changing platform is a total game-changer for the industry.",
+      "should_trigger": true,
+      "assertions": [
+        "The skill was loaded before the response was generated",
+        "The output identifies 'it goes without saying', 'best-in-class', 'second to none', 'let's dive into', 'game-changing', 'game-changer' as violations",
+        "The score is below 40 (severe slop)"
+      ]
+    },
+    {
+      "id": 6,
+      "prompt": "Audit this for writing quality: The meeting ran for two hours. We agreed on the budget. Sarah will draft the timeline. Next review is Friday.",
+      "should_trigger": true,
+      "assertions": [
+        "The skill was loaded before the response was generated",
+        "The output includes a numeric score",
+        "The score is above 85 (clean — reads like a person)"
+      ]
+    },
+    {
+      "id": 7,
+      "prompt": "What is the capital of Australia?",
+      "should_trigger": false,
+      "assertions": [
+        "The skill was NOT loaded for this task",
+        "The response is a factual answer, not an audit"
+      ]
+    },
+    {
+      "id": 8,
+      "prompt": "Write a bash script that backs up a directory to S3.",
+      "should_trigger": false,
+      "assertions": [
+        "The skill was NOT loaded for this task",
+        "The response is a shell script, not an audit or style rewrite"
+      ]
+    },
+    {
+      "id": 9,
+      "prompt": "Audit this paragraph for AI patterns and score it: The new pipeline cut deploy time by 40%, and that number mattered because it freed three engineers for other work—not because we added more tooling.",
+      "should_trigger": true,
+      "assertions": [
+        "The skill was loaded before the response was generated",
+        "The em dash is reported as a forbidden, deterministic finding with the review mode shown",
+        "The score reflects the em-dash deduction"
+      ]
+    },
+    {
+      "id": 10,
+      "prompt": "Audit this corrected paragraph for AI patterns and score it: The new pipeline cut deploy time by 40%, and that number mattered because it freed three engineers for other work. Not because we added more tooling.",
+      "should_trigger": true,
+      "assertions": [
+        "The skill was loaded before the response was generated",
+        "No em-dash finding is raised (the em dash was replaced)",
+        "The score is above 85 (clean)"
+      ]
+    },
+    {
+      "id": 11,
+      "prompt": "Audit and score this reference entry: Nessus scan of the 10.0.0.0/24 range found 12 hosts running a service with CVE-2024-3094. Three are internet-facing. Patches are queued for the next maintenance window.",
+      "should_trigger": true,
+      "assertions": [
+        "The skill was loaded before the response was generated",
+        "The score is above 85 (clean)",
+        "No finding is raised for lacking first-person voice or a personal opinion",
+        "The absence of first-person voice is not presented as evidence of AI authorship"
+      ]
+    },
+    {
+      "id": 12,
+      "prompt": "Audit and score this paragraph: This discovery is crucial because it changes everything about how we think about network security. The implications are massive and far-reaching.",
+      "should_trigger": true,
+      "assertions": [
+        "The skill was loaded before the response was generated",
+        "The unsupported importance claim is raised as an advisory or human-review finding, not a deterministic one",
+        "The finding is a prompt to review the claim, not a verdict that the author is an AI",
+        "The output carries the authorship disclaimer"
+      ]
+    },
+    {
+      "id": 13,
+      "prompt": "Audit and score this draft: The report covers the 2026 threat landscape [source: internal Q1 report]. Key findings include the rise of phishing campaigns [TODO: add specifics].",
+      "should_trigger": true,
+      "assertions": [
+        "The skill was loaded before the response was generated",
+        "The leaked citation token and the placeholder are reported as integrity findings",
+        "The integrity findings appear in a separate block and do not change the Formulaic Writing Risk Score",
+        "No scored violation is raised for the placeholder or leaked citation"
+      ]
+    },
+    {
+      "id": 14,
+      "prompt": "Audit and score this paragraph: The customer wrote: 'This platform is a game-changer for our team.' We agree it solved their scale problem.",
+      "should_trigger": true,
+      "assertions": [
+        "The skill was loaded before the response was generated",
+        "The discouraged phrase 'game-changer' inside the direct quotation is not flagged (false-positive boundary)",
+        "The quotation is treated as reported speech, not the author's own wording",
+        "The score stays clean"
+      ]
+    },
+    {
+      "id": 15,
+      "prompt": "Audit this project update: The migration significantly improved reliability: it created a stronger foundation for future growth and became our north star for operations.",
+      "should_trigger": true,
+      "assertions": [
+        "The skill was loaded before the response was generated",
+        "The output identifies the weak verb plus padding adverb, transition-glue colon, generic foundation language, and abstract north-star metaphor",
+        "The output explains that legitimate technical uses of terms such as vector or surface should not be flagged by exact word alone",
+        "The output includes a numeric score and separates primary findings from related findings"
+      ]
+    }
+  ]
+}

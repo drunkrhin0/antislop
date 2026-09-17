@@ -1,0 +1,37 @@
+name: Lint Skills
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+
+      - name: Validate repository invariants
+        run: python3 validate.py --skills-dir skills --expect-version-from rules.json
+
+      - name: Check generated artifacts match registry
+        run: python3 generate.py --check
+
+      - name: Run test suite
+        run: python3 -m unittest discover -s tests -v
+
+      - name: Test release packaging end to end
+        run: bash scripts/test-release-e2e.sh
+
+      - name: Build portable plugin archive
+        run: bash scripts/build-plugin-archive.sh dist
+
+      - name: Upload portable plugin archive
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: antislop-plugin-${{ github.sha }}
+          path: |
+            dist/antislop-plugin-*.zip
+            dist/antislop-plugin-*.zip.sha256
+          retention-days: 30
