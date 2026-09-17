@@ -13,7 +13,7 @@ and `delete_file` fail closed when the branch target, branch sequencing, or
 head check is missing. Read-only calls and pull-request creation do not grant
 file-write authority.
 
-The reusable contract lives in `forgejo_write_policy.py`. Bifrost callers must
+The reusable contract lives in `tools/forgejo_write_policy.py`. Bifrost callers must
 apply the same sequence: create the branch from the current protected tip,
 verify the returned branch and head, perform file mutations only on that
 branch, then open a pull request back to `main`.

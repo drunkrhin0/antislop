@@ -10,7 +10,7 @@ import unittest
 
 
 ROOT = os.path.join(os.path.dirname(__file__), "..")
-SCORE = os.path.join(ROOT, "score.py")
+SCORE = os.path.join(ROOT, "tools", "score.py")
 
 
 def run_score(text, *args):

@@ -8,11 +8,11 @@ antislop Power's steering files (verbatim copies of the skill's reference
 docs, plus the rendered pattern reference reused for audit mode).
 
 Usage:
-    python3 generate.py --check                    # verify committed files match
-    python3 generate.py --check --profile technical # verify for specific profile
-    python3 generate.py --output-dir out/          # write generated files
-    python3 generate.py --output-dir out/ --profile general
-    python3 generate.py --help
+    python3 tools/generate.py --check                    # verify committed files match
+    python3 tools/generate.py --check --profile technical # verify for specific profile
+    python3 tools/generate.py --output-dir out/          # write generated files
+    python3 tools/generate.py --output-dir out/ --profile general
+    python3 tools/generate.py --help
 
 Check mode exits 0 when all generated artifacts match committed files,
 or exits 1 when any differ.

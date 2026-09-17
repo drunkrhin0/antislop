@@ -42,11 +42,11 @@ orchestration) is not imported; model judgment stays advisory and the runner
 fails only on explicit envelope or preservation contracts.
 
 Usage:
-    python3 delivery.py verify --source-text "..." --body-text "..."
-    python3 delivery.py envelope --source-text "..." --body-text "..." --medium argument
-    python3 delivery.py check --envelope envelope.json
-    python3 delivery.py --fixtures skills/antislop/evals/delivery-envelope-fixtures.json
-    python3 delivery.py --help
+    python3 tools/delivery.py verify --source-text "..." --body-text "..."
+    python3 tools/delivery.py envelope --source-text "..." --body-text "..." --medium argument
+    python3 tools/delivery.py check --envelope envelope.json
+    python3 tools/delivery.py --fixtures skills/antislop/evals/delivery-envelope-fixtures.json
+    python3 tools/delivery.py --help
 
 Exit codes:
     0 -- the run verified, or every fixture decision matched its expectation

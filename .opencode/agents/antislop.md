@@ -758,7 +758,7 @@ Any word in quotes where the quotes signal ironic distance rather than a direct 
 - An advisory or human-review finding is a prompt to review the mechanism, not a verdict on who wrote the text. The score can never prove who wrote a document.
 - Every finding carries one status: keep, revise, ask-author, cut, or no-finding. A clean passage reports no-finding; the system never invents work.
 - Missing author material (a fact, experience, opinion, or motive) is an ask-author finding. Ask one concise question before drafting and wait; a `[TK: ...]` marker is allowed only when the user explicitly requests a template, scaffold, or marked-up draft. Never invent content.
-- Selected structural rules are executable metrics: the scorer and `structural.py` detect them with exact spans or document-level evidence, and findings carry a strict or advisory signal. Strict findings deduct; advisory findings report a sample-size-limited metric and never prove authorship. Headings, list items, tables, code blocks, and quoted examples are excluded from the measurements.
+- Selected structural rules are executable metrics: the scorer and `tools/structural.py` detect them with exact spans or document-level evidence, and findings carry a strict or advisory signal. Strict findings deduct; advisory findings report a sample-size-limited metric and never prove authorship. Headings, list items, tables, code blocks, and quoted examples are excluded from the measurements.
 - Evaluation metadata (fixtures, gates, the authorship disclaimer itself) is never a finding and never evidence of authorship.
 - When corrections are wanted and possible, end with: `Reply "fix" to apply corrections.` Otherwise omit the footer.
 

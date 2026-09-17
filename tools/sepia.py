@@ -42,11 +42,11 @@ regions, apply_edits), fidelity.py (protected spans), drift.py (fact
 matching), density.py (precision, horoscope note).
 
 Usage:
-    python3 sepia.py --fixtures skills/antislop/evals/sepia-routing-fixtures.json
-    python3 sepia.py review --source-text "..." --venue ticket
-    python3 sepia.py review --source-text "..." --fiction
-    python3 sepia.py refactor --source-text "..." --venue ticket --accept vocab-utilize=use
-    python3 sepia.py recreate --source-text "..." --candidate "..." --venue postmortem
+    python3 tools/sepia.py --fixtures skills/antislop/evals/sepia-routing-fixtures.json
+    python3 tools/sepia.py review --source-text "..." --venue ticket
+    python3 tools/sepia.py review --source-text "..." --fiction
+    python3 tools/sepia.py refactor --source-text "..." --venue ticket --accept vocab-utilize=use
+    python3 tools/sepia.py recreate --source-text "..." --candidate "..." --venue postmortem
 
 Exit codes:
     0 -- the run succeeded, or every fixture decision matched its expectation

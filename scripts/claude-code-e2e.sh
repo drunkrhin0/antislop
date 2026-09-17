@@ -153,9 +153,9 @@ record "manifest_validation" "pass"
 
 if ! (
   cd "$repo_dir"
-  python3 validate.py --skills-dir skills --expect-version-from rules.json >/dev/null
+  python3 tools/validate.py --skills-dir skills --expect-version-from rules.json >/dev/null
   bash check.sh >/dev/null
-  python3 -m unittest discover -s tests -v >/dev/null
+  python3 -m unittest discover -s tests -t . -v >/dev/null
 ); then
   failed "repository validation or tests failed"
 fi

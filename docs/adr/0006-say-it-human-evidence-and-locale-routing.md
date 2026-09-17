@@ -4,9 +4,9 @@ Reviewed `taxueseek/say-it-human` at 71bb6f8 (MIT) and adopted its claim-evidenc
 
 ## Decision
 
-Add a `say_human.py` runner with five claim evidence classes: `source`, `logic`, `experience`, `inference`, and `unknown`. Every fact-dependent repair retains or exposes the evidence class of the claim it touches, and a required claim whose evidence is `unknown` stops rewriting and requests a source.
+Add a `tools/say_human.py` runner with five claim evidence classes: `source`, `logic`, `experience`, `inference`, and `unknown`. Every fact-dependent repair retains or exposes the evidence class of the claim it touches, and a required claim whose evidence is `unknown` stops rewriting and requests a source.
 
-Add protected technical spans for code, URLs, paths, API names, numbers, tags, and supplied terminology, reused from `repair.py`'s protected regions and extended with API names and tags. These spans survive byte for byte.
+Add protected technical spans for code, URLs, paths, API names, numbers, tags, and supplied terminology, reused from `tools/repair.py`'s protected regions and extended with API names and tags. These spans survive byte for byte.
 
 Add an opt-in `zh-CN` locale profile covering punctuation width (full-width vs half-width), Chinese-Western spacing, and high-confidence translationese patterns. The rules activate only when `--locale zh-CN` is selected or the text is reliably routed as Han-dominant, and they are advisory findings that never auto-apply to Chinese prose.
 
@@ -24,6 +24,6 @@ Antislop never labeled whether a claim comes from supplied source text, logic, a
 
 ## Consequences
 
-- `rules.json` gains a `claim_evidence_classes` section and a `locales` section. `validate.py` gates both schemas.
-- `say_human.py` owns the claim evidence classification, the protected technical spans, the zh-CN locale checks, the venue routing, and the fixture corpus; `validate.py` runs the corpus and fails when a fixture decision or evidence class does not match.
+- `rules.json` gains a `claim_evidence_classes` section and a `locales` section. `tools/validate.py` gates both schemas.
+- `tools/say_human.py` owns the claim evidence classification, the protected technical spans, the zh-CN locale checks, the venue routing, and the fixture corpus; `tools/validate.py` runs the corpus and fails when a fixture decision or evidence class does not match.
 - The zero-em-dash policy and general English repairs stay absolute; zh-CN locale rules are opt-in and advisory and never change the Formulaic Writing Risk Score.

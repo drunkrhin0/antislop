@@ -4,7 +4,7 @@ Reviewed `Nanako0129/sepia` at 361e82e (MIT) and adopted its operation split and
 
 ## Decision
 
-Add three operations on top of the existing operation authority from `edit.py`:
+Add three operations on top of the existing operation authority from `tools/edit.py`:
 
 - **Review** quotes evidence and never rewrites. Every finding carries a quoted span, rule, status, and reason. It preserves Sepia's explicit `n/a` and `over-correction` states and maps the remaining outcomes to the Antislop-local `keep`, `revise`, `cut`, and `ask-author` statuses.
 - **Refactor** lists the full finding set, then applies only the accepted minimal edits and reports the rejected and unresolved findings.
@@ -24,6 +24,6 @@ Antislop's general and technical profiles do not capture the different jobs perf
 
 ## Consequences
 
-- `rules.json` gains a `venues` section, a `venue_features` section, the `n/a` and `over-correction` review statuses, and the `fiction` profile. `validate.py` gates the schema and the fixture corpus.
-- `sepia.py` owns the deterministic venue-feature detectors and the QUD reflection-tail condition; `generate.py` renders the venue routing into the pattern reference.
+- `rules.json` gains a `venues` section, a `venue_features` section, the `n/a` and `over-correction` review statuses, and the `fiction` profile. `tools/validate.py` gates the schema and the fixture corpus.
+- `tools/sepia.py` owns the deterministic venue-feature detectors and the QUD reflection-tail condition; `tools/generate.py` renders the venue routing into the pattern reference.
 - The zero-em-dash policy stays absolute in every venue and profile.

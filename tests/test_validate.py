@@ -13,11 +13,11 @@ import sys
 import tempfile
 import unittest
 
-VALIDATOR = os.path.join(os.path.dirname(__file__), "..", "validate.py")
+VALIDATOR = os.path.join(os.path.dirname(__file__), "..", "tools", "validate.py")
 FIXTURES = os.path.join(os.path.dirname(__file__), "fixtures")
 REPO_ROOT = os.path.join(os.path.dirname(__file__), "..")
 
-sys.path.insert(0, os.path.abspath(REPO_ROOT))
+sys.path.insert(0, os.path.join(os.path.abspath(REPO_ROOT), "tools"))
 import validate  # noqa: E402 -- import after sys.path setup, for direct unit tests
 
 
@@ -334,7 +334,9 @@ class TestRuleContentChecks(unittest.TestCase):
         skill_dir = os.path.join(tmp, "skills", "antislop")
         references_dir = os.path.join(skill_dir, "references")
         os.makedirs(references_dir)
-        repo_root = os.path.dirname(os.path.abspath(validate.__file__))
+        repo_root = os.path.dirname(
+            os.path.dirname(os.path.abspath(validate.__file__))
+        )
         with open(os.path.join(repo_root, "rules.json"), encoding="utf-8") as f:
             registry = json.load(f)
         social_rules = [
@@ -371,7 +373,8 @@ class TestRuleContentChecks(unittest.TestCase):
     def _rule(rule_id, text, category):
         with open(
             os.path.join(
-                os.path.dirname(os.path.abspath(validate.__file__)), "rules.json"
+                os.path.dirname(os.path.dirname(os.path.abspath(validate.__file__))),
+                "rules.json",
             ),
             encoding="utf-8",
         ) as f:

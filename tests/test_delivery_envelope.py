@@ -33,8 +33,8 @@ import drift  # noqa: E402
 FIXTURES = os.path.join(ROOT, "skills", "antislop", "evals",
                         "delivery-envelope-fixtures.json")
 REGISTRY = os.path.join(ROOT, "rules.json")
-DELIVERY = os.path.join(ROOT, "delivery.py")
-VALIDATE = os.path.join(ROOT, "validate.py")
+DELIVERY = os.path.join(ROOT, "tools", "delivery.py")
+VALIDATE = os.path.join(ROOT, "tools", "validate.py")
 
 CLEAN = ("Run `fetch` with version 2.4. When the cache is cold, then one "
          "record should come back.")

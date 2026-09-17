@@ -71,10 +71,10 @@ jobs:
             echo "Release tag ${TAG} does not match ${EXPECTED_TAG}" >&2
             exit 1
           fi
-          python3 generate.py --check
-          python3 validate.py --skills-dir skills --expect-version-from rules.json
+          python3 tools/generate.py --check
+          python3 tools/validate.py --skills-dir skills --expect-version-from rules.json
           bash check.sh
-          python3 -m unittest discover -s tests -v
+          python3 -m unittest discover -s tests -t . -v
 
       - name: Build release assets
         run: |

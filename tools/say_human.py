@@ -32,12 +32,12 @@ and the registry (profiles). The runner never adds emotion, mess, slang,
 errors, or first-person experience to simulate humanity.
 
 Usage:
-    python3 say_human.py label --source-text "..." --claim "..."
-    python3 say_human.py repair --source-text "..." \
+    python3 tools/say_human.py label --source-text "..." --claim "..."
+    python3 tools/say_human.py repair --source-text "..." \
         --required-claim "..." --locale zh-CN --venue release-note \
         --authorize-delete --term "..." --voice-trait "..."
-    python3 say_human.py locale --source-text "..." --locale zh-CN
-    python3 say_human.py --fixtures skills/antislop/evals/say-human-fixtures.json
+    python3 tools/say_human.py locale --source-text "..." --locale zh-CN
+    python3 tools/say_human.py --fixtures skills/antislop/evals/say-human-fixtures.json
 
 Exit codes:
     0 -- the run succeeded, or every fixture decision matched its expectation

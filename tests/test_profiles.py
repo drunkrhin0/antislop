@@ -12,7 +12,7 @@ import unittest
 
 ROOT = os.path.join(os.path.dirname(__file__), "..")
 REGISTRY = os.path.join(ROOT, "rules.json")
-GENERATE = os.path.join(ROOT, "generate.py")
+GENERATE = os.path.join(ROOT, "tools", "generate.py")
 
 
 def run_generate(*args):

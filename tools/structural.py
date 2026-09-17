@@ -19,10 +19,10 @@ Every metric states its sample-size minimum. Metrics never prove AI
 authorship.
 
 Usage:
-    python3 structural.py --file text.txt --profile general
-    python3 structural.py --stdin --profile general
-    echo "text" | python3 structural.py --profile general
-    python3 structural.py --help
+    python3 tools/structural.py --file text.txt --profile general
+    python3 tools/structural.py --stdin --profile general
+    echo "text" | python3 tools/structural.py --profile general
+    python3 tools/structural.py --help
 
 Exit codes:
     0 -- no findings

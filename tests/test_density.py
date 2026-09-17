@@ -35,8 +35,8 @@ import review  # noqa: E402
 FIXTURES = os.path.join(ROOT, "skills", "antislop", "evals",
                         "density-precision-fixtures.json")
 REGISTRY = os.path.join(ROOT, "rules.json")
-VALIDATE = os.path.join(ROOT, "validate.py")
-SCORE = os.path.join(ROOT, "score.py")
+VALIDATE = os.path.join(ROOT, "tools", "validate.py")
+SCORE = os.path.join(ROOT, "tools", "score.py")
 
 STATUSES = ("keep", "revise", "ask-author", "cut", "no-finding")
 
@@ -465,7 +465,7 @@ class TestCliInterface(unittest.TestCase):
 
     def test_stdin_accepts_input(self):
         import subprocess as sp
-        result = sp.run([sys.executable, os.path.join(ROOT, "density.py"),
+        result = sp.run([sys.executable, os.path.join(ROOT, "tools", "density.py"),
                          "--profile", "general", "--medium", "argument"],
                         capture_output=True, text=True, cwd=ROOT,
                         input=UNSUPPORTED)
@@ -476,7 +476,7 @@ class TestCliInterface(unittest.TestCase):
 
     def test_fixture_corpus_exits_zero(self):
         result = subprocess.run(
-            [sys.executable, os.path.join(ROOT, "density.py"), "--fixtures",
+            [sys.executable, os.path.join(ROOT, "tools", "density.py"), "--fixtures",
              "skills/antislop/evals/density-precision-fixtures.json"],
             capture_output=True, text=True, cwd=ROOT)
         self.assertEqual(result.returncode, 0, result.stderr)
@@ -485,7 +485,7 @@ class TestCliInterface(unittest.TestCase):
 
     def test_missing_file_is_a_usage_error(self):
         result = subprocess.run(
-            [sys.executable, os.path.join(ROOT, "density.py"), "--file",
+            [sys.executable, os.path.join(ROOT, "tools", "density.py"), "--file",
              os.path.join(ROOT, "nope.md")],
             capture_output=True, text=True, cwd=ROOT)
         self.assertEqual(result.returncode, 2)

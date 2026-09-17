@@ -33,8 +33,8 @@ import repair  # noqa: E402
 FIXTURES = os.path.join(ROOT, "skills", "antislop", "evals",
                         "staged-scan-fixtures.json")
 REGISTRY = os.path.join(ROOT, "rules.json")
-SCAN = os.path.join(ROOT, "scan.py")
-VALIDATE = os.path.join(ROOT, "validate.py")
+SCAN = os.path.join(ROOT, "tools", "scan.py")
+VALIDATE = os.path.join(ROOT, "tools", "validate.py")
 
 UNIFORM_PLUS_EM_DASH = (
     "The parser validates every incoming request before the handler thread "

@@ -28,8 +28,8 @@ import unittest
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 REGISTRY = os.path.join(ROOT, "rules.json")
-SCORE = os.path.join(ROOT, "score.py")
-STRUCTURAL = os.path.join(ROOT, "structural.py")
+SCORE = os.path.join(ROOT, "tools", "score.py")
+STRUCTURAL = os.path.join(ROOT, "tools", "structural.py")
 
 sys.path.insert(0, ROOT)
 import structural  # noqa: E402

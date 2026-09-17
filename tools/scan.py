@@ -19,11 +19,11 @@ separate sections. Strict findings affect the exit status; advisory findings
 do not unless --fail-on-advisory is set.
 
 Usage:
-    python3 scan.py --file text.txt --profile general
-    cat text.txt | python3 scan.py --profile general
-    python3 scan.py --doc a.md --doc b.md --doc c.md
-    python3 scan.py --fixtures skills/antislop/evals/staged-scan-fixtures.json
-    python3 scan.py --help
+    python3 tools/scan.py --file text.txt --profile general
+    cat text.txt | python3 tools/scan.py --profile general
+    python3 tools/scan.py --doc a.md --doc b.md --doc c.md
+    python3 tools/scan.py --fixtures skills/antislop/evals/staged-scan-fixtures.json
+    python3 tools/scan.py --help
 
 Exit codes:
     0 -- the scan ran and no strict finding is present (advisory findings do

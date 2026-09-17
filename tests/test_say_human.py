@@ -30,8 +30,8 @@ import say_human  # noqa: E402
 FIXTURES = os.path.join(ROOT, "skills", "antislop", "evals",
                         "say-human-fixtures.json")
 REGISTRY = os.path.join(ROOT, "rules.json")
-SAY_HUMAN = os.path.join(ROOT, "say_human.py")
-VALIDATE = os.path.join(ROOT, "validate.py")
+SAY_HUMAN = os.path.join(ROOT, "tools", "say_human.py")
+VALIDATE = os.path.join(ROOT, "tools", "validate.py")
 
 EVIDENCE_CLASSES = ("source", "logic", "experience", "inference", "unknown")
 

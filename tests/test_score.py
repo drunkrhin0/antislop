@@ -11,7 +11,7 @@ import sys
 import unittest
 
 ROOT = os.path.join(os.path.dirname(__file__), "..")
-SCORE = os.path.join(ROOT, "score.py")
+SCORE = os.path.join(ROOT, "tools", "score.py")
 REGISTRY = os.path.join(ROOT, "rules.json")
 
 

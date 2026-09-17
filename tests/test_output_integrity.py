@@ -30,8 +30,8 @@ import output_integrity as oi  # noqa: E402 -- import after sys.path setup
 FIXTURES = os.path.join(ROOT, "skills", "antislop", "evals",
                         "output-integrity-fixtures.json")
 REGISTRY = os.path.join(ROOT, "rules.json")
-RUNNER = os.path.join(ROOT, "output_integrity.py")
-VALIDATE = os.path.join(ROOT, "validate.py")
+RUNNER = os.path.join(ROOT, "tools", "output_integrity.py")
+VALIDATE = os.path.join(ROOT, "tools", "validate.py")
 
 
 def load_registry():

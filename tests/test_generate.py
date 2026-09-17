@@ -11,7 +11,7 @@ import sys
 import unittest
 
 ROOT = os.path.join(os.path.dirname(__file__), "..")
-GENERATE = os.path.join(ROOT, "generate.py")
+GENERATE = os.path.join(ROOT, "tools", "generate.py")
 REGISTRY = os.path.join(ROOT, "rules.json")
 
 sys.path.insert(0, os.path.abspath(ROOT))

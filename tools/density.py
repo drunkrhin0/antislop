@@ -24,10 +24,10 @@ reviewed project stays an optional manual specificity question and never
 enters the numeric risk score, and no reviewed score band is imported.
 
 Usage:
-    python3 density.py --file text.txt --profile general --medium argument
-    cat text.txt | python3 density.py --medium reference
-    python3 density.py --fixtures skills/antislop/evals/density-precision-fixtures.json
-    python3 density.py --help
+    python3 tools/density.py --file text.txt --profile general --medium argument
+    cat text.txt | python3 tools/density.py --medium reference
+    python3 tools/density.py --fixtures skills/antislop/evals/density-precision-fixtures.json
+    python3 tools/density.py --help
 
 Exit codes:
     0 -- the review ran, or every fixture decision matched its expectation
@@ -46,8 +46,8 @@ from findings import signal as _signal, short_excerpt as _short_excerpt, excerpt
 import limits
 from registry import load_registry
 
-MODULE_DIR = os.path.dirname(os.path.abspath(__file__))
-REGISTRY_PATH = os.path.join(MODULE_DIR, "rules.json")
+REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+REGISTRY_PATH = os.path.join(REPO_ROOT, "rules.json")
 
 INTERFACE = "antislop.density_precision"
 SCHEMA = "density-precision-report-1"

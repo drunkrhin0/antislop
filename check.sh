@@ -12,7 +12,7 @@ validate_failures=0
 report_lines=()
 
 # ── generate.py --check ──────────────────────────────────────────────
-gen_output=$(python3 generate.py --check 2>&1)
+gen_output=$(python3 tools/generate.py --check 2>&1)
 gen_exit=$?
 
 if [ "$gen_exit" -eq 0 ]; then
@@ -33,7 +33,7 @@ else
 fi
 
 # ── validate.py ──────────────────────────────────────────────────────
-val_output=$(python3 validate.py --skills-dir skills --expect-version-from rules.json 2>&1)
+val_output=$(python3 tools/validate.py --skills-dir skills --expect-version-from rules.json 2>&1)
 val_exit=$?
 
 if [ "$val_exit" -eq 0 ]; then

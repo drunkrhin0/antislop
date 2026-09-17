@@ -6,10 +6,10 @@ registry. Supports profile filtering, diminishing repetition, overlap
 handling, and 500-word normalization.
 
 Usage:
-    echo "text" | python3 score.py --profile general
-    python3 score.py --profile general --stdin < file.txt
-    python3 score.py --profile technical --file input.txt
-    python3 score.py --help
+    echo "text" | python3 tools/score.py --profile general
+    python3 tools/score.py --profile general --stdin < file.txt
+    python3 tools/score.py --profile technical --file input.txt
+    python3 tools/score.py --help
 
 Output: JSON with score, band, findings, metadata.
 """

@@ -16,8 +16,8 @@ touched. The hand-maintained opencode agent remains outside the fixer because
 it is not a direct mirror of either skill.
 
 Usage:
-    python3 fix.py
-    python3 fix.py --registry rules.json --skills-dir skills --profile general
+    python3 tools/fix.py
+    python3 tools/fix.py --registry rules.json --skills-dir skills --profile general
 """
 
 import argparse
@@ -67,13 +67,13 @@ def _run(cmd, cwd):
 
 def _scoped_validate(root, skill_dir):
     """Re-run validate.py scoped to a single skill's own directory."""
-    return _run([sys.executable, os.path.join(root, "validate.py"),
+    return _run([sys.executable, os.path.join(root, "tools", "validate.py"),
                  "--skills-dir", skill_dir], root)
 
 
 def fix_pattern_reference(root, registry, profile):
     """Regenerate pattern-reference.md if generate.py --check reports drift."""
-    generate_py = os.path.join(root, "generate.py")
+    generate_py = os.path.join(root, "tools", "generate.py")
     target = os.path.join(root, PATTERN_REF_RELPATH)
 
     rc, _out, _err = _run([sys.executable, generate_py, "--check",
@@ -170,7 +170,7 @@ def main():
     parser.add_argument("--profile", default="general", help="Writing profile to generate for")
     args = parser.parse_args()
 
-    root = os.path.dirname(os.path.abspath(__file__))
+    root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     results = run_fixes(root, args.registry, args.skills_dir, args.profile)
 
     fixed = [r for r in results if r["status"] == "fixed"]

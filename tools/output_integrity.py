@@ -29,12 +29,12 @@ on new or worsened configured findings. Short samples report uncertainty
 instead of a fabricated clean verdict.
 
 Usage:
-    python3 output_integrity.py --file doc.md
-    cat doc.md | python3 output_integrity.py
-    python3 output_integrity.py --file doc.md --template
-    python3 output_integrity.py --file doc.md --baseline baseline.json --fail-on-regression
-    python3 output_integrity.py --fixtures skills/antislop/evals/output-integrity-fixtures.json
-    python3 output_integrity.py --help
+    python3 tools/output_integrity.py --file doc.md
+    cat doc.md | python3 tools/output_integrity.py
+    python3 tools/output_integrity.py --file doc.md --template
+    python3 tools/output_integrity.py --file doc.md --baseline baseline.json --fail-on-regression
+    python3 tools/output_integrity.py --fixtures skills/antislop/evals/output-integrity-fixtures.json
+    python3 tools/output_integrity.py --help
 
 Exit codes:
     0 -- the scan ran and no finding is present, or no regression failed

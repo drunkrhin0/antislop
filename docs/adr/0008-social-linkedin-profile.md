@@ -26,6 +26,6 @@ Antislop had no social-platform profile. Applying long-form paragraph, heading, 
 
 ## Consequences
 
-- `rules.json` gains a `social-linkedin` profile, a `social_post_features` section, a `social_post_types` section, and six social rules scoped to the profile. `validate.py` gates the schema, the fixture corpus, and the no-leakage invariant.
-- `linkedin.py` owns the deterministic social feature detectors and the post review; `generate.py` renders the post-type routing for the social-linkedin profile only.
+- `rules.json` gains a `social-linkedin` profile, a `social_post_features` section, a `social_post_types` section, and six social rules scoped to the profile. `tools/validate.py` gates the schema, the fixture corpus, and the no-leakage invariant.
+- `tools/linkedin.py` owns the deterministic social feature detectors and the post review; `tools/generate.py` renders the post-type routing for the social-linkedin profile only.
 - The general profile's generated artifacts are unchanged: social rules render only under the social-linkedin profile.

@@ -21,10 +21,10 @@ limitation, but never gate release or appear in the Formulaic Writing Risk
 Score. Evaluation results never claim authorship or detector immunity.
 
 Usage:
-    python3 drift.py --fixtures skills/antislop/evals/drift-fixtures.json
-    python3 drift.py --false-positive-corpus skills/antislop/evals/false-positive-corpus.json
-    python3 drift.py --fixtures ... --false-positive-corpus ...
-    python3 drift.py --help
+    python3 tools/drift.py --fixtures skills/antislop/evals/drift-fixtures.json
+    python3 tools/drift.py --false-positive-corpus skills/antislop/evals/false-positive-corpus.json
+    python3 tools/drift.py --fixtures ... --false-positive-corpus ...
+    python3 tools/drift.py --help
 
 Exit codes:
     0 -- all fixtures match their expected decisions and the corpus passes

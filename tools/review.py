@@ -28,9 +28,9 @@ advisory risk score, and a voice sample transfers style only, never personal
 facts.
 
 Usage:
-    python3 review.py --source-text "..." --medium argument
-    python3 review.py --fixtures skills/antislop/evals/clarity-review-fixtures.json
-    python3 review.py --help
+    python3 tools/review.py --source-text "..." --medium argument
+    python3 tools/review.py --fixtures skills/antislop/evals/clarity-review-fixtures.json
+    python3 tools/review.py --help
 
 Exit codes:
     0 -- the review ran, or every fixture decision matched its expectation

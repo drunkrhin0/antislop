@@ -3,7 +3,7 @@
 This file exercises the general scoring surface and the PR #85
 publishing detectors. Score it with:
 
-    cat examples/slop-sample.md | python3 score.py --stdin
+    cat examples/slop-sample.md | python3 tools/score.py --stdin
 
 By [Your Name], the release note cites citeturn0search0 and links
 https://example.com/report?page=2&utm_source=chatgpt.com.

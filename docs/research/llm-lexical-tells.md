@@ -108,19 +108,19 @@ A conceptual record shape is:
 | `evidence_meta` | Class, source, first seen, last reviewed, confidence, sample, and decay. |
 | `review_status` | Proposed candidate disposition. Link to the existing root review queue rather than creating a nested queue. |
 
-`score.py` currently forces advisory finding weights to zero and only scans
+`tools/score.py` currently forces advisory finding weights to zero and only scans
 forbidden or discouraged semantic types. A metadata-only candidate must stay
 outside the active rule set. Numeric candidate weights cannot override this
 contract. Any future scored treatment requires an explicit rule decision and
 calibration, not a silent change to advisory semantics.
 
-`scan.py` routes exact and phrase matches through its lexical stage and
+`tools/scan.py` routes exact and phrase matches through its lexical stage and
 registered structural detectors through its structural stage. A new contextual
 matcher therefore needs an explicit integration path. Merely declaring it
 `pattern_match` will not make it run in both stages.
 
-`scan.py` masks fenced and inline code before matching. The lexical path should
-reuse that code only behavior and retain raw input for excerpts. `score.py`
+`tools/scan.py` masks fenced and inline code before matching. The lexical path should
+reuse that code only behavior and retain raw input for excerpts. `tools/score.py`
 continues to score raw input. Whether URLs, quotes, or supplied domain terms
 receive protection must be established through the current public interface's
 tests, not assumed from this design. Lexical findings should not enter the

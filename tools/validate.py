@@ -56,10 +56,10 @@ the expected version from that file instead of hardcoding it, so a version
 bump edits the shipped artifacts only.
 
 Usage:
-    python3 validate.py --skills-dir skills
-    python3 validate.py --skills-dir skills --expect-version-from rules.json
-    python3 validate.py --skills-dir skills --expect-version 3.0.0
-    python3 validate.py --help
+    python3 tools/validate.py --skills-dir skills
+    python3 tools/validate.py --skills-dir skills --expect-version-from rules.json
+    python3 tools/validate.py --skills-dir skills --expect-version 3.0.0
+    python3 tools/validate.py --help
 
 Fixture files under tests/fixtures/ are named SKILL.md.fixture, not SKILL.md
 (see tests/test_validate.py's materialize_fixture()), so run the test suite
@@ -762,7 +762,7 @@ def check_drift_fixtures(skills_dir):
     if not any(os.path.exists(path) for path in paths):
         return errors
 
-    drift_path = os.path.join(root, "drift.py")
+    drift_path = os.path.join(root, "tools", "drift.py")
     if not os.path.exists(drift_path):
         return errors
     try:
@@ -919,7 +919,7 @@ def check_edit_integrity_fixtures(skills_dir):
     if not os.path.exists(path):
         return errors
 
-    edit_path = os.path.join(root, "edit.py")
+    edit_path = os.path.join(root, "tools", "edit.py")
     if not os.path.exists(edit_path):
         return errors
     try:
@@ -1111,7 +1111,7 @@ def check_review_fixtures(skills_dir):
     if not os.path.exists(path):
         return errors
 
-    review_path = os.path.join(root, "review.py")
+    review_path = os.path.join(root, "tools", "review.py")
     if not os.path.exists(review_path):
         return errors
     try:
@@ -1173,7 +1173,7 @@ def check_repair_fixtures(skills_dir):
     if not os.path.exists(path):
         return errors
 
-    repair_path = os.path.join(root, "repair.py")
+    repair_path = os.path.join(root, "tools", "repair.py")
     if not os.path.exists(repair_path):
         return errors
     try:
@@ -1236,7 +1236,7 @@ def check_repair_loop_fixtures(skills_dir):
     if not os.path.exists(path):
         return errors
 
-    runner_path = os.path.join(root, "repair_loop.py")
+    runner_path = os.path.join(root, "tools", "repair_loop.py")
     if not os.path.exists(runner_path):
         return errors
     try:
@@ -1301,7 +1301,7 @@ def check_calibration_fixtures(skills_dir):
     if not os.path.exists(config_path):
         return errors
 
-    calibration_path = os.path.join(root, "calibration.py")
+    calibration_path = os.path.join(root, "tools", "calibration.py")
     if not os.path.exists(calibration_path):
         return errors
     try:
@@ -1386,7 +1386,7 @@ def check_staged_scan_fixtures(skills_dir):
     if not os.path.exists(path):
         return errors
 
-    scan_path = os.path.join(root, "scan.py")
+    scan_path = os.path.join(root, "tools", "scan.py")
     if not os.path.exists(scan_path):
         return errors
     try:
@@ -1447,7 +1447,7 @@ def check_output_integrity_fixtures(skills_dir):
     if not os.path.exists(path):
         return errors
 
-    runner_path = os.path.join(root, "output_integrity.py")
+    runner_path = os.path.join(root, "tools", "output_integrity.py")
     if not os.path.exists(runner_path):
         return errors
     try:
@@ -1509,7 +1509,7 @@ def check_density_precision_fixtures(skills_dir):
     if not os.path.exists(path):
         return errors
 
-    runner_path = os.path.join(root, "density.py")
+    runner_path = os.path.join(root, "tools", "density.py")
     if not os.path.exists(runner_path):
         return errors
     try:
@@ -1570,7 +1570,7 @@ def check_sepia_fixtures(skills_dir):
     if not os.path.exists(path):
         return errors
 
-    runner_path = os.path.join(root, "sepia.py")
+    runner_path = os.path.join(root, "tools", "sepia.py")
     if not os.path.exists(runner_path):
         return errors
     try:
@@ -1631,7 +1631,7 @@ def check_delivery_fixtures(skills_dir):
     if not os.path.exists(path):
         return errors
 
-    runner_path = os.path.join(root, "delivery.py")
+    runner_path = os.path.join(root, "tools", "delivery.py")
     if not os.path.exists(runner_path):
         return errors
     try:
@@ -1693,7 +1693,7 @@ def check_registry_say_human(skills_dir):
     if not os.path.exists(registry_path):
         return errors
 
-    runner_path = os.path.join(root, "say_human.py")
+    runner_path = os.path.join(root, "tools", "say_human.py")
     if not os.path.exists(runner_path):
         return errors
 
@@ -1759,7 +1759,7 @@ def check_say_human_fixtures(skills_dir):
     if not os.path.exists(path):
         return errors
 
-    runner_path = os.path.join(root, "say_human.py")
+    runner_path = os.path.join(root, "tools", "say_human.py")
     if not os.path.exists(runner_path):
         return errors
     try:
@@ -1820,7 +1820,7 @@ def check_registry_substance(skills_dir):
     if not os.path.exists(registry_path):
         return errors
 
-    runner_path = os.path.join(root, "substance.py")
+    runner_path = os.path.join(root, "tools", "substance.py")
     if not os.path.exists(runner_path):
         return errors
 
@@ -1925,7 +1925,7 @@ def check_substance_fixtures(skills_dir):
     if not os.path.exists(path):
         return errors
 
-    runner_path = os.path.join(root, "substance.py")
+    runner_path = os.path.join(root, "tools", "substance.py")
     if not os.path.exists(runner_path):
         return errors
     try:
@@ -1989,7 +1989,7 @@ def check_registry_provenance(skills_dir):
     if not os.path.exists(registry_path):
         return errors
 
-    provenance_path = os.path.join(root, "provenance.py")
+    provenance_path = os.path.join(root, "tools", "provenance.py")
     if not os.path.exists(provenance_path):
         return errors
     try:
@@ -2026,7 +2026,7 @@ def check_provenance_fixtures(skills_dir):
     if not os.path.exists(path):
         return errors
 
-    runner_path = os.path.join(root, "provenance.py")
+    runner_path = os.path.join(root, "tools", "provenance.py")
     if not os.path.exists(runner_path):
         return errors
     try:
@@ -2078,7 +2078,7 @@ def check_humanizer_review_fixtures(skills_dir):
     path = os.path.join(root, HUMANIZER_REVIEW_CORPUS_PATH)
     if not os.path.exists(path):
         return errors
-    provenance_path = os.path.join(root, "provenance.py")
+    provenance_path = os.path.join(root, "tools", "provenance.py")
     registry_path = os.path.join(root, "rules.json")
     if not os.path.exists(provenance_path) or not os.path.exists(registry_path):
         return errors
@@ -2219,7 +2219,7 @@ def check_social_linkedin_fixtures(skills_dir):
     if not os.path.exists(path):
         return errors
 
-    runner_path = os.path.join(root, "linkedin.py")
+    runner_path = os.path.join(root, "tools", "linkedin.py")
     if not os.path.exists(runner_path):
         return errors
     try:

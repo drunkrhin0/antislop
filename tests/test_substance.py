@@ -32,8 +32,8 @@ import substance  # noqa: E402
 FIXTURES = os.path.join(ROOT, "skills", "antislop", "evals",
                         "substance-fixtures.json")
 REGISTRY = os.path.join(ROOT, "rules.json")
-SUBSTANCE = os.path.join(ROOT, "substance.py")
-VALIDATE = os.path.join(ROOT, "validate.py")
+SUBSTANCE = os.path.join(ROOT, "tools", "substance.py")
+VALIDATE = os.path.join(ROOT, "tools", "validate.py")
 
 EMPTY_PROSE = (
     "The project matters. It represents an important step forward that could "

@@ -31,11 +31,11 @@ and the em-dash merge behavior. The adapted goal is defect removal with
 meaning preservation, never detector evasion.
 
 Usage:
-    python3 repair_loop.py --file doc.md
-    cat doc.md | python3 repair_loop.py
-    python3 repair_loop.py --file doc.md --max-attempts 2 --char-budget 100
-    python3 repair_loop.py --fixtures skills/antislop/evals/repair-loop-fixtures.json
-    python3 repair_loop.py --help
+    python3 tools/repair_loop.py --file doc.md
+    cat doc.md | python3 tools/repair_loop.py
+    python3 tools/repair_loop.py --file doc.md --max-attempts 2 --char-budget 100
+    python3 tools/repair_loop.py --fixtures skills/antislop/evals/repair-loop-fixtures.json
+    python3 tools/repair_loop.py --help
 
 Exit codes:
     0 -- the loop ran; decision accept or no-change

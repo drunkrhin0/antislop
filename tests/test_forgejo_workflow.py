@@ -75,11 +75,11 @@ class TestCheckStepWired(unittest.TestCase):
     def test_authoritative_steps_remain(self):
         text = workflow_text()
         self.assertIn(
-            "python3 validate.py --skills-dir skills --expect-version-from rules.json",
+            "python3 tools/validate.py --skills-dir skills --expect-version-from rules.json",
             text,
         )
-        self.assertIn("python3 generate.py --check", text)
-        self.assertIn("python3 -m unittest discover -s tests -v", text)
+        self.assertIn("python3 tools/generate.py --check", text)
+        self.assertIn("python3 -m unittest discover -s tests -t . -v", text)
 
     def test_no_retired_propagation_tooling(self):
         text = workflow_text()
@@ -95,9 +95,10 @@ class TestCheckScriptContract(unittest.TestCase):
         tmp = tempfile.mkdtemp(prefix="antislop-check-sh-")
         self.addCleanup(shutil.rmtree, tmp, ignore_errors=True)
         shutil.copy(os.path.join(ROOT, "check.sh"), os.path.join(tmp, "check.sh"))
-        with open(os.path.join(tmp, "generate.py"), "w", encoding="utf-8") as f:
+        os.makedirs(os.path.join(tmp, "tools"))
+        with open(os.path.join(tmp, "tools", "generate.py"), "w", encoding="utf-8") as f:
             f.write("import sys\nsys.exit(%d)\n" % generate_exit)
-        with open(os.path.join(tmp, "validate.py"), "w", encoding="utf-8") as f:
+        with open(os.path.join(tmp, "tools", "validate.py"), "w", encoding="utf-8") as f:
             f.write("import sys\nsys.exit(%d)\n" % validate_exit)
         return subprocess.run(["bash", "check.sh"], cwd=tmp, capture_output=True, text=True)
 
@@ -122,9 +123,10 @@ class TestCheckScriptContract(unittest.TestCase):
         tmp = tempfile.mkdtemp(prefix="antislop-check-sh-diagnostic-")
         self.addCleanup(shutil.rmtree, tmp, ignore_errors=True)
         shutil.copy(os.path.join(ROOT, "check.sh"), os.path.join(tmp, "check.sh"))
-        with open(os.path.join(tmp, "generate.py"), "w", encoding="utf-8") as f:
+        os.makedirs(os.path.join(tmp, "tools"))
+        with open(os.path.join(tmp, "tools", "generate.py"), "w", encoding="utf-8") as f:
             f.write("import sys\nsys.exit(0)\n")
-        with open(os.path.join(tmp, "validate.py"), "w", encoding="utf-8") as f:
+        with open(os.path.join(tmp, "tools", "validate.py"), "w", encoding="utf-8") as f:
             f.write(
                 "import sys\n"
                 "print('synthetic validator traceback', file=sys.stderr)\n"

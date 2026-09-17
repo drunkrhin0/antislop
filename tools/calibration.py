@@ -26,9 +26,9 @@ structural.py's detectors, fidelity.py's preservation gate, and drift.py's
 fact matching. No external model or detector claim is involved.
 
 Usage:
-    python3 calibration.py --experiment-config skills/antislop/evals/calibration-experiment.json
-    python3 calibration.py --experiment-config ... --output results.json
-    python3 calibration.py --help
+    python3 tools/calibration.py --experiment-config skills/antislop/evals/calibration-experiment.json
+    python3 tools/calibration.py --experiment-config ... --output results.json
+    python3 tools/calibration.py --help
 
 Exit codes:
     0 -- experiment ran and the gate passed

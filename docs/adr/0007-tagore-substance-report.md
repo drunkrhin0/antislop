@@ -8,7 +8,7 @@ A passage can avoid every known mechanical tell while remaining vague, consequen
 
 ## Decision
 
-Add `substance.py`, an opt-in report that preserves Tagore's two groups:
+Add `tools/substance.py`, an opt-in report that preserves Tagore's two groups:
 
 - **Mechanics**: Directness, Rhythm, Trust, Authenticity, Density.
 - **Substance**: Specificity, Restraint, Voice.
@@ -33,6 +33,6 @@ Adopt the change-contribution contract from Tagore's contributor guide: evidence
 
 ## Consequences
 
-- `rules.json` gains `substance_dimensions`, `substance_statuses`, and `contribution_contract` sections; `validate.py` gates all three schemas and the substance fixture corpus.
-- `substance.py` owns the two-group report and the contribution validation; the fixture corpus lives in `skills/antislop/evals/substance-fixtures.json` and runs in CI.
+- `rules.json` gains `substance_dimensions`, `substance_statuses`, and `contribution_contract` sections; `tools/validate.py` gates all three schemas and the substance fixture corpus.
+- `tools/substance.py` owns the two-group report and the contribution validation; the fixture corpus lives in `skills/antislop/evals/substance-fixtures.json` and runs in CI.
 - The substance group never enters the Formulaic Writing Risk Score, and no dimension result labels the text human or AI.

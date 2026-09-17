@@ -12,7 +12,7 @@ import sys
 import tempfile
 import unittest
 
-VALIDATOR = os.path.join(os.path.dirname(__file__), "..", "validate.py")
+VALIDATOR = os.path.join(os.path.dirname(__file__), "..", "tools", "validate.py")
 FIXTURES = os.path.join(os.path.dirname(__file__), "fixtures")
 REPO_ROOT = os.path.join(os.path.dirname(__file__), "..")
 

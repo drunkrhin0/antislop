@@ -68,7 +68,7 @@ generation checks can all pass while the user-facing path remains incomplete.
 
 | Component | Revision | Public interface exercised |
 |---|---|---|
-| Antislop PR branch | `bd3af7c402ca2ab456290ff8eec5e93813694325`, plus the OpenCode parity fix from this test | `score.py`, registry profiles, generator, manifests, OpenCode agent discovery, style and audit skill contracts |
+| Antislop PR branch | `bd3af7c402ca2ab456290ff8eec5e93813694325`, plus the OpenCode parity fix from this test | `tools/score.py`, registry profiles, generator, manifests, OpenCode agent discovery, style and audit skill contracts |
 | `avoid-ai-writing` | `58a95fc9971d7af95f1f1324b8a6bc991eb8004d` | `AIDetector.analyzeText`, rendered-Markdown mode, `detector/validate.js`, package tests, sync gates |
 | `avoid-ai-writing-mcp` | `125e0818b7e1b88d904c73c7729a5e5c1441f8a6` | MCP client/server tests for `score_text` and `audit_text` |
 
@@ -84,7 +84,7 @@ the blockquote and the fenced command.
 |---|---|---|
 | Plugin manifests point to the single skill | Pass | JSON validation passed and the ChatGPT/Codex skill path exists. |
 | OpenCode discovers the packaged agent | Pass | `opencode agent list` returned `antislop (subagent)`. |
-| Generated artifact propagation | Pass | `python3 generate.py --check` and `bash check.sh` passed. |
+| Generated artifact propagation | Pass | `python3 tools/generate.py --check` and `bash check.sh` passed. |
 | Exact lexical scoring separates the dirty and cleaned fixtures | Pass, narrow | Original scored 0 with five findings; the supplied clean rewrite scored 100. This tests scoring, not rewrite generation. |
 | Existing `general` and `technical` scorer profiles | Pass | Technical mode exempted `robust`; invalid profile input returned a bounded error. |
 | Authorship claim boundary | Pass | Antislop output uses Formulaic Writing Risk Score and does not emit authorship classes or probabilities. |
@@ -97,7 +97,7 @@ the blockquote and the fenced command.
 | Source-stable finding offsets | Fail | Internal positions are calculated, but the public JSON finding omits `position` and `match_length`. |
 | Five voice profiles | Fail, not implemented | `casual` is rejected. Only `general` and `technical` exist, and those are scorer profiles rather than voices. |
 | Six writing contexts | Fail, not implemented | No `linkedin`, `blog`, `technical-blog`, `investor-email`, `docs`, or `casual` context axis exists. |
-| Rewrite preservation gate | Fail, not implemented | Antislop has no prose rewrite validator. `fix.py` repairs generated repository artifacts, not prose. |
+| Rewrite preservation gate | Fail, not implemented | Antislop has no prose rewrite validator. `tools/fix.py` repairs generated repository artifacts, not prose. |
 | Read-only scanner or MCP tools | Fail, not implemented | The plugin is skills-only. It exposes no score or audit tool. |
 | Executed model evaluation suite | Fail | The two `evals.json` files contain prompts and assertions only. No runner, model pin, outputs, judge results, or pass record exists. |
 | Model rewrite and trigger behavior | Unverified | The skills are prompt contracts. This run did not use an independent model session, so it cannot make a reproducible claim about activation or rewrite quality. |
@@ -151,7 +151,7 @@ The publishing-artifact and discourse fixtures both returned:
 ```
 
 The PR registers the new findings and teaches them to model-facing skills, but
-does not make them executable in `score.py`.
+does not make them executable in `tools/score.py`.
 
 ### Declared audit fixtures
 
@@ -238,10 +238,10 @@ The adoption order in ADR 0004 is confirmed, with a harder release boundary:
 Antislop:
 
 ```text
-python3 score.py --profile general --file <original>
-python3 score.py --profile general --file <rewritten>
-python3 score.py --profile casual --stdin
-python3 generate.py --check
+python3 tools/score.py --profile general --file <original>
+python3 tools/score.py --profile general --file <rewritten>
+python3 tools/score.py --profile casual --stdin
+python3 tools/generate.py --check
 bash check.sh
 opencode agent list
 python3 -m unittest tests.test_generate.TestRegistryContent.test_opencode_vocabulary_matches_registry tests.test_generate.TestRegistryContent.test_opencode_has_recent_structural_rules -v

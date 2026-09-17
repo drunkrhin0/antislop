@@ -23,9 +23,9 @@ Standard library only. No Patina service, payment, model backend, persona
 catalog, or detector claim is involved.
 
 Usage:
-    python3 fidelity.py --source-text "..." --candidate-text "..."
-    python3 fidelity.py --source before.txt --candidate after.txt
-    python3 fidelity.py --help
+    python3 tools/fidelity.py --source-text "..." --candidate-text "..."
+    python3 tools/fidelity.py --source before.txt --candidate after.txt
+    python3 tools/fidelity.py --help
 """
 
 import argparse

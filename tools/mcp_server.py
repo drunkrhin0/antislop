@@ -12,7 +12,7 @@ from score import score_text, validate_score_options
 
 
 PROTOCOL_VERSION = "2025-06-18"
-ROOT = os.path.dirname(os.path.abspath(__file__))
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 MAX_INPUT_CHARACTERS = 250000
 
 

@@ -27,9 +27,9 @@ sample, em-dash spans), mechanism.py (nearby-evidence window), drift.py
 spans), score.py (profile-filtered findings).
 
 Usage:
-    python3 linkedin.py --fixtures skills/antislop/evals/linkedin-profile-fixtures.json
-    python3 linkedin.py review --source-text "..." --post-type lesson
-    python3 linkedin.py review --source-text "..." --post-type case-study \
+    python3 tools/linkedin.py --fixtures skills/antislop/evals/linkedin-profile-fixtures.json
+    python3 tools/linkedin.py review --source-text "..." --post-type lesson
+    python3 tools/linkedin.py review --source-text "..." --post-type case-study \
         --voice-sample "..." --sample-fact "..." --required-fact "..."
 
 Exit codes:

@@ -35,8 +35,8 @@ FIXTURES = os.path.join(ROOT, "skills", "antislop", "evals",
 CONFIG = os.path.join(ROOT, "skills", "antislop", "evals",
                       "calibration-experiment.json")
 REGISTRY = os.path.join(ROOT, "rules.json")
-VALIDATE = os.path.join(ROOT, "validate.py")
-CALIBRATION = os.path.join(ROOT, "calibration.py")
+VALIDATE = os.path.join(ROOT, "tools", "validate.py")
+CALIBRATION = os.path.join(ROOT, "tools", "calibration.py")
 
 PROBE_TEXT = "We leverage the API for the rollout."
 

@@ -34,8 +34,8 @@ from registry import filter_rules_by_profile  # noqa: E402
 FIXTURES = os.path.join(ROOT, "skills", "antislop", "evals",
                         "linkedin-profile-fixtures.json")
 REGISTRY = os.path.join(ROOT, "rules.json")
-LINKEDIN = os.path.join(ROOT, "linkedin.py")
-SCORE = os.path.join(ROOT, "score.py")
+LINKEDIN = os.path.join(ROOT, "tools", "linkedin.py")
+SCORE = os.path.join(ROOT, "tools", "score.py")
 
 SOCIAL_RULES = {
     "social-reach-promise", "social-mobile-paragraphs",

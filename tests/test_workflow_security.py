@@ -588,12 +588,12 @@ class TestForgejoReleaseCredentials(unittest.TestCase):
         self.assertIsNotNone(gate)
         script = gate["run"]
         self.assertIn("git merge-base --is-ancestor", script)
-        self.assertIn("python3 generate.py --check", script)
+        self.assertIn("python3 tools/generate.py --check", script)
         self.assertIn(
-            "python3 validate.py --skills-dir skills --expect-version-from rules.json",
+            "python3 tools/validate.py --skills-dir skills --expect-version-from rules.json",
             script)
         self.assertIn("bash check.sh", script)
-        self.assertIn("python3 -m unittest discover -s tests -v", script)
+        self.assertIn("python3 -m unittest discover -s tests -t . -v", script)
         self.assertLess(steps.index(gate),
                         steps.index(step_by_name(workflow, "Tag antislop")))
         self.assertLess(steps.index(gate),

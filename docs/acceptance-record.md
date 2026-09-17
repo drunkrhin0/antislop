@@ -39,10 +39,10 @@ Post-merge main-branch verification passed at `9f60a1f0d6737b2f2c222041127c34b5c
 
 The required commands passed after the acceptance record and portable test-harness updates:
 
-- `python3 generate.py --check`
-- `python3 validate.py`
+- `python3 tools/generate.py --check`
+- `python3 tools/validate.py`
 - `bash check.sh`
-- `python3 -m unittest discover -s tests -v`: 1,117 tests passed, with one platform-capability skip because this macOS filesystem does not retain setuid mode bits.
+- `python3 -m unittest discover -s tests -t . -v`: 1,117 tests passed, with one platform-capability skip because this macOS filesystem does not retain setuid mode bits.
 
 ## Live acceptance environment
 

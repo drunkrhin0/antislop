@@ -10,7 +10,7 @@ import unittest
 
 
 ROOT = os.path.join(os.path.dirname(__file__), "..")
-PRESERVE = os.path.join(ROOT, "preserve.py")
+PRESERVE = os.path.join(ROOT, "tools", "preserve.py")
 
 ORIGINAL = """---
 title: Q3 migration

@@ -22,9 +22,9 @@ imperfection is added. Candidate metrics are advisory by design; none carries
 an external numeric threshold as a strict finding.
 
 Usage:
-    python3 provenance.py --fixtures skills/antislop/evals/provenance-fixtures.json
-    python3 provenance.py
-    python3 provenance.py --help
+    python3 tools/provenance.py --fixtures skills/antislop/evals/provenance-fixtures.json
+    python3 tools/provenance.py
+    python3 tools/provenance.py --help
 
 Exit codes:
     0 -- the review ran, or every fixture matched its expectation
@@ -41,9 +41,9 @@ import sys
 import limits
 from registry import load_registry
 
-MODULE_DIR = os.path.dirname(os.path.abspath(__file__))
-REGISTRY_PATH = os.path.join(MODULE_DIR, "rules.json")
-FIXTURES_PATH = os.path.join(MODULE_DIR, "skills", "antislop", "evals",
+REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+REGISTRY_PATH = os.path.join(REPO_ROOT, "rules.json")
+FIXTURES_PATH = os.path.join(REPO_ROOT, "skills", "antislop", "evals",
                              "provenance-fixtures.json")
 
 INTERFACE = "antislop.rule_provenance"

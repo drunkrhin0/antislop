@@ -11,7 +11,7 @@ from route import route_request
 
 
 ROOT = os.path.join(os.path.dirname(__file__), "..")
-EVAL = os.path.join(ROOT, "eval.py")
+EVAL = os.path.join(ROOT, "tools", "eval.py")
 
 
 class TestEvaluationRunner(unittest.TestCase):

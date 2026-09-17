@@ -34,7 +34,7 @@ FIXTURES = os.path.join(ROOT, "skills", "antislop", "evals",
 FP_CORPUS = os.path.join(ROOT, "skills", "antislop", "evals",
                          "false-positive-corpus.json")
 REGISTRY = os.path.join(ROOT, "rules.json")
-VALIDATE = os.path.join(ROOT, "validate.py")
+VALIDATE = os.path.join(ROOT, "tools", "validate.py")
 
 FP_CATEGORIES = {"technical_term", "literal_metaphor", "necessary_repetition",
                  "formal_register", "quotation", "author_supplied"}

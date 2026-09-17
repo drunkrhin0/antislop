@@ -23,9 +23,9 @@ import unittest
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 REGISTRY = os.path.join(ROOT, "rules.json")
-VALIDATE = os.path.join(ROOT, "validate.py")
-GENERATE = os.path.join(ROOT, "generate.py")
-SCORE = os.path.join(ROOT, "score.py")
+VALIDATE = os.path.join(ROOT, "tools", "validate.py")
+GENERATE = os.path.join(ROOT, "tools", "generate.py")
+SCORE = os.path.join(ROOT, "tools", "score.py")
 TOP_LEVEL_SKILL = os.path.join(ROOT, "skills", "antislop", "SKILL.md")
 AUDIT_SKILL = os.path.join(ROOT, "skills", "antislop", "references",
                              "audit-mode.md")

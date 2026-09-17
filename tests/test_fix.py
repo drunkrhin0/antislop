@@ -3,8 +3,8 @@
 
 Run: python3 -m pytest tests/test_fix.py -v
 
-All fixes run against a throwaway sandbox copy of rules.json, generate.py,
-validate.py, fix.py and skills/ so nothing here ever mutates the real
+All fixes run against a throwaway sandbox copy of rules.json, tools/, and
+skills/ so nothing here ever mutates the real
 working tree.
 """
 
@@ -22,9 +22,11 @@ ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 def make_sandbox():
     """Copy the pieces fix.py needs into a throwaway directory."""
     tmp = tempfile.mkdtemp(prefix="antislop-fix-test-")
-    for name in ("rules.json", "generate.py", "registry.py", "limits.py",
-                 "validate.py", "fix.py"):
-        shutil.copy(os.path.join(ROOT, name), os.path.join(tmp, name))
+    shutil.copy(os.path.join(ROOT, "rules.json"), os.path.join(tmp, "rules.json"))
+    os.makedirs(os.path.join(tmp, "tools"))
+    for name in ("generate.py", "registry.py", "limits.py", "validate.py", "fix.py"):
+        shutil.copy(os.path.join(ROOT, "tools", name),
+                    os.path.join(tmp, "tools", name))
     shutil.copytree(os.path.join(ROOT, "skills"), os.path.join(tmp, "skills"))
     # generate.py --check also covers the antislop Power's steering files
     # (ticket 02), so the sandbox needs powers/ too or generate.py --check
@@ -56,13 +58,13 @@ def patch_bump(version):
 
 
 def run_fix(sandbox, *args):
-    cmd = [sys.executable, os.path.join(sandbox, "fix.py")] + list(args)
+    cmd = [sys.executable, os.path.join(sandbox, "tools", "fix.py")] + list(args)
     result = subprocess.run(cmd, capture_output=True, text=True, cwd=sandbox)
     return result.returncode, result.stdout, result.stderr
 
 
 def run_py(sandbox, script, *args):
-    cmd = [sys.executable, os.path.join(sandbox, script)] + list(args)
+    cmd = [sys.executable, os.path.join(sandbox, "tools", script)] + list(args)
     result = subprocess.run(cmd, capture_output=True, text=True, cwd=sandbox)
     return result.returncode, result.stdout, result.stderr
 

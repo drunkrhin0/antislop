@@ -9,7 +9,7 @@ import sys
 from route import route_intent
 
 
-ROOT = os.path.dirname(os.path.abspath(__file__))
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 EVAL_FILES = (
     os.path.join(ROOT, "skills", "antislop", "evals", "evals.json"),
     os.path.join(ROOT, "skills", "antislop", "evals", "audit-evals.json"),

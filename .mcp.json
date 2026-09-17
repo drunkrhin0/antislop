@@ -2,7 +2,7 @@
   "mcpServers": {
     "antislop": {
       "command": "python3",
-      "args": ["./mcp_server.py"],
+      "args": ["./tools/mcp_server.py"],
       "cwd": ".",
       "version": "2025-06-18"
     }

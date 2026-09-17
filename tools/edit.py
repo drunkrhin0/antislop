@@ -28,8 +28,8 @@ while any dropped or changed inventory item fails. The report keeps a
 fidelity section that names the preservation status either way.
 
 Usage:
-    python3 edit.py --fixtures skills/antislop/evals/edit-integrity-fixtures.json
-    python3 edit.py --help
+    python3 tools/edit.py --fixtures skills/antislop/evals/edit-integrity-fixtures.json
+    python3 tools/edit.py --help
 
 Exit codes:
     0 -- every fixture decision matches its expected decision

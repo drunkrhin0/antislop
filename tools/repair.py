@@ -36,13 +36,13 @@ external models, persistent voice facts, or em-dash allowance. Numeric style
 traits stay out of scope for a later author profile.
 
 Usage:
-    python3 repair.py --file doc.md
-    cat doc.md | python3 repair.py --format json
-    python3 repair.py --file doc.md --write
-    python3 repair.py --file doc.md --format diff
-    python3 repair.py --file doc.md --edit 0-5=use --write
-    python3 repair.py --fixtures skills/antislop/evals/repair-fixtures.json
-    python3 repair.py --help
+    python3 tools/repair.py --file doc.md
+    cat doc.md | python3 tools/repair.py --format json
+    python3 tools/repair.py --file doc.md --write
+    python3 tools/repair.py --file doc.md --format diff
+    python3 tools/repair.py --file doc.md --edit 0-5=use --write
+    python3 tools/repair.py --fixtures skills/antislop/evals/repair-fixtures.json
+    python3 tools/repair.py --help
 
 Exit codes:
     0 -- repair ran; decision accept or no-change

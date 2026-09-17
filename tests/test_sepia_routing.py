@@ -38,9 +38,9 @@ from registry import filter_rules_by_profile  # noqa: E402
 FIXTURES = os.path.join(ROOT, "skills", "antislop", "evals",
                         "sepia-routing-fixtures.json")
 REGISTRY = os.path.join(ROOT, "rules.json")
-SEPIA = os.path.join(ROOT, "sepia.py")
-VALIDATE = os.path.join(ROOT, "validate.py")
-SCORE = os.path.join(ROOT, "score.py")
+SEPIA = os.path.join(ROOT, "tools", "sepia.py")
+VALIDATE = os.path.join(ROOT, "tools", "validate.py")
+SCORE = os.path.join(ROOT, "tools", "score.py")
 
 STATUSES = ("keep", "revise", "ask-author", "cut", "n/a", "over-correction")
 

@@ -37,8 +37,8 @@ import fidelity  # noqa: E402
 FIXTURES = os.path.join(ROOT, "skills", "antislop", "evals",
                         "repair-fixtures.json")
 REGISTRY = os.path.join(ROOT, "rules.json")
-REPAIR = os.path.join(ROOT, "repair.py")
-VALIDATE = os.path.join(ROOT, "validate.py")
+REPAIR = os.path.join(ROOT, "tools", "repair.py")
+VALIDATE = os.path.join(ROOT, "tools", "validate.py")
 
 MARKDOWN_SOURCE = (
     "# Deployment notes\n\n"

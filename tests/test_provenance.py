@@ -35,8 +35,8 @@ sys.path.insert(0, ROOT)
 import provenance  # noqa: E402
 
 REGISTRY = os.path.join(ROOT, "rules.json")
-VALIDATE = os.path.join(ROOT, "validate.py")
-PROVENANCE = os.path.join(ROOT, "provenance.py")
+VALIDATE = os.path.join(ROOT, "tools", "validate.py")
+PROVENANCE = os.path.join(ROOT, "tools", "provenance.py")
 FIXTURES = os.path.join(ROOT, "skills", "antislop", "evals",
                         "provenance-fixtures.json")
 

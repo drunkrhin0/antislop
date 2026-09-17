@@ -33,8 +33,8 @@ import repair_loop  # noqa: E402
 FIXTURES = os.path.join(ROOT, "skills", "antislop", "evals",
                         "repair-loop-fixtures.json")
 REGISTRY = os.path.join(ROOT, "rules.json")
-REPAIR_LOOP = os.path.join(ROOT, "repair_loop.py")
-VALIDATE = os.path.join(ROOT, "validate.py")
+REPAIR_LOOP = os.path.join(ROOT, "tools", "repair_loop.py")
+VALIDATE = os.path.join(ROOT, "tools", "validate.py")
 
 CLEAN = ("The worker lost its lease and the queue drained the backlog "
          "overnight.")

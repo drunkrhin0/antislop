@@ -5,8 +5,8 @@ The numbered-list inflation detector is automated; the colon-overuse
 rule is a manual-review (human-check) rule, so it appears in the
 manual-review metadata rather than as an automated finding.
 
-    cat examples/cursor-sample.md | python3 score.py --stdin
-    cat examples/cursor-sample.md | python3 scan.py
+    cat examples/cursor-sample.md | python3 tools/score.py --stdin
+    cat examples/cursor-sample.md | python3 tools/scan.py
 
 The article gives five reasons:
 

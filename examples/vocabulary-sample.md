@@ -3,7 +3,7 @@
 This file exercises the PR #77 rules: vocab-agile,
 phrase-constantly-evolving, and the expanded phrase-today-world.
 
-    cat examples/vocabulary-sample.md | python3 score.py --stdin
+    cat examples/vocabulary-sample.md | python3 tools/score.py --stdin
 
 Agile is our mantra, and in today's fast-paced world the threat
 landscape is constantly evolving. Our approach stays flexible and

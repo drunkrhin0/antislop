@@ -17,7 +17,7 @@ INVALID_REWRITE = VALID_REWRITE.replace(
 
 
 ROOT = os.path.join(os.path.dirname(__file__), "..")
-SERVER = os.path.join(ROOT, "mcp_server.py")
+SERVER = os.path.join(ROOT, "tools", "mcp_server.py")
 
 
 def call_server(requests):

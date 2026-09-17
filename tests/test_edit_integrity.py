@@ -34,7 +34,7 @@ import fidelity  # noqa: E402
 FIXTURES = os.path.join(ROOT, "skills", "antislop", "evals",
                         "edit-integrity-fixtures.json")
 REGISTRY = os.path.join(ROOT, "rules.json")
-VALIDATE = os.path.join(ROOT, "validate.py")
+VALIDATE = os.path.join(ROOT, "tools", "validate.py")
 
 OPERATIONS = ("draft", "revise", "audit", "transform")
 

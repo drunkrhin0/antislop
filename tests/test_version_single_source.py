@@ -20,7 +20,7 @@ import tempfile
 import unittest
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-VALIDATOR = os.path.join(ROOT, "validate.py")
+VALIDATOR = os.path.join(ROOT, "tools", "validate.py")
 
 sys.path.insert(0, ROOT)
 import validate  # noqa: E402 -- import after sys.path setup, for direct unit tests
@@ -66,7 +66,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Validate repository invariants
-        run: python3 validate.py --skills-dir skills --expect-version %s
+        run: python3 tools/validate.py --skills-dir skills --expect-version %s
 """
 
 

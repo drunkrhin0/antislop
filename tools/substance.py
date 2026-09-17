@@ -30,12 +30,12 @@ examples are candidate cases only; their thresholds are self-defined and are
 not imported as Antislop targets.
 
 Usage:
-    python3 substance.py --source-text "..." --medium argument
-    cat text.txt | python3 substance.py --medium reference
-    python3 substance.py --file text.txt --profile technical
-    python3 substance.py --proposal proposal.json
-    python3 substance.py --fixtures skills/antislop/evals/substance-fixtures.json
-    python3 substance.py --help
+    python3 tools/substance.py --source-text "..." --medium argument
+    cat text.txt | python3 tools/substance.py --medium reference
+    python3 tools/substance.py --file text.txt --profile technical
+    python3 tools/substance.py --proposal proposal.json
+    python3 tools/substance.py --fixtures skills/antislop/evals/substance-fixtures.json
+    python3 tools/substance.py --help
 
 Exit codes:
     0 -- the report ran, or every fixture decision matched its expectation

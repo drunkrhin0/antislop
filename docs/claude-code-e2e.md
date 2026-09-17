@@ -80,9 +80,9 @@ receipt, then stop before live prompts until the manifest is fixed.
 Run the repository checks as a separate result:
 
 ~~~
-python3 validate.py --skills-dir skills --expect-version-from rules.json
+python3 tools/validate.py --skills-dir skills --expect-version-from rules.json
 bash check.sh
-python3 -m unittest discover -s tests -v
+python3 -m unittest discover -s tests -t . -v
 ~~~
 
 Use the commands from the pinned checkout. A repository check can pass while
